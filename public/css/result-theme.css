@@ -1,0 +1,21 @@
+.cardItem{
+    height: 86px;
+    width: 141px;
+    margin-right: 20px;
+    padding: 20px;
+    text-align: center;
+    transition: all 500ms ease-in-out;
+    background-color: #eee;
+}
+
+.cardItem:hover{
+    /* margin-top: 80px; */
+    cursor: pointer;
+    box-shadow: 0px 12px 30px 0px rgba(0,0,0,0.2);
+    transition: all 800ms cubic-bezier(0.19,1,0.22,1);
+}
+
+.slick-dots {
+    text-align: right !important;
+    padding-right: 20px !important;
+}

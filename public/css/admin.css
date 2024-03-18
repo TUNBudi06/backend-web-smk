@@ -1,0 +1,160 @@
+.aside-admin {
+    position: fixed;
+    top: 0px;
+    bottom: 0;
+    z-index: 100;
+    height: 100%;
+    z-index: 999;
+    background-color: rgb(255, 255, 255);
+}
+#label-small {
+    display: none;
+}
+.toggler, #toggler {
+    display: none;
+}
+.toggler-nav-small {
+    display: none;
+    position: fixed;
+    width: 41px;
+    height: 41px;
+    right: 20px;
+    top: 20px;
+    border-radius: 41px;
+    border: 2px solid #ffd720;
+    z-index: 100;
+    background-color: rgba(255, 255, 255, .5) !important;
+    animation-name: toggle;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+.toggler-nav-small:nth-child(1) {
+    animation-delay: 1s;
+    opacity: 0;
+}
+@keyframes toggle {
+    0% {transform: scale(1); opacity: 1;}
+    50% {transform: scale(1.2); opacity: .4;}
+    100% {transform: scale(1); opacity: 1;}
+}
+.avatar-admin-nav {
+    width: 34px;
+    display: inline-block;
+    height: 34px;
+}
+.bg-gray {
+    background-color: rgb(214, 214, 214);
+}
+@media screen and (max-width: 767px) {
+    .aside-admin {
+        left: -90px;
+        transition: all .3s;
+    }
+    .toggler, #toggler {
+        display: inline-block;
+    }
+    .aside-admin-show {
+        left: 0px !important;
+    }
+    .toggler-nav-small {
+        display: inline-block;
+    }
+    #label-small {
+        display: inline-block;
+    }
+    #toggler {
+        position: absolute;
+        top: 28px;
+        right: 34.5px;
+        display: inline-block;
+    }
+}
+.aside-admin-show {
+    left: 0px !important;
+}
+.menu-aside {
+    max-height: 400px;
+    overflow-y: auto;
+}
+.menu-aside div {
+    padding: 5px;
+    color: rgb(158, 158, 158);
+    transition: all .3s;
+    cursor: pointer !important;
+}
+.menu-aside div:hover {
+    padding: 5px;
+    color: rgb(158, 158, 158);
+    background-color: #ffefa8;
+    color: rgb(44, 44, 44) !important;
+    border-radius: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    transition: all .3s;
+}
+.overlay-black-admin {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.menu-aside div.menu-active {
+    background-color: #ffefa8;
+    border-radius: 10px;
+    padding-top: 10px;
+    color: rgb(44, 44, 44) !important;
+    padding-bottom: 10px;
+}
+
+.exit-menu {
+    position: absolute;
+    bottom: 30px;
+    border-radius: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    left: 15%;
+    width: 70%;
+    transition: all .3s;
+}
+.exit-menu:hover {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: rgb(230, 230, 230);
+}
+
+.label-menu {
+    font-family: poppins;
+    margin-bottom: 0px;
+    font-weight: bold;
+    display: inline-block;
+    margin-left: 1rem;
+}
+.img-logo-aside {
+    position: relative;
+}
+.top-img {
+    top: -10px;
+}
+.count-card {
+    background-color: #ffefa8;
+    transition: all .3s;
+    margin-bottom: .5rem;
+}
+.count-card:hover {
+    background-color: #ffd720;
+    box-shadow: 0rem .25rem .5rem rgba(95, 95, 95, 0.1);
+}
+
+
+/* profile */
+.profile-cover {
+    height: 150px;
+    width: 100%;
+    background-size: cover;
+}
+.avatar-profile {
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    background-color: white;
+    border: 3px solid white;
+}
+/* endprofile */
