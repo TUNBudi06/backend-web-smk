@@ -13,11 +13,11 @@
             <i class="fas fa-tachometer-alt"></i>
             <h6 class="label-menu d-none">Dashboard</h6>
         </div>
-        <div class="my-2 my-2 px-3" href="#">
+        <div class="my-2 {{ ($menu_active ==="pengumuman") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('pengumuman') }}';">
             <i class="fas fa-bullhorn"></i>
             <h6 class="label-menu d-none">Pengumuman</h6>
         </div>
-        <div class="my-2 my-2 px-3" href="#">
+        <div class="my-2 {{ ($menu_active ==="agenda") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('agenda') }}';">
             <i class="fas fa-calendar-alt mr-1"></i>
             <h6 class="label-menu d-none">Agenda</h6>
         </div>

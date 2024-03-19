@@ -12,4 +12,18 @@ class AdminController extends Controller
             'menu_active' => 'dashboard',
         ]);
     }
+
+    public function pengumuman()
+    {
+        return view('admin.page.pengumuman', [
+            'menu_active' => 'pengumuman',
+        ]);
+    }
+
+    public function agenda()
+    {
+        return view('admin.page.agenda', [
+            'menu_active' => 'agenda',
+        ]);
+    }
 }
