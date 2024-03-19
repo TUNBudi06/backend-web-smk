@@ -26,4 +26,25 @@ class AdminController extends Controller
             'menu_active' => 'agenda',
         ]);
     }
+
+    public function berita()
+    {
+        return view('admin.page.berita', [
+            'menu_active' => 'berita',
+        ]);
+    }
+
+    public function artikel()
+    {
+        return view('admin.page.artikel', [
+            'menu_active' => 'artikel',
+        ]);
+    }
+
+    public function gallery()
+    {
+        return view('admin.page.gallery', [
+            'menu_active' => 'gallery',
+        ]);
+    }
 }

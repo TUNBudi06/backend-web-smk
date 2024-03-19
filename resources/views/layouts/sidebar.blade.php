@@ -21,15 +21,15 @@
             <i class="fas fa-calendar-alt mr-1"></i>
             <h6 class="label-menu d-none">Agenda</h6>
         </div>
-        <div class="my-2 my-2 px-3" href="#">
+        <div class="my-2 {{ ($menu_active ==="berita") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('berita') }}';">
             <i class="fas fa-newspaper"></i>
             <h6 class="label-menu d-none">Berita</h6>
         </div>
-        <div class="my-2 my-2 px-3" href="#">
+        <div class="my-2 {{ ($menu_active ==="artikel") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('artikel') }}';">
             <i class="fas fa-book mr-1"></i>
             <h6 class="label-menu d-none">Artikel</h6>
         </div>
-        <div class="my-2 my-2 px-3" href="#">
+        <div class="my-2 {{ ($menu_active ==="gallery") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('gallery') }}';">
             <i class="fas fa-images"></i>
             <h6 class="label-menu d-none">Galeri</h6>
         </div>
