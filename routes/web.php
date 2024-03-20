@@ -19,4 +19,10 @@ Route::prefix('private/admin/user')->group(function () {
     Route::get('/berita/category', [CategoryController::class, 'categoryBerita'])->name('category.berita');
     Route::get('/artikel/category', [CategoryController::class, 'categoryArtikel'])->name('category.artikel');
     Route::get('/gallery/category', [CategoryController::class, 'categoryGallery'])->name('category.gallery');
+
+    Route::prefix('profile')->group(function () {
+        Route::get('jurusan', [AdminController::class, 'jurusan'])->name('profile.jurusan');
+        Route::get('extra', [AdminController::class, 'extra'])->name('profile.extra');
+        Route::get('fasilitas', [AdminController::class, 'fasilitas'])->name('profile.fasilitas');
+    });
 });

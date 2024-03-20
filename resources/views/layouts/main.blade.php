@@ -24,9 +24,10 @@
 
     @include('layouts.sidebar')
 
-    @include('admin.partials.search')
-    
-    @yield('container')
+    <div class="container-fluid">
+        @include('admin.partials.search')
+        @yield('container')
+    </div>
     
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/all.min.js') }}"></script>

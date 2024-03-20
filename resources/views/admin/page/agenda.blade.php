@@ -5,7 +5,6 @@
 @endsection
 
 @section('container')
-    <div class="container-fluid">
         <div class="row">
             <div class="col-md-11 offset-md-1 mt-4 p-2">
                 <div class="w-100 table-parent bg-white">
@@ -102,5 +101,4 @@
                 </div>
             </div>
         </div>
-    </div>
 @endsection

@@ -47,4 +47,28 @@ class AdminController extends Controller
             'menu_active' => 'gallery',
         ]);
     }
+
+    public function jurusan()
+    {
+        return view('admin.page.profile.jurusan', [
+            'menu_active' => 'profile',
+            'profile_active' => 'jurusan',
+        ]);
+    }
+
+    public function extra()
+    {
+        return view('admin.page.profile.extra', [
+            'menu_active' => 'profile',
+            'profile_active' => 'extra',
+        ]);
+    }
+
+    public function fasilitas()
+    {
+        return view('admin.page.profile.fasilitas', [
+            'menu_active' => 'profile',
+            'profile_active' => 'fasilitas',
+        ]);
+    }
 }

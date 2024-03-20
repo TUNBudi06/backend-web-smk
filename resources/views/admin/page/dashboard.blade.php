@@ -5,7 +5,6 @@
 @endsection
 
 @section('container')
-    <div class="container-fluid">
         <div class="row pb-3">
             <div class="col-md-11 offset-md-1">
                 <div class="row gy-4">
@@ -72,5 +71,4 @@
                 </div>
             {{-- </div> --}}
         </div>
-    </div>
 @endsection
