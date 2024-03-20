@@ -71,4 +71,38 @@ class AdminController extends Controller
             'profile_active' => 'fasilitas',
         ]);
     }
+
+    public function kemitraan()
+    {
+        return view('admin.page.profile.kemitraan', [
+            'menu_active' => 'profile',
+            'profile_active' => 'kemitraan',
+        ]);
+    }
+
+    public function pd()
+    {
+        return view('admin.page.profile.pd', [
+            'menu_active' => 'profile',
+            'profile_active' => 'pd',
+        ]);
+    }
+
+    public function ptk()
+    {
+        return view('admin.page.profile.ptk', [
+            'menu_active' => 'profile',
+            'profile_active' => 'ptk',
+        ]);
+    }
+
+    public function links()
+    {
+        $action = isset($_GET['action']) ? $_GET['action'] : '';
+
+        return view('admin.page.links', [
+            'menu_active' => 'links',
+            'action' => $action,
+        ]);
+    }
 }

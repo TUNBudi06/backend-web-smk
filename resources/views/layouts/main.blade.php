@@ -20,7 +20,7 @@
 
     @yield('title')
 </head>
-<body style="background-color: rgb(255, 241, 241)">
+<body class="bg-light">
 
     @include('layouts.sidebar')
 
