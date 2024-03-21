@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="col-md-3 col-3 px-4 pt-3 text-center">
-        <a href="#">
+        <a href="{{ route('profile') }}">
             <div class="avatar-admin-nav mx-3 shadow rounded-circle">
                 <img src="{{ asset('img/illust/male.svg') }}" class="w-100" alt="">
             </div>

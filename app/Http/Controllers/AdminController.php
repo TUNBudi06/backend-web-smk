@@ -105,4 +105,11 @@ class AdminController extends Controller
             'action' => $action,
         ]);
     }
+
+    public function profile()
+    {
+        return view('admin.page.profile', [
+            'menu_active' => 'profile',
+        ]);
+    }
 }
