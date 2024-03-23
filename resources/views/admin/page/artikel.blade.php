@@ -16,7 +16,7 @@
                         </div>
                         <div class="col-md-4 text-right">
                             <a href="#" class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i> Artikel Baru</a>
-                            <a href="{{ route('category.artikel') }}" class="btn-print btn btn-white border-warning px-3 rounded-pill"><i class="fas fa-list"></i> Kategori</a>
+                            <a href="{{ route('category.artikel',$token) }}" class="btn-print btn btn-white border-warning px-3 rounded-pill"><i class="fas fa-list"></i> Kategori</a>
                         </div>
                     </div>
                     <table class="table">
@@ -87,7 +87,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 text-right">
-                            <p class="montserrat d-inline" 
+                            <p class="montserrat d-inline"
                             style="font-size: .7rem;">
                             1 dari 10</p>
                             <a href="#"
