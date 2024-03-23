@@ -12,9 +12,12 @@ Route::get('/', function () {
 Route::prefix('private/admin')->group(function () {
     Route::get('/login/GUI-APP', [AuthController::class, 'tokenPage'])->name('guest.token');
     Route::post('/login/GUI-APP', [AuthController::class, 'firstAuth'])->name('first.token');
-    
-    Route::prefix('user')->group(function () {
+
+    Route::prefix('{token}')->group(function () {
         Route::get('/login', [AuthController::class, 'loginPage'])->name('guest.login');
+        Route::post('/login', [AuthController::class, 'login'])->name('guest.auth');
+        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::get('/pengumuman', [AdminController::class, 'pengumuman'])->name('pengumuman');
         Route::get('/agenda', [AdminController::class, 'agenda'])->name('agenda');
@@ -23,7 +26,7 @@ Route::prefix('private/admin')->group(function () {
         Route::get('/gallery', [AdminController::class, 'gallery'])->name('gallery');
         Route::get('/links', [AdminController::class, 'links'])->name('links');
         Route::get('/profile', [AdminController::class, 'profile'])->name('profile');
-    
+
         Route::get('/berita/category', [CategoryController::class, 'categoryBerita'])->name('category.berita');
         Route::get('/artikel/category', [CategoryController::class, 'categoryArtikel'])->name('category.artikel');
         Route::get('/gallery/category', [CategoryController::class, 'categoryGallery'])->name('category.gallery');
@@ -39,8 +42,4 @@ Route::prefix('private/admin')->group(function () {
     });
 });
 
-Route::fallback(function () {
-    return view('layouts.error', [
-        'active' => '',
-    ]);
-});
+Route::fallback([AdminController::class, 'error']);

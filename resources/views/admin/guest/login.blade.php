@@ -17,6 +17,15 @@
 </head>
 <body>
     <div class="container my-5 py-5">
+            @if(Session::get('loginError'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                {{ Session::get('loginError') }}
+            </div>
+        @endif
         <div class="w-100 bg-white shadow rad mt-5 p-2">
             <div class="row">
                 <div class="col-md-6">
@@ -29,12 +38,13 @@
                                 <img src="{{ asset('img/fav.png') }}" class="mb-3 d-inline-block" width="40px" alt="">
                                 <h2 class="d-inline-block montserrat">Login</h2>
                             </div>
-                            <form action="{{ route('dashboard') }}" method="">
+                            <form action="{{ route('guest.auth', ['token' => $token]) }}" method="post">
+                                @csrf
                                 <div class="form-group">
                                     <input type="hidden" name="token" value="{{ $token }}">
                                     <label for="email">Email</label>
                                     <div class="input-group">
-                                        <input required type="email" name="email" id="email" class="form-control border-right-0" placeholder="Email" aria-describedby="emailMsg">
+                                        <input type="email" name="email" id="email" class="form-control border-right-0" placeholder="Email" aria-describedby="emailMsg">
                                         <div class="input-group-append">
                                             <span class="input-group-text bg-white border-left-0"><i class="fas text-warning fa-envelope"></i></span>
                                         </div>
@@ -44,7 +54,7 @@
                                 <div class="form-group">
                                     <label for="password">Password</label>
                                     <div class="input-group">
-                                        <input required type="password" name="password" id="password" class="form-control border-right-0" placeholder="password" aria-describedby="passwordMsg">
+                                        <input type="password" name="password" id="password" class="form-control border-right-0" placeholder="password" aria-describedby="passwordMsg">
                                         <div class="input-group-append">
                                             <span class="input-group-text bg-white border-left-0" id="toggler-password"><i id="icon-eye" class="fas fa-eye"></i></span>
                                         </div>
