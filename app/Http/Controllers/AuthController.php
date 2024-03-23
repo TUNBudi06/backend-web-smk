@@ -57,12 +57,6 @@ class AuthController extends Controller
 
         if ($user) {
             if (password_verify($password, $user->password)) {
-                if ($cookie) {
-                    // Set cookie, menggunakan helper 'cookie'
-                    cookie()->queue('email', $email, 30 * 24 * 60); // Cookie berlaku selama 30 hari
-                    cookie()->queue('password', $password, 30 * 24 * 60);
-                }
-
                 // Set session user
                 $request->session()->put('user', $user);
                 $request->session()->put('token', $token);
