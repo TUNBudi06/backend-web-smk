@@ -10,4 +10,6 @@ class tb_admin extends Model
     use HasFactory;
 
     protected $table = "tb_admin";
+
+    protected $hidden = ["password"];
 }

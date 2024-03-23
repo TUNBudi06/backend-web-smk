@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\tb_admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -51,8 +52,7 @@ class AuthController extends Controller
         $password = $request->input('password');
         $cookie = $request->has('cookie') ? true : false;
 
-        $user = DB::table('tb_admin')
-            ->where('email', $email)
+        $user = tb_admin::where('email', $email)
             ->where('token', $token)
             ->first();
 
@@ -61,7 +61,7 @@ class AuthController extends Controller
                 // Set session user
                 $request->session()->put('user', $user);
                 $request->session()->put('token', $token);
-                $request->session()->put('status', 'benar');
+                $request->session()->put('status', 'true');
 
                 // Redirect ke dashboard
                 return redirect()->route('dashboard', ['token' => $token]);
@@ -77,7 +77,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        session_destroy();
+        session()->flush();
         $_SESSION = [];
 
         return redirect()->route('guest.token');

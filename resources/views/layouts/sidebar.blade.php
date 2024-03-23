@@ -43,16 +43,21 @@
         </div>
 
     </div>
-    <div class="w-100 bg-white exit-menu" style="left: 0;">
-        <a class="a-dark-default bg-white" href="{{ route('logout', ['token' => $token]) }}">
-            <div class="text-center">
-                <div class="">
-                    <i class="fas fa-door-open"></i>
-                    <h6 class="label-menu d-none">Keluar</h6>
+    <div class="w-80 bg-white exit-menu ml-4" style="left: 0;">
+        <form method="POST" action="{{ route('logout',$token) }}">
+            @csrf <!-- CSRF protection for Laravel -->
+            <input type="hidden" name="token" value="{{ $token }}">
+            <button type="submit" class="a-dark-default bg-white" style="border: none; background: none;">
+                <div class="text-center">
+                    <div class="">
+                        <i class="fas fa-door-open"></i>
+                        <h6 class="label-menu d-none">Keluar</h6>
+                    </div>
                 </div>
-            </div>
-        </a>
+            </button>
+        </form>
     </div>
+
 </aside>
 
 <div id="toggler" class="bg-light" style="z-index: 500;">
@@ -60,7 +65,7 @@
         <i id="icon-toggler" class="fas fa-bars position-relative" style="top: 6px; left: -1px;"></i>
     </div>
     <div class="toggler-nav-small"></div>
-    <div class="toggler-nav-small"></div>    
+    <div class="toggler-nav-small"></div>
 </div>
 <div class="container mt-3" id="label-small">
     <div class="row">
