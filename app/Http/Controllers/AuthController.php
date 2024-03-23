@@ -12,6 +12,7 @@ class AuthController extends Controller
         $token = $request->validate([
             "token" => "required"
         ])["token"];
+
         $result = DB::table('tb_admin')->where('token', $token)->first();
         if ($result !== null) {
             $nToken = $token;
@@ -23,7 +24,7 @@ class AuthController extends Controller
 
     public function tokenPage()
     {
-        return view('admin.guest.token');
+        return view("admin.guest.token");
     }
 
     public function checkTokenUrl($token)

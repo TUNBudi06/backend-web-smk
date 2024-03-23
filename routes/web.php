@@ -12,7 +12,6 @@ Route::get('/', function () {
 Route::prefix('private/admin')->group(function () {
     Route::get('/login/GUI-APP', [AuthController::class, 'tokenPage'])->name('guest.token');
     Route::post('/login/GUI-APP', [AuthController::class, 'firstAuth'])->name('first.token');
-
     Route::prefix('{token}')->group(function () {
         Route::get('/login', [AuthController::class, 'loginPage'])->name('guest.login');
         Route::post('/login', [AuthController::class, 'login'])->name('guest.auth');
@@ -41,5 +40,6 @@ Route::prefix('private/admin')->group(function () {
         });
     });
 });
+
 
 Route::fallback([AdminController::class, 'error']);
