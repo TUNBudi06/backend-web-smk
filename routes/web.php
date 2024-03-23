@@ -11,6 +11,7 @@ Route::get('/', function () {
 
 Route::prefix('private/admin')->group(function () {
     Route::get('/login/GUI-APP', [AuthController::class, 'tokenPage'])->name('guest.token');
+    Route::post('/login/GUI-APP', [AuthController::class, 'firstAuth'])->name('first.token');
     
     Route::prefix('user')->group(function () {
         Route::get('/login', [AuthController::class, 'loginPage'])->name('guest.login');

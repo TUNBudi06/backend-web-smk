@@ -31,6 +31,7 @@
                             </div>
                             <form action="{{ route('dashboard') }}" method="">
                                 <div class="form-group">
+                                    <input type="hidden" name="token" value="{{ $token }}">
                                     <label for="email">Email</label>
                                     <div class="input-group">
                                         <input required type="email" name="email" id="email" class="form-control border-right-0" placeholder="Email" aria-describedby="emailMsg">

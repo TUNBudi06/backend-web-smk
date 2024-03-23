@@ -20,7 +20,8 @@
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <div class="w-100 bg-white position-relative shadow rad mt-5 py-3 px-3">
-                    <form action="{{ route('guest.login') }}" method="">
+                    <form action="{{ route('first.token') }}" method="post">
+                        @csrf
                         <div class="form-group">
                             <label for="token">Token admin</label>
                             <input type="text" required name="token" id="token" class="form-control" placeholder="XXXXXXXX" aria-describedby="token">
