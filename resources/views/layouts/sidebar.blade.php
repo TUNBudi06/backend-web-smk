@@ -9,42 +9,42 @@
         </div>
     </div>
     <div class="menu-aside px-2 w-100 text-center mt-5">
-        <div class="my-2 {{ ($menu_active ==="dashboard") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('dashboard') }}';">
+        <div class="my-2 {{ ($menu_active ==="dashboard") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('dashboard', ['token' => $token]) }}';">
             <i class="fas fa-tachometer-alt"></i>
             <h6 class="label-menu d-none">Dashboard</h6>
         </div>
-        <div class="my-2 {{ ($menu_active ==="pengumuman") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('pengumuman') }}';">
+        <div class="my-2 {{ ($menu_active ==="pengumuman") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('pengumuman', ['token' => $token]) }}';">
             <i class="fas fa-bullhorn"></i>
             <h6 class="label-menu d-none">Pengumuman</h6>
         </div>
-        <div class="my-2 {{ ($menu_active ==="agenda") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('agenda') }}';">
+        <div class="my-2 {{ ($menu_active ==="agenda") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('agenda', ['token' => $token]) }}';">
             <i class="fas fa-calendar-alt mr-1"></i>
             <h6 class="label-menu d-none">Agenda</h6>
         </div>
-        <div class="my-2 {{ ($menu_active ==="berita") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('berita') }}';">
+        <div class="my-2 {{ ($menu_active ==="berita") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('berita', ['token' => $token]) }}';">
             <i class="fas fa-newspaper"></i>
             <h6 class="label-menu d-none">Berita</h6>
         </div>
-        <div class="my-2 {{ ($menu_active ==="artikel") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('artikel') }}';">
+        <div class="my-2 {{ ($menu_active ==="artikel") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('artikel', ['token' => $token]) }}';">
             <i class="fas fa-book mr-1"></i>
             <h6 class="label-menu d-none">Artikel</h6>
         </div>
-        <div class="my-2 {{ ($menu_active ==="gallery") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('gallery') }}';">
+        <div class="my-2 {{ ($menu_active ==="gallery") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('gallery', ['token' => $token]) }}';">
             <i class="fas fa-images"></i>
             <h6 class="label-menu d-none">Galeri</h6>
         </div>
-        <div class="my-2 {{ ($menu_active ==="profile") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('profile.jurusan') }}';">
+        <div class="my-2 {{ ($menu_active ==="profile") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('profile.jurusan', ['token' => $token]) }}';">
             <i class="fas fa-school"></i>
             <h6 class="label-menu d-none">Profil Sekolah</h6>
         </div>
-        <div class="my-2 {{ ($menu_active ==="links") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('links') }}';">
+        <div class="my-2 {{ ($menu_active ==="links") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('links', ['token' => $token]) }}';">
             <i class="fas fa-link"></i>
             <h6 class="label-menu d-none">Links</h6>
         </div>
 
     </div>
     <div class="w-100 bg-white exit-menu" style="left: 0;">
-        <a class="a-dark-default bg-white" href="#">
+        <a class="a-dark-default bg-white" href="{{ route('logout', ['token' => $token]) }}">
             <div class="text-center">
                 <div class="">
                     <i class="fas fa-door-open"></i>

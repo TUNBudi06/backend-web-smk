@@ -20,6 +20,15 @@
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <div class="w-100 bg-white position-relative shadow rad mt-5 py-3 px-3">
+                    @if(Session::get('tokenError'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <strong>{{ Session::get('tokenError') }}</strong>
+                    </div>
+                    @endif
                     <form action="{{ route('first.token') }}" method="post">
                         @csrf
                         <div class="form-group">

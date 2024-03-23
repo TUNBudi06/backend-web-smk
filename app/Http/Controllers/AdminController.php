@@ -6,10 +6,13 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function dashboard()
+    public function dashboard(Request $request)
     {
+        $token = $request->session()->get('token') ?? $request->input('token');
+
         return view('admin.page.dashboard', [
             'menu_active' => 'dashboard',
+            'token' => $token,
         ]);
     }
 
@@ -110,6 +113,13 @@ class AdminController extends Controller
     {
         return view('admin.page.profile', [
             'menu_active' => 'profile',
+        ]);
+    }
+
+    public function error()
+    {
+        return view('layouts.error', [
+            'menu_active' => '',
         ]);
     }
 }

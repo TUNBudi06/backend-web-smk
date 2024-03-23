@@ -12,9 +12,11 @@ Route::get('/', function () {
 Route::prefix('private/admin')->group(function () {
     Route::get('/login/GUI-APP', [AuthController::class, 'tokenPage'])->name('guest.token');
     Route::post('/login/GUI-APP', [AuthController::class, 'firstAuth'])->name('first.token');
+    Route::prefix('{token}')->group(function () {
+        Route::get('/login', [AuthController::class, 'loginPage'])->name('guest.login');
+        Route::post('/login', [AuthController::class, 'login'])->name('guest.auth');
+        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::prefix('user')->group(function () {
-        Route::post('/login', [AuthController::class, 'loginPage'])->name('guest.login');
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::get('/pengumuman', [AdminController::class, 'pengumuman'])->name('pengumuman');
         Route::get('/agenda', [AdminController::class, 'agenda'])->name('agenda');
@@ -39,8 +41,5 @@ Route::prefix('private/admin')->group(function () {
     });
 });
 
-Route::fallback(function () {
-    return view('layouts.error', [
-        'active' => '',
-    ]);
-});
+
+Route::fallback([AdminController::class, 'error']);

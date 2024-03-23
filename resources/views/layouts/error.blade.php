@@ -21,7 +21,7 @@
             <img src="{{ asset('img/illust/404.svg') }}" class="w-50" alt="not found">
             <h3 class="poppins mt-3">Opps... Halaman tidak tersedia</h3>
             <p class="mt-2 mb-3 montserrat">Kami mohon maaf, Halaman yang diinginkan tidak ditemukan.</p>
-            <button onclick="window.location.href='{{ route('dashboard') }}';" class="btn btn-warning shadow-warning rounded-pill px-5"><i class="fas fa-home"></i> Kembali ke beranda</button>
+            {{-- <button onclick="window.location.href='{{ route('dashboard', ['token' => $token]) }}';" class="btn btn-warning shadow-warning rounded-pill px-5"><i class="fas fa-home"></i> Kembali ke beranda</button> --}}
         </div>
     </div>
 
