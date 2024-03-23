@@ -12,16 +12,12 @@ class AuthController extends Controller
         $token = $request->validate([
             "token" => "required"
         ])["token"];
-        if (session()->has('user')) {
-            return redirect()->route('dashboard');
+        $result = DB::table('tb_admin')->where('token', $token)->first();
+        if ($result !== null) {
+            $nToken = $token;
+            return redirect()->route('guest.login', ['token' => $token]);
         } else {
-            $result = DB::table('tb_admin')->where('token', $token)->first();
-            if ($result !== null) {
-                $nToken = $token;
-                return redirect()->route('guest.login', ['token' => $token]);
-            } else {
-                return back();
-            }
+            return back()->with('tokenError', 'Incorrect Token');
         }
     }
 
@@ -71,7 +67,7 @@ class AuthController extends Controller
                 $request->session()->put('user', $user);
                 $request->session()->put('token', $token);
                 $request->session()->put('status', 'benar');
-                
+
                 // Redirect ke dashboard
                 return redirect()->route('dashboard', ['token' => $token]);
             } else {
@@ -88,7 +84,7 @@ class AuthController extends Controller
     {
         session_destroy();
         $_SESSION = [];
-        
+
         return redirect()->route('guest.token');
     }
 }
