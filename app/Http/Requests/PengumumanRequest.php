@@ -25,7 +25,7 @@ class PengumumanRequest extends FormRequest
             'pengumuman_nama' => 'required',
             'pengumuman_target' => 'required',
             'pengumuman_text' => 'required',
-            'pengumuman_date' => 'required',
+            'pengumuman_date' => 'required|date',
             'pengumuman_time' => 'required',
         ];
     }

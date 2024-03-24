@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PengumumanController;
 
 Route::get('/', function () {
     return redirect('/private/admin/login/GUI-APP');
@@ -21,7 +22,9 @@ Route::prefix('private/admin')->group(function () {
 
         Route::middleware([preventCallBack::class,hasLogin::class])->group(function () {
             Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-            Route::get('/pengumuman', [AdminController::class, 'pengumuman'])->name('pengumuman');
+
+            Route::resource('pengumuman', PengumumanController::class);
+
             Route::get('/agenda', [AdminController::class, 'agenda'])->name('agenda');
             Route::get('/berita', [AdminController::class, 'berita'])->name('berita');
             Route::get('/artikel', [AdminController::class, 'artikel'])->name('artikel');

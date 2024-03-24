@@ -15,7 +15,7 @@
                             </p>
                         </div>
                         <div class="col-md-4 text-right">
-                            <a href="#" class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i> Pengumuman Baru</a>
+                            <a href="{{ route('pengumuman.create', ['token' => $token]) }}" class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i> Pengumuman Baru</a>
                         </div>
                     </div>
                     <table class="table">
@@ -29,17 +29,19 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($pengumuman as $key => $data)
                             <tr>
-                                <td>Pengumuman Nama</td>
-                                <td>Pengumuman Waktu(GMT+7)</td>
-                                <td>Pengumuman Target</td>
-                                <td>Tanggal Aplod(GMT+7)</td>
+                                <td style="word-wrap: break-word; max-width: 300px;">{{ $data->pengumuman_nama }}</td>
+                                <td>{{ $data->pengumuman_date }} {{ $data->pengumuman_time }}</td>
+                                <td style="word-wrap: break-word; max-width: 200px;">{{ $data->pengumuman_target }}</td>
+                                <td>{{ $data->pengumuman_timestamp }}</td>
                                 <td>
                                     <a href="#" target="_blank" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
                                     <a href="#" target="_blank" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
                                     <a href="#" target="_blank" class="btn btn-danger p-2"><i class="fas fa-trash"></i></a>
                                 </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                     <script>
@@ -70,9 +72,6 @@
                                         <select id="show-select" name="show" onchange="showData()" class="form-control form-control-sm d-inline-block"
                                             style="width:70px; font-size: .7rem;" name="" id="">
                                             <option value="10">10</option>
-                                            <option value="20">20</option>
-                                            <option value="30">30</option>
-                                            <option value="40">40</option>
                                         </select>
                                     </div>
                                     <p class="montserrat d-inline" style="font-size: .7rem;">Data per halaman</p>
@@ -88,14 +87,11 @@
                             </div>
                         </div>
                         <div class="col-md-6 text-right">
-                            <p class="montserrat d-inline" 
-                            style="font-size: .7rem;">
-                            1 dari 10</p>
-                            <a href="#"
-                            class="btn btn-sm p-0 px-2 btn-white active"><i
-                                    class="fas fa-caret-left text-warning"></i></a>
-                            <a href="#"
-                            class="btn btn-sm p-0 px-2 btn-white active">
+                            <p class="montserrat d-inline" style="font-size: .7rem;">{{ $pengumuman->firstItem() }} dari {{ $pengumuman->lastItem() }}</p>
+                            <a href="{{ $pengumuman->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $pengumuman->onFirstPage() ? 'disabled' : 'active' }}">
+                                <i class="fas fa-caret-left text-warning"></i>
+                            </a>
+                            <a href="{{ $pengumuman->nextPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $pengumuman->hasMorePages() ? 'active' : 'disabled' }}">
                                 <i class="fas fa-caret-right text-warning"></i>
                             </a>
                         </div>

@@ -13,7 +13,7 @@
             <i class="fas fa-tachometer-alt"></i>
             <h6 class="label-menu d-none">Dashboard</h6>
         </div>
-        <div class="my-2 {{ ($menu_active ==="pengumuman") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('pengumuman', ['token' => $token]) }}';">
+        <div class="my-2 {{ ($menu_active ==="pengumuman") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('pengumuman.index', ['token' => $token]) }}';">
             <i class="fas fa-bullhorn"></i>
             <h6 class="label-menu d-none">Pengumuman</h6>
         </div>
