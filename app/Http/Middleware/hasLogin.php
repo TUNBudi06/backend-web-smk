@@ -6,6 +6,7 @@ use App\Models\tb_admin;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -31,6 +32,9 @@ class hasLogin
         if(session("status") != "true"){
             return redirect()->route("guest.token");
         }
-        return $next($request);
+        if(Auth::check()) {
+            return $next($request);
+        }
+        return redirect()->route("guest.token");
     }
 }
