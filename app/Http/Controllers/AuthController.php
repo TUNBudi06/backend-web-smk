@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\tb_admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -50,16 +52,22 @@ class AuthController extends Controller
     {
         $email = $request->input('email');
         $password = $request->input('password');
-        $cookie = $request->has('cookie') ? true : false;
+        if($request->has("cookie")) {
+            $cookie = true;
+        } else {
+            $cookie = false;
+        }
 
+        Log::info($cookie);
         $user = tb_admin::where('email', $email)
             ->where('token', $token)
             ->first();
 
-        if ($user) {
+        if ($user && Auth::attempt(["email"=>$email,"password"=>$password],$cookie)) {
             if (password_verify($password, $user->password)) {
                 // Set session user
                 $request->session()->put('user', $user);
+                $request->session()->put('xaf', $password);
                 $request->session()->put('token', $token);
                 $request->session()->put('status', 'true');
 
@@ -77,9 +85,9 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        Auth::logoutOtherDevices(session("xaf"));
         session()->flush();
         $_SESSION = [];
-
         return redirect()->route('guest.token');
     }
 }
