@@ -18,6 +18,15 @@
                             <a href="{{ route('pengumuman.create', ['token' => $token]) }}" class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i> Pengumuman Baru</a>
                         </div>
                     </div>
+                    @if(Session::get('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <strong>{{ Session::get('success') }}</strong>
+                    </div>
+                    @endif
                     <table class="table">
                         <thead>
                             <tr>
@@ -36,8 +45,8 @@
                                 <td style="word-wrap: break-word; max-width: 200px;">{{ $data->pengumuman_target }}</td>
                                 <td>{{ $data->pengumuman_timestamp }}</td>
                                 <td>
-                                    <a href="#" target="_blank" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
-                                    <a href="#" target="_blank" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
+                                    <a href="#" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('pengumuman.edit', ['pengumuman' => $data->id_pengumuman, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
                                     <a href="#" target="_blank" class="btn btn-danger p-2"><i class="fas fa-trash"></i></a>
                                 </td>
                             </tr>

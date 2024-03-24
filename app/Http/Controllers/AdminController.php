@@ -16,16 +16,6 @@ class AdminController extends Controller
         ]);
     }
 
-    // public function pengumuman(Request $request)
-    // {
-    //     $token = $request->session()->get('token') ?? $request->input('token');
-
-    //     return view('admin.page.pengumuman', [
-    //         'menu_active' => 'pengumuman',
-    //         'token' => $token,
-    //     ]);
-    // }
-
     public function agenda(Request $request)
     {
         $token = $request->session()->get('token') ?? $request->input('token');

@@ -9,6 +9,7 @@
 <div class="col-md-8 offset-md-2 pt-4">
     <a href="{{ route('pengumuman.index', ['token' => $token]) }}" class="btn btn-light border-warning px-4 mb-4"><i class="fas fa-arrow-left"></i> Kembali</a>
     <form action="{{ route('pengumuman.store', ['token' => $token]) }}" method="POST">
+        @csrf
         <div class="form-group">
             <label for="pengumuman_nama">Pengumuman</label>
             <input type="text" name="pengumuman_nama" id="pengumuman_nama" class="form-control" placeholder="Besok ada sesuatu..." aria-describedby="namaId">
@@ -36,8 +37,8 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="text">Deskripsi Pengumuman</label>
-            <textarea required name="text" id="texteditor" cols="30" rows="10" class="form-control" placeholder="Isi dari pengumuman.." aria-describedby="textId"></textarea>
+            <label for="pengumuman_text">Deskripsi Pengumuman</label>
+            <textarea required name="pengumuman_text" id="texteditor" cols="30" rows="10" class="form-control" placeholder="Isi dari pengumuman.." aria-describedby="textId"></textarea>
             <small id="textId" class="text-muted d-none"></small>
         </div>
         <script>

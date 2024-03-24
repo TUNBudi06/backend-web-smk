@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\tb_admin;
 use App\Models\tb_pengumuman;
 use Illuminate\Http\Request;
 
@@ -42,7 +43,18 @@ class PengumumanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $token = $request->session()->get('token') ?? $request->input('token');
+
+        $request->validate([
+            'pengumuman_nama' => 'required',
+            'pengumuman_target' => 'required',
+            'pengumuman_text' => 'required',
+            'pengumuman_date' => 'required|date',
+            'pengumuman_time' => 'required',
+        ]);
+
+        tb_pengumuman::create($request->all());
+        return redirect()->route('pengumuman.index', ['token' => $token])->with('success', 'Data added successfully.');
     }
 
     /**
@@ -56,9 +68,19 @@ class PengumumanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id, Request $request)
     {
-        //
+        $token = $request->session()->get('token') ?? $request->input('token');
+        $pengumuman = tb_pengumuman::find($id);
+        if (!$pengumuman) {
+            return redirect()->route('pengumuman.index')->with('error', 'Pengumuman not found.');
+        }
+    
+        return view('admin.pengumuman.edit', [
+            'menu_active' => 'pengumuman',
+            'token' => $token,
+            'pengumuman' => $pengumuman,
+        ]);
     }
 
     /**
