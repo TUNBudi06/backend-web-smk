@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\tb_admin;
-use App\Models\tb_pengumuman;
 use Illuminate\Http\Request;
+use App\Models\tb_pengumuman;
+use Illuminate\Support\Facades\DB;
 
 class PengumumanController extends Controller
 {
@@ -71,10 +72,8 @@ class PengumumanController extends Controller
     public function edit(string $id, Request $request)
     {
         $token = $request->session()->get('token') ?? $request->input('token');
-        $pengumuman = tb_pengumuman::find($id);
-        if (!$pengumuman) {
-            return redirect()->route('pengumuman.index')->with('error', 'Pengumuman not found.');
-        }
+        $pengumuman = tb_pengumuman::where('id_pengumuman', $id)->first();
+        // dd($pengumuman);
     
         return view('admin.pengumuman.edit', [
             'menu_active' => 'pengumuman',
@@ -88,7 +87,18 @@ class PengumumanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'pengumuman_nama' => 'required',
+            'pengumuman_target' => 'required',
+            'pengumuman_text' => 'required',
+            'pengumuman_date' => 'required|date',
+            'pengumuman_time' => 'required',
+        ]);
+    
+        $pengumuman = tb_pengumuman::findOrFail($id);
+        $pengumuman->update($request->all());
+    
+        return redirect()->route('pengumuman.index', ['token' => $request->token])->with('success', 'Data updated successfully.');
     }
 
     /**

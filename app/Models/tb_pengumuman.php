@@ -9,11 +9,11 @@ class tb_pengumuman extends Model
 {
     use HasFactory;
 
-    protected $table = "tb_pengumuman";
+    protected $table = 'tb_pengumuman';
 
-    protected $guarded = [];
+    protected $guarded = ['id_pengumuman'];
 
-    protected $primaryKey = "id_pengumuman";
+    // protected $primaryKey = 'id_pengumuman';
 
     public $timestamps = false;
 }
