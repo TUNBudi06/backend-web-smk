@@ -66,11 +66,11 @@ class EventController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id, Request $request)
+    public function edit(Request $request)
     {
-        // ini error ya Attempt to read property "id_event" on null
+        $id_event = $request->route("event");
         $token = $request->session()->get('token') ?? $request->input('token');
-        $event = tb_event::where('id_event', $id)->first();
+        $event = tb_event::findOrFail($id_event);
         // dd($event);
 
         return view('admin.agenda.edit', [

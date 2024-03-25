@@ -11,9 +11,9 @@ class tb_event extends Model
 
     protected $table = 'tb_event';
 
-    protected $guarded = ['id_event'];
+//    protected $guarded = ['id_event'];
 
-    // protected $primaryKey = 'id_event';
+     protected $primaryKey = 'id_event';
 
     public $timestamps = false;
 }

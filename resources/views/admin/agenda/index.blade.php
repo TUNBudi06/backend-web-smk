@@ -46,7 +46,7 @@
                                 <td>{{ $data->event_timestamp }}</td>
                                 <td>
                                     <a href="#" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
-                                    <a href="{{ route('event.edit', ['event' => $data->event_name, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
+                                    <a href="{{ route('event.edit', ['event' => $data->id_event, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
                                     <a href="#" target="_blank" class="btn btn-danger p-2"><i class="fas fa-trash"></i></a>
                                 </td>
                             </tr>

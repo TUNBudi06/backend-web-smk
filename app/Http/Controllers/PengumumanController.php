@@ -71,13 +71,9 @@ class PengumumanController extends Controller
      */
     public function edit(Request $request)
     {
-        // ini error ya Attempt to read property "id_pengumuman" on null
-//       DONE MAS
         $id_pengumuman = $request->route("pengumuman");
         $token = $request->session()->get('token') ?? $request->input('token');
         $pengumuman = tb_pengumuman::findOrFail($id_pengumuman);
-//         dd($pengumuman);
-
         return view('admin.pengumuman.edit', [
             'menu_active' => 'pengumuman',
             'token' => $token,
@@ -108,8 +104,13 @@ class PengumumanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $id_pengumuman = $request->route("pengumuman");
+        $token = $request->session()->get('token') ?? $request->input('token');
+
+//        $pengumuman = tb_pengumuman::findOrFail($id_pengumuman);
+//        $pengumuman->delete();
+
     }
 }
