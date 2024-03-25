@@ -88,8 +88,9 @@ class PengumumanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
+        $id_pengumuman = $request->route("pengumuman");
         $request->validate([
             'pengumuman_nama' => 'required',
             'pengumuman_target' => 'required',
@@ -98,7 +99,7 @@ class PengumumanController extends Controller
             'pengumuman_time' => 'required',
         ]);
 
-        $pengumuman = tb_pengumuman::findOrFail($id);
+        $pengumuman = tb_pengumuman::findOrFail($id_pengumuman);
         $pengumuman->update($request->all());
 
         return redirect()->route('pengumuman.index', ['token' => $request->token])->with('success', 'Data updated successfully.');
