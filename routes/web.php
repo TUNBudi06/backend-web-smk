@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\PengumumanController;
 
 Route::get('/', function () {
@@ -24,8 +25,9 @@ Route::prefix('private/admin')->group(function () {
             Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
             Route::resource('pengumuman', PengumumanController::class);
+            Route::resource('event', EventController::class);
 
-            Route::get('/agenda', [AdminController::class, 'agenda'])->name('agenda');
+            // Route::get('/agenda', [AdminController::class, 'agenda'])->name('agenda');
             Route::get('/berita', [AdminController::class, 'berita'])->name('berita');
             Route::get('/artikel', [AdminController::class, 'artikel'])->name('artikel');
             Route::get('/gallery', [AdminController::class, 'gallery'])->name('gallery');

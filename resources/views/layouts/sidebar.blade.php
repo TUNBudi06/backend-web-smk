@@ -17,7 +17,7 @@
             <i class="fas fa-bullhorn"></i>
             <h6 class="label-menu d-none">Pengumuman</h6>
         </div>
-        <div class="my-2 {{ ($menu_active ==="agenda") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('agenda', ['token' => $token]) }}';">
+        <div class="my-2 {{ ($menu_active ==="agenda") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('event.index', ['token' => $token]) }}';">
             <i class="fas fa-calendar-alt mr-1"></i>
             <h6 class="label-menu d-none">Agenda</h6>
         </div>
