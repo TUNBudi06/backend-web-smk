@@ -71,6 +71,7 @@ class PengumumanController extends Controller
      */
     public function edit(string $id, Request $request)
     {
+        // ini error ya Attempt to read property "id_pengumuman" on null
         $token = $request->session()->get('token') ?? $request->input('token');
         $pengumuman = tb_pengumuman::where('id_pengumuman', $id)->first();
         // dd($pengumuman);
