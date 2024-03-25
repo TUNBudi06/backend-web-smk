@@ -11,9 +11,9 @@ class tb_pengumuman extends Model
 
     protected $table = 'tb_pengumuman';
 
-    protected $guarded = ['id_pengumuman'];
+//    protected $guarded = ['id_pengumuman'];
 
-    // protected $primaryKey = 'id_pengumuman';
+    protected $primaryKey = 'id_pengumuman';
 
     public $timestamps = false;
 }

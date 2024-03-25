@@ -39,7 +39,7 @@
         </div>
         <div class="form-group">
             <label for="pengumuman_text">Deskripsi Pengumuman</label>
-            <textarea required name="pengumuman_text" id="texteditor" cols="30" rows="10" class="form-control" placeholder="Isi dari pengumuman.." aria-describedby="textId"></textarea>
+            <textarea required name="pengumuman_text" id="texteditor" cols="30" rows="10" class="form-control" placeholder="Isi dari pengumuman.." aria-describedby="textId">{{ $pengumuman->pengumuman_text }}</textarea>
             <small id="textId" class="text-muted d-none"></small>
         </div>
         <script>

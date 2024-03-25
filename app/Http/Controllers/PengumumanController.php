@@ -69,13 +69,15 @@ class PengumumanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id, Request $request)
+    public function edit(Request $request)
     {
         // ini error ya Attempt to read property "id_pengumuman" on null
+//       DONE MAS
+        $id_pengumuman = $request->route("pengumuman");
         $token = $request->session()->get('token') ?? $request->input('token');
-        $pengumuman = tb_pengumuman::where('id_pengumuman', $id)->first();
-        // dd($pengumuman);
-    
+        $pengumuman = tb_pengumuman::findOrFail($id_pengumuman);
+//         dd($pengumuman);
+
         return view('admin.pengumuman.edit', [
             'menu_active' => 'pengumuman',
             'token' => $token,
@@ -95,10 +97,10 @@ class PengumumanController extends Controller
             'pengumuman_date' => 'required|date',
             'pengumuman_time' => 'required',
         ]);
-    
+
         $pengumuman = tb_pengumuman::findOrFail($id);
         $pengumuman->update($request->all());
-    
+
         return redirect()->route('pengumuman.index', ['token' => $request->token])->with('success', 'Data updated successfully.');
     }
 
