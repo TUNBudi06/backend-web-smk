@@ -25,7 +25,6 @@ class tb_event extends Model
         'event_type',
 
         'event_text',
-        
         'event_location',
     ];
 

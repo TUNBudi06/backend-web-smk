@@ -5,6 +5,7 @@ use App\Http\Middleware\preventCallBack;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\categories\BeritaCategory;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
@@ -27,6 +28,20 @@ Route::prefix('private/admin')->group(function () {
 
             Route::resource('pengumuman', PengumumanController::class);
             Route::resource('event', EventController::class);
+            
+            // Kalau gapake param dan names, di route list jadinya beritum..
+            Route::resource('berita', BeritaController::class)->parameters([
+                'berita' => 'berita',
+            ])->names([
+                'index' => 'berita.index', 
+                'create' => 'berita.create',
+                'store' => 'berita.store',
+                'show' => 'berita.show',
+                'edit' => 'berita.edit',
+                'update' => 'berita.update',
+                'destroy' => 'berita.destroy',
+            ]);
+
             Route::resource('berita/category', BeritaCategory::class)->parameters([
                 'category' => 'berita_category',
             ])->names([
@@ -38,7 +53,6 @@ Route::prefix('private/admin')->group(function () {
                 'destroy' => 'berita.category.destroy',
             ]);            
 
-            Route::get('/berita', [AdminController::class, 'berita'])->name('berita');
             Route::get('/artikel', [AdminController::class, 'artikel'])->name('artikel');
             Route::get('/gallery', [AdminController::class, 'gallery'])->name('gallery');
             Route::get('/links', [AdminController::class, 'links'])->name('links');

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class tb_category_news extends Model
 {
+    use HasFactory;
 
     protected $table = 'tb_category_news';
 
@@ -15,4 +16,9 @@ class tb_category_news extends Model
     protected $primaryKey = 'id_category';
 
     public $timestamps = false;
+
+    public function beritas()
+    {
+        return $this->hasMany(tb_news::class);
+    }
 }

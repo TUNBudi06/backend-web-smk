@@ -16,9 +16,9 @@
             <small id="namaId" class="text-muted">Hindari penggunaan slash (/,\)</small>
         </div>
         <div class="form-group">
-            <label for="tipe">Kategori Agenda</label>
-            <input type="text" name="event_type" id="event_type" class="form-control" placeholder="Perayaan / Upacara / Classmeet / Istighosah" aria-describedby="tipeId">
-            <small id="tipeId" class="text-muted d-none"></small>
+            <label for="event_type">Tujuan Agenda</label>
+            <input type="text" name="event_type" id="event_type" class="form-control" placeholder="Perayaan / Upacara / Classmeet / Istighosah" aria-describedby="typeId">
+            <small id="typeId" class="text-muted d-none"></small>
         </div>
         <div class="row">
             <div class="col-6">

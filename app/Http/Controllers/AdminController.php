@@ -26,16 +26,6 @@ class AdminController extends Controller
         ]);
     }
 
-    public function berita(Request $request)
-    {
-        $token = $request->session()->get('token') ?? $request->input('token');
-
-        return view('admin.page.berita', [
-            'menu_active' => 'berita',
-            'token' => $token,
-        ]);
-    }
-
     public function artikel(Request $request)
     {
         $token = $request->session()->get('token') ?? $request->input('token');
