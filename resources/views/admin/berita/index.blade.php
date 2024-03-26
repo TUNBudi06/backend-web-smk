@@ -15,7 +15,7 @@
                             </p>
                         </div>
                         <div class="col-md-4 text-right">
-                            <a href="#" class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i> Berita Baru</a>
+                            <a href="{{ route('berita.create', ['token' => $token]) }}" class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i> Berita Baru</a>
                             <a href="{{ route('berita.category.index',['token' => $token]) }}" class="btn-print btn btn-white border-warning px-3 rounded-pill"><i class="fas fa-list"></i> Kategori</a>
                         </div>
                     </div>
@@ -30,18 +30,22 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tr>
-                            <td><img src="" width="100px" class="rounded" alt=""></td>
-                            <td>Judul Berita</td>
-                            <td>Kategori Berita</td>
-                            <td>Lokasi Berita</td>
-                            <td>Tanggal Aplod</td>
-                            <td>
-                                <a href="#" target="_blank" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
-                                <a href="#" target="_blank" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                <a href="#" target="_blank" class="btn btn-danger p-2"><i class="fas fa-trash"></i></a>
-                            </td>
-                        </tr>
+                        <tbody>
+                            @foreach($news as $key => $data)
+                            <tr>
+                                <td><img src="{{ asset('img/berita/'.$data->news_image) }}" width="100px" class="rounded" alt=""></td>
+                                <td style="word-wrap: break-word; max-width: 250px;">{{ $data->news_title }}</td>
+                                <td>{{ $data->category_news->category_name }}</td>
+                                <td>{{ $data->news_location }}</td>
+                                <td style="word-wrap: break-word; max-width: 150px;">{{ $data->news_timestamp }}</td>
+                                <td>
+                                    <a href="#" target="_blank" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
+                                    <a href="#" target="_blank" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
+                                    <a href="#" target="_blank" class="btn btn-danger p-2"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
                     </table>
                     <script>
                         $('.check-toggle').change(function() {
@@ -89,14 +93,11 @@
                             </div>
                         </div>
                         <div class="col-md-6 text-right">
-                            <p class="montserrat d-inline"
-                            style="font-size: .7rem;">
-                            1 dari 10</p>
-                            <a href="#"
-                            class="btn btn-sm p-0 px-2 btn-white disabled"><i
-                                    class="fas fa-caret-left text-warning"></i></a>
-                            <a href="#"
-                            class="btn btn-sm p-0 px-2 btn-white active">
+                            <p class="montserrat d-inline" style="font-size: .7rem;">{{ $news->firstItem() }} dari {{ $news->lastItem() }}</p>
+                            <a href="{{ $news->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $news->onFirstPage() ? 'disabled' : 'active' }}">
+                                <i class="fas fa-caret-left text-warning"></i>
+                            </a>
+                            <a href="{{ $news->nextPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $news->hasMorePages() ? 'active' : 'disabled' }}">
                                 <i class="fas fa-caret-right text-warning"></i>
                             </a>
                         </div>

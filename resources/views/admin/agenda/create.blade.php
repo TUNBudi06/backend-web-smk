@@ -17,7 +17,7 @@
         </div>
         <div class="form-group">
             <label for="event_type">Tujuan Agenda</label>
-            <input type="text" name="event_type" id="event_type" class="form-control" placeholder="Tujuan Agenda" aria-describedby="typeId">
+            <input type="text" name="event_type" id="event_type" class="form-control" placeholder="Perayaan / Upacara / Classmeet / Istighosah" aria-describedby="typeId">
             <small id="typeId" class="text-muted d-none"></small>
         </div>
         <div class="row">
@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="event_text">Deskripsi event</label>
+            <label for="event_text">Deskripsi Agenda</label>
             <textarea required name="event_text" id="texteditor" cols="30" rows="10" class="form-control" placeholder="Isi dari event.." aria-describedby="textId"></textarea>
             <small id="textId" class="text-muted d-none"></small>
         </div>

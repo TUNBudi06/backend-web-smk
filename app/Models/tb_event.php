@@ -13,7 +13,21 @@ class tb_event extends Model
 
 //    protected $guarded = ['id_event'];
 
-     protected $primaryKey = 'id_event';
+    protected $primaryKey = 'id_event';
+
+    const CREATED_AT = "pengumuman_timestamp";
+
+    protected $fillable = [
+        'event_name',
+
+        'event_date',
+
+        'event_type',
+
+        'event_text',
+
+        'event_location',
+    ];
 
     public $timestamps = false;
 }
