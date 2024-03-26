@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    <title>event | Admin Panel</title>
+    <title>Agenda | Admin Panel</title>
     <script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
 @endsection
 

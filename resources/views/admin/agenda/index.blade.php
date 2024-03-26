@@ -15,7 +15,7 @@
                             </p>
                         </div>
                         <div class="col-md-4 text-right">
-                            <a href="{{ route('event.create', ['token' => $token]) }}" class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i> event Baru</a>
+                            <a href="{{ route('event.create', ['token' => $token]) }}" class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i> Agenda Baru</a>
                         </div>
                     </div>
                     @if(Session::get('success'))

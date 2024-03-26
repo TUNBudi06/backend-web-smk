@@ -5,6 +5,7 @@ use App\Http\Middleware\preventCallBack;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\categories\BeritaCategory;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PengumumanController;
@@ -26,15 +27,23 @@ Route::prefix('private/admin')->group(function () {
 
             Route::resource('pengumuman', PengumumanController::class);
             Route::resource('event', EventController::class);
+            Route::resource('berita/category', BeritaCategory::class)->parameters([
+                'category' => 'berita_category',
+            ])->names([
+                'index' => 'berita.category.index',
+                'create' => 'berita.category.create',
+                'store' => 'berita.category.store',
+                'edit' => 'berita.category.edit',
+                'update' => 'berita.category.update',
+                'destroy' => 'berita.category.destroy',
+            ]);            
 
-            // Route::get('/agenda', [AdminController::class, 'agenda'])->name('agenda');
             Route::get('/berita', [AdminController::class, 'berita'])->name('berita');
             Route::get('/artikel', [AdminController::class, 'artikel'])->name('artikel');
             Route::get('/gallery', [AdminController::class, 'gallery'])->name('gallery');
             Route::get('/links', [AdminController::class, 'links'])->name('links');
             Route::get('/profile', [AdminController::class, 'profile'])->name('profile');
 
-            Route::get('/berita/category', [CategoryController::class, 'categoryBerita'])->name('category.berita');
             Route::get('/artikel/category', [CategoryController::class, 'categoryArtikel'])->name('category.artikel');
             Route::get('/gallery/category', [CategoryController::class, 'categoryGallery'])->name('category.gallery');
 

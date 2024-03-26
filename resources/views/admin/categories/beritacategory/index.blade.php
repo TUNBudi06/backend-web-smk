@@ -6,12 +6,23 @@
 
 @section('container')
     <div class="container-fluid">
+        @if(Session::get('success'))
+        <div class="position-fixed w-100 alert alert-success alert-dismissible fade show" style="top: 0px; left: 0px; z-index: 1000 !important;" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <strong>{{ Session::get('success') }}</strong>
+        </div>
+        @endif
         <div class="row">
             @if ($action == "update")
             <div class="col-md-4 offset-md-1 mt-4 p-2">
                 <div class="w-100 rad bg-white position-relative shadow py-3 px-4">
                     <h5 class="poppins mb-0">Update Kategori</h5>
-                    <form action="" method="post">
+                    <form action="{{ route('berita.category.update', ['token' => $token, 'berita_category' => $category->id_category]) }}" method="post">
+                        @method('put')
+                        @csrf
                         <div class="form-group">
                             <input type="hidden" value="" name="idCategory" id="idCategory" class="form-control" placeholder="Perayaan / Peristiwa" aria-describedby="namaID">
                         </div>
@@ -31,10 +42,11 @@
             <div class="col-md-4 offset-md-1 mt-4 p-2">
                 <div class="w-100 rad bg-white position-relative shadow py-3 px-4">
                     <h5 class="poppins mb-0">Tambah Kategori</h5>
-                    <form action="" method="post">
+                    <form action="{{ route('berita.category.store', ['token' => $token]) }}" method="post">
+                        @csrf
                         <div class="form-group">
-                          <label for="nama" class="mt-3 mb-2">Nama Kategori</label>
-                          <input type="text" name="nama"id="nama" class="form-control" placeholder="Perayaan / Peristiwa" aria-describedby="namaID">
+                          <label for="category_name" class="mt-3 mb-2">Nama Kategori</label>
+                          <input type="text" name="category_name"id="category_name" class="form-control" placeholder="Perayaan / Peristiwa" aria-describedby="namaID">
                           <small id="namaID" class="text-muted d-none">Nama</small>
                         </div>
                         <div class="text-right w-100">
@@ -64,13 +76,19 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($news as $key => $data)
                             <tr>
-                                <td>Nama Kategori</td>
+                                <td>{{ $data->category_name }}</td>
                                 <td>
-                                    <a href="" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                    <a href="" class="btn btn-danger p-2" onclick="return confirm('Pengumuman akan dihapus ?')"><i class="fas fa-trash"></i></a>
+                                    <a href="{{ route('berita.category.edit', ['berita_category' => $data->id_category, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
+                                    <form action="{{ route('berita.category.destroy', ['berita_category' => $data->id_category, 'token' => $token]) }}" method="post" class="d-inline" onclick="return confirm('Pengumuman akan dihapus ?')">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>
+                                    </form>
                                 </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                     <script>
@@ -123,7 +141,7 @@
                         <div class="col-md-6 text-right">
                             <p class="montserrat d-inline" 
                             style="font-size: .7rem;">
-                            1 dari 10 data</p>
+                            {{ $news->count() }} dari {{ $news->count() }} data</p>
                             <a href="#"
                             class="btn btn-sm p-0 px-2 btn-white disabled"><i
                                     class="fas fa-caret-left text-warning"></i></a>
