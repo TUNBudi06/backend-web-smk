@@ -60,7 +60,16 @@ class EventController extends Controller
      */
     public function show(Request $request)
     {
-        //
+        $id_event = $request->route("event");
+        $token = $request->session()->get('token') ?? $request->input('token');
+        $event = tb_event::findOrFail($id_event);
+        // dd($event);
+
+        return view('admin.agenda.show', [
+            'menu_active' => 'event',
+            'token' => $token,
+            'event' => $event,
+        ]);
     }
 
     /**
