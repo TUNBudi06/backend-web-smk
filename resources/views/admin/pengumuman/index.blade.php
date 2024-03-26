@@ -48,7 +48,11 @@
                                 <td>
                                     <a href="#" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
                                     <a href="{{ route('pengumuman.edit', ['pengumuman' => $data->id_pengumuman , 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                    <a href="#" target="_blank" class="btn btn-danger p-2"><i class="fas fa-trash"></i></a>
+                                    <form action="{{ route('pengumuman.destroy', ['pengumuman' => $data->id_pengumuman , 'token' => $token]) }}" method="post" class="d-inline">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach

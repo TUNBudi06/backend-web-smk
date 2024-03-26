@@ -15,7 +15,7 @@ class PengumumanController extends Controller
     public function index(Request $request)
     {
         $perPage = 10;
-        $pengumuman = tb_pengumuman::paginate($perPage);
+        $pengumuman = tb_pengumuman::orderBy('pengumuman_timestamp', 'desc')->paginate($perPage);
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
@@ -109,8 +109,10 @@ class PengumumanController extends Controller
         $id_pengumuman = $request->route("pengumuman");
         $token = $request->session()->get('token') ?? $request->input('token');
 
-//        $pengumuman = tb_pengumuman::findOrFail($id_pengumuman);
-//        $pengumuman->delete();
+       $pengumuman = tb_pengumuman::findOrFail($id_pengumuman);
+       $pengumuman->delete();
+
+       return redirect()->route('pengumuman.index', ['token' => $request->token])->with('success', 'Data deleted successfully.');
 
     }
 }

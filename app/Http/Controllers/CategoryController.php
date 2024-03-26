@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function categoryBerita()
+    public function categoryBerita(Request $request)
     {
+        $token = $request->session()->get('token') ?? $request->input('token');
         $action = isset($_GET['action']) ? $_GET['action'] : '';
 
         return view('admin.category.category_berita', [
             'menu_active' => 'berita',
             'action' => $action,
+            'token' => $token,
         ]);
     }
 

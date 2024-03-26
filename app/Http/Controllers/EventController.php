@@ -13,7 +13,7 @@ class EventController extends Controller
     public function index(Request $request)
     {
         $perPage = 10;
-        $event = tb_event::paginate($perPage);
+        $event = tb_event::orderBy('event_timestamp', 'desc')->paginate($perPage);
 
         $token = $request->session()->get('token') ?? $request->input('token');
         return view('admin.agenda.index', [
@@ -102,12 +102,15 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        $agenda = tb_event::findOrFail($id);
+        $id_event = $request->route("event");
+        $token = $request->session()->get('token') ?? $request->input('token');
 
-        $agenda->delete();
+       $event = tb_event::findOrFail($id_event);
+       $event->delete();
 
-        return redirect()->route('agenda.index')->with('success', 'Data deleted successfully.');
+       return redirect()->route('event.index', ['token' => $request->token])->with('success', 'Data deleted successfully.');
+
     }
 }
