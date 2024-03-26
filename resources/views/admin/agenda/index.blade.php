@@ -45,7 +45,7 @@
                                 <td style="word-wrap: break-word; max-width: 200px;">{{ $data->event_type }}</td>
                                 <td>{{ $data->event_timestamp }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('event.show', ['event' => $data->id_event, 'token' => $token]) }}" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
                                     <a href="{{ route('event.edit', ['event' => $data->id_event, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
                                     <form action="{{ route('event.destroy', ['event' => $data->id_event , 'token' => $token]) }}" method="post" class="d-inline">
                                         @csrf

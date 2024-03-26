@@ -58,9 +58,18 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request)
     {
-        //
+        $id_event = $request->route("event");
+        $token = $request->session()->get('token') ?? $request->input('token');
+        $event = tb_event::findOrFail($id_event);
+        // dd($event);
+
+        return view('admin.agenda.show', [
+            'menu_active' => 'event',
+            'token' => $token,
+            'event' => $event,
+        ]);
     }
 
     /**
@@ -83,8 +92,9 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
+        $id_event = $request->route("event");
         $request->validate([
             'event_name' => 'required',
             'event_date' => 'required|date',
@@ -93,7 +103,7 @@ class EventController extends Controller
             'event_location' => 'required',
         ]);
 
-        $event = tb_event::findOrFail($id);
+        $event = tb_event::findOrFail($id_event);
         $event->update($request->all());
 
         return redirect()->route('event.index', ['token' => $request->token])->with('success', 'Data updated successfully.');
@@ -107,10 +117,9 @@ class EventController extends Controller
         $id_event = $request->route("event");
         $token = $request->session()->get('token') ?? $request->input('token');
 
-       $event = tb_event::findOrFail($id_event);
-       $event->delete();
+        $event = tb_event::findOrFail($id_event);
+        $event->delete();
 
-       return redirect()->route('event.index', ['token' => $request->token])->with('success', 'Data deleted successfully.');
-
+        return redirect()->route('event.index', ['token' => $request->token])->with('success', 'Data deleted successfully.');
     }
 }
