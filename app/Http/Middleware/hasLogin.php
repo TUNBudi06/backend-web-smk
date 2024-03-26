@@ -22,10 +22,11 @@ class hasLogin
         $email = session("user")??null;
         $token = $request->route("token");
         $rToken = $request->session()->get('token') ?? $request->input('token');
+        Log::info($rToken);
+        Log::info($email);
         if($rToken != $token) {
             return redirect()->route("guest.token");
         }
-        Log::info($email);
         $user = tb_admin::where('token', $token)
             ->first();
         if(!$email == null) {

@@ -41,8 +41,15 @@ class AuthController extends Controller
         return $token;
     }
 
-    public function loginPage($token)
+    public function loginPage($token,Request $request)
     {
+        if(Auth::check()) {
+            $user_id = Auth::getUser();
+//            return ["user"=>$user_id["token"],"session"=>session()->all()];
+            $request->session()->put('token', $token);
+            $request->session()->put('status', 'true');
+            return redirect()->route('dashboard', ['token' => $user_id["token"]]);
+        }
         return view('admin.guest.login', [
             'token' => $token,
         ]);
@@ -66,6 +73,7 @@ class AuthController extends Controller
         if ($user && Auth::attempt(["email"=>$email,"password"=>$password],$cookie)) {
             if (password_verify($password, $user->password)) {
                 // Set session user
+                Auth::logoutOtherDevices($password);
                 $request->session()->put('user', $user);
                 $request->session()->put('xaf', $password);
                 $request->session()->put('token', $token);
@@ -85,7 +93,9 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::logoutOtherDevices(session("xaf"));
+        Auth::logoutCurrentDevice();
+        session()->invalidate();
+        session()->regenerate();
         session()->flush();
         $_SESSION = [];
         return redirect()->route('guest.token');

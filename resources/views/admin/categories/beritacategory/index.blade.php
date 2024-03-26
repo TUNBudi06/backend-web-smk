@@ -16,11 +16,11 @@
         </div>
         @endif
         <div class="row">
-            @if ($action == "update")
+            @if (session("update"))
             <div class="col-md-4 offset-md-1 mt-4 p-2">
                 <div class="w-100 rad bg-white position-relative shadow py-3 px-4">
                     <h5 class="poppins mb-0">Update Kategori</h5>
-                    <form action="{{ route('berita.category.update', ['token' => $token, 'berita_category' => $category->id_category]) }}" method="post">
+                    <form action="{{ route('berita.category.update', ['token' => session("token"), 'berita_category' => session("category")->id_category]) }}" method="post">
                         @method('put')
                         @csrf
                         <div class="form-group">
@@ -139,7 +139,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 text-right">
-                            <p class="montserrat d-inline" 
+                            <p class="montserrat d-inline"
                             style="font-size: .7rem;">
                             {{ $news->count() }} dari {{ $news->count() }} data</p>
                             <a href="#"

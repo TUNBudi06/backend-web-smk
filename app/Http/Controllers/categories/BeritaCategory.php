@@ -43,12 +43,12 @@ class BeritaCategory extends Controller
         $request->validate([
             'category_name' => 'required',
         ]);
-    
+
         // Simpan data kategori
         tb_category_news::create([
             'category_name' => $request->category_name,
         ]);
-    
+
         return redirect()->route('berita.category.index', ['token' => $request->token])->with('success', 'Kategori berhasil ditambahkan.');
     }
 
@@ -57,11 +57,16 @@ class BeritaCategory extends Controller
      */
     public function edit(Request $request)
     {
-        $id_category = $request->route("berita/category");
+        $id_category = $request->route("berita_category");
         $token = $request->session()->get('token') ?? $request->input('token');
         $action = 'update';
         $category = tb_category_news::findOrFail($id_category);
-        return redirect()->route('berita.category.index', compact('action', 'category', 'token'))->withInput();
+        $data = [
+            'token' => $token,
+            'category' => $category,
+            'update' => $action,
+        ];
+        return redirect(route('berita.category.index',$token))->with($data);
     }
 
     /**
@@ -72,13 +77,13 @@ class BeritaCategory extends Controller
         $request->validate([
             'category_name' => 'required',
         ]);
-    
+
         // Update data category
         $category = tb_category_news::findOrFail($id);
         $category->update([
             'category_name' => $request->category_name,
         ]);
-    
+
         return redirect()->route('berita.category.index', ['token' => $request->token])->with('success', 'Kategori berhasil diperbarui.');
     }
 
@@ -92,7 +97,7 @@ class BeritaCategory extends Controller
 
        $category = tb_category_news::findOrFail($id_category);
        $category->delete();
-    
-        return redirect()->route('berita.category.index', ['token' => $request->token])->with('success', 'Kategori berhasil dihapus.');
+
+        return redirect()->route('berita.category.index', ['token' => $token])->with('success', 'Kategori berhasil dihapus.');
     }
 }
