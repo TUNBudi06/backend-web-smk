@@ -30,14 +30,14 @@
             </div>
             <div class="col-6">
                 <div class="form-group">
-                    <label for="event_location">Lokasi</label>
+                    <label for="target">Lokasi</label>
                     <input type="text" name="event_location" id="event_location" class="form-control" aria-describedby="lokasiId">
                     <small id="lokasiId" class="text-muted d-none"></small>
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <label for="event_text">Deskripsi Agenda</label>
+            <label for="text">Deskripsi Agenda</label>
             <textarea required name="event_text" id="texteditor" cols="30" rows="10" class="form-control" placeholder="Isi dari event.." aria-describedby="textId"></textarea>
             <small id="textId" class="text-muted d-none"></small>
         </div>
