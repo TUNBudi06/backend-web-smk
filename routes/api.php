@@ -11,5 +11,5 @@ Route::get('/user', function (Request $request) {
 
 Route::prefix('private/admin')->group(function () {
     Route::post('login/GUI-APP', [AuthController::class, 'addToken']);
-    Route::resource('pengumuman', PengumumanController::class);
+    Route::resource('announcement', PengumumanController::class)->parameters([]);
 });
