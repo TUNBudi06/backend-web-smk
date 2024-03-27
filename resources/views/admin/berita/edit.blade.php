@@ -81,16 +81,16 @@
                     <label for="news_image">Thumbnail Berita</label>
                     <input onchange="loadFile(event)" type="file" name="news_image" id="image" class="form-control" placeholder="Purwosari, Pasuruan" aria-describedby="imageId">
                     <small id="imageId" class="text-muted d-none"></small>
-                @error('news_image')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
+                    @error('news_image')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
             </div>
             <div class="col-md-6 text-center">
                 <img class="w-100 rounded" id="preview" 
-                src="{{ asset('img/berita/no_image.png') }}" 
+                src="{{ asset('img/berita/'.$news->news_image) }}"  
                 alt="">
             </div>
         </div>
