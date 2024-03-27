@@ -124,15 +124,6 @@ class AdminController extends Controller
         ]);
     }
 
-    public function profile(Request $request)
-    {
-        $token = $request->session()->get('token') ?? $request->input('token');
-        return view('admin.page.profile', [
-            'menu_active' => 'profile',
-            'token' => $token,
-        ]);
-    }
-
     public function error()
     {
         return view('layouts.error', [

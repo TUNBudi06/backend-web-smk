@@ -10,4 +10,13 @@ class tb_admin extends Model
     protected $table = "tb_admin";
 
     protected $hidden = ["password"];
+
+    protected $primaryKey = "id";
+    const CREATED_AT =  null;
+    protected $fillable = [
+        "password",
+        "email",
+        "nama",
+        "token"
+        ];
 }

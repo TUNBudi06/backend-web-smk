@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\profileAdmin;
 use App\Http\Middleware\hasLogin;
 use App\Http\Middleware\preventCallBack;
 use Illuminate\Support\Facades\Route;
@@ -56,7 +57,10 @@ Route::prefix('private/admin')->group(function () {
             Route::get('/artikel', [AdminController::class, 'artikel'])->name('artikel');
             Route::get('/gallery', [AdminController::class, 'gallery'])->name('gallery');
             Route::get('/links', [AdminController::class, 'links'])->name('links');
-            Route::get('/profile', [AdminController::class, 'profile'])->name('profile');
+
+            Route::get('/profile', [profileAdmin::class, 'index'])->name('profile');
+            Route::put('/profile/token', [profileAdmin::class, 'updateToken'])->name('profile.token');
+            Route::put('/profile/admin', [profileAdmin::class, 'updateAdmin'])->name('profile.admin');
 
             Route::get('/artikel/category', [CategoryController::class, 'categoryArtikel'])->name('category.artikel');
             Route::get('/gallery/category', [CategoryController::class, 'categoryGallery'])->name('category.gallery');

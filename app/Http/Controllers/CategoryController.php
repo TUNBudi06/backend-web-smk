@@ -10,7 +10,7 @@ class CategoryController extends Controller
     {
         $action = isset($_GET['action']) ? $_GET['action'] : '';
 
-        return view('admin.category.category_artikel', [
+        return view('admin.categories.category_artikel', [
             'menu_active' => 'artikel',
             'action' => $action,
         ]);
