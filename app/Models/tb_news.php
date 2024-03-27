@@ -21,6 +21,10 @@ class tb_news extends Model
         'news_viewer'
     ];
 
+    protected $attributes = [
+        'news_viewer' => 0,
+    ];
+
     protected $primaryKey = 'id_news';
 
     public $timestamps = false;

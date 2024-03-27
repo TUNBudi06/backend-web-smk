@@ -19,6 +19,15 @@
                             <a href="{{ route('berita.category.index',['token' => $token]) }}" class="btn-print btn btn-white border-warning px-3 rounded-pill"><i class="fas fa-list"></i> Kategori</a>
                         </div>
                     </div>
+                    @if(Session::get('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <strong>{{ Session::get('success') }}</strong>
+                    </div>
+                    @endif
                     <table class="table">
                         <thead>
                             <tr>

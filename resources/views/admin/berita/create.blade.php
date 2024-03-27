@@ -14,6 +14,11 @@
             <label for="news_title">Judul Berita</label>
             <input type="text" name="news_title" id="news_title" class="form-control" placeholder="Besok ada sesuatu..." aria-describedby="nameId">
             <small id="nameId" class="text-muted">Hindari penggunaan slash (/,\)</small>
+            @error('news_title')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+            @enderror
         </div>
         <div class="form-group">
             <label for="news_level" class="form-label">Status</label>
@@ -21,28 +26,52 @@
                     <option value="1" selected>Biasa</option>
                     <option value="0">Penting</option>
             </select>
+            @error('news_level')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+            @enderror
         </div>
         <div class="form-group">
             <label for="news" class="form-label">Kategori Berita</label>
-          <select class="form-control" name="category_id">
+          <select class="form-control" name="id_category">
             @foreach ( $news as $n )
-            @if(old('category_id') == $n->category_id)
-              <option value="{{ $n->category_id }}" selected>{{ $n->category_name }}</option>
+            @if(old('category_id') == $n->id_category)
+              <option value="{{ $n->id_category }}" selected>{{ $n->category_name }}</option>
             @else
-              <option value="{{ $n->category_id }}">{{ $n->jenis }}</option>
+              <option value="{{ $n->id_category }}">{{ $n->category_name }}</option>
               @endif
             @endforeach
           </select>
+          @error('id_category')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+            @enderror
         </div>
         <div class="form-group">
             <label for="news_location">Lokasi</label>
             <input type="location" name="news_location" id="news_location" class="form-control" aria-describedby="waktuId">
                 <small id="waktuId" class="text-muted d-none"></small>
+                @error('news_location')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
         </div>
         <div class="form-group">
-            <label for="event_text">Deskripsi Berita</label>
+            <input type="hidden" name="news_viewer" id="news_viewer" class="form-control" value="0" aria-describedby="viewId">
+                <small id="viewId" class="text-muted d-none"></small>
+        </div>
+        <div class="form-group">
+            <label for="news_content">Deskripsi Berita</label>
             <textarea name="news_content" id="texteditor" cols="30" rows="10" class="form-control" placeholder="Isi dari news.." aria-describedby="textId"></textarea>
             <small id="textId" class="text-muted d-none"></small>
+            @error('news_content')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+            @enderror
         </div>
         <script>
             CKEDITOR.replace('texteditor');
@@ -50,9 +79,14 @@
         <div class="row">
             <div class="col-md-6 py-md-5 py-3">
                 <div class="form-group">
-                    <label for="image">Thumbnail Berita</label>
-                    <input onchange="loadFile(event)" type="file" name="image" id="image" class="form-control" placeholder="Purwosari, Pasuruan" aria-describedby="imageId">
+                    <label for="news_image">Thumbnail Berita</label>
+                    <input onchange="loadFile(event)" type="file" name="news_image" id="image" class="form-control" placeholder="Purwosari, Pasuruan" aria-describedby="imageId">
                     <small id="imageId" class="text-muted d-none"></small>
+                @error('news_image')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
                 </div>
             </div>
             <div class="col-md-6 text-center">

@@ -53,23 +53,28 @@ class BeritaController extends Controller
             'id_category' => 'required',
             'news_content' => 'required',
             'news_location' => 'required',
-            'news_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'news_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
+        ], [
+            'news_image.max' => 'The image may not be greater than 10MB.',
         ]);
 
-        $data = tb_news::create([
-            'news_title' => $request->news_title,
-            'news_level' => $request->news_level,
-            'id_category' => $request->id_category,
-            'news_content' => $request->news_content,
-            'news_location' => $request->news_location,
-        ]);
+        // Simpan data ke tabel news
+        $data = new tb_news();
+        $data->news_title = $request->news_title;
+        $data->news_level = $request->news_level;
+        $data->id_category = $request->id_category;
+        $data->news_content = $request->news_content;
+        $data->news_location = $request->news_location;
+        $data->news_viewer = $request->news_viewer;
 
+        // Simpan gambar
         if ($request->hasFile('news_image')) {
             $imageName = Str::random(20) . '.' . $request->file('news_image')->getClientOriginalExtension();
             $request->file('news_image')->move('img/berita', $imageName);
             $data->news_image = $imageName;
-            $data->save();
         }
+
+        $data->save();
 
         return redirect()->route('berita.index', ['token' => $token])->with('success', 'Data added successfully.');
     }
