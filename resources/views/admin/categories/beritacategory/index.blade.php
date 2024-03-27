@@ -65,7 +65,7 @@
                             </p>
                         </div>
                         <div class="col-md-4 text-right">
-                            <a href="{{ route('berita', ['token' => $token]) }}" class="btn-print btn btn-white border-warning px-3 rounded-pill"><i class="fas fa-newspaper"></i> Berita</a>
+                            <a href="{{ route('berita.index', ['token' => $token]) }}" class="btn-print btn btn-white border-warning px-3 rounded-pill"><i class="fas fa-newspaper"></i> Berita</a>
                         </div>
                     </div>
                     <table class="table">
