@@ -15,13 +15,16 @@ class BeritaCategory extends Controller
     {
         $token = $request->session()->get('token') ?? $request->input('token');
         $news = tb_category_news::all();
-        $action = isset($_GET['action']) ? $_GET['action'] : '';
+        $action = $_GET['action'] ?? '';
+//        return $request->session()->all();
 
         return view('admin.categories.beritacategory.index', [
             'menu_active' => 'berita',
             'action' => $action,
             'news' => $news,
             'token' => $token,
+            "category" => $request->session()->get("category") ?? null,
+            "action" => $request->session()->get("update") ?? false,
         ]);
     }
 
@@ -32,7 +35,10 @@ class BeritaCategory extends Controller
     {
         $token = $request->session()->get('token') ?? $request->input('token');
         $action = 'create';
-        return view('admin.categories.beritacategory.index', compact('action', 'token'));
+        $data = [
+            'update' => $action,
+        ];
+        return redirect()->route("berita.category.index",$token)->with($data);
     }
 
     /**
@@ -60,26 +66,27 @@ class BeritaCategory extends Controller
         $id_category = $request->route("berita_category");
         $token = $request->session()->get('token') ?? $request->input('token');
         $action = 'update';
+        $request->session()->put('token',$token);
         $category = tb_category_news::findOrFail($id_category);
         $data = [
-            'token' => $token,
             'category' => $category,
             'update' => $action,
         ];
-        return redirect(route('berita.category.index',$token))->with($data);
+        return redirect()->route("berita.category.index",$token)->with($data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
         $request->validate([
             'category_name' => 'required',
         ]);
+        $berita_category = $request->route("berita_category");
 
         // Update data category
-        $category = tb_category_news::findOrFail($id);
+        $category = tb_category_news::findOrFail($berita_category);
         $category->update([
             'category_name' => $request->category_name,
         ]);
@@ -92,7 +99,7 @@ class BeritaCategory extends Controller
      */
     public function destroy(Request $request)
     {
-        $id_category = $request->route("berita/category");
+        $id_category = $request->route("berita_category");
         $token = $request->session()->get('token') ?? $request->input('token');
 
        $category = tb_category_news::findOrFail($id_category);

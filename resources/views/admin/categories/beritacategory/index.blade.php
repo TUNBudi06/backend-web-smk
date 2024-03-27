@@ -16,23 +16,23 @@
         </div>
         @endif
         <div class="row">
-            @if (session("update"))
+            @if ($action == "update")
             <div class="col-md-4 offset-md-1 mt-4 p-2">
                 <div class="w-100 rad bg-white position-relative shadow py-3 px-4">
                     <h5 class="poppins mb-0">Update Kategori</h5>
-                    <form action="{{ route('berita.category.update', ['token' => session("token"), 'berita_category' => session("category")->id_category]) }}" method="post">
+                    <form action="{{ route('berita.category.update', ['token' => $token, 'berita_category' => $category->id_category]) }}" method="post">
                         @method('put')
                         @csrf
                         <div class="form-group">
-                            <input type="hidden" value="" name="idCategory" id="idCategory" class="form-control" placeholder="Perayaan / Peristiwa" aria-describedby="namaID">
+                            <input type="hidden" value="{{$category->id_category}}" name="idCategory" id="idCategory" class="form-control" placeholder="Perayaan / Peristiwa" aria-describedby="namaID">
                         </div>
                         <div class="form-group">
                             <label for="nama" class="mt-3 mb-2">Nama Kategori</label>
-                            <input type="text" value="" name="nama" id="nama" class="form-control" placeholder="Perayaan / Peristiwa" aria-describedby="namaID">
+                            <input type="text" value="{{$category->category_name}}" name="category_name" id="category_name" class="form-control" placeholder="Perayaan / Peristiwa" aria-describedby="namaID">
                             <small id="namaID" class="text-muted d-none">Nama</small>
                         </div>
                         <div class="text-right w-100 position-absolute" style="right: 10px;">
-                            <a href="#" class="btn btn-white px-4 rounded-pill border-warning">Tambah</a>
+                            <a href="{{ route('berita.category.create', ['token' => $token]) }}" class="btn btn-white px-4 rounded-pill border-warning">Tambah</a>
                             <button class="btn btn-warning px-4 rounded-pill shadow-warning">Update</button>
                         </div>
                     </form>
@@ -46,7 +46,7 @@
                         @csrf
                         <div class="form-group">
                           <label for="category_name" class="mt-3 mb-2">Nama Kategori</label>
-                          <input type="text" name="category_name"id="category_name" class="form-control" placeholder="Perayaan / Peristiwa" aria-describedby="namaID">
+                          <input type="text" name="category_name" id="category_name" class="form-control" placeholder="Perayaan / Peristiwa" aria-describedby="namaID">
                           <small id="namaID" class="text-muted d-none">Nama</small>
                         </div>
                         <div class="text-right w-100">

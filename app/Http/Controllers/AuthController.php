@@ -43,7 +43,7 @@ class AuthController extends Controller
 
     public function loginPage($token,Request $request)
     {
-        if(Auth::check()) {
+        if(Auth::check() && (Auth::getUser()["token"] == $token)) {
             $user_id = Auth::getUser();
 //            return ["user"=>$user_id["token"],"session"=>session()->all()];
             $request->session()->put('token', $token);
