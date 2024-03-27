@@ -49,8 +49,12 @@
                                 <td style="word-wrap: break-word; max-width: 150px;">{{ $data->news_timestamp }}</td>
                                 <td>
                                     <a href="#" target="_blank" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
-                                    <a href="#" target="_blank" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                    <a href="#" target="_blank" class="btn btn-danger p-2"><i class="fas fa-trash"></i></a>
+                                    <a href="{{ route('berita.edit', ['berita' => $data->id_news, 'token' => $token]) }}" target="_blank" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
+                                    <form action="{{ route('berita.destroy', ['berita' => $data->id_news, 'token' => $token]) }}" method="post" class="d-inline">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach

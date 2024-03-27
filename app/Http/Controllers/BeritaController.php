@@ -90,24 +90,72 @@ class BeritaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request)
     {
-        //
+        $id_news = $request->route("berita");
+        $token = $request->session()->get('token') ?? $request->input('token');
+        $news = tb_news::findOrFail($id_news);
+        $categories = tb_category_news::all();
+
+        return view('admin.berita.edit', [
+            'menu_active' => 'berita',
+            'token' => $token,
+            'news' => $news,
+            'categories' => $categories,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $id_news = $request->route("berita");
+        $token = $request->session()->get('token') ?? $request->input('token');
+
+        $request->validate([
+            'news_title' => 'required',
+            'news_level' => 'required',
+            'id_category' => 'required',
+            'news_content' => 'required',
+            'news_location' => 'required',
+            'news_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
+        ], [
+            'news_image.max' => 'The image may not be greater than 10MB.',
+        ]);
+
+        // Simpan data ke tabel news
+        $data =tb_news::findOrFail($id_news);
+        $data->update($request->all());
+
+        $data->news_title = $request->news_title;
+        $data->news_level = $request->news_level;
+        $data->id_category = $request->id_category;
+        $data->news_content = $request->news_content;
+        $data->news_location = $request->news_location;
+        $data->news_viewer = $request->news_viewer;
+
+        // Simpan gambar
+        if ($request->hasFile('news_image')) {
+            $imageName = Str::random(20) . '.' . $request->file('news_image')->getClientOriginalExtension();
+            $request->file('news_image')->move('img/berita', $imageName);
+            $data->news_image = $imageName;
+        }
+
+        return redirect()->route('berita.index', ['token' => $token])->with('success', 'Data added successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $id_news = $request->route("berita");
+        $token = $request->session()->get('token') ?? $request->input('token');
+
+        $news = tb_news::findOrFail($id_news);
+        $news->delete();
+
+        return redirect()->route('berita.index', ['token' => $request->token])->with('success', 'Data deleted successfully.');
     }
 }
