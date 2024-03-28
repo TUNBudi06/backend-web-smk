@@ -6,6 +6,7 @@ use App\Http\Middleware\preventCallBack;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\categories\BeritaCategory;
 use App\Http\Controllers\CategoryController;
@@ -54,7 +55,7 @@ Route::prefix('private/admin')->group(function () {
                 'destroy' => 'berita.destroy',
             ]);
 
-            Route::get('/artikel', [AdminController::class, 'artikel'])->name('artikel');
+            Route::resource('/artikel', ArtikelController::class);
             Route::get('/gallery', [AdminController::class, 'gallery'])->name('gallery');
             Route::get('/links', [AdminController::class, 'links'])->name('links');
 

@@ -15,10 +15,19 @@
                             </p>
                         </div>
                         <div class="col-md-4 text-right">
-                            <a href="#" class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i> Artikel Baru</a>
+                            <a href="{{ route('artikel.create', ['token' => $token]) }}" class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i> Artikel Baru</a>
                             <a href="{{ route('category.artikel',$token) }}" class="btn-print btn btn-white border-warning px-3 rounded-pill"><i class="fas fa-list"></i> Kategori</a>
                         </div>
                     </div>
+                    @if(Session::get('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <strong>{{ Session::get('success') }}</strong>
+                    </div>
+                    @endif
                     <table class="table">
                         <thead>
                             <tr>
@@ -30,15 +39,23 @@
                             </tr>
                         </thead>
                         <tr>
-                            <td><img src="" width="100px" class="rounded" alt=""></td>
-                            <td>Judul Artikel</td>
-                            <td>Kategori Artikel</td>
-                            <td>Tanggal Aplod</td>
-                            <td>
-                                <a href="#" target="_blank" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
-                                <a href="#" target="_blank" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                <a href="#" target="_blank" class="btn btn-danger p-2"><i class="fas fa-trash"></i></a>
-                            </td>
+                            @foreach($artikel as $key => $data)
+                            <tr>
+                                <td><img src="{{ asset('img/artikel/'.$data->artikel_thumbnail) }}" width="100px" class="rounded" alt=""></td>
+                                <td style="word-wrap: break-word; max-width: 250px;">{{ $data->artikel_title }}</td>
+                                <td>{{ $data->category_artikel->category_name }}</td>
+                                <td style="word-wrap: break-word; max-width: 150px;">{{ $data->artikel_timestamp }}</td>
+                                <td>
+                                    <a href="#" target="_blank" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('artikel.edit', ['artikel' => $data->id_artikel, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
+                                    <form action="{{ route('artikel.destroy', ['artikel' => $data->id_artikel, 'token' => $token]) }}" method="post" class="d-inline">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
                         </tr>
                     </table>
                     <script>
