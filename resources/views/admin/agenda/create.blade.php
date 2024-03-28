@@ -11,7 +11,7 @@
     <form action="{{ route('event.store', ['token' => $token]) }}" method="POST">
         @csrf
         <div class="form-group">
-            <label for="nama">event</label>
+            <label for="nama">Agenda</label>
             <input type="text" name="event_name" id="event_name" class="form-control" placeholder="Besok ada sesuatu..." aria-describedby="namaId">
             <small id="namaId" class="text-muted">Hindari penggunaan slash (/,\)</small>
         </div>

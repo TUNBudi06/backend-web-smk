@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\AgendaController;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\PengumumanController;
 use Illuminate\Http\Request;
@@ -12,4 +13,5 @@ Route::get('/user', function (Request $request) {
 Route::prefix('private/admin')->group(function () {
     Route::post('login/GUI-APP', [AuthController::class, 'addToken']);
     Route::resource('announcement', PengumumanController::class)->parameters([]);
+    Route::resource('agenda', AgendaController::class)->parameters([]);
 });
