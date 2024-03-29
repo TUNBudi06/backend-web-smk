@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    <title>Kategori artikel | Admin Panel</title>
+    <title>Kategori Artikel | Admin Panel</title>
 @endsection
 
 @section('container')
@@ -28,7 +28,7 @@
                         </div>
                         <div class="form-group">
                             <label for="nama" class="mt-3 mb-2">Nama Kategori</label>
-                            <input type="text" value="{{$category->category_name}}" name="category_name" id="category_name" class="form-control" placeholder="Perayaan / Peristiwa" aria-describedby="namaID">
+                            <input type="text" required value="{{$category->category_name}}" name="category_name" id="category_name" class="form-control" placeholder="Perayaan / Peristiwa" aria-describedby="namaID">
                             <small id="namaID" class="text-muted d-none">Nama</small>
                         </div>
                         <div class="text-right w-100 position-absolute" style="right: 10px;">
@@ -76,7 +76,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($news as $key => $data)
+                            @foreach ($articles as $key => $data)
                             <tr>
                                 <td>{{ $data->category_name }}</td>
                                 <td>
@@ -141,7 +141,7 @@
                         <div class="col-md-6 text-right">
                             <p class="montserrat d-inline"
                             style="font-size: .7rem;">
-                            {{ $news->count() }} dari {{ $news->count() }} data</p>
+                            {{ $articles->count() }} dari {{ $articles->count() }} data</p>
                             <a href="#"
                             class="btn btn-sm p-0 px-2 btn-white disabled"><i
                                     class="fas fa-caret-left text-warning"></i></a>

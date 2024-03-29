@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\categories\ArtikelCategory;
 use App\Http\Controllers\categories\BeritaCategory;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
@@ -37,6 +38,17 @@ Route::prefix('private/admin')->group(function () {
                 'edit' => 'berita.category.edit',
                 'update' => 'berita.category.update',
                 'destroy' => 'berita.category.destroy',
+            ]);
+
+            Route::resource('artikel/categoryArtikel', ArtikelCategory::class)->parameters([
+                'categoryArtikel' => 'artikel_category',
+            ])->names([
+                'index' => 'artikel.category.index',
+                'create' => 'artikel.category.create',
+                'store' => 'artikel.category.store',
+                'edit' => 'artikel.category.edit',
+                'update' => 'artikel.category.update',
+                'destroy' => 'artikel.category.destroy',
             ]);
 
             Route::resource('pengumuman', PengumumanController::class);
