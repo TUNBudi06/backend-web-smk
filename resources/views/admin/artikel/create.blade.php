@@ -12,41 +12,31 @@
         @csrf
         <div class="form-group">
             <label for="artikel_title">Judul Artikel</label>
-            <input type="text" name="artikel_title" id="artikel_title" class="form-control" placeholder="Besok ada sesuatu..." aria-describedby="nameId">
+            <input type="text" name="artikel_title" id="artikel_title" class="form-control @error('artikel_title') is-invalid @enderror" value="{{ old('artikel_title') }}" placeholder="Besok ada sesuatu..." aria-describedby="nameId">
             <small id="nameId" class="text-muted">Hindari penggunaan slash (/,\)</small>
             @error('artikel_title')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
+                <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group">
             <label for="artikel_level" class="form-label">Status</label>
-            <select class="form-control" id="artikel_level" name="artikel_level">
-                    <option value="1" selected>Biasa</option>
-                    <option value="0">Penting</option>
+            <select class="form-control @error('artikel_level') is-invalid @enderror" id="artikel_level" name="artikel_level">
+                    <option value="1" {{ old('artikel_level') == '1' ? 'selected' : '' }}>Biasa</option>
+                    <option value="0" {{ old('artikel_level') == '0' ? 'selected' : '' }}>Penting</option>
             </select>
             @error('artikel_level')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
+                <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group">
-            <label for="artikel" class="form-label">Kategori artikel</label>
-          <select class="form-control" name="id_category">
-            @foreach ( $artikel as $n )
-            @if(old('category_id') == $n->id_category)
-              <option value="{{ $n->id_category }}" selected>{{ $n->category_name }}</option>
-            @else
-              <option value="{{ $n->id_category }}">{{ $n->category_name }}</option>
-              @endif
-            @endforeach
-          </select>
-          @error('id_category')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
+            <label for="id_category" class="form-label">Kategori Artikel</label>
+            <select class="form-control @error('id_category') is-invalid @enderror" name="id_category">
+                @foreach ($artikel as $n)
+                    <option value="{{ $n->id_category }}" {{ old('id_category') == $n->id_category ? 'selected' : '' }}>{{ $n->category_name }}</option>
+                @endforeach
+            </select>
+            @error('id_category')
+                <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group">
@@ -54,13 +44,11 @@
                 <small id="viewId" class="text-muted d-none"></small>
         </div>
         <div class="form-group">
-            <label for="artikel_text">Deskripsi artikel</label>
-            <textarea name="artikel_text" id="texteditor" cols="30" rows="10" class="form-control" placeholder="Isi dari artikel.." aria-describedby="textId"></textarea>
+            <label for="artikel_text">Deskripsi Artikel</label>
+            <textarea name="artikel_text" id="texteditor" cols="30" rows="10" class="form-control @error('artikel_text') is-invalid @enderror" placeholder="Isi dari artikel.." aria-describedby="textId">{{ old('artikel_text') }}</textarea>
             <small id="textId" class="text-muted d-none"></small>
             @error('artikel_text')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
+                <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
         <script>
@@ -69,20 +57,16 @@
         <div class="row">
             <div class="col-md-6 py-md-5 py-3">
                 <div class="form-group">
-                    <label for="artikel_thumbnail">Thumbnail artikel</label>
-                    <input onchange="loadFile(event)" type="file" name="artikel_thumbnail" id="image" class="form-control" placeholder="Purwosari, Pasuruan" aria-describedby="imageId">
+                    <label for="artikel_thumbnail">Thumbnail Artikel</label>
+                    <input onchange="loadFile(event)" type="file" name="artikel_thumbnail" id="image" class="form-control @error('artikel_thumbnail') is-invalid @enderror" placeholder="Purwosari, Pasuruan" aria-describedby="imageId">
                     <small id="imageId" class="text-muted d-none"></small>
-                @error('artikel_thumbnail')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
+                    @error('artikel_thumbnail')
+                        <p class="text-danger">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
             <div class="col-md-6 text-center">
-                <img class="w-100 rounded" id="preview" 
-                src="{{ asset('img/artikel/no_image.png') }}" 
-                alt="">
+                <img class="w-100 rounded" id="preview" src="{{ asset('img/artikel/no_image.png') }}" alt="">
             </div>
         </div>
         <div class="text-right mb-4">

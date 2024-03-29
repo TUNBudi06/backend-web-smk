@@ -140,6 +140,8 @@ class ArtikelController extends Controller
             $data->save();
         }
 
+        dd($data);
+
 
         return redirect()->route('artikel.index', ['token' => $token])->with('success', 'Data added successfully.');
     }

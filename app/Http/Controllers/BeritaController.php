@@ -110,43 +110,52 @@ class BeritaController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request)
-    {
-        $id_news = $request->route("berita");
-        $token = $request->session()->get('token') ?? $request->input('token');
+{
+    $id_news = $request->route("berita");
+    $token = $request->session()->get('token') ?? $request->input('token');
 
-        $request->validate([
-            'news_title' => 'required',
-            'news_level' => 'required',
-            'id_category' => 'required',
-            'news_content' => 'required',
-            'news_location' => 'required',
-            'news_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
-        ], [
-            'news_image.max' => 'The image may not be greater than 10MB.',
-        ]);
+    $request->validate([
+        'news_title' => 'required',
+        'news_level' => 'required',
+        'id_category' => 'required',
+        'news_content' => 'required',
+        'news_location' => 'required',
+        'news_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+    ], [
+        'news_image.max' => 'The image may not be greater than 10MB.',
+    ]);
 
-        // Simpan data ke tabel news
-        $data =tb_news::findOrFail($id_news);
-        $data->update([
-            'news_title' => $request->news_title,
-            'news_level' => $request->news_level,
-            'id_category' => $request->id_category,
-            'news_content' => $request->news_content,
-            'news_location' => $request->news_location,
-            'news_viewer' => $request->news_viewer,
-        ]);
+    // Temukan data berita
+    $data = tb_news::findOrFail($id_news);
 
-        // Simpan gambar
-        if ($request->hasFile('news_image')) {
-            $fileContents = file_get_contents($request->file('news_image')->getRealPath());
-            $imageName = hash('sha256', $fileContents) . '.' . $request->file('news_image')->getClientOriginalExtension();
-            $request->file('news_image')->move('img/berita', $imageName);
-            $data->news_image = $imageName;
-            $data->save();
+    // Periksa apakah ada pergantian gambar
+    if ($request->hasFile('news_image')) {
+        // Hapus gambar sebelumnya jika ada
+        if ($data->news_image !== null) {
+            $oldImagePath = public_path('img/berita/' . $data->news_image);
+            if (file_exists($oldImagePath)) {
+                unlink($oldImagePath);
+            }
         }
 
-        return redirect()->route('berita.index', ['token' => $token])->with('success', 'Data added successfully.');
+        // Simpan gambar baru
+        $imageName = $request->file('news_image')->hashName();
+        $request->file('news_image')->move('img/berita', $imageName);
+        $data->news_image = $imageName;
     }
+
+    // Update data berita
+    $data->update([
+        'news_title' => $request->news_title,
+        'news_level' => $request->news_level,
+        'id_category' => $request->id_category,
+        'news_content' => $request->news_content,
+        'news_location' => $request->news_location,
+        'news_viewer' => $request->news_viewer,
+    ]);
+
+    return redirect()->route('berita.index', ['token' => $token])->with('success', 'Data updated successfully.');
+}
 
     /**
      * Remove the specified resource from storage.
