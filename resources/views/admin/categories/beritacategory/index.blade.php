@@ -28,7 +28,7 @@
                         </div>
                         <div class="form-group">
                             <label for="nama" class="mt-3 mb-2">Nama Kategori</label>
-                            <input type="text" value="{{$category->category_name}}" name="category_name" id="category_name" class="form-control" placeholder="Perayaan / Peristiwa" aria-describedby="namaID">
+                            <input type="text" required value="{{$category->category_name}}" name="category_name" id="category_name" class="form-control" placeholder="Perayaan / Peristiwa" aria-describedby="namaID">
                             <small id="namaID" class="text-muted d-none">Nama</small>
                         </div>
                         <div class="text-right w-100 position-absolute" style="right: 10px;">
