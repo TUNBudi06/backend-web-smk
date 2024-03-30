@@ -14,7 +14,8 @@ Ada Judul, Deskripsi, Visi-Misi, Struktur (Embed PDF), Logo Jurusan, Gambar Bann
 
 Search bar:
 Mencari berita, artikel, pengumuman, agenda, jurusan, ekstra, form perangkat ajar
-potret form perangkat ajar ![form perangkat ajar](https://web.whatsapp.com/706eb6aa-7cce-4904-a76c-ede9bd1bea6e)
+Potret Form Perangkat Ajar
+![image](https://github.com/TUNBudi06/backend-web-smk/assets/115862018/7ee724db-6897-4853-89f7-3c9236e79586)
 
 Keunggulan:
 Buat database keunggulan, berisi dua kolom (id, teks)
@@ -25,5 +26,8 @@ Pertama adalah default videotron, berisi url youtube untuk embed video
 Kedua adalah secondary videotron, url youtube yang bisa diganti ganti
 
 Fasilitas:
-------
+Kosong, Budi sudah tau
+
+Kemitraan Videotron:
+Embed youtube
 
