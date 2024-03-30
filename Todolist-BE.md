@@ -14,6 +14,7 @@ Ada Judul, Deskripsi, Visi-Misi, Struktur (Embed PDF), Logo Jurusan, Gambar Bann
 
 Search bar:
 Mencari berita, artikel, pengumuman, agenda, jurusan, ekstra, form perangkat ajar
+potret form perangkat ajar ![form perangkat ajar](https://web.whatsapp.com/706eb6aa-7cce-4904-a76c-ede9bd1bea6e)
 
 Keunggulan:
 Buat database keunggulan, berisi dua kolom (id, teks)
