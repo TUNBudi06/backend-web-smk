@@ -29,7 +29,7 @@
             <i class="fas fa-book mr-1"></i>
             <h6 class="label-menu d-none">Artikel</h6>
         </div>
-        <div class="my-2 {{ ($menu_active ==="gallery") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('gallery', ['token' => $token]) }}';">
+        <div class="my-2 {{ ($menu_active ==="gallery") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('gallery.index', ['token' => $token]) }}';">
             <i class="fas fa-images"></i>
             <h6 class="label-menu d-none">Galeri</h6>
         </div>

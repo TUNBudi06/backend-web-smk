@@ -12,6 +12,7 @@ use App\Http\Controllers\categories\ArtikelCategory;
 use App\Http\Controllers\categories\BeritaCategory;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\profile\JurusanController;
 
@@ -69,7 +70,7 @@ Route::prefix('private/admin')->group(function () {
             ]);
 
             Route::resource('/artikel', ArtikelController::class);
-            Route::get('/gallery', [AdminController::class, 'gallery'])->name('gallery');
+            Route::resource('/gallery', GalleryController::class);
             Route::get('/links', [AdminController::class, 'links'])->name('links');
 
             Route::get('/profile', [profileAdmin::class, 'index'])->name('profile');

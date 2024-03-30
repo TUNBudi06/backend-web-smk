@@ -104,14 +104,11 @@
                             </div>
                         </div>
                         <div class="col-md-6 text-right">
-                            <p class="montserrat d-inline"
-                            style="font-size: .7rem;">
-                            1 dari 10</p>
-                            <a href="#"
-                            class="btn btn-sm p-0 px-2 btn-white disabled"><i
-                                    class="fas fa-caret-left text-warning"></i></a>
-                            <a href="#"
-                            class="btn btn-sm p-0 px-2 btn-white active">
+                            <p class="montserrat d-inline" style="font-size: .7rem;">{{ $artikel->firstItem() }} dari {{ $artikel->lastItem() }}</p>
+                            <a href="{{ $artikel->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $artikel->onFirstPage() ? 'disabled' : 'active' }}">
+                                <i class="fas fa-caret-left text-warning"></i>
+                            </a>
+                            <a href="{{ $artikel->nextPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $artikel->hasMorePages() ? 'active' : 'disabled' }}">
                                 <i class="fas fa-caret-right text-warning"></i>
                             </a>
                         </div>
