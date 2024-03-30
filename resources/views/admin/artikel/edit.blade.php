@@ -49,7 +49,7 @@
             @enderror
         </div>
         <div class="form-group">
-            <input type="hidden" name="categories_viewer" id="artikel_viewer" class="form-control" value="0" aria-describedby="viewId">
+            <input type="hidden" name="artikel_viewer" id="artikel_viewer" class="form-control" value="{{ $artikel->artikel_viewer }}" aria-describedby="viewId">
                 <small id="viewId" class="text-muted d-none"></small>
         </div>
         <div class="form-group">

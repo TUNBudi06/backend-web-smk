@@ -110,41 +110,45 @@ class ArtikelController extends Controller
     {
         $id_artikel = $request->route("artikel");
         $token = $request->session()->get('token') ?? $request->input('token');
-
+    
         $request->validate([
             'artikel_title' => 'required',
             'artikel_level' => 'required',
             'id_category' => 'required',
             'artikel_text' => 'required',
-            'artikel_thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'artikel_thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
         ], [
             'artikel_thumbnail.max' => 'The image may not be greater than 10MB.',
         ]);
-
-        // Simpan data ke tabel artikel
+    
         $data = tb_artikel::findOrFail($id_artikel);
+
+        if ($request->hasFile('artikel_thumbnail')) {
+            // Hapus gambar sebelumnya jika ada
+            if ($data->artikel_thumbnail !== null) {
+                $oldImagePath = public_path('img/artikel/' . $data->artikel_thumbnail);
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+
+            // Simpan gambar baru
+            $imageName = $request->file('artikel_thumbnail')->hashName();
+            $request->file('artikel_thumbnail')->move('img/artikel', $imageName);
+            $data->artikel_thumbnail = $imageName;
+        }
+
+    
         $data->update([
             'artikel_title' => $request->artikel_title,
             'artikel_level' => $request->artikel_level,
             'id_category' => $request->id_category,
             'artikel_text' => $request->artikel_text,
-            'artikel_viewer' => $request->artikel_viewer,
         ]);
-
-        // Periksa apakah ada gambar yang diunggah
-        if ($request->hasFile('artikel_thumbnail')) {
-            $file = $request->file('artikel_thumbnail');
-            $imageName = md5($file->getClientOriginalName() . microtime()) . '.' . $file->getClientOriginalExtension();
-            $file->move('img/artikel', $imageName);
-            $data->artikel_thumbnail = $imageName;
-            $data->save();
-        }
-
-        dd($data);
-
-
-        return redirect()->route('artikel.index', ['token' => $token])->with('success', 'Data added successfully.');
-    }
+    
+        // Redirect dengan pesan sukses
+        return redirect()->route('artikel.index', ['token' => $token])->with('success', 'Data updated successfully.');
+    }    
 
     /**
      * Remove the specified resource from storage.
