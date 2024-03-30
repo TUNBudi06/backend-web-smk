@@ -46,17 +46,6 @@ class AdminController extends Controller
         ]);
     }
 
-    public function jurusan(Request $request)
-    {
-        $token = $request->session()->get('token') ?? $request->input('token');
-
-        return view('admin.page.profile.jurusan', [
-            'menu_active' => 'profile',
-            'profile_active' => 'jurusan',
-            'token' => $token,
-        ]);
-    }
-
     public function extra(Request $request)
     {
         $token = $request->session()->get('token') ?? $request->input('token');

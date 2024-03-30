@@ -16,9 +16,18 @@
                         </p>
                     </div>
                     <div class="col-md-4 text-right">
-                        <a href="#" class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i> Jurusan Baru</a>
+                        <a href="{{ route('jurusan.create', ['token' => $token]) }}" class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i> Jurusan Baru</a>
                     </div>
                 </div>
+                @if(Session::get('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <strong>{{ Session::get('success') }}</strong>
+                    </div>
+                @endif
                 <table class="table">
                     <thead>
                         <tr>
@@ -30,17 +39,23 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($jurusan as $key => $data)
                         <tr>
-                            <td><img src="" width="100px" class="rounded" alt=""></td>
-                            <td>Jurusan Nama</td>
-                            <td>Jurusan Kode</td>
-                            <td>Nama Prodi</td>
+                            <td><img src="{{ asset('img/jurusan/thumbnail/'.$data->jurusan_thumbnail) }}" width="100px" class="rounded" alt=""></td>
+                            <td>{{ $data->jurusan_nama }}</td>
+                            <td>{{ $data->jurusan_short }}</td>
+                            <td>{{ $data->prodis->prodi_name }}</td>
                             <td>
                                 <a href="#" target="_blank" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
-                                <a href="#" target="_blank" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                <a href="#" target="_blank" class="btn btn-danger p-2"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('jurusan.edit', ['jurusan' => $data->id_jurusan, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
+                                <form action="{{ route('jurusan.destroy', ['jurusan' => $data->id_jurusan, 'token' => $token]) }}" method="post" class="d-inline">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>
+                                </form>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
                 <script>
@@ -89,14 +104,11 @@
                         </div>
                     </div>
                     <div class="col-md-6 text-right">
-                        <p class="montserrat d-inline" 
-                        style="font-size: .7rem;">
-                        1 dari 10</p>
-                        <a href="#"
-                        class="btn btn-sm p-0 px-2 btn-white active"><i
-                                class="fas fa-caret-left text-warning"></i></a>
-                        <a href="#"
-                        class="btn btn-sm p-0 px-2 btn-white active">
+                        <p class="montserrat d-inline" style="font-size: .7rem;">{{ $jurusan->firstItem() }} dari {{ $jurusan->lastItem() }}</p>
+                        <a href="{{ $jurusan->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $jurusan->onFirstPage() ? 'disabled' : 'active' }}">
+                            <i class="fas fa-caret-left text-warning"></i>
+                        </a>
+                        <a href="{{ $jurusan->nextPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $jurusan->hasMorePages() ? 'active' : 'disabled' }}">
                             <i class="fas fa-caret-right text-warning"></i>
                         </a>
                     </div>

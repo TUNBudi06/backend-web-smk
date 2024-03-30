@@ -30,4 +30,9 @@ class tb_jurusan extends Model
     ];
 
     public $timestamps = false;
+
+    public function prodis()
+    {
+        return $this->belongsTo(tb_prodi::class, 'id_prodi', 'id_prodi');
+    }
 }

@@ -13,6 +13,7 @@ use App\Http\Controllers\categories\BeritaCategory;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\profile\JurusanController;
 
 Route::get('/', function () {
     return redirect('/private/admin/login/GUI-APP');
@@ -79,7 +80,7 @@ Route::prefix('private/admin')->group(function () {
             Route::get('/gallery/category', [CategoryController::class, 'categoryGallery'])->name('category.gallery');
 
             Route::prefix('profile')->group(function () {
-                Route::get('jurusan', [AdminController::class, 'jurusan'])->name('profile.jurusan');
+                Route::resource('/jurusan', JurusanController::class);
                 Route::get('extra', [AdminController::class, 'extra'])->name('profile.extra');
                 Route::get('fasilitas', [AdminController::class, 'fasilitas'])->name('profile.fasilitas');
                 Route::get('kemitraan', [AdminController::class, 'kemitraan'])->name('profile.kemitraan');
