@@ -15,9 +15,10 @@
                         </p>
                     </div>
                     <div class="col-md-4 text-right">
-                        <a href="{{ route('gallery.create', ['token' => $token]) }}" class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i
-                                class="fas fa-plus"></i> Gallery Baru</a>
-                        <a href="{{ route('category.gallery', $token) }}"
+                        <a href="{{ route('gallery.create', ['token' => $token]) }}"
+                            class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i>
+                            Gallery Baru</a>
+                        <a href="{{ route('gallery.category.index', $token) }}"
                             class="btn-print btn btn-white border-warning px-3 rounded-pill"><i class="fas fa-list"></i>
                             Kategori</a>
                     </div>
@@ -105,11 +106,14 @@
                         </div>
                     </div>
                     <div class="col-md-6 text-right">
-                        <p class="montserrat d-inline" style="font-size: .7rem;">{{ $gallery->firstItem() }} dari {{ $gallery->lastItem() }}</p>
-                        <a href="{{ $gallery->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $gallery->onFirstPage() ? 'disabled' : 'active' }}">
+                        <p class="montserrat d-inline" style="font-size: .7rem;">{{ $gallery->firstItem() }} dari
+                            {{ $gallery->lastItem() }}</p>
+                        <a href="{{ $gallery->previousPageUrl() }}"
+                            class="btn btn-sm p-0 px-2 btn-white {{ $gallery->onFirstPage() ? 'disabled' : 'active' }}">
                             <i class="fas fa-caret-left text-warning"></i>
                         </a>
-                        <a href="{{ $gallery->nextPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $gallery->hasMorePages() ? 'active' : 'disabled' }}">
+                        <a href="{{ $gallery->nextPageUrl() }}"
+                            class="btn btn-sm p-0 px-2 btn-white {{ $gallery->hasMorePages() ? 'active' : 'disabled' }}">
                             <i class="fas fa-caret-right text-warning"></i>
                         </a>
                     </div>

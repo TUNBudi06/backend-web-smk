@@ -10,6 +10,7 @@ use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\categories\ArtikelCategory;
 use App\Http\Controllers\categories\BeritaCategory;
+use App\Http\Controllers\categories\GalleryCategory;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
@@ -51,6 +52,17 @@ Route::prefix('private/admin')->group(function () {
                 'edit' => 'artikel.category.edit',
                 'update' => 'artikel.category.update',
                 'destroy' => 'artikel.category.destroy',
+            ]);
+
+            Route::resource('gallery/categoryGallery', GalleryCategory::class)->parameters([
+                'categoryGallery' => 'gallery_category',
+            ])->names([
+                'index' => 'gallery.category.index',
+                'create' => 'gallery.category.create',
+                'store' => 'gallery.category.store',
+                'edit' => 'gallery.category.edit',
+                'update' => 'gallery.category.update',
+                'destroy' => 'gallery.category.destroy',
             ]);
 
             Route::resource('pengumuman', PengumumanController::class);
