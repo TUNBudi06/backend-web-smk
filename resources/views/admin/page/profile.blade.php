@@ -17,8 +17,8 @@
                         <img src="{{ asset('img/illust/male.svg') }}" class="w-100" alt="">
                     </div>
                     <div class="name-profile ml-2 position-absolute d-inline-block" style="top: 20px;">
-                        <h4 class="text-white poppins"> {{$nama}}</h4>
-                        <p class="text-dark montserrat" style="font-size: .8rem;"><i class="fas fa-envelope text-warning"></i> {{$email}}</p>
+                        <h4 class="text-white poppins"> {{$nama}} <span class="text-white poppins" style="font-size: .8rem;">({{$user_type}})</span></h4>
+                        <p class="text-dark montserrat" style="font-size: .8rem;"><i class="fas fa-envelope text-warning"></i> {{$email}}<i style="margin-left: 1rem" class="fas fa-user text-warning"></i> {{$username}}</p>
                     </div>
                 </div>
             </div>

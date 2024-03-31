@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class tb_gallery extends Model
 {
-    use HasFactory;
+
 
     protected $table = 'tb_gallery';
 

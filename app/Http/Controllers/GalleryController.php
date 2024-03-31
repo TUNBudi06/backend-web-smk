@@ -65,9 +65,8 @@ class GalleryController extends Controller
 
         if ($request->hasFile('gallery_file')) {
             $file = $request->file('gallery_file');
-            $fileContents = file_get_contents($file->getRealPath());
             $fileMimeType = $file->getClientMimeType();
-            $imageName = hash('sha256', $fileContents) . '.' . $file->getClientOriginalExtension();
+            $imageName = data_manager::renameFile($file);
             $file->move('img/gallery', $imageName);
 
             // Simpan nama file dan tipe file ke dalam database

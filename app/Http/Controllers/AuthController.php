@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\tb_admin;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,7 @@ class AuthController extends Controller
             "token" => "required"
         ])["token"];
 
-        $result = DB::table('tb_admin')->where('token', $token)->first();
+        $result = User::where('token', $token)->first();
         if ($result !== null) {
             $nToken = $token;
             return redirect()->route('guest.login', ['token' => $token]);
@@ -32,7 +33,7 @@ class AuthController extends Controller
 
     public function checkTokenUrl($token)
     {
-        $result = DB::table('tb_admin')->where('token', $token)->first();
+        $result = User::where('token', $token)->first();
         return $result;
     }
 
@@ -66,7 +67,7 @@ class AuthController extends Controller
         }
 
         Log::info($cookie);
-        $user = tb_admin::where('email', $email)
+        $user = User::where('email', $email)
             ->where('token', $token)
             ->first();
 

@@ -13,6 +13,7 @@ class User extends Authenticatable
 
 
     protected $table = "tb_users";
+    protected $primaryKey = "id_user";
     /**
      * The attributes that are mass assignable.
      *
@@ -20,7 +21,12 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        "username",
         'email',
+        "token",
+        "role",
+        "email_verified_at",
+        "verified_user",
         'password',
     ];
 
@@ -30,9 +36,15 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
+        "token",
         'password',
         'remember_token',
     ];
+
+    public function role()
+    {
+        return $this->belongsTo(tb_role::class,"role","id_role");
+    }
 
     /**
      * Get the attributes that should be cast.

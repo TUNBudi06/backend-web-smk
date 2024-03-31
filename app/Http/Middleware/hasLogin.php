@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\tb_admin;
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
@@ -27,7 +28,7 @@ class hasLogin
         if($rToken != $token) {
             return redirect()->route("guest.token");
         }
-        $user = tb_admin::where('token', $token)
+        $user = User::where('token', $token)
             ->first();
         if(!$email == null) {
             if($email->email != $user->email) {
