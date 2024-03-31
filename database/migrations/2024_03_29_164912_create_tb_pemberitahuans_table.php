@@ -10,13 +10,13 @@ return new class extends Migration
     {
         Schema::create('tb_pemberitahuan', function (Blueprint $table) {
             $table->bigIncrements('id_pemberitahuan');
-            $table->string('pemberitahuan_nama', 100);
-            $table->string('pemberitahuan_target', 100);
-            $table->string("pemberitahuan_thumbnail");
-            $table->date('pemberitahuan_date');
-            $table->time('pemberitahuan_time');
-            $table->longText('pemberitahuan_text');
-            $table->timestamp('pemberitahuan_timestamp')->useCurrent();
+            $table->string('nama', 100);
+            $table->string('target', 100);
+            $table->string("thumbnail");
+            $table->date('date');
+            $table->time('time');
+            $table->longText('text');
+            $table->timestamp('timestamp')->useCurrent();
             $table->timestamps(); // Laravel timestamps, 'created_at' and 'updated_at'
         });
     }

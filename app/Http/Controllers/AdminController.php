@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\tb_artikel;
+use App\Models\tb_event;
+use App\Models\tb_gallery;
+use App\Models\tb_news;
+use App\Models\tb_pengumuman;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -10,9 +15,16 @@ class AdminController extends Controller
     {
         $token = $request->session()->get('token') ?? $request->input('token');
 
+
+
         return view('admin.page.dashboard', [
             'menu_active' => 'dashboard',
             'token' => $token,
+            "artikel"=> tb_artikel::count(),
+            "berita"=>tb_news::count(),
+            "event"=>tb_event::count(),
+            "gallery"=>tb_gallery::count(),
+            "pengumuman"=>tb_pengumuman::count(),
         ]);
     }
 

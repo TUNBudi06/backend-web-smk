@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password'); // Assuming password will be stored as a string
             $table->string('token')->nullable();
-            $table->string("remember_token");
+            $table->rememberToken();
             $table->timestamps(); // Creates 'created_at' and 'updated_at' columns unless overridden
         });
     }

@@ -11,31 +11,31 @@
                     <div class="col-md-6 mb-2">
                         <div class="count-card rounded p-3">
                             <p class="poppins mb-0"><i class="fas mr-2 fa-tachometer-alt"></i> Pengumuman</p>
-                            <p class="montserrat mb-0" style="font-size: .8rem;"><span class="font-weight-bold"></span> Item</p>
+                            <p class="montserrat mb-0" style="font-size: .8rem;"><span class="font-weight-bold">{{$pengumuman}}</span> Item</p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="count-card rounded p-3">
                             <p class="poppins mb-0"><i class="fas mr-2 fa-bullhorn"></i>Agenda</p>
-                            <p class="montserrat mb-0" style="font-size: .8rem;"><span class="font-weight-bold"></span> Item</p>
+                            <p class="montserrat mb-0" style="font-size: .8rem;"><span class="font-weight-bold">{{$event}}</span> Item</p>
                         </div>
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="count-card rounded p-3">
                             <p class="poppins mb-0"><i class="fas mr-2 fa-newspaper"></i>Berita</p>
-                            <p class="montserrat mb-0" style="font-size: .8rem;"><span class="font-weight-bold"></span> Item</p>
+                            <p class="montserrat mb-0" style="font-size: .8rem;"><span class="font-weight-bold">{{$berita}}</span> Item</p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="count-card rounded p-3">
                             <p class="poppins mb-0"><i class="fas mr-2 fa-book"></i>Artikel</p>
-                            <p class="montserrat mb-0" style="font-size: .8rem;"><span class="font-weight-bold"></span> Item</p>
+                            <p class="montserrat mb-0" style="font-size: .8rem;"><span class="font-weight-bold">{{$artikel}}</span> Item</p>
                         </div>
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="count-card rounded p-3">
                             <p class="poppins mb-0"><i class="fas mr-2 fa-images"></i>Gallery</p>
-                            <p class="montserrat mb-0" style="font-size: .8rem;"><span class="font-weight-bold"></span> Item</p>
+                            <p class="montserrat mb-0" style="font-size: .8rem;"><span class="font-weight-bold">{{$gallery}}</span> Item</p>
                         </div>
                     </div>
                     <div class="col-md-6">
