@@ -30,6 +30,16 @@
             @enderror
         </div>
         <div class="form-group">
+            <label for="gallery_location">Lokasi</label>
+            <input type="text" name="gallery_location" id="gallery_location" class="form-control @error('gallery_location') is-invalid @enderror" value="{{ old('gallery_location') }}" aria-describedby="waktuId">
+            <small id="waktuId" class="text-muted d-none"></small>
+            @error('gallery_location')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+        <div class="form-group">
             <label for="gallery_text">Deskripsi gallery</label>
             <textarea name="gallery_text" id="texteditor" cols="30" rows="10" class="form-control @error('gallery_text') is-invalid @enderror" placeholder="Isi dari gallery.." aria-describedby="textId">{{ old('gallery_text') }}</textarea>
             <small id="textId" class="text-muted d-none"></small>

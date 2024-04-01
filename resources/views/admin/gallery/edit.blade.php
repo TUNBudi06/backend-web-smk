@@ -47,10 +47,10 @@
             @enderror
         </div>
         <div class="form-group">
-            <label for="gallery_content">Deskripsi Gallery</label>
-            <textarea name="gallery_content" id="texteditor" cols="30" rows="10" class="form-control @error('gallery_content') is-invalid @enderror" placeholder="Isi dari gallery.." aria-describedby="textId">{{ $gallery->gallery_content }}</textarea>
+            <label for="gallery_text">Deskripsi Gallery</label>
+            <textarea name="gallery_text" id="texteditor" cols="30" rows="10" class="form-control @error('gallery_text') is-invalid @enderror" placeholder="Isi dari gallery.." aria-describedby="textId">{{ $gallery->gallery_text }}</textarea>
             <small id="textId" class="text-muted d-none"></small>
-            @error('gallery_content')
+            @error('gallery_text')
                 <p class="text-danger">
                     {{ $message }}
                 </p>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\tb_category_gallery;
 use App\Models\tb_gallery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
 {
@@ -14,7 +15,7 @@ class GalleryController extends Controller
     public function index(Request $request)
     {
         $perPage = 10;
-        $gallery = tb_gallery::orderBy('gallery_timestamp', 'desc')->paginate($perPage);
+        $gallery = tb_gallery::orderBy('id_gallery', 'desc')->paginate($perPage);
 
         $token = $request->session()->get('token') ?? $request->input('token');
         return view('admin.gallery.index', [
@@ -110,10 +111,50 @@ class GalleryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $token = $request->session()->get('token') ?? $request->input('token');
+
+        $id_gallery = $request->route("gallery");
+        $request->validate([
+            'gallery_title' => 'required',
+            'id_category' => 'required',
+            'gallery_text' => 'required',
+            'gallery_location' => 'required',
+            'gallery_file' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+        ], [
+            'gallery_file.max' => 'The image may not be greater than 10MB.',
+        ]);
+
+        // Temukan data galeri yang akan disunting
+        $data = tb_gallery::findOrFail($id_gallery);
+        $data->gallery_title = $request->gallery_title;
+        $data->id_category = $request->id_category;
+        $data->gallery_text = $request->gallery_text;
+        $data->gallery_location = $request->gallery_location;
+
+        if ($request->hasFile('gallery_file')) {
+            $file = $request->file('gallery_file');
+            $fileMimeType = $file->getClientMimeType();
+            $imageName = data_manager::renameFile($file);
+            $file->move('img/gallery', $imageName);
+
+            // Hapus file lama jika ada dan simpan file baru
+            if ($data->gallery_file) {
+                // Hapus file lama
+                Storage::delete('img/gallery/' . $data->gallery_file);
+            }
+
+            // Simpan nama file dan tipe file ke dalam database
+            $data->gallery_file = $imageName;
+            $data->file_type = $fileMimeType;
+        }
+
+        $data->save();
+
+        return redirect()->route('gallery.index', ['token' => $token])->with('success', 'Data updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.
