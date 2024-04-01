@@ -62,18 +62,20 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($ptk as $key => $data)
                         <tr>
-                            <td>Nama PTK</td>
-                            <td>NIP PTK</td>
-                            <td>TTL PTK</td>
-                            <td>Gender PTK</td>
-                            <td>Alamat PTK</td>
+                            <td>{{ $data->nama }}</td>
+                            <td>{{ $data->nip }}</td>
+                            <td>{{ $data->tempat_lahir }}, {{ $data->tanggal_lahir }}</td>
+                            <td>{{ $data->jenis_kelamin }}</td>
+                            <td>{{ $data->alamat }}</td>
                             <td>
                                 <a href="#" target="_blank" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
                                 <a href="#" target="_blank" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
                                 <a href="#" target="_blank" class="btn btn-danger p-2"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
                 <script>
@@ -122,14 +124,11 @@
                         </div>
                     </div>
                     <div class="col-md-6 text-right">
-                        <p class="montserrat d-inline" 
-                        style="font-size: .7rem;">
-                        1 dari 10</p>
-                        <a href="#"
-                        class="btn btn-sm p-0 px-2 btn-white active"><i
-                                class="fas fa-caret-left text-warning"></i></a>
-                        <a href="#"
-                        class="btn btn-sm p-0 px-2 btn-white active">
+                        <p class="montserrat d-inline" style="font-size: .7rem;">{{ $ptk->firstItem() }} dari {{ $ptk->lastItem() }}</p>
+                        <a href="{{ $ptk->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $ptk->onFirstPage() ? 'disabled' : 'active' }}">
+                            <i class="fas fa-caret-left text-warning"></i>
+                        </a>
+                        <a href="{{ $ptk->nextPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $ptk->hasMorePages() ? 'active' : 'disabled' }}">
                             <i class="fas fa-caret-right text-warning"></i>
                         </a>
                     </div>

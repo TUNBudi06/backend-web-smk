@@ -102,17 +102,6 @@ class AdminController extends Controller
         ]);
     }
 
-    public function ptk(Request $request)
-    {
-        $token = $request->session()->get('token') ?? $request->input('token');
-
-        return view('admin.page.profile.ptk', [
-            'menu_active' => 'profile',
-            'profile_active' => 'ptk',
-            'token' => $token,
-        ]);
-    }
-
     public function links(Request $request)
     {
         $token = $request->session()->get('token') ?? $request->input('token');
