@@ -7,7 +7,7 @@
         class="<?= $profile_active == 'fasilitas' ? 'btn my-1 btn-warning px-4 shadow-warning' : 'btn my-1 btn-light px-4 border-warning'?>">Fasilitas</a>
     <a href="{{ route('profile.kemitraan',$token) }}"
         class="<?= $profile_active == 'kemitraan' ? 'btn my-1 btn-warning px-4 shadow-warning' : 'btn my-1 btn-light px-4 border-warning'?>">Kemitraan</a>
-    <a href="{{ route('profile.pd',$token) }}"
+    <a href="{{ route('pd.index',$token) }}"
         class="<?= $profile_active == 'pd' ? 'btn my-1 btn-warning px-4 shadow-warning' : 'btn my-1 btn-light px-4 border-warning'?>">PD</a>
     <a href="{{ route('profile.ptk',$token) }}"
         class="<?= $profile_active == 'ptk' ? 'btn my-1 btn-warning px-4 shadow-warning' : 'btn my-1 btn-light px-4 border-warning'?>">PTK</a>

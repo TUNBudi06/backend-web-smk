@@ -95,7 +95,7 @@ class AdminController extends Controller
     {
         $token = $request->session()->get('token') ?? $request->input('token');
 
-        return view('admin.page.profile.pd', [
+        return view('admin.page.profile.peserta_didik.index', [
             'menu_active' => 'profile',
             'profile_active' => 'pd',
             'token' => $token,

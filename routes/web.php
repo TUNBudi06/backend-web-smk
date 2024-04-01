@@ -16,6 +16,8 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\profile\JurusanController;
+use App\Http\Controllers\profile\PdController;
+
 
 Route::get('/', function () {
     return redirect('/private/admin/login/GUI-APP');
@@ -97,7 +99,7 @@ Route::prefix('private/admin')->group(function () {
                 Route::get('extra', [AdminController::class, 'extra'])->name('profile.extra');
                 Route::get('fasilitas', [AdminController::class, 'fasilitas'])->name('profile.fasilitas');
                 Route::get('kemitraan', [AdminController::class, 'kemitraan'])->name('profile.kemitraan');
-                Route::get('pd', [AdminController::class, 'pd'])->name('profile.pd');
+                Route::resource('pd', PdController::class);
                 Route::get('ptk', [AdminController::class, 'ptk'])->name('profile.ptk');
             });
         });

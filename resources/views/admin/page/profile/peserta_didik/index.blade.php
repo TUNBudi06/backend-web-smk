@@ -41,8 +41,16 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn bg-second rad text-warning" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-warning rad">Save</button>
+                                    @if(Session::get('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <strong>{{ Session::get('success') }}</strong>
+                    </div>
+                @endif
+                                        <!-- <button type="submit" class="btn btn-warning rad">Save</button> -->
                                     </div>
                                 </div>
                                 </form>
@@ -55,7 +63,8 @@
                         <tr>
                             <th>Nama</th>
                             <th>Kelas</th>
-                            <th>TTL</th>
+                            <th>Tempat Lahir</th>
+                            <th>tanggal Lahir</th>
                             <th>agama</th>
                             <th>gender</th>
                             <th>alamat</th>
@@ -63,40 +72,51 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Nama Siswa</td>
-                            <td>Kelas Siswa</td>
-                            <td>TTL Siswa</td>
-                            <td>Agama Siswa</td>
-                            <td>Gender Siswa</td>
-                            <td>Alamat Siswa</td>
-                            <td>
-                                <a href="#" target="_blank" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
-                                <a href="#" target="_blank" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                <a href="#" target="_blank" class="btn btn-danger p-2"><i class="fas fa-trash"></i></a>
-                            </td>
-                        </tr>
-                    </tbody>
+    @foreach($pd as  $key => $data)
+        <tr>
+            <!-- <td>{{ $data->nisn }}</td>
+            <td>{{ $data->nis }}</td> -->
+            <td>{{ $data->nama }}</td>
+            <td>{{ $data->kelas }}</td>
+            <td>{{ $data->tempat_lahir }}</td>
+            <td>{{ $data->tanggal_lahir }}</td>
+            <td>{{ $data->agama }}</td>
+            <td>{{ $data->gender }}</td>
+            <td>{{ $data->alamat }}</td>
+            <td>
+                <a href="#" target="_blank" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
+                <a href="{{ route('pd.edit', ['pd' => $data->id, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
+                <form action="{{ route('pd.destroy', ['pd' => $data->id, 'token' => $token]) }}" method="post" class="d-inline">
+                    @csrf
+                    @method('delete')
+                    <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>
+                </form>
+            </td>
+        </tr>
+    @endforeach
+</tbody>
+
+
                 </table>
                 <script>
-                    $('.check-toggle').change(function() {
-                        if(this.checked) {
-                            $('.btn-print').removeAttr('disabled').removeClass('disabled')
-                            $('.check-respond').prop('checked', true);
-                        } else {
-                            $('.btn-print').addClass('disabled').attr('disabled')
-                            $('.check-respond').prop('checked', false);
-                        }
-                    });
-                    $('input[name="checkPrint[]"]').change(function() {
-                        var atLeastOneIsChecked = $('input[name="checkPrint[]"]:checked').length > 0;
-                        if(atLeastOneIsChecked) {
-                            $('.btn-print').removeAttr('disabled').removeClass('disabled')
-                        } else {
-                            $('.btn-print').addClass('disabled').attr('disabled')
-                        }
-                    });
-                </script>
+                        $('.check-toggle').change(function() {
+                            if(this.checked) {
+                                $('.btn-print').removeAttr('disabled').removeClass('disabled')
+                                $('.check-respond').prop('checked', true);
+                            } else {
+                                $('.btn-print').addClass('disabled').attr('disabled')
+                                $('.check-respond').prop('checked', false);
+                            }
+                        });
+                        $('input[name="checkPrint[]"]').change(function() {
+                            var atLeastOneIsChecked = $('input[name="checkPrint[]"]:checked').length > 0;
+                            if(atLeastOneIsChecked) {
+                                $('.btn-print').removeAttr('disabled').removeClass('disabled')
+                            } else {
+                                $('.btn-print').addClass('disabled').attr('disabled')
+                            }
+                        });
+                    </script>
                 <div class="row px-3">
                     <div class="col-md-6">
                         <div class="pb-3">
