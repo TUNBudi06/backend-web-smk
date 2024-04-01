@@ -56,10 +56,15 @@ class JurusanController extends Controller
             'jurusan_text' => 'required',
             'jurusan_thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
         ], [
-            'jurusan_thumbnail.max' => 'The image may not be greater than 10MB.',
+            'jurusan_nama.required' => 'Kolom nama jurusan harus diisi.',
+            'jurusan_short.required' => 'Kolom inisial jurusan harus diisi.',
+            'id_category.required' => 'Kolom kategori jurusan harus diisi.',
+            'jurusan_text.required' => 'Kolom isi jurusan harus diisi.',
+            'jurusan_thumbnail' => 'Kolom gambar wajib diisi',
+            'jurusan_thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
         ]);
 
-        // Simpan data ke tabel news
+        // Simpan data ke tabel jurusan
         $data = new tb_jurusan();
         $data->jurusan_nama = $request->jurusan_nama;
         $data->jurusan_short = $request->jurusan_short;
@@ -76,7 +81,7 @@ class JurusanController extends Controller
 
         $data->save();
 
-        return redirect()->route('jurusan.index', ['token' => $token])->with('success', 'Data added successfully.');
+        return redirect()->route('jurusan.index', ['token' => $token])->with('success', 'Jurusan baru berhasil ditambahkan.');
     }
 
     /**
@@ -119,9 +124,14 @@ class JurusanController extends Controller
             'jurusan_short' => 'required',
             'id_prodi' => 'required',
             'jurusan_text' => 'required',
-            'jurusan_thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'jurusan_thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
         ], [
-            'jurusan_thumbnail.max' => 'The image may not be greater than 10MB.',
+            'jurusan_nama.required' => 'Kolom nama jurusan harus diisi.',
+            'jurusan_short.required' => 'Kolom inisial jurusan harus diisi.',
+            'id_category.required' => 'Kolom kategori jurusan harus diisi.',
+            'jurusan_text.required' => 'Kolom isi jurusan harus diisi.',
+            'jurusan_thumbnail' => 'Kolom gambar wajib diisi',
+            'jurusan_thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
         ]);
 
         // Temukan data jurusan
@@ -151,7 +161,7 @@ class JurusanController extends Controller
             'jurusan_text' => $request->jurusan_text,
         ]);
 
-        return redirect()->route('jurusan.index', ['token' => $token])->with('success', 'Data updated successfully.');
+        return redirect()->route('jurusan.index', ['token' => $token])->with('success', 'Jurusan berhasil diperbarui.');
     }
 
     /**
@@ -165,6 +175,6 @@ class JurusanController extends Controller
         $jurusan = tb_jurusan::findOrFail($id_jurusan);
         $jurusan->delete();
 
-        return redirect()->route('jurusan.index', ['token' => $request->token])->with('success', 'Data deleted successfully.');
+        return redirect()->route('jurusan.index', ['token' => $request->token])->with('success', 'Jurusan berhasil dihapus.');
     }
 }

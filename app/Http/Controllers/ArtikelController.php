@@ -53,7 +53,12 @@ class ArtikelController extends Controller
             'artikel_text' => 'required',
             'artikel_thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
         ], [
-            'artikel_thumbnail.max' => 'The image may not be greater than 10MB.',
+            'artikel_title.required' => 'Kolom nama artikel harus diisi.',
+            'artikel_level.required' => 'Kolom level artikel harus diisi.',
+            'id_category.required' => 'Kolom kategori artikel harus diisi.',
+            'artikel_text.required' => 'Kolom isi artikel harus diisi.',
+            'artikel_thumbnail' => 'Kolom gambar wajib diisi',
+            'artikel_thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
         ]);
 
         // Simpan data ke tabel artikel
@@ -74,7 +79,7 @@ class ArtikelController extends Controller
 
         $data->save();
 
-        return redirect()->route('artikel.index', ['token' => $token])->with('success', 'Data added successfully.');
+        return redirect()->route('artikel.index', ['token' => $token])->with('success', 'Artikel baru berhasil ditambahkan.');
     }
 
     /**
@@ -118,7 +123,12 @@ class ArtikelController extends Controller
             'artikel_text' => 'required',
             'artikel_thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
         ], [
-            'artikel_thumbnail.max' => 'The image may not be greater than 10MB.',
+            'artikel_title.required' => 'Kolom nama artikel harus diisi.',
+            'artikel_level.required' => 'Kolom level artikel harus diisi.',
+            'id_category.required' => 'Kolom kategori artikel harus diisi.',
+            'artikel_text.required' => 'Kolom isi artikel harus diisi.',
+            'artikel_thumbnail' => 'Kolom gambar wajib diisi',
+            'artikel_thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
         ]);
     
         $data = tb_artikel::findOrFail($id_artikel);
@@ -147,7 +157,7 @@ class ArtikelController extends Controller
         ]);
     
         // Redirect dengan pesan sukses
-        return redirect()->route('artikel.index', ['token' => $token])->with('success', 'Data updated successfully.');
+        return redirect()->route('artikel.index', ['token' => $token])->with('success', 'Artikel berhasil diperbarui.');
     }    
 
     /**
@@ -161,6 +171,6 @@ class ArtikelController extends Controller
         $artikel = tb_artikel::findOrFail($id_artikel);
         $artikel->delete();
 
-        return redirect()->route('artikel.index', ['token' => $request->token])->with('success', 'Data deleted successfully.');
+        return redirect()->route('artikel.index', ['token' => $request->token])->with('success', 'Artikel berhasil dihapus');
     }
 }

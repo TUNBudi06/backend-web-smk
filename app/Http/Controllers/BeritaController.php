@@ -55,11 +55,11 @@ class BeritaController extends Controller
             'news_location' => 'required',
             'news_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240'
         ], [
-            'news_title.required' => 'Kolom nama agenda harus diisi.',
-            'news_level.required' => 'Kolom tipe agenda harus diisi.',
-            'id_category.required' => 'Kolom isi agenda harus diisi.',
-            'news_content.required' => 'Kolom tanggal agenda harus diisi.',
-            'news_location.required' => 'Kolom lokasi agenda harus diisi.',
+            'news_title.required' => 'Kolom nama berita harus diisi.',
+            'news_level.required' => 'Kolom level berita harus diisi.',
+            'id_category.required' => 'Kolom kategori berita harus diisi.',
+            'news_content.required' => 'Kolom isi berita harus diisi.',
+            'news_location.required' => 'Kolom lokasi berita harus diisi.',
             'news_image' => 'Kolom gambar wajib diisi',
             'news_image.max' => 'Ukuran gambar tidak boleh lebih dari 10MB'
         ]);
@@ -128,11 +128,11 @@ class BeritaController extends Controller
             'news_location' => 'required',
             'news_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240'
         ], [
-            'news_title.required' => 'Kolom nama agenda harus diisi.',
-            'news_level.required' => 'Kolom tipe agenda harus diisi.',
-            'id_category.required' => 'Kolom isi agenda harus diisi.',
-            'news_content.required' => 'Kolom tanggal agenda harus diisi.',
-            'news_location.required' => 'Kolom lokasi agenda harus diisi.',
+            'news_title.required' => 'Kolom nama berita harus diisi.',
+            'news_level.required' => 'Kolom level berita harus diisi.',
+            'id_category.required' => 'Kolom kategori berita harus diisi.',
+            'news_content.required' => 'Kolom isi berita harus diisi.',
+            'news_location.required' => 'Kolom lokasi berita harus diisi.',
             'news_image' => 'Kolom gambar wajib diisi',
             'news_image.max' => 'Ukuran gambar tidak boleh lebih dari 10MB'
         ]);
