@@ -16,7 +16,7 @@
                         </p>
                     </div>
                     <div class="col-md-4 text-right">
-                        <a href="#" class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i> Peserta Baru</a>
+                        <a href="{{ route('pd.create', ['token' => $token]) }}" class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i> Peserta Baru</a>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-warning rounded-pill px-4" data-toggle="modal" data-target="#modelId">
                             import CSV
