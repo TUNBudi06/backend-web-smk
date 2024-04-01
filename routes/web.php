@@ -1,12 +1,8 @@
 <?php
 
-use App\Http\Controllers\profileAdmin;
-use App\Http\Middleware\hasLogin;
-use App\Http\Middleware\preventCallBack;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArtikelController;
+use App\Http\Controllers\Auth\AdminAuth;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\categories\ArtikelCategory;
 use App\Http\Controllers\categories\BeritaCategory;
@@ -19,20 +15,26 @@ use App\Http\Controllers\profile\FasilitasController;
 use App\Http\Controllers\profile\JurusanController;
 use App\Http\Controllers\profile\PdController;
 use App\Http\Controllers\profile\PTKController;
+use App\Http\Controllers\profileAdmin;
+use App\Http\Middleware\auth\adminLogin;
+use App\Http\Middleware\hasAdminToken;
+use App\Http\Middleware\hasLogin;
+use App\Http\Middleware\preventCallBack;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect('/private/admin/login/GUI-APP');
 });
 
 Route::prefix('private/admin')->group(function () {
-    Route::get('/login/GUI-APP', [AuthController::class, 'tokenPage'])->name('guest.token');
-    Route::post('/login/GUI-APP', [AuthController::class, 'firstAuth'])->name('first.token');
+    Route::get('/login/GUI-APP', [AdminAuth::class, 'tokenPage'])->name('guest.token');
+    Route::post('/login/GUI-APP', [AdminAuth::class, 'firstAuth'])->name('first.token');
     Route::prefix('{token}')->group(function () {
-        Route::get('/login', [AuthController::class, 'loginPage'])->name('guest.login');
-        Route::post('/login', [AuthController::class, 'login'])->name('guest.auth');
-        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+        Route::get('/login', [AdminAuth::class, 'loginPage'])->name('guest.login');
+        Route::post('/login', [AdminAuth::class, 'login'])->name('guest.auth');
+        Route::post('/logout', [AdminAuth::class, 'logout'])->name('logout');
 
-        Route::middleware([preventCallBack::class,hasLogin::class])->group(function () {
+        Route::middleware([preventCallBack::class,adminLogin::class])->group(function () {
             Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
             Route::resource('berita/category', BeritaCategory::class)->parameters([
@@ -104,7 +106,7 @@ Route::prefix('private/admin')->group(function () {
                 Route::resource('pd', PdController::class);
             });
         });
-    });
+    })->middleware(hasAdminToken::class);
 });
 
 

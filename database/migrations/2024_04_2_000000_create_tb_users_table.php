@@ -17,11 +17,10 @@ return new class extends Migration
             $table->string('username');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string("token")->nullable();
-            $table->unsignedBigInteger("role")->nullable();
-            $table->foreign("role")->references("id_role")->on("tb_user_roles")->onDelete('set null');
             $table->boolean("verified_user")->default(false);
-            $table->string('password');
+            $table->unsignedBigInteger("approved_by")->nullable();
+            $table->foreign("approved_by")->references("id_admin")->on("tb_admins")->onDelete("set null")->onUpdate("set null");
+            $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

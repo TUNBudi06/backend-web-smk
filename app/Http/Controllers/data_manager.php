@@ -15,7 +15,25 @@ class data_manager
     {
         return [
           "isAdmin"=> false,
-          "permission"=> [],
+          "permission"=> [
+              "artikel"=>[
+                  "write"=>false,
+                  "need_verification"=>true
+              ],
+              "pengumuman"=>[
+                  "write"=>false,
+                  "need_verification"=>true
+              ],
+              "event"=>[
+                  "write"=>false,
+                  "need_verification"=>true
+              ],
+              "berita"=>[
+                  "write"=>false,
+                  "need_verification"=>true
+              ]
+          ],
+            "customPermission"=> [],
         ];
     }
 

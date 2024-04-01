@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\tb_admin;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -12,7 +11,7 @@ class profileAdmin extends Controller
     public function index(Request $request)
     {
         $token = $request->session()->get('token') ?? $request->input('token');
-        $user = User::where("token",$token)->first();
+        $user = tb_admin::where("token",$token)->first();
         $user_role = $user->role();
         return view('admin.page.profile', [
             'menu_active' => 'profile',
@@ -32,7 +31,7 @@ class profileAdmin extends Controller
            "email" => "required|email",
         ]);
 
-        $user = User::where("token",$token)->first();
+        $user = tb_admin::where("token",$token)->first();
         $user->update($data);
 
          if ($request->has("password") && $request->has("password_new")) {
@@ -52,7 +51,7 @@ class profileAdmin extends Controller
             "token" => "required|min:4"
         ]);
 
-        $user = User::where("token",$token)->first();
+        $user = tb_admin::where("token",$token)->first();
         $user->update($data);
         return redirect()->route("profile",$request->token);
     }

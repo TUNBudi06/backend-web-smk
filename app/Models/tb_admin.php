@@ -2,18 +2,14 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authincatable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class tb_admin extends Authincatable
 {
-    use HasFactory, Notifiable;
-
-
-    protected $table = "tb_users";
-    protected $primaryKey = "id_user";
+    protected $table = "tb_admins";
+    protected $primaryKey = "id_admin";
     /**
      * The attributes that are mass assignable.
      *
@@ -23,9 +19,11 @@ class User extends Authenticatable
         'name',
         "username",
         'email',
+        "token",
+        "role",
         "email_verified_at",
+        "created_by",
         "verified_user",
-        "approved_by",
         'password',
     ];
 

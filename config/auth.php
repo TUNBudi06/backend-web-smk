@@ -36,9 +36,13 @@ return [
     */
 
     'guards' => [
-        'web' => [
+        'user' => [
             'driver' => 'session',
             'provider' => 'users',
+        ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
         ],
     ],
 
@@ -62,7 +66,11 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            'model' => env('AUTH_MODEL_USER', App\Models\User::class),
+        ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL_ADMIN', App\Models\tb_admin::class),
         ],
 
         // 'users' => [

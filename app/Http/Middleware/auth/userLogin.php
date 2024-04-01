@@ -1,17 +1,15 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\auth;
 
-use App\Models\tb_admin;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
-class hasLogin
+class userLogin
 {
     /**
      * Handle an incoming request.
@@ -38,7 +36,7 @@ class hasLogin
         if(session("status") != "true"){
             return redirect()->route("guest.token");
         }
-        if(Auth::check()) {
+        if(Auth::guard("user")->check()) {
             return $next($request);
         }
         return redirect()->route("guest.token");

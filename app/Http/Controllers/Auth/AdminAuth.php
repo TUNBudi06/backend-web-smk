@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\Models\tb_admin;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class AuthController extends Controller
+class AdminAuth extends Controller
 {
     public function firstAuth(request $request)
     {
@@ -17,7 +16,7 @@ class AuthController extends Controller
             "token" => "required"
         ])["token"];
 
-        $result = User::where('token', $token)->first();
+        $result = tb_admin::where('token', $token)->first();
         if ($result !== null) {
             $nToken = $token;
             return redirect()->route('guest.login', ['token' => $token]);
@@ -33,7 +32,7 @@ class AuthController extends Controller
 
     public function checkTokenUrl($token)
     {
-        $result = User::where('token', $token)->first();
+        $result = tb_admin::where('token', $token)->first();
         return $result;
     }
 
@@ -44,7 +43,7 @@ class AuthController extends Controller
 
     public function loginPage($token,Request $request)
     {
-        if(Auth::check() && (Auth::getUser()["token"] == $token)) {
+        if(Auth::guard("admin")->check() && (Auth::guard("admin")->getUser()["token"] == $token)) {
             $user_id = Auth::getUser();
 //            return ["user"=>$user_id["token"],"session"=>session()->all()];
             $request->session()->put('token', $token);
@@ -67,11 +66,11 @@ class AuthController extends Controller
         }
 
         Log::info($cookie);
-        $user = User::where('email', $email)
+        $user = tb_admin::where('email', $email)
             ->where('token', $token)
             ->first();
 
-        if ($user && Auth::attempt(["email"=>$email,"password"=>$password],$cookie)) {
+        if ($user && Auth::guard("admin")->attempt(["email"=>$email,"password"=>$password],$cookie)) {
             if (password_verify($password, $user->password)) {
                 // Set session user
                 Auth::logoutOtherDevices($password);
