@@ -15,6 +15,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\profile\FasilitasController;
 use App\Http\Controllers\profile\JurusanController;
 use App\Http\Controllers\profile\PdController;
 
@@ -97,7 +98,7 @@ Route::prefix('private/admin')->group(function () {
             Route::prefix('profile')->group(function () {
                 Route::resource('/jurusan', JurusanController::class);
                 Route::get('extra', [AdminController::class, 'extra'])->name('profile.extra');
-                Route::get('fasilitas', [AdminController::class, 'fasilitas'])->name('profile.fasilitas');
+                Route::resource('/fasilitas', FasilitasController::class);
                 Route::get('kemitraan', [AdminController::class, 'kemitraan'])->name('profile.kemitraan');
                 Route::resource('pd', PdController::class);
                 Route::get('ptk', [AdminController::class, 'ptk'])->name('profile.ptk');
