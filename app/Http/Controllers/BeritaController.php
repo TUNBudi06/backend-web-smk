@@ -53,9 +53,15 @@ class BeritaController extends Controller
             'id_category' => 'required',
             'news_content' => 'required',
             'news_location' => 'required',
-            'news_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'news_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240'
         ], [
-            'news_image.max' => 'The image may not be greater than 10MB.',
+            'news_title.required' => 'Kolom nama agenda harus diisi.',
+            'news_level.required' => 'Kolom tipe agenda harus diisi.',
+            'id_category.required' => 'Kolom isi agenda harus diisi.',
+            'news_content.required' => 'Kolom tanggal agenda harus diisi.',
+            'news_location.required' => 'Kolom lokasi agenda harus diisi.',
+            'news_image' => 'Kolom gambar wajib diisi',
+            'news_image.max' => 'Ukuran gambar tidak boleh lebih dari 10MB'
         ]);
 
         // Simpan data ke tabel news
@@ -77,7 +83,7 @@ class BeritaController extends Controller
 
         $data->save();
 
-        return redirect()->route('berita.index', ['token' => $token])->with('success', 'Data added successfully.');
+        return redirect()->route('berita.index', ['token' => $token])->with('success', 'Berita baru berhasil ditambahkan.');
     }
 
     /**
@@ -120,9 +126,15 @@ class BeritaController extends Controller
             'id_category' => 'required',
             'news_content' => 'required',
             'news_location' => 'required',
-            'news_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'news_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240'
         ], [
-            'news_image.max' => 'The image may not be greater than 10MB.',
+            'news_title.required' => 'Kolom nama agenda harus diisi.',
+            'news_level.required' => 'Kolom tipe agenda harus diisi.',
+            'id_category.required' => 'Kolom isi agenda harus diisi.',
+            'news_content.required' => 'Kolom tanggal agenda harus diisi.',
+            'news_location.required' => 'Kolom lokasi agenda harus diisi.',
+            'news_image' => 'Kolom gambar wajib diisi',
+            'news_image.max' => 'Ukuran gambar tidak boleh lebih dari 10MB'
         ]);
 
         // Temukan data berita
@@ -154,7 +166,7 @@ class BeritaController extends Controller
             'news_viewer' => $request->news_viewer,
         ]);
 
-        return redirect()->route('berita.index', ['token' => $token])->with('success', 'Data updated successfully.');
+        return redirect()->route('berita.index', ['token' => $token])->with('success', 'Berita berhasil diperbarui.');
     }
 
     /**
@@ -168,6 +180,6 @@ class BeritaController extends Controller
         $news = tb_news::findOrFail($id_news);
         $news->delete();
 
-        return redirect()->route('berita.index', ['token' => $request->token])->with('success', 'Data deleted successfully.');
+        return redirect()->route('berita.index', ['token' => $request->token])->with('success', 'Berita berhasil dihapus.');
     }
 }

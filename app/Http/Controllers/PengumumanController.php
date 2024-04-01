@@ -52,10 +52,17 @@ class PengumumanController extends Controller
             'pengumuman_text' => 'required',
             'pengumuman_date' => 'required|date',
             'pengumuman_time' => 'required',
+        ], [
+            'pengumuman_nama.required' => 'Kolom nama pengumuman harus diisi.',
+            'pengumuman_target.required' => 'Kolom target pengumuman harus diisi.',
+            'pengumuman_text.required' => 'Kolom isi pengumuman harus diisi.',
+            'pengumuman_date.required' => 'Kolom tanggal pengumuman harus diisi.',
+            'pengumuman_date.date' => 'Kolom tanggal pengumuman harus dalam format tanggal yang benar.',
+            'pengumuman_time.required' => 'Kolom waktu pengumuman harus diisi.',
         ]);
 
         tb_pengumuman::create($request->all());
-        return redirect()->route('pengumuman.index', ['token' => $token])->with('success', 'Data added successfully.');
+        return redirect()->route('pengumuman.index', ['token' => $token])->with('success', 'Pengumuman baru berhasil ditambahkan.');
     }
 
     /**
@@ -93,12 +100,19 @@ class PengumumanController extends Controller
             'pengumuman_text' => 'required',
             'pengumuman_date' => 'required|date',
             'pengumuman_time' => 'required',
+        ], [
+            'pengumuman_nama.required' => 'Kolom nama pengumuman harus diisi.',
+            'pengumuman_target.required' => 'Kolom target pengumuman harus diisi.',
+            'pengumuman_text.required' => 'Kolom isi pengumuman harus diisi.',
+            'pengumuman_date.required' => 'Kolom tanggal pengumuman harus diisi.',
+            'pengumuman_date.date' => 'Kolom tanggal pengumuman harus dalam format tanggal yang benar.',
+            'pengumuman_time.required' => 'Kolom waktu pengumuman harus diisi.',
         ]);
 
         $pengumuman = tb_pengumuman::findOrFail($id_pengumuman);
         $pengumuman->update($request->all());
 
-        return redirect()->route('pengumuman.index', ['token' => $request->token])->with('success', 'Data updated successfully.');
+        return redirect()->route('pengumuman.index', ['token' => $request->token])->with('success', 'Pengumuman berhasil diperbarui.');
     }
 
     /**
@@ -112,7 +126,7 @@ class PengumumanController extends Controller
        $pengumuman = tb_pengumuman::findOrFail($id_pengumuman);
        $pengumuman->delete();
 
-       return redirect()->route('pengumuman.index', ['token' => $request->token])->with('success', 'Data deleted successfully.');
+       return redirect()->route('pengumuman.index', ['token' => $request->token])->with('success', 'Pengumuman berhasil dihapus.');
 
     }
 }
