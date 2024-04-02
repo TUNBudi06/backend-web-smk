@@ -16,7 +16,7 @@
                         </p>
                     </div>
                     <div class="col-md-4 text-right">
-                        <a href="#" class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i> PTK Baru</a>
+                        <a href="{{ route('ptk.create', ['token' => $token]) }}" class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i> PTK Baru</a>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-warning rounded-pill px-4" data-toggle="modal" data-target="#modelId">
                             import CSV
@@ -50,6 +50,15 @@
                         </div>
                     </div>
                 </div>
+                @if(Session::get('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <strong>{{ Session::get('success') }}</strong>
+                    </div>
+                    @endif
                 <table class="table">
                     <thead>
                         <tr>
@@ -71,8 +80,12 @@
                             <td>{{ $data->alamat }}</td>
                             <td>
                                 <a href="#" target="_blank" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
-                                <a href="#" target="_blank" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                <a href="#" target="_blank" class="btn btn-danger p-2"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('ptk.edit', ['ptk' => $data->id, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
+                                    <form action="{{ route('ptk.destroy', ['ptk' => $data->id, 'token' => $token]) }}" method="post" class="d-inline">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>
+                                    </form>
                             </td>
                         </tr>
                         @endforeach
