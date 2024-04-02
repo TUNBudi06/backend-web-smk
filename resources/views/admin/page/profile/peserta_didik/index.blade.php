@@ -41,23 +41,23 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                    @if(Session::get('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            <span class="sr-only">Close</span>
-                        </button>
-                        <strong>{{ Session::get('success') }}</strong>
-                    </div>
-                @endif
                                         <!-- <button type="submit" class="btn btn-warning rad">Save</button> -->
                                     </div>
                                 </div>
-                                </form>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
+            </div>
+            @if(Session::get('success'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    <span class="sr-only">Close</span>
+</button>
+<strong>{{ Session::get('success') }}</strong>
+</div>
+@endif
                 <table class="table">
                     <thead>
                         <tr>
@@ -84,9 +84,9 @@
             <td>{{ $data->gender }}</td>
             <td>{{ $data->alamat }}</td>
             <td>
-                <a href="#" target="_blank" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
+                <a href="{{ route('pd.show', ['pd' => $data->id, 'token' => $token]) }}" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
                 <a href="{{ route('pd.edit', ['pd' => $data->id, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                <form action="{{ route('pd.destroy', ['pd' => $data->id, 'token' => $token]) }}" method="post" class="d-inline">
+                <form action="{{ route('pd.destroy', ['pd' => $data->id, 'token' => $token]) }}" onclick="return confirm('Data akan dihapus ?')" method="post" class="d-inline">
                     @csrf
                     @method('delete')
                     <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>

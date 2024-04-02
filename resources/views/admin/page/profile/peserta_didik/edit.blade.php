@@ -1,89 +1,124 @@
 @extends('layouts.main')
 
 @section('title')
-    <title>Edit Jurusan | Admin Panel</title>
+    <title>Edit Peserta Didik | Admin Panel</title>
     <script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
 @endsection
 
 @section('container')
 <div class="col-md-8 offset-md-2 pt-4">
-    <a href="{{ route('jurusan.index', ['token' => $token]) }}" class="btn btn-light border-warning px-4 mb-4"><i class="fas fa-arrow-left"></i> Kembali</a>
-    <form action="{{ route('jurusan.update', ['token' => $token, 'jurusan' => $jurusan->id_jurusan]) }}" method="POST" enctype="multipart/form-data">
+    <a href="{{ route('pd.index', ['token' => $token]) }}" class="btn btn-light border-warning px-4 mb-4"><i class="fas fa-arrow-left"></i> Kembali</a>
+    <form action="{{ route('pd.update', ['token' => $token, 'pd' => $pd->id]) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="form-group">
-            <label for="jurusan_nama">Nama Jurusan</label>
-            <input type="text" name="jurusan_nama" id="jurusan_nama" class="form-control @error('jurusan_nama') is-invalid @enderror" placeholder="Besok ada sesuatu..." aria-describedby="nameId" value="{{ $jurusan->jurusan_nama }}">
-            <small id="nameId" class="text-muted">Hindari penggunaan slash (/,\)</small>
-            @error('jurusan_nama')
-                <p class="text-danger">
-                    {{ $message }}
-                </p>
-            @enderror
-        </div>      
-        <div class="form-group">
-            <label for="jurusan" class="form-label">Kategori Jurusan</label>
-            <select class="form-control @error('id_prodi') is-invalid @enderror" name="id_prodi">
-                @foreach ($prodis as $prodi)
-                    <option value="{{ $prodi->id_prodi }}" {{ $jurusan->id_prodi == $prodi->id_prodi ? 'selected' : '' }}>
-                        {{ $prodi->prodi_name }}
-                    </option>
-                @endforeach
-            </select>
-            @error('id_prodi')
-                <p class="text-danger">
-                    {{ $message }}
-                </p>
+            <label for="nisn">NISN</label>
+            <input type="number" name="nisn" id="nisn" class="form-control @error('nisn') is-invalid @enderror" value="{{ $pd->nisn }}" placeholder="Masukkan NISN..." aria-describedby="namaId">
+            <small id="namaId" class="text-muted">Hindari penggunaan slash (/,\)</small>
+            @error('nisn')
+                <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group">
-            <label for="jurusan_short">Kode Jurusan</label>
-            <input type="text" name="jurusan_short" id="jurusan_short" class="form-control @error('jurusan_short') is-invalid @enderror" aria-describedby="waktuId" value="{{ $jurusan->jurusan_short }}">
-            <small id="waktuId" class="text-muted d-none"></small>
-            @error('jurusan_short')
-                <p class="text-danger">
-                    {{ $message }}
-                </p>
+            <label for="nis">NIS</label>
+            <input type="number" name="nis" id="nis" class="form-control @error('nis') is-invalid @enderror" value="{{ $pd->nis }}" placeholder="Masukkan NIS..." aria-describedby="namaId">
+            <small id="namaId" class="text-muted">Hindari penggunaan slash (/,\)</small>
+            @error('nis')
+                <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group">
-            <label for="jurusan_text">Deskripsi Jurusan</label>
-            <textarea name="jurusan_text" id="texteditor" cols="30" rows="10" class="form-control @error('jurusan_text') is-invalid @enderror" placeholder="Isi dari jurusan.." aria-describedby="textId">{{ $jurusan->jurusan_text }}</textarea>
-            <small id="textId" class="text-muted d-none"></small>
-            @error('jurusan_text')
-                <p class="text-danger">
-                    {{ $message }}
-                </p>
+            <label for="nama">Nama</label>
+            <input type="text" name="nama" id="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ $pd->nama }}" placeholder="Masukkan Nama..." aria-describedby="namaId">
+            <small id="namaId" class="text-muted">Hindari penggunaan slash (/,\)</small>
+            @error('nama')
+                <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
-        <script>
-            CKEDITOR.replace('texteditor');
-        </script>
+        <div class="form-group">
+            <label for="kelas">Kelas</label>
+            <input type="text" name="kelas" id="kelas" class="form-control @error('kelas') is-invalid @enderror" value="{{ $pd->kelas }}" placeholder="Masukkan Kelas..." aria-describedby="namaId">
+            <small id="namaId" class="text-muted">Hindari penggunaan slash (/,\)</small>
+            @error('kelas')
+                <p class="text-danger">{{ $message }}</p>
+            @enderror
+        </div>
+        <div class="form-group">
+            <label for="tipe">Tempat Lahir</label>
+            <input type="text" name="tempat_lahir" id="tempat_lahir" class="form-control @error('tempat_lahir') is-invalid @enderror" value="{{ $pd->tempat_lahir }}" placeholder="Masukkan Tempat Lahir" aria-describedby="tipeId">
+            <small id="tipeId" class="text-muted d-none"></small>
+            @error('tempat_lahir')
+                <p class="text-danger">{{ $message }}</p>
+            @enderror
+        </div>
         <div class="row">
-            <div class="col-md-6 py-md-5 py-3">
+            <div class="col-6">
                 <div class="form-group">
-                    <label for="jurusan_thumbnail">Thumbnail Jurusan</label>
-                    <input onchange="loadFile(event)" type="file" name="jurusan_thumbnail" id="image" class="form-control @error('jurusan_thumbnail') is-invalid @enderror" placeholder="Purwosari, Pasuruan" aria-describedby="imageId">
-                    <small id="imageId" class="text-muted d-none"></small>
-                    @error('jurusan_thumbnail')
-                        <p class="text-danger">
-                            {{ $message }}
-                        </p>
+                    <label for="tanggal">Tanggal Lahir</label>
+                    <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control @error('tanggal_lahir') is-invalid @enderror" value="{{ $pd->tanggal_lahir }}" aria-describedby="tanggalId">
+                    <small id="tanggalId" class="text-muted d-none"></small>
+                    @error('tanggal_lahir')
+                        <p class="text-danger">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
-            <div class="col-md-6 text-center">
-                <img class="w-100 rounded" id="preview" 
-                src="{{ asset('img/jurusan/thumbnail/'.$jurusan->jurusan_thumbnail) }}"  
-                alt="">
-            </div>
+            <div class="col-6">
+    <div class="form-group">
+        <label for="agama">Agama</label>
+        <select name="agama" id="agama" class="form-control @error('agama') is-invalid @enderror">
+            <option value="">Pilih Agama</option>
+            <option value="Islam" {{ $pd->agama == 'Islam' ? 'selected' : '' }}>Islam</option>
+            <option value="Kristen" {{ $pd->agama == 'Kristen' ? 'selected' : '' }}>Kristen</option>
+            <option value="Katolik" {{ $pd->agama == 'Katolik' ? 'selected' : '' }}>Katolik</option>
+            <option value="Hindu" {{ $pd->agama == 'Hindu' ? 'selected' : '' }}>Hindu</option>
+            <option value="Buddha" {{ $pd->agama == 'Buddha' ? 'selected' : '' }}>Buddha</option>
+            <option value="Konghucu" {{ $pd->agama == 'Konghucu' ? 'selected' : '' }}>Konghucu</option>
+        </select>
+        @error('agama')
+            <p class="text-danger">{{ $message }}</p>
+        @enderror
+    </div>
+</div>
+
         </div>
+        <div class="form-group">
+    <label for="gender" class="form-label">Gender</label>
+    <select class="form-control @error('gender') is-invalid @enderror" name="gender">
+        <option value="L" {{ $pd->gender == 'L' ? 'selected' : '' }}>Laki - laki</option>
+        <option value="P" {{ $pd->gender == 'P' ? 'selected' : '' }}>Perempuan</option>
+    </select>
+    @error('gender')
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
+</div>
+
+        <div class="form-group">
+            <label for="telp">Telp</label>
+            <input type="number" name="telp" id="telp" class="form-control @error('telp') is-invalid @enderror" value="{{ $pd->telp }}" placeholder="Masukkan No Telp..." aria-describedby="namaId">
+            <small id="namaId" class="text-muted">Hindari penggunaan slash (/,\)</small>
+            @error('telp')
+                <p class="text-danger">{{ $message }}</p>
+            @enderror
+        </div>
+        <div class="form-group">
+            <label for="text">Alamat</label>
+            <textarea required name="alamat" cols="30" rows="10" class="form-control @error('alamat') is-invalid @enderror" placeholder="Isi Alamat Dengan Lengkap" aria-describedby="textId">{{ $pd->alamat }}</textarea>
+            <small id="textId" class="text-muted d-none"></small>
+            @error('alamat')
+                <p class="text-danger">{{ $message }}</p>
+            @enderror
+        </div>
+
+      
         <div class="text-right mb-4">
             <button type="submit" class="btn btn-warning mt-2 px-5 rounded-pill shadow-warning"><i class="fas fa-paper-plane"></i> Submit</button>
         </div>
     </form>
 </div>
 <script>
+     CKEDITOR.replace('texteditor');
     function loadFile(event) {
         var reader = new FileReader();
         reader.onload = function() {
