@@ -32,7 +32,7 @@
                     {{ $message }}
                 </p>
             @enderror
-        </div>        
+        </div>
         <div class="form-group">
             <label for="news" class="form-label">Kategori Berita</label>
             <select class="form-control @error('id_category') is-invalid @enderror" name="id_category">
