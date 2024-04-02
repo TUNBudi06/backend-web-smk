@@ -101,7 +101,9 @@ Route::prefix('private/admin')->group(function () {
                 Route::resource('/jurusan', JurusanController::class);
                 Route::resource('/ptk', PTKController::class);
                 Route::get('extra', [AdminController::class, 'extra'])->name('profile.extra');
-                Route::resource('/fasilitas', FasilitasController::class);
+                Route::resource('/fasilitas', FasilitasController::class)->parameters([
+                    'fasilitas' => 'fasilitas',
+                ]);
                 Route::get('kemitraan', [AdminController::class, 'kemitraan'])->name('profile.kemitraan');
                 Route::resource('pd', PdController::class);
             });

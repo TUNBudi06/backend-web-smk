@@ -45,8 +45,8 @@
                             <td>{{ $data->prodis->prodi_name }}</td>
                             <td>
                                 <a href="#" target="_blank" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
-                                <a href="{{ route('fasilitas.edit', ['fasilita' => $data->id_facility, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                <form action="{{ route('fasilitas.destroy', ['fasilita' => $data->id_facility, 'token' => $token]) }}" method="post" class="d-inline">
+                                <a href="{{ route('fasilitas.edit', ['fasilitas' => $data->id_facility, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
+                                <form action="{{ route('fasilitas.destroy', ['fasilitas' => $data->id_facility, 'token' => $token]) }}" method="post" class="d-inline">
                                     @csrf
                                     @method('delete')
                                     <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>
@@ -102,14 +102,11 @@
                         </div>
                     </div>
                     <div class="col-md-6 text-right">
-                        <p class="montserrat d-inline" 
-                        style="font-size: .7rem;">
-                        1 dari 10</p>
-                        <a href="#"
-                        class="btn btn-sm p-0 px-2 btn-white active"><i
-                                class="fas fa-caret-left text-warning"></i></a>
-                        <a href="#"
-                        class="btn btn-sm p-0 px-2 btn-white active">
+                        <p class="montserrat d-inline" style="font-size: .7rem;">{{ $fasilitas->firstItem() }} dari {{ $fasilitas->lastItem() }}</p>
+                        <a href="{{ $fasilitas->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $fasilitas->onFirstPage() ? 'disabled' : 'active' }}">
+                            <i class="fas fa-caret-left text-warning"></i>
+                        </a>
+                        <a href="{{ $fasilitas->nextPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $fasilitas->hasMorePages() ? 'active' : 'disabled' }}">
                             <i class="fas fa-caret-right text-warning"></i>
                         </a>
                     </div>
