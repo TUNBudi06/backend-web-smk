@@ -99,11 +99,11 @@ Route::prefix('private/admin')->group(function () {
 
             Route::prefix('profile')->group(function () {
                 Route::resource('/jurusan', JurusanController::class);
+                Route::resource('pd', PdController::class);
                 Route::resource('/ptk', PTKController::class);
                 Route::get('extra', [AdminController::class, 'extra'])->name('profile.extra');
                 Route::resource('/fasilitas', FasilitasController::class);
                 Route::get('kemitraan', [AdminController::class, 'kemitraan'])->name('profile.kemitraan');
-                Route::resource('pd', PdController::class);
             });
         });
     })->middleware(hasAdminToken::class);
