@@ -13,7 +13,7 @@
         <div class="form-group">
             <label for="nisn">NISN</label>
             <input type="number" name="nisn" id="nisn" class="form-control @error('nisn') is-invalid @enderror" value="{{ old('nisn') }}" placeholder="Masukkan NISN..." aria-describedby="namaId">
-            <small id="namaId" class="text-muted">Hindari penggunaan slash (/,\)</small>
+            <small id="namaId" class="text-muted">Perhatikan dengan teliti!!</small>
             @error('nisn')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -21,7 +21,7 @@
         <div class="form-group">
             <label for="nis">NIS</label>
             <input type="number" name="nis" id="nis" class="form-control @error('nis') is-invalid @enderror" value="{{ old('nis') }}" placeholder="Masukkan NIS..." aria-describedby="namaId">
-            <small id="namaId" class="text-muted">Hindari penggunaan slash (/,\)</small>
+            <small id="namaId" class="text-muted">Perhatikan dengan teliti!!</small>
             @error('nis')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -29,7 +29,7 @@
         <div class="form-group">
             <label for="nama">Nama</label>
             <input type="text" name="nama" id="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}" placeholder="Masukkan Nama..." aria-describedby="namaId">
-            <small id="namaId" class="text-muted">Hindari penggunaan slash (/,\)</small>
+            <small id="namaId" class="text-muted">Isi dengan huruf kapital!!</small>
             @error('nama')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -37,7 +37,7 @@
         <div class="form-group">
             <label for="kelas">Kelas</label>
             <input type="text" name="kelas" id="kelas" class="form-control @error('kelas') is-invalid @enderror" value="{{ old('kelas') }}" placeholder="Masukkan Kelas..." aria-describedby="namaId">
-            <small id="namaId" class="text-muted">Hindari penggunaan slash (/,\)</small>
+            <small id="namaId" class="text-muted">Perhatikan dengan teliti!!</small>
             @error('kelas')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -96,14 +96,14 @@
         <div class="form-group">
             <label for="telp">Telp</label>
             <input type="number" name="telp" id="telp" class="form-control @error('telp') is-invalid @enderror" value="{{ old('telp') }}" placeholder="Masukkan No Telp..." aria-describedby="namaId">
-            <small id="namaId" class="text-muted">Hindari penggunaan slash (/,\)</small>
+            <small id="namaId" class="text-muted">Perhatikan dengan teliti!!</small>
             @error('telp')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group">
             <label for="text">Alamat</label>
-            <textarea required name="alamat" cols="30" rows="10" class="form-control @error('alamat') is-invalid @enderror" placeholder="Isi Alamat Dengan Lengkap" aria-describedby="textId">{{ old('alamat') }}</textarea>
+            <textarea name="alamat" cols="30" rows="10" class="form-control @error('alamat') is-invalid @enderror" placeholder="Isi Alamat Dengan Lengkap" aria-describedby="textId">{{ old('alamat') }}</textarea>
             <small id="textId" class="text-muted d-none"></small>
             @error('alamat')
                 <p class="text-danger">{{ $message }}</p>
@@ -111,6 +111,16 @@
         </div>
         <script>
             CKEDITOR.replace('texteditor');
+            <script>
+    function loadFile(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var preview = document.getElementById('preview');
+            preview.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
         </script>
         <div class="text-right mb-4">
             <button type="submit" class="btn btn-warning mt-2 px-5 rounded-pill shadow-warning"><i class="fas fa-paper-plane"></i> Submit</button>

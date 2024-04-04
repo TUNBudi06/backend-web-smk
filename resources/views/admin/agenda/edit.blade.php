@@ -45,7 +45,7 @@
         </div>
         <div class="form-group">
             <label for="text">Deskripsi Agenda</label>
-            <textarea name="event_text" id="event_text" cols="30" rows="10" class="form-control @error('event_text') is-invalid @enderror" placeholder="Isi dari event.." aria-describedby="textId">{{$event->event_text}}</textarea>
+            <textarea name="event_text" id="texteditor" cols="30" rows="10" class="form-control @error('event_text') is-invalid @enderror" placeholder="Isi dari event.." aria-describedby="textId">{{$event->event_text}}</textarea>
             @error('event_text')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
