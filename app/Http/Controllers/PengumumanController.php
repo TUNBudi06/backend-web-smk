@@ -14,7 +14,7 @@ class PengumumanController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = 10;
+        $perPage = $request->input('show', 10);
         $pengumuman = tb_pengumuman::orderBy('pengumuman_timestamp', 'desc')->paginate($perPage);
 
         $token = $request->session()->get('token') ?? $request->input('token');

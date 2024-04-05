@@ -7,17 +7,35 @@ use Illuminate\Database\Eloquent\Model;
 
 class tb_pemberitahuan extends Model
 {
-    protected $table = 'tb_pemberitahuan';
+    protected $table = 'tb_pemberitahuan'; // Define the table name
 
-    protected $primaryKey = 'id_pemberitahuan';
-
-    public $timestamps = true;
+    protected $primaryKey = 'id_pemberitahuan'; // Define the primary key
 
     protected $fillable = [
-        'pemberitahuan_nama',
-        'pemberitahuan_target',
-        'pemberitahuan_date',
-        'pemberitahuan_time',
-        'pemberitahuan_text',
+        'nama',
+        'target',
+        'thumbnail',
+        'banner',
+        'date',
+        'time',
+        'text',
+        'level',
+        'location',
+        'type',
+        'category',
+        'viewer',
+        'created_by',
+        'approved',
+        'Approved_by',
     ];
+
+    // Define relationships
+    public function relationships()
+    {
+        return [
+            'jenis' => $this->belongsTo(tb_pemberitahuan_type::class, 'type', 'id_pemberitahuan_type'),
+            'kategori' => $this->belongsTo(tb_pemberitahuan_category::class, 'category', 'id_pemberitahuan_category'),
+            'approver' => $this->belongsTo(tb_admin::class, 'Approved_by', 'id_admin'),
+        ];
+    }
 }

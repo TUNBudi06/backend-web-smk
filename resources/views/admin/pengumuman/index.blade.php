@@ -80,24 +80,25 @@
                     <div class="row px-3">
                         <div class="col-md-6">
                             <div class="pb-3">
-                                <form method="GET" id="show-form" name="showForm" action="">
+                                <form method="GET" id="show-form" action="{{ route('pengumuman.index', ['token' => $token]) }}">
                                     <div class="form-group d-inline-block">
-                                        <input type="hidden" name="#">
-                                        <select id="show-select" name="show" onchange="showData()" class="form-control form-control-sm d-inline-block"
-                                            style="width:70px; font-size: .7rem;" name="" id="">
-                                            <option value="10">10</option>
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <select id="show-select" name="show" onchange="showData()" class="form-control form-control-sm d-inline-block" style="width:70px; font-size: .7rem;">
+                                            <option value="10" @>10</option>
+                                            <option value="20">20</option>
+                                            <option value="40">40</option>
                                         </select>
                                     </div>
                                     <p class="montserrat d-inline" style="font-size: .7rem;">Data per halaman</p>
-                                    <script>
-                                        function showData() {
-                                            $('#show-select').change(function() {
-                                                var value = $(this).val();
-                                                $('#show-form').submit()
-                                            });
-                                        }
-                                    </script>
                                 </form>
+
+                                <script>
+                                    function showData() {
+                                        $('#show-select').change(function() {
+                                            $('#show-form').submit(); // Submit the form when the select value changes
+                                        });
+                                    }
+                                </script>
                             </div>
                         </div>
                         <div class="col-md-6 text-right">

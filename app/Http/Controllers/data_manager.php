@@ -14,7 +14,7 @@ class data_manager
     public static function accessRole(): array
     {
         return [
-          "isAdmin"=> false,
+          "isAdmin"=> true,
           "permission"=> [
               "artikel"=>[
                   "write"=>false,
