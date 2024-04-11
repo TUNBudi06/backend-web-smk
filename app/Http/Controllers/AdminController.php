@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\tb_artikel;
 use App\Models\tb_event;
+use App\Models\tb_facilities;
 use App\Models\tb_gallery;
 use App\Models\tb_news;
 use App\Models\tb_pengumuman;
+use App\Models\tb_peserta_didik;
+use App\Models\tb_ptk;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -25,6 +28,9 @@ class AdminController extends Controller
             "event"=>tb_event::count(),
             "gallery"=>tb_gallery::count(),
             "pengumuman"=>tb_pengumuman::count(),
+            'fasilitas' => tb_facilities::count(),
+            'pd' => tb_peserta_didik::count(),
+            'ptk' => tb_ptk::count(),
         ]);
     }
 

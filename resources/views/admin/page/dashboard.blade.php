@@ -47,19 +47,19 @@
                     <div class="col-md-6 mb-2">
                         <div class="count-card rounded p-3">
                             <p class="poppins mb-0"><i class="fas mr-2 fa-laptop"></i>Fasilitas</p>
-                            <p class="montserrat mb-0" style="font-size: .8rem;"><span class="font-weight-bold"></span> Item</p>
+                            <p class="montserrat mb-0" style="font-size: .8rem;"><span class="font-weight-bold">{{ $fasilitas }}</span> Item</p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="count-card rounded p-3">
                             <p class="poppins mb-0"><i class="fas mr-2 fa-users"></i>Peserta didik</p>
-                            <p class="montserrat mb-0" style="font-size: .8rem;"><span class="font-weight-bold"></span> Item</p>
+                            <p class="montserrat mb-0" style="font-size: .8rem;"><span class="font-weight-bold">{{ $pd }}</span> Item</p>
                         </div>
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="count-card rounded p-3">
                             <p class="poppins mb-0"><i class="fas mr-2 fa-user-tie"></i>PTK</p>
-                            <p class="montserrat mb-0" style="font-size: .8rem;"><span class="font-weight-bold"></span> Item</p>
+                            <p class="montserrat mb-0" style="font-size: .8rem;"><span class="font-weight-bold">{{ $ptk }}</span> Item</p>
                         </div>
                     </div>
                     <div class="col-md-6">
