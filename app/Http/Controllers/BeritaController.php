@@ -6,6 +6,7 @@ use App\Models\tb_category_news;
 use App\Models\tb_news;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BeritaController extends Controller
 {
@@ -89,9 +90,20 @@ class BeritaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request)
     {
-        //
+        $id_news = $request->route("berita");
+        $token = $request->session()->get('token') ?? $request->input('token');
+        $news = tb_news::findOrFail($id_news);
+        $categories = tb_category_news::all();
+
+        return view('admin.berita.show', [
+            'menu_active' => 'berita',
+            'profile_active' => 'berita',
+            'token' => $token,
+            'news' => $news,
+            'categories' => $categories,
+        ]);
     }
 
     /**

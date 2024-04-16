@@ -46,9 +46,9 @@
                                 <td style="word-wrap: break-word; max-width: 200px;">{{ $data->pengumuman_target }}</td>
                                 <td>{{ $data->pengumuman_timestamp }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('pengumuman.show', ['pengumuman' => $data->id_pengumuman , 'token' => $token]) }}" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
                                     <a href="{{ route('pengumuman.edit', ['pengumuman' => $data->id_pengumuman , 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                    <form action="{{ route('pengumuman.destroy', ['pengumuman' => $data->id_pengumuman , 'token' => $token]) }}" method="post" class="d-inline">
+                                    <form action="{{ route('pengumuman.destroy', ['pengumuman' => $data->id_pengumuman , 'token' => $token]) }}" onclick="return confirm('Data akan dihapus ?')" method="post" class="d-inline">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>

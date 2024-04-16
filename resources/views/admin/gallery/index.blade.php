@@ -53,11 +53,11 @@
                         <td>{{ $data->gallery_location }}</td>
                         <td style="word-wrap: break-word; max-width: 150px;">{{ $data->gallery_timestamp }}</td>
                         <td>
-                            <a href="#" target="_blank" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
+                            <a href="{{ route('gallery.show', ['gallery' => $data->id_gallery, 'token' => $token]) }}" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
                             <a href="{{ route('gallery.edit', ['gallery' => $data->id_gallery, 'token' => $token]) }}"
                                 class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
                             <form
-                                action="{{ route('gallery.destroy', ['gallery' => $data->id_gallery, 'token' => $token]) }}"
+                                action="{{ route('gallery.destroy', ['gallery' => $data->id_gallery, 'token' => $token]) }}" onclick="return confirm('Data akan dihapus ?')"
                                 method="post" class="d-inline">
                                 @csrf
                                 @method('delete')

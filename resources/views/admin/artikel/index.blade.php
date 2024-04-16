@@ -46,9 +46,9 @@
                                 <td>{{ $data->category_artikel->category_name }}</td>
                                 <td style="word-wrap: break-word; max-width: 150px;">{{ $data->artikel_timestamp }}</td>
                                 <td>
-                                    <a href="#" target="_blank" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('artikel.show', ['artikel' => $data->id_artikel, 'token' => $token]) }}" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
                                     <a href="{{ route('artikel.edit', ['artikel' => $data->id_artikel, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                    <form action="{{ route('artikel.destroy', ['artikel' => $data->id_artikel, 'token' => $token]) }}" method="post" class="d-inline">
+                                    <form action="{{ route('artikel.destroy', ['artikel' => $data->id_artikel, 'token' => $token]) }}" onclick="return confirm('Data akan dihapus ?')" method="post" class="d-inline">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>

@@ -15,6 +15,7 @@ class tb_artikel extends Model
         'artikel_title',
         'artikel_level',
         'id_category',
+        'category_name',
         'artikel_text',
         'artikel_image',
         'artikel_viewer'

@@ -68,9 +68,18 @@ class PengumumanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request)
     {
-        //
+        $id_pengumuman = $request->route("pengumuman");
+        $token = $request->session()->get('token') ?? $request->input('token');
+        $pengumuman = tb_pengumuman::findOrFail($id_pengumuman);
+
+        return view('admin.pengumuman.show', [
+            'menu_active' => 'pengumuman',
+            'profile_active' => 'pengumuman',
+            'token' => $token,
+            'pengumuman' => $pengumuman,
+        ]);
     }
 
     /**

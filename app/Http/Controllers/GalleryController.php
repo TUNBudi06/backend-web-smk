@@ -85,9 +85,20 @@ class GalleryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request)
     {
-        //
+        $id_gallery = $request->route("gallery");
+        $token = $request->session()->get('token') ?? $request->input('token');
+        $gallery = tb_gallery::findOrFail($id_gallery);
+        $categories = tb_category_gallery::all();
+
+        return view('admin.gallery.show', [
+            'menu_active' => 'gallery',
+            'profile_active' => 'gallery',
+            'token' => $token,
+            'gallery' => $gallery,
+            'categories' => $categories,
+        ]);
     }
 
     /**

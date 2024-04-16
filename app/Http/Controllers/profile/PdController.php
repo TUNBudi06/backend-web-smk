@@ -14,7 +14,7 @@ class PdController extends Controller
     public function index(Request $request)
     {
         $perPage = 10;
-        $peserta_didik = tb_peserta_didik::orderBy('id', 'desc')->paginate($perPage);
+        $peserta_didik = tb_peserta_didik::orderBy('id', 'asc')->paginate($perPage);
     
         $token = $request->session()->get('token') ?? $request->input('token');
         return view('admin.page.profile.peserta_didik.index', [

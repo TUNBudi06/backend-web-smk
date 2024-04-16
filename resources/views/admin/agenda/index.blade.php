@@ -47,7 +47,7 @@
                                 <td>
                                     <a href="{{ route('event.show', ['event' => $data->id_event, 'token' => $token]) }}" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
                                     <a href="{{ route('event.edit', ['event' => $data->id_event, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                    <form action="{{ route('event.destroy', ['event' => $data->id_event , 'token' => $token]) }}" method="post" class="d-inline">
+                                    <form action="{{ route('event.destroy', ['event' => $data->id_event , 'token' => $token]) }}" onclick="return confirm('Data akan dihapus ?')" method="post" class="d-inline">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>

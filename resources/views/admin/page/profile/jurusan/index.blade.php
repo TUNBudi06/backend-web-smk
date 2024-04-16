@@ -41,7 +41,7 @@
                     <tbody>
                         @foreach($jurusan as $key => $data)
                         <tr>
-                            <td><img src="{{ asset('img/jurusan/thumbnail/'.$data->jurusan_thumbnail) }}" width="100px" class="rounded" alt=""></td>
+                            <td><img src="{{ asset('img/jurusan/thumbnail/'. $data->jurusan_thumbnail) }}" width="100px" class="rounded" alt=""></td>
                             <td>{{ $data->jurusan_nama }}</td>
                             <td>{{ $data->jurusan_short }}</td>
                             <td>{{ $data->prodis->prodi_name }}</td>

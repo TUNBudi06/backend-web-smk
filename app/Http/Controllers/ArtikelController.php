@@ -85,9 +85,20 @@ class ArtikelController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request)
     {
-        //
+        $id_artikel = $request->route("artikel");
+        $token = $request->session()->get('token') ?? $request->input('token');
+        $artikel = tb_artikel::findOrFail($id_artikel);
+        $categories = tb_category_artikel::all();
+
+        return view('admin.artikel.show', [
+            'menu_active' => 'artikel',
+            'profile_active' => 'artikel',
+            'token' => $token,
+            'artikel' => $artikel,
+            'categories' => $categories,
+        ]);
     }
 
     /**
