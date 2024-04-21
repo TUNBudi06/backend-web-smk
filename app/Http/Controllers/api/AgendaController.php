@@ -28,7 +28,14 @@ class AgendaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dataAgenda = new tb_event();
+        $dataAgenda = tb_event::create($request->all());
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Sukses menambahkan data',
+            'data' => $dataAgenda,
+        ],200);
     }
 
     /**
@@ -36,7 +43,20 @@ class AgendaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $agenda = tb_event::find($id);
+
+        if (!$agenda) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan',
+            ], 404);
+        }
+    
+        return response()->json([
+            'status' => true,
+            'message' => 'Data ditemukan',
+            'data' => $agenda,
+        ], 200);
     }
 
     /**
@@ -44,7 +64,21 @@ class AgendaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $agenda = tb_event::find($id);
+
+        if (!$agenda) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan',
+            ], 404);
+        }
+    
+        $agenda->update($request->all());
+    
+        return response()->json([
+            'status' => true,
+            'message' => 'Data berhasil diperbarui',
+        ], 200);
     }
 
     /**
@@ -52,6 +86,20 @@ class AgendaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $agenda = tb_event::find($id);
+
+        if (!$agenda) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan',
+            ], 404);
+        }
+    
+        $agenda->delete();
+    
+        return response()->json([
+            'status' => true,
+            'message' => 'Data berhasil dihapus',
+        ], 200);
     }
 }
