@@ -27,7 +27,14 @@ class PDController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dataPeserta_didik = new tb_peserta_didik();
+        $dataPeserta_didik = tb_peserta_didik::create($request->all());
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Sukses menambahkan data',
+            'data' => $dataPeserta_didik,
+        ],200);
     }
 
     /**
@@ -35,7 +42,20 @@ class PDController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $peserta_didik = tb_peserta_didik::find($id);
+
+        if (!$peserta_didik) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan',
+            ], 404);
+        }
+    
+        return response()->json([
+            'status' => true,
+            'message' => 'Data ditemukan',
+            'data' => $peserta_didik,
+        ], 200);
     }
 
     /**
@@ -43,7 +63,21 @@ class PDController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $peserta_didik = tb_peserta_didik::find($id);
+
+        if (!$peserta_didik) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan',
+            ], 404);
+        }
+    
+        $peserta_didik->update($request->all());
+    
+        return response()->json([
+            'status' => true,
+            'message' => 'Data berhasil diperbarui',
+        ], 200);
     }
 
     /**
@@ -51,6 +85,20 @@ class PDController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $peserta_didik = tb_peserta_didik::find($id);
+
+        if (!$peserta_didik) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan',
+            ], 404);
+        }
+    
+        $peserta_didik->delete();
+    
+        return response()->json([
+            'status' => true,
+            'message' => 'Data berhasil dihapus',
+        ], 200);
     }
 }

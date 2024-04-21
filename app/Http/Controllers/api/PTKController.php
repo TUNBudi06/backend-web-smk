@@ -27,7 +27,14 @@ class PTKController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dataPTK = new tb_ptk();
+        $dataPTK = tb_ptk::create($request->all());
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Sukses menambahkan data',
+            'data' => $dataPTK,
+        ],200);
     }
 
     /**
@@ -35,7 +42,20 @@ class PTKController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $ptk = tb_ptk::find($id);
+
+        if (!$ptk) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan',
+            ], 404);
+        }
+    
+        return response()->json([
+            'status' => true,
+            'message' => 'Data ditemukan',
+            'data' => $ptk,
+        ], 200);
     }
 
     /**
@@ -43,7 +63,21 @@ class PTKController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $ptk = tb_ptk::find($id);
+
+        if (!$ptk) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan',
+            ], 404);
+        }
+    
+        $ptk->update($request->all());
+    
+        return response()->json([
+            'status' => true,
+            'message' => 'Data berhasil diperbarui',
+        ], 200);
     }
 
     /**
@@ -51,6 +85,20 @@ class PTKController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $ptk = tb_ptk::find($id);
+
+        if (!$ptk) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan',
+            ], 404);
+        }
+    
+        $ptk->delete();
+    
+        return response()->json([
+            'status' => true,
+            'message' => 'Data berhasil dihapus',
+        ], 200);
     }
 }
