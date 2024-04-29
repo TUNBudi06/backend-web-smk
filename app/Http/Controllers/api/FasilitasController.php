@@ -50,9 +50,9 @@ class FasilitasController extends Controller
 
         // Simpan data ke tabel facility
         $data = new tb_facilities();
-        $data->facility_name = $request->input('facility_name');
-        $data->id_prodi = $prodi->id_prodi;
-        $data->facility_text = $request->input('facility_text');
+        $data->facility_name = $request->facility_name;
+        $data->id_prodi = $request->id_prodi;
+        $data->facility_text = $request->facility_text;
 
         // Simpan gambar
         if ($request->hasFile('facility_image')) {
