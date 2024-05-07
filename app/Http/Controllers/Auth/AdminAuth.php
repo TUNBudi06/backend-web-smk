@@ -44,7 +44,8 @@ class AdminAuth extends Controller
     public function loginPage($token,Request $request)
     {
         if(Auth::guard("admin")->check() && (Auth::guard("admin")->getUser()["token"] == $token)) {
-            $user_id = Auth::getUser();
+            $user_id = Auth::guard('admin')->getUser();
+            // return $user_id;
 //            return ["user"=>$user_id["token"],"session"=>session()->all()];
             $request->session()->put('token', $token);
             $request->session()->put('status', 'true');
