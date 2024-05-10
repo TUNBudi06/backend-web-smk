@@ -41,14 +41,14 @@
                         <tbody>
                             @foreach($pengumuman as $key => $data)
                             <tr>
-                                <td style="word-wrap: break-word; max-width: 300px;">{{ $data->pengumuman_nama }}</td>
-                                <td>{{ $data->pengumuman_date }} {{ $data->pengumuman_time }}</td>
-                                <td style="word-wrap: break-word; max-width: 200px;">{{ $data->pengumuman_target }}</td>
-                                <td>{{ $data->pengumuman_timestamp }}</td>
+                                <td style="word-wrap: break-word; max-width: 300px;">{{ $data->nama }}</td>
+                                <td>{{ $data->date }} {{ $data->time }}</td>
+                                <td style="word-wrap: break-word; max-width: 200px;">{{ $data->target }}</td>
+                                <td>{{ $data->created_at }}</td>
                                 <td>
-                                    <a href="{{ route('pengumuman.show', ['pengumuman' => $data->id_pengumuman , 'token' => $token]) }}" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
-                                    <a href="{{ route('pengumuman.edit', ['pengumuman' => $data->id_pengumuman , 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                    <form action="{{ route('pengumuman.destroy', ['pengumuman' => $data->id_pengumuman , 'token' => $token]) }}" onclick="return confirm('Data akan dihapus ?')" method="post" class="d-inline">
+                                    <a href="{{ route('pengumuman.show', ['pengumuman' => $data->id_pemberitahuan , 'token' => $token]) }}" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('pengumuman.edit', ['pengumuman' => $data->id_pemberitahuan , 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
+                                    <form action="{{ route('pengumuman.destroy', ['pengumuman' => $data->id_pemberitahuan , 'token' => $token]) }}" onclick="return confirm('Data akan dihapus ?')" method="post" class="d-inline">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>
@@ -84,7 +84,7 @@
                                     <div class="form-group d-inline-block">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <select id="show-select" name="show" onchange="showData()" class="form-control form-control-sm d-inline-block" style="width:70px; font-size: .7rem;">
-                                            <option value="10" @>10</option>
+                                            <option value="10">10</option>
                                             <option value="20">20</option>
                                             <option value="40">40</option>
                                         </select>

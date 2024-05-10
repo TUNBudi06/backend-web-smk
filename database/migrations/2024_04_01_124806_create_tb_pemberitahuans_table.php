@@ -20,9 +20,9 @@ return new class extends Migration
             $table->boolean("level")->default(false);
             $table->string("location")->nullable();
             $table->unsignedBigInteger("type")->nullable();
-            $table->foreign("type","jenis")->references("id_pemberitahuan_type")->on("tb_pemberitahuan_type")->onUpdate("cascade")->onDelete("set null");
+            $table->foreign("type","jenis")->references("id_pemberitahuan_type")->on("tb_pemberitahuan_type")->onUpdate("cascade")->onDelete("cascade");
             $table->unsignedBigInteger("category")->nullable();
-            $table->foreign("category","kategori")->references("id_pemberitahuan_category")->on("tb_pemberitahuan_category")->onUpdate("cascade")->onDelete("set null");
+            $table->foreign("category","kategori")->references("id_pemberitahuan_category")->on("tb_pemberitahuan_category")->onUpdate("cascade")->onDelete("cascade");
             $table->unsignedBigInteger("viewer");
             $table->string("created_by")->nullable();
             $table->boolean("approved")->default(false);

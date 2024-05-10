@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\tb_admin;
+use App\Models\tb_pemberitahuan;
 use Illuminate\Http\Request;
 use App\Models\tb_pengumuman;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +16,7 @@ class PengumumanController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('show', 10);
-        $pengumuman = tb_pengumuman::orderBy('pengumuman_timestamp', 'desc')->paginate($perPage);
+        $pengumuman = tb_pemberitahuan::where(['type' => 2])->orderBy('created_at', 'desc')->paginate($perPage);
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
@@ -61,7 +62,14 @@ class PengumumanController extends Controller
             'pengumuman_time.required' => 'Kolom waktu pengumuman harus diisi.',
         ]);
 
-        tb_pengumuman::create($request->all());
+//        tb_pengumuman::create($request->all());
+        $data = new tb_pemberitahuan();
+        $data->nama = $request->pengumuman_nama;
+        $data->target = $request->pengumuman_target;
+        $data->text = $request->pengumuman_text;
+        $data->date = $request->pengumuman_date;
+        $data->time = $request->pengumuman_time;
+        $data->save();
         return redirect()->route('pengumuman.index', ['token' => $token])->with('success', 'Pengumuman baru berhasil ditambahkan.');
     }
 
@@ -72,7 +80,7 @@ class PengumumanController extends Controller
     {
         $id_pengumuman = $request->route("pengumuman");
         $token = $request->session()->get('token') ?? $request->input('token');
-        $pengumuman = tb_pengumuman::findOrFail($id_pengumuman);
+        $pengumuman = tb_pemberitahuan::where(['type' => 2])->findOrFail($id_pengumuman);
 
         return view('admin.pengumuman.show', [
             'menu_active' => 'pengumuman',
@@ -89,7 +97,7 @@ class PengumumanController extends Controller
     {
         $id_pengumuman = $request->route("pengumuman");
         $token = $request->session()->get('token') ?? $request->input('token');
-        $pengumuman = tb_pengumuman::findOrFail($id_pengumuman);
+        $pengumuman = tb_pemberitahuan::where(['type' => 2])->findOrFail($id_pengumuman);
         return view('admin.pengumuman.edit', [
             'menu_active' => 'pengumuman',
             'token' => $token,
@@ -118,8 +126,17 @@ class PengumumanController extends Controller
             'pengumuman_time.required' => 'Kolom waktu pengumuman harus diisi.',
         ]);
 
-        $pengumuman = tb_pengumuman::findOrFail($id_pengumuman);
-        $pengumuman->update($request->all());
+        // Temukan record yang ingin diupdate berdasarkan ID atau kriteria lain
+        $pemberitahuan = tb_pemberitahuan::findOrFail($id_pengumuman);
+
+        $pemberitahuan->nama = $request->pengumuman_nama;
+        $pemberitahuan->target = $request->pengumuman_target;
+        $pemberitahuan->text = $request->pengumuman_text;
+        $pemberitahuan->date = $request->pengumuman_date;
+        $pemberitahuan->time = $request->pengumuman_time;
+
+        $pemberitahuan->save();
+
 
         return redirect()->route('pengumuman.index', ['token' => $request->token])->with('success', 'Pengumuman berhasil diperbarui.');
     }
@@ -132,7 +149,7 @@ class PengumumanController extends Controller
         $id_pengumuman = $request->route("pengumuman");
         $token = $request->session()->get('token') ?? $request->input('token');
 
-       $pengumuman = tb_pengumuman::findOrFail($id_pengumuman);
+       $pengumuman = tb_pemberitahuan::where(['type' => 2])->findOrFail($id_pengumuman);
        $pengumuman->delete();
 
        return redirect()->route('pengumuman.index', ['token' => $request->token])->with('success', 'Pengumuman berhasil dihapus.');
