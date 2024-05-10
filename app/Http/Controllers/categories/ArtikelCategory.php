@@ -52,10 +52,11 @@ class ArtikelCategory extends Controller
         ]);
 
         // Simpan data kategori
-        tb_pemberitahuan_category::create([
-            'pemberitahuan_category_name' => $request->category_name,
-            "type" => 1
-        ]);
+        // Create a new instance of the PemberitahuanCategory model
+        $category = new tb_pemberitahuan_category();
+        $category->pemberitahuan_category_name = $request->category_name;
+        $category->type = 1;
+        $category->save();
 
         return redirect()->route('artikel.category.index', ['token' => $request->token])->with('success', 'Kategori berhasil ditambahkan.');
     }
