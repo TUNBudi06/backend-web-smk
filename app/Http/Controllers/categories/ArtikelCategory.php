@@ -4,6 +4,7 @@ namespace App\Http\Controllers\categories;
 
 use App\Http\Controllers\Controller;
 use App\Models\tb_category_artikel;
+use App\Models\tb_pemberitahuan_category;
 use Illuminate\Http\Request;
 
 class ArtikelCategory extends Controller
@@ -14,7 +15,7 @@ class ArtikelCategory extends Controller
     public function index(Request $request)
     {
         $token = $request->session()->get('token') ?? $request->input('token');
-        $articles = tb_category_artikel::all();
+        $articles = tb_pemberitahuan_category::where(["type" => 1])->get();
         $action = $_GET['action'] ?? '';
 //        return $request->session()->all();
 
@@ -51,8 +52,9 @@ class ArtikelCategory extends Controller
         ]);
 
         // Simpan data kategori
-        tb_category_artikel::create([
-            'category_name' => $request->category_name,
+        tb_pemberitahuan_category::create([
+            'pemberitahuan_category_name' => $request->category_name,
+            "type" => 1
         ]);
 
         return redirect()->route('artikel.category.index', ['token' => $request->token])->with('success', 'Kategori berhasil ditambahkan.');
@@ -67,7 +69,7 @@ class ArtikelCategory extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
         $action = 'update';
         $request->session()->put('token',$token);
-        $category = tb_category_artikel::findOrFail($id_category);
+        $category = tb_pemberitahuan_category::where(["type" => 1])->findOrFail($id_category);
         $data = [
             'category' => $category,
             'update' => $action,
@@ -86,9 +88,9 @@ class ArtikelCategory extends Controller
         $artikel_category = $request->route("artikel_category");
 
         // Update data category
-        $category = tb_category_artikel::findOrFail($artikel_category);
+        $category = tb_pemberitahuan_category::where(["type" => 1])->findOrFail($artikel_category);
         $category->update([
-            'category_name' => $request->category_name,
+            'pemberitahuan_category_name' => $request->category_name,
         ]);
 
         return redirect()->route('artikel.category.index', ['token' => $request->token])->with('success', 'Kategori berhasil diperbarui.');
@@ -102,7 +104,7 @@ class ArtikelCategory extends Controller
         $id_category = $request->route("artikel_category");
         $token = $request->session()->get('token') ?? $request->input('token');
 
-       $category = tb_category_artikel::findOrFail($id_category);
+       $category = tb_pemberitahuan_category::where(["type" => 1])->findOrFail($id_category);
        $category->delete();
 
         return redirect()->route('artikel.category.index', ['token' => $token])->with('success', 'Kategori berhasil dihapus.');
