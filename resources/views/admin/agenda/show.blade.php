@@ -15,23 +15,23 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="nama">Agenda</label>
-                    <input value="{{ $event->event_name }}" type="text" class="form-control" readonly>
+                    <input value="{{ $event->nama }}" type="text" class="form-control" readonly>
                 </div>
                 <div class="form-group">
                     <label for="tanggal">Tanggal</label>
-                    <input value="{{ $event->event_date }}" type="text" class="form-control" readonly>
+                    <input value="{{ $event->date }}" type="text" class="form-control" readonly>
                 </div>
                 <div class="form-group">
                     <label for="tipe">Kategori Agenda</label>
-                    <input value="{{ $event->event_type }}" type="text" class="form-control" readonly>
+                    <input value="{{ $event->type }}" type="text" class="form-control" readonly>
                 </div>
                 <div class="form-group">
                     <label for="target">Lokasi</label>
-                    <input value="{{ $event->event_location }}" type="text" class="form-control" readonly>
+                    <input value="{{ $event->location }}" type="text" class="form-control" readonly>
                 </div>
                 <div class="form-group">
                     <label for="text">Deskripsi Agenda</label>
-                    <textarea class="form-control" readonly>{{ $event->event_text }}</textarea>
+                    <textarea class="form-control" readonly>{{ $event->text }}</textarea>
                 </div>
             </div>
         </div>

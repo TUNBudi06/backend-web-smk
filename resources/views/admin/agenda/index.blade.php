@@ -1,5 +1,5 @@
 @extends('layouts.main')
-
+{{--@dd($event)--}}
 @section('title')
     <title>Agenda | Admin Panel</title>
 @endsection
@@ -40,14 +40,14 @@
                         <tbody>
                             @foreach($event as $key => $data)
                             <tr>
-                                <td style="word-wrap: break-word; max-width: 300px;">{{ $data->event_name }}</td>
-                                <td>{{ $data->event_date }} {{ $data->event_time }}</td>
-                                <td style="word-wrap: break-word; max-width: 200px;">{{ $data->event_type }}</td>
-                                <td>{{ $data->event_timestamp }}</td>
+                                <td style="word-wrap: break-word; max-width: 300px;">{{ $data->nama }}</td>
+                                <td>{{ $data->date }} {{ $data->time }}</td>
+                                <td style="word-wrap: break-word; max-width: 200px;">{{ $data->target }}</td>
+                                <td>{{ $data->created_at }}</td>
                                 <td>
-                                    <a href="{{ route('event.show', ['event' => $data->id_event, 'token' => $token]) }}" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
-                                    <a href="{{ route('event.edit', ['event' => $data->id_event, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                    <form action="{{ route('event.destroy', ['event' => $data->id_event , 'token' => $token]) }}" onclick="return confirm('Data akan dihapus ?')" method="post" class="d-inline">
+                                    <a href="{{ route('event.show', ['event' => $data->id_pemberitahuan, 'token' => $token]) }}" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('event.edit', ['event' => $data->id_pemberitahuan, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
+                                    <form action="{{ route('event.destroy', ['event' => $data->id_pemberitahuan , 'token' => $token]) }}" onclick="return confirm('Data akan dihapus ?')" method="post" class="d-inline">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>

@@ -39,7 +39,7 @@ class BeritaController extends Controller
 
         return view('admin.berita.create', [
             'menu_active' => 'berita',
-            'news' => tb_category_news::all(),
+            'news' => tb_pemberitahuan_category::where(['type' => 3])->get(),
             'token' => $token,
         ]);
     }
