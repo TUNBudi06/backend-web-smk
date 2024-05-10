@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\tb_artikel;
 use App\Models\tb_category_artikel;
+use App\Models\tb_pemberitahuan;
+use App\Models\tb_pemberitahuan_category;
 use Illuminate\Http\Request;
 
 class ArtikelController extends Controller
@@ -14,14 +16,17 @@ class ArtikelController extends Controller
     public function index(Request $request)
     {
         $perPage = 10;
-        $artikel = tb_artikel::orderBy('artikel_timestamp', 'desc')->paginate($perPage);
+        $artikel = tb_pemberitahuan::select('tb_pemberitahuan.*', 'tb_pemberitahuan_category.pemberitahuan_category_name')
+            ->join('tb_pemberitahuan_category', 'tb_pemberitahuan.category', '=', 'tb_pemberitahuan_category.id_pemberitahuan_category')
+            ->where('tb_pemberitahuan.type', 1)
+            ->orderBy('tb_pemberitahuan.created_at', 'desc')
+            ->paginate($perPage);
 
         $token = $request->session()->get('token') ?? $request->input('token');
         return view('admin.artikel.index', [
             'menu_active' => 'artikel',
             'token' => $token,
             'artikel' => $artikel,
-            'category_artikel' => tb_category_artikel::all(),
         ]);
     }
 
@@ -34,7 +39,7 @@ class ArtikelController extends Controller
 
         return view('admin.artikel.create', [
             'menu_active' => 'artikel',
-            'artikel' => tb_category_artikel::all(),
+            'artikel' => tb_pemberitahuan_category::where(["type" => 1])->get(),
             'token' => $token,
         ]);
     }
@@ -62,19 +67,19 @@ class ArtikelController extends Controller
         ]);
 
         // Simpan data ke tabel artikel
-        $data = new tb_artikel();
-        $data->artikel_title = $request->artikel_title;
-        $data->artikel_level = $request->artikel_level;
-        $data->id_category = $request->id_category;
-        $data->artikel_text = $request->artikel_text;
-        $data->artikel_viewer = $request->artikel_viewer;
+        $data = new tb_pemberitahuan();
+        $data->nama = $request->artikel_title;
+        $data->level = $request->artikel_level;
+        $data->category = $request->id_category;
+        $data->type = 1;
+        $data->text = $request->artikel_text;
 
         // Simpan gambar
         if ($request->hasFile('artikel_thumbnail')) {
             $file = $request->file('artikel_thumbnail');
             $imageName = md5($file->getClientOriginalName() . microtime()) . '.' . $file->getClientOriginalExtension();
             $file->move('img/artikel', $imageName);
-            $data->artikel_thumbnail = $imageName;
+            $data->thumbnail = $imageName;
         }
 
         $data->save();
@@ -89,15 +94,16 @@ class ArtikelController extends Controller
     {
         $id_artikel = $request->route("artikel");
         $token = $request->session()->get('token') ?? $request->input('token');
-        $artikel = tb_artikel::findOrFail($id_artikel);
-        $categories = tb_category_artikel::all();
+        $artikel = tb_pemberitahuan::select('tb_pemberitahuan.*', 'tb_pemberitahuan_category.pemberitahuan_category_name')
+            ->join('tb_pemberitahuan_category', 'tb_pemberitahuan.category', '=', 'tb_pemberitahuan_category.id_pemberitahuan_category')
+            ->where('tb_pemberitahuan.type', 1)
+            ->findOrFail($id_artikel);
 
         return view('admin.artikel.show', [
             'menu_active' => 'artikel',
             'profile_active' => 'artikel',
             'token' => $token,
-            'artikel' => $artikel,
-            'categories' => $categories,
+            'artikel' => $artikel
         ]);
     }
 
@@ -108,14 +114,18 @@ class ArtikelController extends Controller
     {
         $id_artikel = $request->route("artikel");
         $token = $request->session()->get('token') ?? $request->input('token');
-        $artikel = tb_artikel::findOrFail($id_artikel);
-        $categories = tb_category_artikel::all();
+        $artikel = tb_pemberitahuan::select('tb_pemberitahuan.*', 'tb_pemberitahuan_category.pemberitahuan_category_name')
+            ->join('tb_pemberitahuan_category', 'tb_pemberitahuan.category', '=', 'tb_pemberitahuan_category.id_pemberitahuan_category')
+            ->where('tb_pemberitahuan.type', 1)
+            ->findOrFail($id_artikel);
+        $categories = tb_pemberitahuan_category::where("type", 1)->get();
+
 
         return view('admin.artikel.edit', [
             'menu_active' => 'artikel',
             'token' => $token,
             'artikel' => $artikel,
-            'categories' => $categories,
+            "categories" => $categories
         ]);
     }
 
@@ -126,7 +136,7 @@ class ArtikelController extends Controller
     {
         $id_artikel = $request->route("artikel");
         $token = $request->session()->get('token') ?? $request->input('token');
-    
+
         $request->validate([
             'artikel_title' => 'required',
             'artikel_level' => 'required',
@@ -141,8 +151,9 @@ class ArtikelController extends Controller
             'artikel_thumbnail' => 'Kolom gambar wajib diisi',
             'artikel_thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
         ]);
-    
-        $data = tb_artikel::findOrFail($id_artikel);
+
+        $data = tb_pemberitahuan::where('tb_pemberitahuan.type', 1)
+            ->findOrFail($id_artikel);
 
         if ($request->hasFile('artikel_thumbnail')) {
             // Hapus gambar sebelumnya jika ada
@@ -156,20 +167,20 @@ class ArtikelController extends Controller
             // Simpan gambar baru
             $imageName = $request->file('artikel_thumbnail')->hashName();
             $request->file('artikel_thumbnail')->move('img/artikel', $imageName);
-            $data->artikel_thumbnail = $imageName;
+            $data->thumbnail = $imageName;
         }
 
-    
+
         $data->update([
-            'artikel_title' => $request->artikel_title,
-            'artikel_level' => $request->artikel_level,
-            'id_category' => $request->id_category,
-            'artikel_text' => $request->artikel_text,
+            'nama' => $request->artikel_title,
+            'level' => $request->artikel_level,
+            'category' => $request->id_category,
+            'text' => $request->artikel_text,
         ]);
-    
+
         // Redirect dengan pesan sukses
         return redirect()->route('artikel.index', ['token' => $token])->with('success', 'Artikel berhasil diperbarui.');
-    }    
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -179,7 +190,10 @@ class ArtikelController extends Controller
         $id_artikel = $request->route("artikel");
         $token = $request->session()->get('token') ?? $request->input('token');
 
-        $artikel = tb_artikel::findOrFail($id_artikel);
+        $artikel = tb_pemberitahuan::select('tb_pemberitahuan.*', 'tb_pemberitahuan_category.pemberitahuan_category_name')
+            ->join('tb_pemberitahuan_category', 'tb_pemberitahuan.category', '=', 'tb_pemberitahuan_category.id_pemberitahuan_category')
+            ->where('tb_pemberitahuan.type', 1)
+            ->findOrFail($id_artikel);
         $artikel->delete();
 
         return redirect()->route('artikel.index', ['token' => $request->token])->with('success', 'Artikel berhasil dihapus');

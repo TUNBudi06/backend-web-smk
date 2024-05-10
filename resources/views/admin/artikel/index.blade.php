@@ -40,15 +40,16 @@
                         </thead>
                         <tr>
                             @foreach($artikel as $key => $data)
+{{--                                @dd($data->category_artikel)--}}
                             <tr>
-                                <td><img src="{{ asset('img/artikel/'.$data->artikel_thumbnail) }}" width="100px" class="rounded" alt=""></td>
-                                <td style="word-wrap: break-word; max-width: 250px;">{{ $data->artikel_title }}</td>
-                                <td>{{ $data->category_artikel->category_name }}</td>
-                                <td style="word-wrap: break-word; max-width: 150px;">{{ $data->artikel_timestamp }}</td>
+                                <td><img src="{{ asset('img/artikel/'.$data->thumbnail) }}" width="100px" class="rounded" alt=""></td>
+                                <td style="word-wrap: break-word; max-width: 250px;">{{ $data->nama }}</td>
+                                <td>{{ $data->pemberitahuan_category_name }}</td>
+                                <td style="word-wrap: break-word; max-width: 150px;">{{ $data->created_at }}</td>
                                 <td>
-                                    <a href="{{ route('artikel.show', ['artikel' => $data->id_artikel, 'token' => $token]) }}" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
-                                    <a href="{{ route('artikel.edit', ['artikel' => $data->id_artikel, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                    <form action="{{ route('artikel.destroy', ['artikel' => $data->id_artikel, 'token' => $token]) }}" onclick="return confirm('Data akan dihapus ?')" method="post" class="d-inline">
+                                    <a href="{{ route('artikel.show', ['artikel' => $data->id_pemberitahuan, 'token' => $token]) }}" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('artikel.edit', ['artikel' => $data->id_pemberitahuan, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
+                                    <form action="{{ route('artikel.destroy', ['artikel' => $data->id_pemberitahuan, 'token' => $token]) }}" onclick="return confirm('Data akan dihapus ?')" method="post" class="d-inline">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>

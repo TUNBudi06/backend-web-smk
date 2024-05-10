@@ -69,6 +69,7 @@ class PengumumanController extends Controller
         $data->text = $request->pengumuman_text;
         $data->date = $request->pengumuman_date;
         $data->time = $request->pengumuman_time;
+        $data->type = 2;
         $data->save();
         return redirect()->route('pengumuman.index', ['token' => $token])->with('success', 'Pengumuman baru berhasil ditambahkan.');
     }

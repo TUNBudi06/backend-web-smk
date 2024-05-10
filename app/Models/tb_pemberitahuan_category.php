@@ -13,4 +13,9 @@ class tb_pemberitahuan_category extends Model
     protected $fillable = [
         "pemberitahuan_category_name"
     ];
+
+    public function tb_pemberitahuans()
+    {
+        return $this->hasMany(tb_pemberitahuan_type::class);
+    }
 }

@@ -32,7 +32,7 @@
             <label for="id_category" class="form-label">Kategori Artikel</label>
             <select class="form-control @error('id_category') is-invalid @enderror" name="id_category">
                 @foreach ($artikel as $n)
-                    <option value="{{ $n->id_category }}" {{ old('id_category') == $n->id_category ? 'selected' : '' }}>{{ $n->category_name }}</option>
+                    <option value="{{ $n->id_pemberitahuan_category }}" {{ old('id_category') == $n->id_pemberitahuan_category ? 'selected' : '' }}>{{ $n->pemberitahuan_category_name }}</option>
                 @endforeach
             </select>
             @error('id_category')
