@@ -40,7 +40,7 @@
                         </thead>
                         <tr>
                             @foreach($artikel as $key => $data)
-{{--                                @dd($data->category_artikel)--}}
+{{--                                @dd($data)--}}
                             <tr>
                                 <td><img src="{{ asset('img/artikel/'.$data->thumbnail) }}" width="100px" class="rounded" alt=""></td>
                                 <td style="word-wrap: break-word; max-width: 250px;">{{ $data->nama }}</td>

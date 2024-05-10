@@ -18,7 +18,7 @@ class ArtikelController extends Controller
         $perPage = 10;
         $artikel = tb_pemberitahuan::select('tb_pemberitahuan.*', 'tb_pemberitahuan_category.pemberitahuan_category_name')
             ->join('tb_pemberitahuan_category', 'tb_pemberitahuan.category', '=', 'tb_pemberitahuan_category.id_pemberitahuan_category')
-            ->where('tb_pemberitahuan.type', 1)
+            ->where(['tb_pemberitahuan.type'=> 1])
             ->orderBy('tb_pemberitahuan.created_at', 'desc')
             ->paginate($perPage);
 

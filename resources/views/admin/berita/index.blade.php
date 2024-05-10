@@ -41,16 +41,17 @@
                         </thead>
                         <tbody>
                             @foreach($news as $key => $data)
+
                             <tr>
-                                <td><img src="{{ asset('img/berita/'.$data->news_image) }}" width="100px" class="rounded" alt=""></td>
-                                <td style="word-wrap: break-word; max-width: 250px;">{{ $data->news_title }}</td>
-                                <td>{{ $data->category_news->category_name }}</td>
-                                <td>{{ $data->news_location }}</td>
-                                <td style="word-wrap: break-word; max-width: 150px;">{{ $data->news_timestamp }}</td>
+                                <td><img src="{{ asset('img/berita/'.$data->thumbnail) }}" width="100px" class="rounded" alt=""></td>
+                                <td style="word-wrap: break-word; max-width: 250px;">{{ $data->nama }}</td>
+                                <td>{{ $data->pemberitahuan_category_name }}</td>
+                                <td>{{ $data->location }}</td>
+                                <td style="word-wrap: break-word; max-width: 150px;">{{ $data->created_at }}</td>
                                 <td>
-                                    <a href="{{ route('berita.show', ['berita' => $data->id_news, 'token' => $token]) }}" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
-                                    <a href="{{ route('berita.edit', ['berita' => $data->id_news, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                    <form action="{{ route('berita.destroy', ['berita' => $data->id_news, 'token' => $token]) }}" onclick="return confirm('Data akan dihapus ?')" method="post" class="d-inline">
+                                    <a href="{{ route('berita.show', ['berita' => $data->id_pemberitahuan, 'token' => $token]) }}" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('berita.edit', ['berita' => $data->id_pemberitahuan, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
+                                    <form action="{{ route('berita.destroy', ['berita' => $data->id_pemberitahuan, 'token' => $token]) }}" onclick="return confirm('Data akan dihapus ?')" method="post" class="d-inline">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>

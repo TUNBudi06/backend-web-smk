@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\tb_category_news;
 use App\Models\tb_news;
+use App\Models\tb_pemberitahuan;
+use App\Models\tb_pemberitahuan_category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -15,15 +17,16 @@ class BeritaController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = 10;
-        $news = tb_news::orderBy('news_timestamp', 'desc')->paginate($perPage);
-
+        $perPage = $request->input('show', 10);
+        $news = tb_pemberitahuan::select('tb_pemberitahuan.*', 'tb_pemberitahuan_category.pemberitahuan_category_name')
+            ->join('tb_pemberitahuan_category', 'tb_pemberitahuan.category', '=', 'tb_pemberitahuan_category.id_pemberitahuan_category')
+            ->where(['tb_pemberitahuan.type'=> 3])
+            ->paginate($perPage);
         $token = $request->session()->get('token') ?? $request->input('token');
         return view('admin.berita.index', [
             'menu_active' => 'berita',
             'token' => $token,
-            'news' => $news,
-            'category_news' => tb_category_news::all(),
+            'news' => $news
         ]);
     }
 
@@ -66,20 +69,21 @@ class BeritaController extends Controller
         ]);
 
         // Simpan data ke tabel news
-        $data = new tb_news();
-        $data->news_title = $request->news_title;
-        $data->news_level = $request->news_level;
-        $data->id_category = $request->id_category;
-        $data->news_content = $request->news_content;
-        $data->news_location = $request->news_location;
-        $data->news_viewer = $request->news_viewer;
+        $data = new tb_pemberitahuan();
+        $data->nama = $request->news_title;
+        $data->level = $request->news_level;
+        $data->category = $request->id_category;
+        $data->text = $request->news_content;
+        $data->location = $request->news_location;
+        $data->type = 3;
+        $data->viewer = $request->news_viewer;
 
         // Simpan gambar
         if ($request->hasFile('news_image')) {
             $fileContents = file_get_contents($request->file('news_image')->getRealPath());
             $imageName = hash('sha256', $fileContents) . '.' . $request->file('news_image')->getClientOriginalExtension();
             $request->file('news_image')->move('img/berita', $imageName);
-            $data->news_image = $imageName;
+            $data->thumbnail = $imageName;
         }
 
         $data->save();
@@ -94,15 +98,16 @@ class BeritaController extends Controller
     {
         $id_news = $request->route("berita");
         $token = $request->session()->get('token') ?? $request->input('token');
-        $news = tb_news::findOrFail($id_news);
-        $categories = tb_category_news::all();
+        $news = tb_pemberitahuan::select('tb_pemberitahuan.*', 'tb_pemberitahuan_category.pemberitahuan_category_name')
+            ->join('tb_pemberitahuan_category', 'tb_pemberitahuan.category', '=', 'tb_pemberitahuan_category.id_pemberitahuan_category')
+            ->where(['tb_pemberitahuan.type'=> 3])
+            ->findOrFail($id_news);
 
         return view('admin.berita.show', [
             'menu_active' => 'berita',
             'profile_active' => 'berita',
             'token' => $token,
             'news' => $news,
-            'categories' => $categories,
         ]);
     }
 
@@ -113,8 +118,11 @@ class BeritaController extends Controller
     {
         $id_news = $request->route("berita");
         $token = $request->session()->get('token') ?? $request->input('token');
-        $news = tb_news::findOrFail($id_news);
-        $categories = tb_category_news::all();
+        $news = tb_pemberitahuan::select('tb_pemberitahuan.*', 'tb_pemberitahuan_category.pemberitahuan_category_name')
+            ->join('tb_pemberitahuan_category', 'tb_pemberitahuan.category', '=', 'tb_pemberitahuan_category.id_pemberitahuan_category')
+            ->where(['tb_pemberitahuan.type'=> 3])
+            ->findOrFail($id_news);
+        $categories = tb_pemberitahuan_category::where(["type" => 3])->get();
 
         return view('admin.berita.edit', [
             'menu_active' => 'berita',
@@ -150,7 +158,10 @@ class BeritaController extends Controller
         ]);
 
         // Temukan data berita
-        $data = tb_news::findOrFail($id_news);
+        $data = tb_pemberitahuan::select('tb_pemberitahuan.*', 'tb_pemberitahuan_category.pemberitahuan_category_name')
+            ->join('tb_pemberitahuan_category', 'tb_pemberitahuan.category', '=', 'tb_pemberitahuan_category.id_pemberitahuan_category')
+            ->where(['tb_pemberitahuan.type'=> 3])
+            ->findOrFail($id_news);
 
         // Periksa apakah ada pergantian gambar
         if ($request->hasFile('news_image')) {
@@ -165,17 +176,17 @@ class BeritaController extends Controller
             // Simpan gambar baru
             $imageName = $request->file('news_image')->hashName();
             $request->file('news_image')->move('img/berita', $imageName);
-            $data->news_image = $imageName;
+            $data->thumbnail = $imageName;
         }
 
         // Update data berita
         $data->update([
-            'news_title' => $request->news_title,
-            'news_level' => $request->news_level,
-            'id_category' => $request->id_category,
-            'news_content' => $request->news_content,
-            'news_location' => $request->news_location,
-            'news_viewer' => $request->news_viewer,
+            'nama' => $request->news_title,
+            'level' => $request->news_level,
+            'category' => $request->id_category,
+            'text' => $request->news_content,
+            'location' => $request->news_location,
+            'viewer' => $request->news_viewer,
         ]);
 
         return redirect()->route('berita.index', ['token' => $token])->with('success', 'Berita berhasil diperbarui.');
@@ -189,7 +200,10 @@ class BeritaController extends Controller
         $id_news = $request->route("berita");
         $token = $request->session()->get('token') ?? $request->input('token');
 
-        $news = tb_news::findOrFail($id_news);
+        $news = tb_pemberitahuan::select('tb_pemberitahuan.*', 'tb_pemberitahuan_category.pemberitahuan_category_name')
+            ->join('tb_pemberitahuan_category', 'tb_pemberitahuan.category', '=', 'tb_pemberitahuan_category.id_pemberitahuan_category')
+            ->where(['tb_pemberitahuan.type'=> 3])
+            ->findOrFail($id_news);
         $news->delete();
 
         return redirect()->route('berita.index', ['token' => $request->token])->with('success', 'Berita berhasil dihapus.');

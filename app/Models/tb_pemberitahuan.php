@@ -29,6 +29,8 @@ class tb_pemberitahuan extends Model
         'Approved_by',
     ];
 
+    public $timestamps = true;
+
     // Define relationships
     public function relationships()
     {
