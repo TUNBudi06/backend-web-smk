@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AgendaController;
+use App\Http\Controllers\api\ArticleController;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\BeritaController;
 use App\Http\Controllers\api\FasilitasController;
@@ -18,6 +19,7 @@ Route::get('/user', function (Request $request) {
 Route::prefix('user')->group(function () {
     Route::post('login/GUI-APP', [AuthController::class, 'addToken']);
     Route::resource('announcement', PengumumanController::class);
+    Route::resource('article', ArticleController::class);
     Route::resource('agenda', AgendaController::class);
     Route::resource('news', BeritaController::class);
     Route::prefix('profile')->group(function () {
