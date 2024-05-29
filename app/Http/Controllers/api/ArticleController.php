@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ArticleResource;
 use App\Models\tb_pemberitahuan;
 use Illuminate\Http\Request;
 
@@ -13,11 +14,16 @@ class ArticleController extends Controller
      */
     public function index(Request $request)
     {
-        $artikel = tb_pemberitahuan::select('tb_pemberitahuan.*', 'tb_pemberitahuan_category.pemberitahuan_category_name')
-            ->join('tb_pemberitahuan_category', 'tb_pemberitahuan.category', '=', 'tb_pemberitahuan_category.id_pemberitahuan_category')
-            ->where(['tb_pemberitahuan.type'=> 1])
-            ->orderBy('tb_pemberitahuan.created_at', 'desc')
-            ->get();
+        // $artikel = tb_pemberitahuan::select('tb_pemberitahuan.*', 'tb_pemberitahuan_category.pemberitahuan_category_name')
+        //     ->join('tb_pemberitahuan_category', 'tb_pemberitahuan.category', '=', 'tb_pemberitahuan_category.id_pemberitahuan_category')
+        //     ->where(['tb_pemberitahuan.type'=> 1])
+        //     ->orderBy('tb_pemberitahuan.created_at', 'desc')
+        //     ->get();
+
+        $artikel = tb_pemberitahuan::with('kategori')
+        ->where('type', 1)
+        ->orderBy('created_at', 'desc')
+        ->get();
 
         return response()->json([
             'message' => 'Data ditemukan',
@@ -38,22 +44,22 @@ class ArticleController extends Controller
      */
     public function show(string $id)
     {
-        $artikel = tb_pemberitahuan::select('tb_pemberitahuan.*', 'tb_pemberitahuan_category.pemberitahuan_category_name')
-            ->join('tb_pemberitahuan_category', 'tb_pemberitahuan.category', '=', 'tb_pemberitahuan_category.id_pemberitahuan_category')
-            ->where(['tb_pemberitahuan.id' => $id, 'tb_pemberitahuan.type' => 1])
-            ->first();
+        $artikel = tb_pemberitahuan::with('kategori')
+        ->where('id_pemberitahuan', $id)
+        ->where('type', 1)
+        ->first();
 
-        if ($artikel) {
+        if (empty($artikel)) {
             return response()->json([
-                'message' => 'Data ditemukan',
-                'data' => $artikel,
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'Data tidak ditemukan',
-                'data' => null,
+                'status' => false,
+                'data' => 'Data tidak ditemukan'
             ], 404);
         }
+
+        return response()->json([
+            'message' => 'Data ditemukan',
+            'data' => new ArticleResource($artikel),
+        ], 200);
     }
 
     /**

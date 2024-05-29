@@ -40,4 +40,9 @@ class tb_pemberitahuan extends Model
             'approver' => $this->belongsTo(tb_admin::class, 'Approved_by', 'id_admin'),
         ];
     }
+
+    public function kategori()
+    {
+        return $this->belongsTo(tb_pemberitahuan_category::class, 'category', 'id_pemberitahuan_category');
+    }
 }
