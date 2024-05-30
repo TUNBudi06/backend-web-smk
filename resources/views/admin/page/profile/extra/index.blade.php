@@ -16,9 +16,20 @@
                         </p>
                     </div>
                     <div class="col-md-4 text-right">
-                        <a href="#" class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i> Extrakulikuler Baru</a>
+                        <a href="{{ route('extra.create', ['token' => $token]) }}"
+                            class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i>
+                            Extrakurikuler Baru</a>
                     </div>
                 </div>
+                @if (Session::get('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <strong>{{ Session::get('success') }}</strong>
+                    </div>
+                @endif
                 <table class="table">
                     <thead>
                         <tr>
@@ -30,22 +41,35 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><img src="" width="100px" class="rounded" alt=""></td>
-                            <td><img src="" width="100px" class="rounded" alt=""></td>
-                            <td>Extrakulikuler Nama</td>
-                            <td>Jadwal Extra</td>
-                            <td>
-                                <a href="#" target="_blank" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
-                                <a href="#" target="_blank" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                <a href="#" target="_blank" class="btn btn-danger p-2"><i class="fas fa-trash"></i></a>
-                            </td>
-                        </tr>
+                        @foreach ($extra as $key => $data)
+                            <tr>
+                                <td><img src="{{ asset('img/extrakurikuler/cover/' . $data->extra_image) }}" width="100px"
+                                        class="rounded" alt=""></td>
+                                <td><img src="{{ asset('img/extrakurikuler/logo/' . $data->extra_logo) }}" width="100px"
+                                        class="rounded" alt=""></td>
+                                <td>{{ $data->extra_name }}</td>
+                                <td>{{ $data->extra_hari }}</td>
+                                <td>
+                                    <a href="#" target="_blank" class="btn btn-warning p-2"><i
+                                            class="fas fa-eye"></i></a>
+                                    <a href="{{ route('extra.edit', ['extra' => $data->id_extra, 'token' => $token]) }}"
+                                        class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
+                                    <form
+                                        action="{{ route('extra.destroy', ['extra' => $data->id_extra, 'token' => $token]) }}"
+                                        method="post" class="d-inline">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-danger p-2"><i
+                                                class="fas fa-trash"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
                 <script>
                     $('.check-toggle').change(function() {
-                        if(this.checked) {
+                        if (this.checked) {
                             $('.btn-print').removeAttr('disabled').removeClass('disabled')
                             $('.check-respond').prop('checked', true);
                         } else {
@@ -55,7 +79,7 @@
                     });
                     $('input[name="checkPrint[]"]').change(function() {
                         var atLeastOneIsChecked = $('input[name="checkPrint[]"]:checked').length > 0;
-                        if(atLeastOneIsChecked) {
+                        if (atLeastOneIsChecked) {
                             $('.btn-print').removeAttr('disabled').removeClass('disabled')
                         } else {
                             $('.btn-print').addClass('disabled').attr('disabled')
@@ -68,7 +92,8 @@
                             <form method="GET" id="show-form" name="showForm" action="">
                                 <div class="form-group d-inline-block">
                                     <input type="hidden" name="#">
-                                    <select id="show-select" name="show" onchange="showData()" class="form-control form-control-sm d-inline-block"
+                                    <select id="show-select" name="show" onchange="showData()"
+                                        class="form-control form-control-sm d-inline-block"
                                         style="width:70px; font-size: .7rem;" name="" id="">
                                         <option value="10">10</option>
                                         <option value="20">20</option>
@@ -89,14 +114,14 @@
                         </div>
                     </div>
                     <div class="col-md-6 text-right">
-                        <p class="montserrat d-inline" 
-                        style="font-size: .7rem;">
-                        1 dari 10</p>
-                        <a href="#"
-                        class="btn btn-sm p-0 px-2 btn-white active"><i
-                                class="fas fa-caret-left text-warning"></i></a>
-                        <a href="#"
-                        class="btn btn-sm p-0 px-2 btn-white active">
+                        <p class="montserrat d-inline" style="font-size: .7rem;">{{ $extra->firstItem() }} dari
+                            {{ $extra->lastItem() }}</p>
+                        <a href="{{ $extra->previousPageUrl() }}"
+                            class="btn btn-sm p-0 px-2 btn-white {{ $extra->onFirstPage() ? 'disabled' : 'active' }}">
+                            <i class="fas fa-caret-left text-warning"></i>
+                        </a>
+                        <a href="{{ $extra->nextPageUrl() }}"
+                            class="btn btn-sm p-0 px-2 btn-white {{ $extra->hasMorePages() ? 'active' : 'disabled' }}">
                             <i class="fas fa-caret-right text-warning"></i>
                         </a>
                     </div>

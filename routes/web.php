@@ -11,6 +11,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\profile\ExtraController;
 use App\Http\Controllers\profile\FasilitasController;
 use App\Http\Controllers\profile\JurusanController;
 use App\Http\Controllers\profile\PdController;
@@ -103,7 +104,7 @@ Route::prefix('private/admin')->group(function () {
                     'pd' => 'pd',
                 ]);
                 Route::resource('/ptk', PTKController::class);
-                Route::get('extra', [AdminController::class, 'extra'])->name('profile.extra');
+                Route::resource('/extra', ExtraController::class);
                 Route::resource('/fasilitas', FasilitasController::class)->parameters([
                     'fasilitas' => 'fasilitas',
                 ]);
