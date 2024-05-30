@@ -4,7 +4,8 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PengumumanRequest;
-use App\Http\Resources\PengumumanResource;
+use App\Http\Resources\AnnouncementResource;
+use App\Models\tb_pemberitahuan;
 use App\Models\tb_pengumuman;
 use Illuminate\Http\Request;
 
@@ -15,13 +16,15 @@ class PengumumanController extends Controller
      */
     public function index()
     {
-        $data = tb_pengumuman::get();
+        $pengumuman = tb_pemberitahuan::with('kategori')
+        ->where('type', 2)
+        ->orderBy('created_at', 'desc')
+        ->get();
 
         return response()->json([
             'message' => 'Data ditemukan',
-            // 'data' => $data
-            'data' => PengumumanResource::collection($data),
-        ],200);
+            'data' => AnnouncementResource::collection($pengumuman),
+        ], 200);
     }
 
     /**
@@ -29,15 +32,15 @@ class PengumumanController extends Controller
      */
     public function store(PengumumanRequest $request)
     {
-        $dataPengumuman = new tb_pengumuman();
+        // $dataPengumuman = new tb_pengumuman();
         
-        $dataPengumuman = tb_pengumuman::create($request->all());
+        // $dataPengumuman = tb_pengumuman::create($request->all());
 
-        return response()->json([
-            'status' => true,
-            'message' => 'Sukses menambahkan data',
-            'data' => $dataPengumuman,
-        ],200);
+        // return response()->json([
+        //     'status' => true,
+        //     'message' => 'Sukses menambahkan data',
+        //     'data' => $dataPengumuman,
+        // ],200);
     }
 
     /**
@@ -45,19 +48,20 @@ class PengumumanController extends Controller
      */
     public function show(string $id)
     {
-        $pengumuman = tb_pengumuman::find($id);
+        $pengumuman = tb_pemberitahuan::with('kategori')
+        ->where('id_pemberitahuan', $id)
+        ->where('type', 2)
+        ->first();
 
-        if (!$pengumuman) {
+        if (empty($pengumuman)) {
             return response()->json([
-                'status' => false,
-                'message' => 'Data tidak ditemukan',
+                'data' => 'Data tidak ditemukan'
             ], 404);
         }
-    
+
         return response()->json([
-            'status' => true,
             'message' => 'Data ditemukan',
-            'data' => $pengumuman,
+            'data' => new AnnouncementResource($pengumuman),
         ], 200);
     }
 
@@ -66,21 +70,21 @@ class PengumumanController extends Controller
      */
     public function update(PengumumanRequest $request, string $id)
     {
-        $pengumuman = tb_pengumuman::find($id);
+        // $pengumuman = tb_pengumuman::find($id);
 
-        if (!$pengumuman) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Data tidak ditemukan',
-            ], 404);
-        }
+        // if (!$pengumuman) {
+        //     return response()->json([
+        //         'status' => false,
+        //         'message' => 'Data tidak ditemukan',
+        //     ], 404);
+        // }
     
-        $pengumuman->update($request->all());
+        // $pengumuman->update($request->all());
     
-        return response()->json([
-            'status' => true,
-            'message' => 'Data berhasil diperbarui',
-        ], 200);
+        // return response()->json([
+        //     'status' => true,
+        //     'message' => 'Data berhasil diperbarui',
+        // ], 200);
     }
 
     /**
@@ -88,20 +92,20 @@ class PengumumanController extends Controller
      */
     public function destroy(string $id)
     {
-        $pengumuman = tb_pengumuman::find($id);
+        // $pengumuman = tb_pengumuman::find($id);
 
-        if (!$pengumuman) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Data tidak ditemukan',
-            ], 404);
-        }
+        // if (!$pengumuman) {
+        //     return response()->json([
+        //         'status' => false,
+        //         'message' => 'Data tidak ditemukan',
+        //     ], 404);
+        // }
     
-        $pengumuman->delete();
+        // $pengumuman->delete();
     
-        return response()->json([
-            'status' => true,
-            'message' => 'Data berhasil dihapus',
-        ], 200);
+        // return response()->json([
+        //     'status' => true,
+        //     'message' => 'Data berhasil dihapus',
+        // ], 200);
     }
 }

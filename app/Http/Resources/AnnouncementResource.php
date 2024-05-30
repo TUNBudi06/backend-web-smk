@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ArticleResource extends JsonResource
+class AnnouncementResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,16 +16,15 @@ class ArticleResource extends JsonResource
     {
         return [
             'id_pemberitahuan' => $this->id_pemberitahuan,
-            'nama' => $this->nama,
-            'thumbnail' => $this->thumbnail,
+            'title' => $this->nama,
+            'target' => $this->target,
             'date' => $this->date,
+            'time' => $this->time,
             'text' => $this->text,
-            'level' => $this->level,
             'category' => $this->kategori ? [
                 'id' => $this->kategori->id_pemberitahuan_category,
                 'nama' => $this->kategori->pemberitahuan_category_name,
             ] : null,
-            'viewer' => $this->viewer,
             'created_at' => $this->created_at,
         ];
     }

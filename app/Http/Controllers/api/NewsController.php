@@ -4,22 +4,25 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\NewsResource;
-use App\Models\tb_news;
+use App\Models\tb_pemberitahuan;
 use Illuminate\Http\Request;
 
-class BeritaController extends Controller
+class NewsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = tb_news::with('category_news')->get();
+        $news = tb_pemberitahuan::with('kategori')
+        ->where('type', 3)
+        ->orderBy('created_at', 'desc')
+        ->get();
 
         return response()->json([
             'message' => 'Data ditemukan',
-            'data' => NewsResource::collection($data),
-        ],200);
+            'data' => NewsResource::collection($news),
+        ], 200);
     }
 
     /**
@@ -35,7 +38,21 @@ class BeritaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $news = tb_pemberitahuan::with('kategori')
+        ->where('id_pemberitahuan', $id)
+        ->where('type', 3)
+        ->first();
+
+        if (empty($news)) {
+            return response()->json([
+                'data' => 'Data tidak ditemukan'
+            ], 404);
+        }
+
+        return response()->json([
+            'message' => 'Data ditemukan',
+            'data' => new NewsResource($news),
+        ], 200);
     }
 
     /**

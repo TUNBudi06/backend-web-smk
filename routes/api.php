@@ -3,10 +3,11 @@
 use App\Http\Controllers\api\AgendaController;
 use App\Http\Controllers\api\ArticleController;
 use App\Http\Controllers\api\AuthController;
-use App\Http\Controllers\api\BeritaController;
+use App\Http\Controllers\api\EventController;
 use App\Http\Controllers\api\FasilitasController;
 use App\Http\Controllers\api\PengumumanController;
 use App\Http\Controllers\api\JurusanController;
+use App\Http\Controllers\api\NewsController;
 use App\Http\Controllers\api\PDController;
 use App\Http\Controllers\api\PTKController;
 use Illuminate\Http\Request;
@@ -21,7 +22,8 @@ Route::prefix('user')->group(function () {
     Route::resource('announcement', PengumumanController::class);
     Route::resource('article', ArticleController::class);
     Route::resource('agenda', AgendaController::class);
-    Route::resource('news', BeritaController::class);
+    Route::resource('news', NewsController::class);
+    Route::resource('events', EventController::class);
     Route::prefix('profile')->group(function () {
         Route::resource('major', JurusanController::class);
         Route::resource('facility', FasilitasController::class);

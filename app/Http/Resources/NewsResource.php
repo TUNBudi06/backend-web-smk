@@ -15,14 +15,18 @@ class NewsResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id_news' => $this->id_news,
-            'news_title' => $this->news_title,
-            'id_category' => $this->category_news->category_name,
-            'news_level' => $this->news_level,
-            'news_image' => $this->news_image,
-            'news_content' => $this->news_content,
-            'news_location' => $this->news_location,
-            'news_viewer' => $this->news_viewer,
+            'id_pemberitahuan' => $this->id_pemberitahuan,
+            'nama' => $this->nama,
+            'thumbnail' => $this->thumbnail,
+            'text' => $this->text,
+            'level' => $this->level,
+            'location' => $this->location,
+            'category' => [
+                'id' => $this->kategori->id_pemberitahuan_category,
+                'nama' => $this->kategori->pemberitahuan_category_name,
+            ],
+            'viewer' => $this->viewer,
+            'created_at' => $this->created_at,
         ];
     }
 }
