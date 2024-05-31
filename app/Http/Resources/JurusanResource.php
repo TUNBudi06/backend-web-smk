@@ -19,7 +19,11 @@ class JurusanResource extends JsonResource
             'jurusan_nama' => $this->jurusan_nama,
             'jurusan_short' => $this->jurusan_short,
             'jurusan_thumbnail' => $this->jurusan_thumbnail,
-            'id_prodi' => $this->prodis->prodi_name,
+            'prodi' => $this->prodis ? [
+                'id' => $this->prodis->id_prodi,
+                'nama_prodi' => $this->prodis->prodi_name,
+                'prodi_short' => $this->prodis->prodi_short,
+            ] : null,
             'jurusan_text' => $this->jurusan_text,
         ];
     }

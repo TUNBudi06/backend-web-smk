@@ -77,19 +77,19 @@ class FasilitasController extends Controller
      */
     public function show(string $id)
     {
-        $facility = tb_facilities::find($id);
+        $data = tb_facilities::with('prodis')
+        ->where('id_facility', $id)
+        ->first();
 
-        if (!$facility) {
+        if (empty($data)) {
             return response()->json([
-                'status' => false,
-                'message' => 'Data tidak ditemukan',
+                'data' => 'Data tidak ditemukan'
             ], 404);
         }
 
         return response()->json([
-            'status' => true,
             'message' => 'Data ditemukan',
-            'data' => $facility,
+            'data' => new FasilitasResource($data),
         ], 200);
     }
 

@@ -79,19 +79,19 @@ class JurusanController extends Controller
      */
     public function show(string $id)
     {
-        $jurusan = tb_jurusan::find($id);
+        $data = tb_jurusan::with('prodis')
+        ->where('id_jurusan', $id)
+        ->first();
 
-        if (!$jurusan) {
+        if (empty($data)) {
             return response()->json([
-                'status' => false,
-                'message' => 'Data tidak ditemukan',
+                'data' => 'Data tidak ditemukan'
             ], 404);
         }
 
         return response()->json([
-            'status' => true,
             'message' => 'Data ditemukan',
-            'data' => $jurusan,
+            'data' => new JurusanResource($data),
         ], 200);
     }
 

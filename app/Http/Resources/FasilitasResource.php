@@ -18,7 +18,11 @@ class FasilitasResource extends JsonResource
             'id_facility' => $this->id_facility,
             'facility_name' => $this->facility_name,
             'facility_image' => $this->facility_image,
-            'id_prodi' => $this->prodis->prodi_name,
+            'prodi' => $this->prodis ? [
+                'id' => $this->prodis->id_prodi,
+                'nama_prodi' => $this->prodis->prodi_name,
+                'prodi_short' => $this->prodis->prodi_short,
+            ] : null,
             'facility_text' => $this->facility_text,
         ];
     }

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\api\AgendaController;
 use App\Http\Controllers\api\ArticleController;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\EventController;
@@ -21,7 +20,6 @@ Route::prefix('user')->group(function () {
     Route::post('login/GUI-APP', [AuthController::class, 'addToken']);
     Route::resource('announcement', PengumumanController::class);
     Route::resource('article', ArticleController::class);
-    Route::resource('agenda', AgendaController::class);
     Route::resource('news', NewsController::class);
     Route::resource('events', EventController::class);
     Route::prefix('profile')->group(function () {
