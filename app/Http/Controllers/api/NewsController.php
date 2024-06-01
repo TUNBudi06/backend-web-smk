@@ -10,7 +10,17 @@ use Illuminate\Http\Request;
 class NewsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get (
+     * path="api/user/news",
+     * tags={"news"},
+     * summary="Get all news data",
+     * description="",
+     * operationId="news",
+     * @OA\Response(
+     *      response="default",
+     *      description="return array model news"     
+     *      )
+     * )
      */
     public function index()
     {

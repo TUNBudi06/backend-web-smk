@@ -1,0 +1,24 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "School Backend API Documentation",
+        "version": "1.0"
+    },
+    "paths": {
+        "api/user/news": {
+            "get": {
+                "tags": [
+                    "news"
+                ],
+                "summary": "Get all news data",
+                "description": "",
+                "operationId": "news",
+                "responses": {
+                    "default": {
+                        "description": "return array model news"
+                    }
+                }
+            }
+        }
+    }
+}
