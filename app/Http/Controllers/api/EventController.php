@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryResource;
 use App\Http\Resources\EventResource;
 use App\Models\tb_pemberitahuan;
+use App\Models\tb_pemberitahuan_category;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -69,5 +71,17 @@ class EventController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function categoryEvent()
+    {
+        $data = tb_pemberitahuan_category::with('tipe')
+        ->where('type', 4)
+        ->get();
+
+        return response()->json([
+            'message' => 'Data ditemukan',
+            'data' => CategoryResource::collection($data),
+        ], 200);
     }
 }

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ArticleResource;
+use App\Http\Resources\CategoryResource;
 use App\Models\tb_pemberitahuan;
+use App\Models\tb_pemberitahuan_category;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -75,5 +77,17 @@ class ArticleController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function categoryArticle()
+    {
+        $data = tb_pemberitahuan_category::with('tipe')
+        ->where('type', 1)
+        ->get();
+
+        return response()->json([
+            'message' => 'Data ditemukan',
+            'data' => CategoryResource::collection($data),
+        ], 200);
     }
 }

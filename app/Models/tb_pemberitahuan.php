@@ -45,4 +45,9 @@ class tb_pemberitahuan extends Model
     {
         return $this->belongsTo(tb_pemberitahuan_category::class, 'category', 'id_pemberitahuan_category');
     }
+
+    public function tipe()
+    {
+        return $this->belongsTo(tb_pemberitahuan_type::class, 'type', 'id_pemberitahuan_type');
+    }
 }

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PengumumanRequest;
 use App\Http\Resources\AnnouncementResource;
+use App\Http\Resources\CategoryResource;
 use App\Models\tb_pemberitahuan;
+use App\Models\tb_pemberitahuan_category;
 use App\Models\tb_pengumuman;
 use Illuminate\Http\Request;
 
@@ -107,5 +109,17 @@ class PengumumanController extends Controller
         //     'status' => true,
         //     'message' => 'Data berhasil dihapus',
         // ], 200);
+    }
+
+    public function categoryAnnouncement()
+    {
+        $data = tb_pemberitahuan_category::with('tipe')
+        ->where('type', 2)
+        ->get();
+
+        return response()->json([
+            'message' => 'Data ditemukan',
+            'data' => CategoryResource::collection($data),
+        ], 200);
     }
 }

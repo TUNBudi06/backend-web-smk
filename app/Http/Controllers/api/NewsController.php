@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryResource;
 use App\Http\Resources\NewsResource;
 use App\Models\tb_pemberitahuan;
+use App\Models\tb_pemberitahuan_category;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
@@ -79,5 +81,17 @@ class NewsController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function categoryNews()
+    {
+        $data = tb_pemberitahuan_category::with('tipe')
+        ->where('type', 3)
+        ->get();
+
+        return response()->json([
+            'message' => 'Data ditemukan',
+            'data' => CategoryResource::collection($data),
+        ], 200);
     }
 }
