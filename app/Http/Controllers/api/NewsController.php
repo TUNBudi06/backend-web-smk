@@ -11,17 +11,28 @@ use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
-    /**
-     * @OA\Get (
-     * path="api/user/news",
-     * tags={"news"},
-     * summary="Get all news data",
-     * description="",
-     * operationId="news",
-     * @OA\Response(
-     *      response="default",
-     *      description="return array model news"     
-     *      )
+/**
+     * @OA\Get(
+     *     path="/api/user/news",
+     *     tags={"News"},
+     *     summary="Get all news data",
+     *     description="Retrieve all news data",
+     *     operationId="getAllNews",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Data ditemukan",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/NewsResource")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Data tidak ditemukan",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
+     *         )
+     *     )
      * )
      */
     public function index()
@@ -46,7 +57,31 @@ class NewsController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/user/news/{id}",
+     *     tags={"News"},
+     *     summary="Get news by ID",
+     *     description="Retrieve a single news entry by ID",
+     *     operationId="getNewsById",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Data ditemukan",
+     *         @OA\JsonContent(ref="#/components/schemas/NewsResource")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Data tidak ditemukan",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
+     *         )
+     *     )
+     * )
      */
     public function show(string $id)
     {
@@ -82,7 +117,24 @@ class NewsController extends Controller
     {
         //
     }
-
+    
+        /**
+     * @OA\Get(
+     *     path="/api/user/newsCategory",
+     *     tags={"News"},
+     *     summary="Get news categories",
+     *     description="Retrieve categories of news",
+     *     operationId="getNewsCategories",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Data ditemukan",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/CategoryResource")
+     *         )
+     *     )
+     * )
+     */
     public function categoryNews()
     {
         $data = tb_pemberitahuan_category::with('tipe')

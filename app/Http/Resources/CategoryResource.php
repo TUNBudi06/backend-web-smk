@@ -5,6 +5,21 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @OA\Schema(
+ *     schema="CategoryResource",
+ *     type="object",
+ *     title="Category Resource",
+ *     properties={
+ *         @OA\Property(property="id_pemberitahuan_category", type="integer"),
+ *         @OA\Property(property="nama", type="string"),
+ *         @OA\Property(property="tipe", type="object",
+ *             @OA\Property(property="id", type="integer"),
+ *             @OA\Property(property="nama", type="string")
+ *         )
+ *     }
+ * )
+ */
 class CategoryResource extends JsonResource
 {
     /**

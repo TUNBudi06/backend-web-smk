@@ -14,7 +14,30 @@ use Illuminate\Http\Request;
 class PengumumanController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/user/announcement",
+     *     tags={"Announcement"},
+     *     summary="Get all announcements",
+     *     description="Retrieve all announcements with type 2",
+     *     operationId="getAllAnnouncements",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Data ditemukan",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Data ditemukan"),
+     *             @OA\Property(property="data", type="array",
+     *                 @OA\Items(ref="#/components/schemas/AnnouncementResource")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Data tidak ditemukan",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
+     *         )
+     *     )
+     * )
      */
     public function index()
     {
@@ -46,7 +69,36 @@ class PengumumanController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/user/announcement/{id}",
+     *     tags={"Announcement"},
+     *     summary="Get specific announcement",
+     *     description="Retrieve a specific announcement by its ID",
+     *     operationId="getAnnouncementById",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Data ditemukan",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Data ditemukan"),
+     *             @OA\Property(property="data", ref="#/components/schemas/AnnouncementResource")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Data tidak ditemukan",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
+     *         )
+     *     )
+     * )
      */
     public function show(string $id)
     {
@@ -111,6 +163,32 @@ class PengumumanController extends Controller
         // ], 200);
     }
 
+        /**
+     * @OA\Get(
+     *     path="/api/user/announcementCategory",
+     *     tags={"Announcement"},
+     *     summary="Get all announcement categories",
+     *     description="Retrieve all categories for announcements",
+     *     operationId="getAnnouncementCategories",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Data ditemukan",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Data ditemukan"),
+     *             @OA\Property(property="data", type="array",
+     *                 @OA\Items(ref="#/components/schemas/CategoryResource")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Data tidak ditemukan",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
+     *         )
+     *     )
+     * )
+     */
     public function categoryAnnouncement()
     {
         $data = tb_pemberitahuan_category::with('tipe')
