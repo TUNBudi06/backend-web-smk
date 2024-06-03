@@ -19,13 +19,13 @@ Route::get('/user', function (Request $request) {
 Route::prefix('user')->group(function () {
     Route::post('login/GUI-APP', [AuthController::class, 'addToken']);
     Route::resource('announcement', PengumumanController::class);
-    Route::get('announcementCategory', [PengumumanController::class, 'categoryAnnouncement']);
+    Route::get('announcementCategories', [PengumumanController::class, 'categoryAnnouncement']);
     Route::resource('article', ArticleController::class);
-    Route::get('articleCategory', [ArticleController::class, 'categoryArticle']);
+    Route::get('articleCategories', [ArticleController::class, 'categoryArticle']);
     Route::resource('news', NewsController::class);
-    Route::get('newsCategory', [NewsController::class, 'categoryNews']);
+    Route::get('newsCategories', [NewsController::class, 'categoryNews']);
     Route::resource('events', EventController::class);
-    Route::get('eventCategory', [EventController::class, 'categoryEvent']);
+    Route::get('eventCategories', [EventController::class, 'categoryEvent']);
     Route::prefix('profile')->group(function () {
         Route::resource('major', JurusanController::class);
         Route::resource('facility', FasilitasController::class);

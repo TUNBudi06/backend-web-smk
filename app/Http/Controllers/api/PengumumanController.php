@@ -165,7 +165,7 @@ class PengumumanController extends Controller
 
         /**
      * @OA\Get(
-     *     path="/api/user/announcementCategory",
+     *     path="/api/user/announcementCategories",
      *     tags={"Announcement"},
      *     summary="Get all announcement categories",
      *     description="Retrieve all categories for announcements",

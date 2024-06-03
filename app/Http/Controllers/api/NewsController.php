@@ -120,7 +120,7 @@ class NewsController extends Controller
     
         /**
      * @OA\Get(
-     *     path="/api/user/newsCategory",
+     *     path="/api/user/newsCategories",
      *     tags={"News"},
      *     summary="Get news categories",
      *     description="Retrieve categories of news",
