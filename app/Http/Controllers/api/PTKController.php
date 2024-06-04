@@ -10,7 +10,23 @@ use Illuminate\Http\Request;
 class PTKController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/user/ptk",
+     *     tags={"PTK"},
+     *     summary="Get all PTK",
+     *     description="Retrieve all PTK",
+     *     operationId="getAllPTK",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Data ditemukan",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Data ditemukan"),
+     *             @OA\Property(property="data", type="array",
+     *                 @OA\Items(ref="#/components/schemas/PTKResource")
+     *             )
+     *         )
+     *     )
+     * )
      */
     public function index()
     {
@@ -38,7 +54,36 @@ class PTKController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/user/ptk/{id}",
+     *     tags={"PTK"},
+     *     summary="Get specific PTK",
+     *     description="Retrieve a specific PTK by its ID",
+     *     operationId="getPTKById",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Data ditemukan",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Data ditemukan"),
+     *             @OA\Property(property="data", ref="#/components/schemas/PTKResource")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Data tidak ditemukan",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
+     *         )
+     *     )
+     * )
      */
     public function show(string $id)
     {

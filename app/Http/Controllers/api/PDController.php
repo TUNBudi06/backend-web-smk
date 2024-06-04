@@ -10,7 +10,23 @@ use Illuminate\Http\Request;
 class PDController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/user/peserta_didik",
+     *     tags={"PD"},
+     *     summary="Get all peserta didik",
+     *     description="Retrieve all peserta didik",
+     *     operationId="getAllPesertaDidik",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Data ditemukan",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Data ditemukan"),
+     *             @OA\Property(property="data", type="array",
+     *                 @OA\Items(ref="#/components/schemas/PDResource")
+     *             )
+     *         )
+     *     )
+     * )
      */
     public function index()
     {
@@ -38,7 +54,36 @@ class PDController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/user/peserta_didik/{id}",
+     *     tags={"PD"},
+     *     summary="Get specific peserta didik",
+     *     description="Retrieve a specific peserta didik by its ID",
+     *     operationId="getPesertaDidikById",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Data ditemukan",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Data ditemukan"),
+     *             @OA\Property(property="data", ref="#/components/schemas/PDResource")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Data tidak ditemukan",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
+     *         )
+     *     )
+     * )
      */
     public function show(string $id)
     {

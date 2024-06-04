@@ -540,6 +540,188 @@
                 }
             }
         },
+        "/api/user/peserta_didik": {
+            "get": {
+                "tags": [
+                    "PD"
+                ],
+                "summary": "Get all peserta didik",
+                "description": "Retrieve all peserta didik",
+                "operationId": "getAllPesertaDidik",
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/PDResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/peserta_didik/{id}": {
+            "get": {
+                "tags": [
+                    "PD"
+                ],
+                "summary": "Get specific peserta didik",
+                "description": "Retrieve a specific peserta didik by its ID",
+                "operationId": "getPesertaDidikById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/PDResource"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data tidak ditemukan"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/ptk": {
+            "get": {
+                "tags": [
+                    "PTK"
+                ],
+                "summary": "Get all PTK",
+                "description": "Retrieve all PTK",
+                "operationId": "getAllPTK",
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/PTKResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/ptk/{id}": {
+            "get": {
+                "tags": [
+                    "PTK"
+                ],
+                "summary": "Get specific PTK",
+                "description": "Retrieve a specific PTK by its ID",
+                "operationId": "getPTKById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/PTKResource"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data tidak ditemukan"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/announcement": {
             "get": {
                 "tags": [
@@ -937,6 +1119,94 @@
                     "created_at": {
                         "type": "string",
                         "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "PDResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "nisn": {
+                        "type": "string",
+                        "example": "1234567890"
+                    },
+                    "nis": {
+                        "type": "string",
+                        "example": "12345"
+                    },
+                    "nama": {
+                        "type": "string",
+                        "example": "John Doe"
+                    },
+                    "kelas": {
+                        "type": "string",
+                        "example": "10A"
+                    },
+                    "tempat_lahir": {
+                        "type": "string",
+                        "example": "Jakarta"
+                    },
+                    "tanggal_lahir": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2000-01-01"
+                    },
+                    "agama": {
+                        "type": "string",
+                        "example": "Islam"
+                    },
+                    "gender": {
+                        "type": "string",
+                        "example": "Laki-laki"
+                    },
+                    "telp": {
+                        "type": "string",
+                        "example": "081234567890"
+                    },
+                    "alamat": {
+                        "type": "string",
+                        "example": "Jl. Kebon Jeruk No. 1"
+                    }
+                },
+                "type": "object"
+            },
+            "PTKResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "nama": {
+                        "type": "string",
+                        "example": "Jane Doe"
+                    },
+                    "nip": {
+                        "type": "string",
+                        "example": "123456789"
+                    },
+                    "nuptk": {
+                        "type": "string",
+                        "example": "987654321"
+                    },
+                    "tempat_lahir": {
+                        "type": "string",
+                        "example": "Bandung"
+                    },
+                    "tanggal_lahir": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "1980-05-15"
+                    },
+                    "jenis_kelamin": {
+                        "type": "string",
+                        "example": "Perempuan"
+                    },
+                    "alamat": {
+                        "type": "string",
+                        "example": "Jl. Merdeka No. 10"
                     }
                 },
                 "type": "object"
