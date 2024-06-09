@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\ArticleController;
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\EkstraController;
 use App\Http\Controllers\api\EventController;
 use App\Http\Controllers\api\FasilitasController;
 use App\Http\Controllers\api\PengumumanController;
@@ -31,6 +32,7 @@ Route::prefix('user')->group(function () {
         Route::resource('facility', FasilitasController::class);
         Route::resource('peserta_didik', PDController::class);
         Route::resource('PTK', PTKController::class);
+        Route::resource('ekstra', EkstraController::class);
     });
 });
 
