@@ -162,6 +162,98 @@
                 }
             }
         },
+        "/api/user/profile/ekstra": {
+            "get": {
+                "tags": [
+                    "Ekstra"
+                ],
+                "summary": "Get all Ekstra",
+                "description": "Retrieve all Ekstra",
+                "operationId": "getAllEkstra",
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Ekstra"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/profile/ekstra/{id}": {
+            "get": {
+                "tags": [
+                    "Ekstra"
+                ],
+                "summary": "Get specific Ekstra",
+                "description": "Retrieve a specific Ekstra by ID",
+                "operationId": "getEkstraById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Ekstra",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Ekstra"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "string",
+                                            "example": "Data tidak ditemukan"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/events": {
             "get": {
                 "tags": [
@@ -993,6 +1085,47 @@
                             }
                         },
                         "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "Ekstra": {
+                "properties": {
+                    "id_extra": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "extra_name": {
+                        "type": "string",
+                        "example": "Basketball"
+                    },
+                    "extra_text": {
+                        "type": "string",
+                        "example": "Basketball club for all grades."
+                    },
+                    "extra_type": {
+                        "type": "string",
+                        "example": "Sport"
+                    },
+                    "extra_logo": {
+                        "type": "string",
+                        "example": "logo.png"
+                    },
+                    "extra_image": {
+                        "type": "string",
+                        "example": "image.png"
+                    },
+                    "instagram": {
+                        "type": "string",
+                        "example": "https://instagram.com/basketball"
+                    },
+                    "telegram": {
+                        "type": "string",
+                        "example": "https://telegram.me/basketball"
+                    },
+                    "extra_hari": {
+                        "type": "string",
+                        "example": "Monday and Thursday"
                     }
                 },
                 "type": "object"

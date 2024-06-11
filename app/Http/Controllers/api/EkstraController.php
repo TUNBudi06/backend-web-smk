@@ -9,8 +9,27 @@ use Illuminate\Http\Request;
 
 class EkstraController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+        /**
+     * @OA\Get(
+     *     path="/api/user/profile/ekstra",
+     *     tags={"Ekstra"},
+     *     summary="Get all Ekstra",
+     *     description="Retrieve all Ekstra",
+     *     operationId="getAllEkstra",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Data ditemukan",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Data ditemukan"),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(ref="#/components/schemas/Ekstra")
+     *             )
+     *         )
+     *     )
+     * )
      */
     public function index()
     {
@@ -31,7 +50,37 @@ class EkstraController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/user/profile/ekstra/{id}",
+     *     tags={"Ekstra"},
+     *     summary="Get specific Ekstra",
+     *     description="Retrieve a specific Ekstra by ID",
+     *     operationId="getEkstraById",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of the Ekstra",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Data ditemukan",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Data ditemukan"),
+     *             @OA\Property(property="data", ref="#/components/schemas/Ekstra")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Data tidak ditemukan",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="data", type="string", example="Data tidak ditemukan")
+     *         )
+     *     )
+     * )
      */
     public function show(string $id)
     {

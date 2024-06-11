@@ -41,7 +41,7 @@
                     <div class="col-md-6" onclick="window.location.href='{{ route('extra.index', ['token' => $token]) }}';">
                         <div class="count-card rounded p-3">
                             <p class="poppins mb-0"><i class="fas mr-2 fa-school"></i>Extrakurikuler</p>
-                            <p class="montserrat mb-0" style="font-size: .8rem;"><span class="font-weight-bold"></span> Item</p>
+                            <p class="montserrat mb-0" style="font-size: .8rem;"><span class="font-weight-bold">{{$extra}}</span> Item</p>
                         </div>
                     </div>
                     <div class="col-md-6 mb-2" onclick="window.location.href='{{ route('fasilitas.index', ['token' => $token]) }}';">

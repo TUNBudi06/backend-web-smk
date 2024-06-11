@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\tb_artikel;
 use App\Models\tb_event;
+use App\Models\tb_extra;
 use App\Models\tb_facilities;
 use App\Models\tb_gallery;
 use App\Models\tb_news;
@@ -31,6 +32,7 @@ class AdminController extends Controller
             'fasilitas' => tb_facilities::count(),
             'pd' => tb_peserta_didik::count(),
             'ptk' => tb_ptk::count(),
+            'extra' => tb_extra::count(),
         ]);
     }
 
