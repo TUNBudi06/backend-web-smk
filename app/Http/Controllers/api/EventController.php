@@ -127,7 +127,7 @@ class EventController extends Controller
 
         /**
      * @OA\Get(
-     *     path="/api/user/eventCategories",
+     *     path="/api/user/event-categories",
      *     tags={"Events"},
      *     summary="Get all event categories",
      *     description="Retrieve all categories for events",

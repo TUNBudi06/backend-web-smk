@@ -131,13 +131,13 @@ class ArticleController extends Controller
         //
     }
 
-        /**
+    /**
      * @OA\Get(
-     *     path="/api/user/articleCategories",
+     *     path="/api/user/article-categories",
      *     tags={"Articles"},
      *     summary="Get all article categories",
      *     description="Retrieve all categories for articles",
-     *     operationId="getArticleCategories",
+     *     operationId="getArticle-categories",
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",

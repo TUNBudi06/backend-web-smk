@@ -11,7 +11,7 @@ class EkstraController extends Controller
 {
         /**
      * @OA\Get(
-     *     path="/api/user/profile/ekstra",
+     *     path="/api/user/profile/ekstras",
      *     tags={"Ekstra"},
      *     summary="Get all Ekstra",
      *     description="Retrieve all Ekstra",
@@ -51,7 +51,7 @@ class EkstraController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/user/profile/ekstra/{id}",
+     *     path="/api/user/profile/ekstras/{id}",
      *     tags={"Ekstra"},
      *     summary="Get specific Ekstra",
      *     description="Retrieve a specific Ekstra by ID",

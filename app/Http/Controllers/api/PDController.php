@@ -11,7 +11,7 @@ class PDController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/api/user/peserta_didik",
+     *     path="/api/user/profile/students",
      *     tags={"PD"},
      *     summary="Get all peserta didik",
      *     description="Retrieve all peserta didik",
@@ -55,7 +55,7 @@ class PDController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/user/peserta_didik/{id}",
+     *     path="/api/user/profile/students/{id}",
      *     tags={"PD"},
      *     summary="Get specific peserta didik",
      *     description="Retrieve a specific peserta didik by its ID",

@@ -19,20 +19,20 @@ Route::get('/user', function (Request $request) {
 
 Route::prefix('user')->group(function () {
     Route::post('login/GUI-APP', [AuthController::class, 'addToken']);
-    Route::resource('announcement', PengumumanController::class);
-    Route::get('announcementCategories', [PengumumanController::class, 'categoryAnnouncement']);
+    Route::resource('announcements', PengumumanController::class);
+    Route::get('announcement-categories', [PengumumanController::class, 'categoryAnnouncement']);
     Route::resource('articles', ArticleController::class);
-    Route::get('articleCategories', [ArticleController::class, 'categoryArticle']);
+    Route::get('article-categories', [ArticleController::class, 'categoryArticle']);
     Route::resource('news', NewsController::class);
-    Route::get('newsCategories', [NewsController::class, 'categoryNews']);
+    Route::get('news-categories', [NewsController::class, 'categoryNews']);
     Route::resource('events', EventController::class);
-    Route::get('eventCategories', [EventController::class, 'categoryEvent']);
+    Route::get('event-categories', [EventController::class, 'categoryEvent']);
     Route::prefix('profile')->group(function () {
-        Route::resource('major', JurusanController::class); // durung ono
+        Route::resource('majors', JurusanController::class); // durung ono
         Route::resource('facilities', FasilitasController::class);
-        Route::resource('peserta_didik', PDController::class);
-        Route::resource('PTK', PTKController::class);
-        Route::resource('ekstra', EkstraController::class);
+        Route::resource('students', PDController::class);
+        Route::resource('teachers', PTKController::class);
+        Route::resource('ekstras', EkstraController::class);
     });
 });
 

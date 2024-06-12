@@ -13,7 +13,7 @@ class JurusanController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/api/user/profile/major",
+     *     path="/api/user/profile/majors",
      *     tags={"Major"},
      *     summary="Get all Major",
      *     description="Retrieve all Major",
@@ -93,7 +93,7 @@ class JurusanController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/user/profile/major/{id}",
+     *     path="/api/user/profile/majors/{id}",
      *     tags={"Major"},
      *     summary="Get specific Major",
      *     description="Retrieve a specific Major by ID",

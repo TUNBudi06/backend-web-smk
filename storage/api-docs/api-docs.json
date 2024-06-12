@@ -112,14 +112,14 @@
                 }
             }
         },
-        "/api/user/articleCategories": {
+        "/api/user/article-categories": {
             "get": {
                 "tags": [
                     "Articles"
                 ],
                 "summary": "Get all article categories",
                 "description": "Retrieve all categories for articles",
-                "operationId": "getArticleCategories",
+                "operationId": "getArticle-categories",
                 "responses": {
                     "200": {
                         "description": "Data ditemukan",
@@ -162,7 +162,7 @@
                 }
             }
         },
-        "/api/user/profile/ekstra": {
+        "/api/user/profile/ekstras": {
             "get": {
                 "tags": [
                     "Ekstra"
@@ -196,7 +196,7 @@
                 }
             }
         },
-        "/api/user/profile/ekstra/{id}": {
+        "/api/user/profile/ekstras/{id}": {
             "get": {
                 "tags": [
                     "Ekstra"
@@ -361,7 +361,7 @@
                 }
             }
         },
-        "/api/user/eventCategories": {
+        "/api/user/event-categories": {
             "get": {
                 "tags": [
                     "Events"
@@ -518,7 +518,7 @@
                 }
             }
         },
-        "/api/user/profile/major": {
+        "/api/user/profile/majors": {
             "get": {
                 "tags": [
                     "Major"
@@ -552,7 +552,7 @@
                 }
             }
         },
-        "/api/user/profile/major/{id}": {
+        "/api/user/profile/majors/{id}": {
             "get": {
                 "tags": [
                     "Major"
@@ -699,7 +699,7 @@
                 }
             }
         },
-        "/api/user/newsCategories": {
+        "/api/user/news-categories": {
             "get": {
                 "tags": [
                     "News"
@@ -724,7 +724,7 @@
                 }
             }
         },
-        "/api/user/peserta_didik": {
+        "/api/user/profile/students": {
             "get": {
                 "tags": [
                     "PD"
@@ -758,7 +758,7 @@
                 }
             }
         },
-        "/api/user/peserta_didik/{id}": {
+        "/api/user/profile/students/{id}": {
             "get": {
                 "tags": [
                     "PD"
@@ -815,7 +815,7 @@
                 }
             }
         },
-        "/api/user/ptk": {
+        "/api/user/profile/teachers": {
             "get": {
                 "tags": [
                     "PTK"
@@ -849,7 +849,7 @@
                 }
             }
         },
-        "/api/user/ptk/{id}": {
+        "/api/user/profile/teachers/{id}": {
             "get": {
                 "tags": [
                     "PTK"
@@ -906,7 +906,7 @@
                 }
             }
         },
-        "/api/user/announcement": {
+        "/api/user/announcements": {
             "get": {
                 "tags": [
                     "Announcement"
@@ -928,7 +928,7 @@
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/AnnouncementResource"
+                                                "$ref": "#/components/schemas/Announcement"
                                             }
                                         }
                                     },
@@ -956,7 +956,7 @@
                 }
             }
         },
-        "/api/user/announcement/{id}": {
+        "/api/user/announcements/{id}": {
             "get": {
                 "tags": [
                     "Announcement"
@@ -986,7 +986,7 @@
                                             "example": "Data ditemukan"
                                         },
                                         "data": {
-                                            "$ref": "#/components/schemas/AnnouncementResource"
+                                            "$ref": "#/components/schemas/Announcement"
                                         }
                                     },
                                     "type": "object"
@@ -1013,7 +1013,7 @@
                 }
             }
         },
-        "/api/user/announcementCategories": {
+        "/api/user/announcement-categories": {
             "get": {
                 "tags": [
                     "Announcement"
@@ -1066,7 +1066,7 @@
     },
     "components": {
         "schemas": {
-            "AnnouncementResource": {
+            "Announcement": {
                 "properties": {
                     "id_pemberitahuan": {
                         "type": "integer",

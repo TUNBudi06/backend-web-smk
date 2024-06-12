@@ -11,7 +11,7 @@ class PTKController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/api/user/ptk",
+     *     path="/api/user/profile/teachers",
      *     tags={"PTK"},
      *     summary="Get all PTK",
      *     description="Retrieve all PTK",
@@ -55,7 +55,7 @@ class PTKController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/user/ptk/{id}",
+     *     path="/api/user/profile/teachers/{id}",
      *     tags={"PTK"},
      *     summary="Get specific PTK",
      *     description="Retrieve a specific PTK by its ID",

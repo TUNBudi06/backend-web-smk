@@ -8,14 +8,13 @@ use App\Http\Resources\AnnouncementResource;
 use App\Http\Resources\CategoryResource;
 use App\Models\tb_pemberitahuan;
 use App\Models\tb_pemberitahuan_category;
-use App\Models\tb_pengumuman;
 use Illuminate\Http\Request;
 
 class PengumumanController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/api/user/announcement",
+     *     path="/api/user/announcements",
      *     tags={"Announcement"},
      *     summary="Get all announcements",
      *     description="Retrieve all announcements with type 2",
@@ -70,7 +69,7 @@ class PengumumanController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/user/announcement/{id}",
+     *     path="/api/user/announcements/{id}",
      *     tags={"Announcement"},
      *     summary="Get specific announcement",
      *     description="Retrieve a specific announcement by its ID",
@@ -165,7 +164,7 @@ class PengumumanController extends Controller
 
         /**
      * @OA\Get(
-     *     path="/api/user/announcementCategories",
+     *     path="/api/user/announcement-categories",
      *     tags={"Announcement"},
      *     summary="Get all announcement categories",
      *     description="Retrieve all categories for announcements",
