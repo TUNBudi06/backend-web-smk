@@ -7,7 +7,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * @OA\Schema(
- *     schema="AnnouncementResource",
+ *     schema="Announcement",
  *     @OA\Property(property="id_pemberitahuan", type="integer", example=1),
  *     @OA\Property(property="title", type="string", example="Pengumuman Penting"),
  *     @OA\Property(property="target", type="string", example="Semua"),

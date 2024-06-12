@@ -21,15 +21,15 @@ Route::prefix('user')->group(function () {
     Route::post('login/GUI-APP', [AuthController::class, 'addToken']);
     Route::resource('announcement', PengumumanController::class);
     Route::get('announcementCategories', [PengumumanController::class, 'categoryAnnouncement']);
-    Route::resource('article', ArticleController::class);
+    Route::resource('articles', ArticleController::class);
     Route::get('articleCategories', [ArticleController::class, 'categoryArticle']);
     Route::resource('news', NewsController::class);
     Route::get('newsCategories', [NewsController::class, 'categoryNews']);
     Route::resource('events', EventController::class);
     Route::get('eventCategories', [EventController::class, 'categoryEvent']);
     Route::prefix('profile')->group(function () {
-        Route::resource('major', JurusanController::class);
-        Route::resource('facility', FasilitasController::class);
+        Route::resource('major', JurusanController::class); // durung ono
+        Route::resource('facilities', FasilitasController::class);
         Route::resource('peserta_didik', PDController::class);
         Route::resource('PTK', PTKController::class);
         Route::resource('ekstra', EkstraController::class);

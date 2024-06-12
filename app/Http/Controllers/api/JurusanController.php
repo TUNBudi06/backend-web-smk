@@ -12,7 +12,26 @@ use Illuminate\Support\Facades\Validator;
 class JurusanController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/user/profile/major",
+     *     tags={"Major"},
+     *     summary="Get all Major",
+     *     description="Retrieve all Major",
+     *     operationId="getAllMajor",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Data ditemukan",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Data ditemukan"),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(ref="#/components/schemas/Jurusan")
+     *             )
+     *         )
+     *     )
+     * )
      */
     public function index()
     {
@@ -29,8 +48,6 @@ class JurusanController extends Controller
      */
     public function store(Request $request)
     {
-        $prodi = tb_prodi::where('prodi_name', $request->input('id_prodi'))->first();
-
         $validator = Validator::make($request->all(), [
             'jurusan_nama' => 'required',
             'jurusan_short' => 'required',
@@ -42,7 +59,7 @@ class JurusanController extends Controller
             'jurusan_short.required' => 'Kolom inisial jurusan harus diisi.',
             'id_prodi.required' => 'Kolom kategori jurusan harus diisi.',
             'jurusan_text.required' => 'Kolom isi jurusan harus diisi.',
-            'jurusan_thumbnail' => 'Kolom gambar wajib diisi',
+            'jurusan_thumbnail.required' => 'Kolom gambar wajib diisi.',
             'jurusan_thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
         ]);
 
@@ -50,7 +67,7 @@ class JurusanController extends Controller
             return response()->json(['errors' => $validator->errors()], 400);
         }
 
-        // Simpan data ke tabel facility
+        // Simpan data ke tabel jurusan
         $data = new tb_jurusan();
         $data->jurusan_nama = $request->jurusan_nama;
         $data->jurusan_short = $request->jurusan_short;
@@ -67,21 +84,51 @@ class JurusanController extends Controller
 
         $data->save();
 
-        // Berikan respons berhasil dengan data fasilitas yang baru saja dibuat
+        // Berikan respons berhasil dengan data jurusan yang baru saja dibuat
         return response()->json([
-            'message' => 'Fasilitas baru berhasil ditambahkan.',
+            'message' => 'Jurusan baru berhasil ditambahkan.',
             'data' => new JurusanResource($data),
         ], 201);
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/user/profile/major/{id}",
+     *     tags={"Major"},
+     *     summary="Get specific Major",
+     *     description="Retrieve a specific Major by ID",
+     *     operationId="getMajorById",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of the Major",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Data ditemukan",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Data ditemukan"),
+     *             @OA\Property(property="data", ref="#/components/schemas/Jurusan")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Data tidak ditemukan",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="data", type="string", example="Data tidak ditemukan")
+     *         )
+     *     )
+     * )
      */
     public function show(string $id)
     {
         $data = tb_jurusan::with('prodis')
-        ->where('id_jurusan', $id)
-        ->first();
+            ->where('id_jurusan', $id)
+            ->first();
 
         if (empty($data)) {
             return response()->json([

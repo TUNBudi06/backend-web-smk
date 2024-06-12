@@ -518,6 +518,98 @@
                 }
             }
         },
+        "/api/user/profile/major": {
+            "get": {
+                "tags": [
+                    "Major"
+                ],
+                "summary": "Get all Major",
+                "description": "Retrieve all Major",
+                "operationId": "getAllMajor",
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Jurusan"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/profile/major/{id}": {
+            "get": {
+                "tags": [
+                    "Major"
+                ],
+                "summary": "Get specific Major",
+                "description": "Retrieve a specific Major by ID",
+                "operationId": "getMajorById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Major",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Jurusan"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "string",
+                                            "example": "Data tidak ditemukan"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/news": {
             "get": {
                 "tags": [
@@ -1214,6 +1306,49 @@
                 },
                 "type": "object"
             },
+            "Jurusan": {
+                "properties": {
+                    "id_jurusan": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "jurusan_nama": {
+                        "type": "string",
+                        "example": "Teknik Informatika"
+                    },
+                    "jurusan_short": {
+                        "type": "string",
+                        "example": "TI"
+                    },
+                    "jurusan_thumbnail": {
+                        "type": "string",
+                        "example": "http://example.com/images/thumbnail.jpg"
+                    },
+                    "prodi": {
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "nama_prodi": {
+                                "type": "string",
+                                "example": "Teknik Informatika"
+                            },
+                            "prodi_short": {
+                                "type": "string",
+                                "example": "TI"
+                            }
+                        },
+                        "type": "object",
+                        "nullable": true
+                    },
+                    "jurusan_text": {
+                        "type": "string",
+                        "example": "Deskripsi jurusan Teknik Informatika"
+                    }
+                },
+                "type": "object"
+            },
             "NewsResource": {
                 "title": "News Resource",
                 "properties": {
@@ -1340,6 +1475,23 @@
                     "alamat": {
                         "type": "string",
                         "example": "Jl. Merdeka No. 10"
+                    }
+                },
+                "type": "object"
+            },
+            "Prodi": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "nama_prodi": {
+                        "type": "string",
+                        "example": "Teknik Informatika"
+                    },
+                    "prodi_short": {
+                        "type": "string",
+                        "example": "TI"
                     }
                 },
                 "type": "object"
