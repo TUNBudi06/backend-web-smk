@@ -11,9 +11,9 @@ return new class extends Migration
         Schema::create('tb_pemberitahuan', function (Blueprint $table) {
             $table->bigIncrements('id_pemberitahuan');
             $table->string('nama',)->nullable();
-            $table->string('target');
-            $table->string("thumbnail");
-            $table->string("banner");
+            $table->string('target')->nullable();
+            $table->string("thumbnail")->nullable();
+            $table->string("banner")->nullable();
             $table->date('date')->nullable();
             $table->time('time')->nullable();
             $table->longText('text');
