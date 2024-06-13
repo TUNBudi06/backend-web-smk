@@ -30,9 +30,14 @@ class PengumumanCategory extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $token = $request->session()->get('token') ?? $request->input('token');
+        $action = 'create';
+        $data = [
+            'update' => $action,
+        ];
+        return redirect()->route("pengumuman.category.index",$token)->with($data);
     }
 
     /**
@@ -40,30 +45,65 @@ class PengumumanCategory extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'pemberitahuan_category_name' => 'required',
+        ]);
+
+        $category = new tb_pemberitahuan_category();
+        $category->pemberitahuan_category_name = $request->pemberitahuan_category_name;
+        $category->type = 2;
+        $category->save();
+
+        return redirect()->route('pengumuman.category.index', ['token' => $request->token])->with('success', 'Kategori berhasil ditambahkan.');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request)
     {
-        //
+        $id_category = $request->route("pengumuman_category");
+        $token = $request->session()->get('token') ?? $request->input('token');
+        $action = 'update';
+        $request->session()->put('token',$token);
+        $category = tb_pemberitahuan_category::where(["type" => 2])->findOrFail($id_category);
+        $data = [
+            'category' => $category,
+            'update' => $action,
+        ];
+        return redirect()->route("pengumuman.category.index",$token)->with($data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'pemberitahuan_category_name' => 'required',
+        ]);
+        $pengumuman_category = $request->route("pengumuman_category");
+
+        // Update data category
+        $category = tb_pemberitahuan_category::where(["type" => 2])->findOrFail($pengumuman_category);
+        $category->update([
+            'pemberitahuan_category_name' => $request->pemberitahuan_category_name,
+        ]);
+
+        return redirect()->route('pengumuman.category.index', ['token' => $request->token])->with('success', 'Kategori berhasil diperbarui.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $id_category = $request->route("pengumuman_category");
+        $token = $request->session()->get('token') ?? $request->input('token');
+
+       $category = tb_pemberitahuan_category::where(["type" => 2])->findOrFail($id_category);
+       $category->delete();
+
+        return redirect()->route('pengumuman.category.index', ['token' => $token])->with('success', 'Kategori berhasil dihapus.');
     }
 }

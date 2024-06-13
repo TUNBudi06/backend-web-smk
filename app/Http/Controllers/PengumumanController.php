@@ -17,7 +17,7 @@ class PengumumanController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('show', 10);
-        $pengumuman = tb_pemberitahuan::where(['type' => 2])->orderBy('created_at', 'desc')->paginate($perPage);
+        $pengumuman = tb_pemberitahuan::where(['type' => 2])->orderBy('date', 'desc')->paginate($perPage);
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
@@ -51,7 +51,7 @@ class PengumumanController extends Controller
 
         $request->validate([
             'nama' => 'required',
-            'category' => 'required',
+            'id_pemberitahuan_category' => 'required',
             'target' => 'required',
             'text' => 'required',
             'date' => 'required|date',
@@ -59,20 +59,20 @@ class PengumumanController extends Controller
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240'
         ], [
             'nama.required' => 'Kolom nama pengumuman harus diisi.',
-            'category.required' => 'Kolom kategori pengumuman harus diisi.',
+            'id_pemberitahuan_category.required' => 'Kolom kategori pengumuman harus diisi.',
             'target.required' => 'Kolom target pengumuman harus diisi.',
             'text.required' => 'Kolom isi pengumuman harus diisi.',
             'date.required' => 'Kolom tanggal pengumuman harus diisi.',
             'date.date' => 'Kolom tanggal pengumuman harus dalam format tanggal yang benar.',
             'time.required' => 'Kolom waktu pengumuman harus diisi.',
-            'thumbnail' => 'Kolom gambar wajib diisi',
+            'thumbnail.required' => 'Kolom gambar wajib diisi',
             'thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB'
         ]);
 
 //        tb_pengumuman::create($request->all());
         $data = new tb_pemberitahuan();
         $data->nama = $request->nama;
-        $data->category = $request->categpry;
+        $data->category = $request->id_pemberitahuan_category;
         $data->target = $request->target;
         $data->text = $request->text;
         $data->date = $request->date;
@@ -115,10 +115,13 @@ class PengumumanController extends Controller
         $id_pengumuman = $request->route("pengumuman");
         $token = $request->session()->get('token') ?? $request->input('token');
         $pengumuman = tb_pemberitahuan::where(['type' => 2])->findOrFail($id_pengumuman);
+        $categories = tb_pemberitahuan_category::where(["type" => 2])->get();
+
         return view('admin.pengumuman.edit', [
             'menu_active' => 'pengumuman',
             'token' => $token,
             'pengumuman' => $pengumuman,
+            'categories' => $categories,
         ]);
     }
 
@@ -168,7 +171,7 @@ class PengumumanController extends Controller
         $data->update([
             'nama' => $request->nama,
             'target' => $request->target,
-            'category' => $request->pengumuman_category,
+            'id_pemberitahuan_category' => $request->pengumuman_category,
             'date' => $request->date,
             'time' => $request->time,
             'text' => $request->text,
