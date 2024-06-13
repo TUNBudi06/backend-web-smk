@@ -17,6 +17,7 @@
                         </div>
                         <div class="col-md-4 text-right">
                             <a href="{{ route('pengumuman.create', ['token' => $token]) }}" class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i> Pengumuman Baru</a>
+                            <a href="{{ route('pengumuman.category.index',['token' => $token]) }}" class="btn-print btn btn-white border-warning px-3 rounded-pill"><i class="fas fa-list"></i> Kategori</a>
                         </div>
                     </div>
                     @if(Session::get('success'))
@@ -31,20 +32,22 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th class="pl-4">Pengumuman</th>
+                                <th class="pl-4">Thumbnail</th>
+                                <th>Pengumuman</th>
+                                <th>Kategori</th>
                                 <th>Tanggal</th>
                                 <th>Tujuan</th>
-                                <th>Tanggal upload</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($pengumuman as $key => $data)
                             <tr>
-                                <td style="word-wrap: break-word; max-width: 300px;">{{ $data->nama }}</td>
+                                <td><img src="{{ asset('img/announcement/'.$data->thumbnail) }}" width="100px" class="rounded" alt=""></td>
+                                <td style="word-wrap: break-word; max-width: 230px;">{{ $data->nama }}</td>
+                                <td>{{ $data->pemberitahuan_category_name }}</td>
                                 <td>{{ $data->date }} {{ $data->time }}</td>
-                                <td style="word-wrap: break-word; max-width: 200px;">{{ $data->target }}</td>
-                                <td>{{ $data->created_at }}</td>
+                                <td style="word-wrap: break-word; max-width: 180px;">{{ $data->target }}</td>
                                 <td>
                                     <a href="{{ route('pengumuman.show', ['pengumuman' => $data->id_pemberitahuan , 'token' => $token]) }}" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
                                     <a href="{{ route('pengumuman.edit', ['pengumuman' => $data->id_pemberitahuan , 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>

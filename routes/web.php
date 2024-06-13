@@ -7,6 +7,7 @@ use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\categories\ArtikelCategory;
 use App\Http\Controllers\categories\BeritaCategory;
 use App\Http\Controllers\categories\GalleryCategory;
+use App\Http\Controllers\categories\PengumumanCategory;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
@@ -19,7 +20,6 @@ use App\Http\Controllers\profile\PTKController;
 use App\Http\Controllers\profileAdmin;
 use App\Http\Middleware\auth\adminLogin;
 use App\Http\Middleware\hasAdminToken;
-use App\Http\Middleware\hasLogin;
 use App\Http\Middleware\preventCallBack;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +38,17 @@ Route::prefix('private/admin')->group(function () {
         Route::middleware([preventCallBack::class,adminLogin::class])->group(function () {
             Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
+            Route::resource('pengumuman/category', PengumumanCategory::class)->parameters([
+                'category' => 'pengumuman_category',
+            ])->names([
+                'index' => 'pengumuman.category.index',
+                'create' => 'pengumuman.category.create',
+                'store' => 'pengumuman.category.store',
+                'edit' => 'pengumuman.category.edit',
+                'update' => 'pengumuman.category.update',
+                'destroy' => 'pengumuman.category.destroy',
+            ])->except(['show']);
+
             Route::resource('berita/category', BeritaCategory::class)->parameters([
                 'category' => 'berita_category',
             ])->names([
@@ -47,7 +58,7 @@ Route::prefix('private/admin')->group(function () {
                 'edit' => 'berita.category.edit',
                 'update' => 'berita.category.update',
                 'destroy' => 'berita.category.destroy',
-            ]);
+            ])->except(['show']);
 
             Route::resource('artikel/categoryArtikel', ArtikelCategory::class)->parameters([
                 'categoryArtikel' => 'artikel_category',
@@ -58,7 +69,7 @@ Route::prefix('private/admin')->group(function () {
                 'edit' => 'artikel.category.edit',
                 'update' => 'artikel.category.update',
                 'destroy' => 'artikel.category.destroy',
-            ]);
+            ])->except(['show']);
 
             Route::resource('gallery/categoryGallery', GalleryCategory::class)->parameters([
                 'categoryGallery' => 'gallery_category',
@@ -69,7 +80,7 @@ Route::prefix('private/admin')->group(function () {
                 'edit' => 'gallery.category.edit',
                 'update' => 'gallery.category.update',
                 'destroy' => 'gallery.category.destroy',
-            ]);
+            ])->except(['show']);
 
             Route::resource('pengumuman', PengumumanController::class);
             Route::resource('event', EventController::class);

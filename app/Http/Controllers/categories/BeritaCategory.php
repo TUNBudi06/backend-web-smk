@@ -17,7 +17,6 @@ class BeritaCategory extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
         $news = tb_pemberitahuan_category::where(["type" => 3])->get();
         $action = $_GET['action'] ?? '';
-//        return $request->session()->all();
 
         return view('admin.categories.beritacategory.index', [
             'menu_active' => 'berita',

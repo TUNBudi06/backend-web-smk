@@ -57,16 +57,16 @@
         <div class="row">
             <div class="col-md-6 py-md-5 py-3">
                 <div class="form-group">
-                    <label for="artikel_thumbnail">Thumbnail Artikel</label>
-                    <input onchange="loadFile(event)" type="file" name="artikel_thumbnail" id="image" class="form-control @error('artikel_thumbnail') is-invalid @enderror" placeholder="Purwosari, Pasuruan" aria-describedby="imageId">
+                    <label for="thumbnail">Thumbnail Artikel</label>
+                    <input onchange="loadFile(event)" type="file" name="thumbnail" id="image" class="form-control @error('thumbnail') is-invalid @enderror" placeholder="Purwosari, Pasuruan" aria-describedby="imageId">
                     <small id="imageId" class="text-muted d-none"></small>
-                    @error('artikel_thumbnail')
+                    @error('thumbnail')
                         <p class="text-danger">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
             <div class="col-md-6 text-center">
-                <img class="w-100 rounded" id="preview" src="{{ asset('img/artikel/no_image.png') }}" alt="">
+                <img class="w-100 rounded" id="preview" src="{{ asset('img/no_image.png') }}" alt="">
             </div>
         </div>
         <div class="text-right mb-4">

@@ -56,14 +56,14 @@ class ArtikelController extends Controller
             'artikel_level' => 'required',
             'id_category' => 'required',
             'artikel_text' => 'required',
-            'artikel_thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
         ], [
             'artikel_title.required' => 'Kolom nama artikel harus diisi.',
             'artikel_level.required' => 'Kolom level artikel harus diisi.',
             'id_category.required' => 'Kolom kategori artikel harus diisi.',
             'artikel_text.required' => 'Kolom isi artikel harus diisi.',
-            'artikel_thumbnail' => 'Kolom gambar wajib diisi',
-            'artikel_thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
+            'thumbnail' => 'Kolom gambar wajib diisi',
+            'thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
         ]);
 
         // Simpan data ke tabel artikel
@@ -75,8 +75,8 @@ class ArtikelController extends Controller
         $data->text = $request->artikel_text;
 
         // Simpan gambar
-        if ($request->hasFile('artikel_thumbnail')) {
-            $file = $request->file('artikel_thumbnail');
+        if ($request->hasFile('thumbnail')) {
+            $file = $request->file('thumbnail');
             $imageName = md5($file->getClientOriginalName() . microtime()) . '.' . $file->getClientOriginalExtension();
             $file->move('img/artikel', $imageName);
             $data->thumbnail = $imageName;
@@ -142,31 +142,31 @@ class ArtikelController extends Controller
             'artikel_level' => 'required',
             'id_category' => 'required',
             'artikel_text' => 'required',
-            'artikel_thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
         ], [
             'artikel_title.required' => 'Kolom nama artikel harus diisi.',
             'artikel_level.required' => 'Kolom level artikel harus diisi.',
             'id_category.required' => 'Kolom kategori artikel harus diisi.',
             'artikel_text.required' => 'Kolom isi artikel harus diisi.',
-            'artikel_thumbnail' => 'Kolom gambar wajib diisi',
-            'artikel_thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
+            'thumbnail' => 'Kolom gambar wajib diisi',
+            'thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
         ]);
 
         $data = tb_pemberitahuan::where('tb_pemberitahuan.type', 1)
             ->findOrFail($id_artikel);
 
-        if ($request->hasFile('artikel_thumbnail')) {
+        if ($request->hasFile('thumbnail')) {
             // Hapus gambar sebelumnya jika ada
-            if ($data->artikel_thumbnail !== null) {
-                $oldImagePath = public_path('img/artikel/' . $data->artikel_thumbnail);
+            if ($data->thumbnail !== null) {
+                $oldImagePath = public_path('img/artikel/' . $data->thumbnail);
                 if (file_exists($oldImagePath)) {
                     unlink($oldImagePath);
                 }
             }
 
             // Simpan gambar baru
-            $imageName = $request->file('artikel_thumbnail')->hashName();
-            $request->file('artikel_thumbnail')->move('img/artikel', $imageName);
+            $imageName = $request->file('thumbnail')->hashName();
+            $request->file('thumbnail')->move('img/artikel', $imageName);
             $data->thumbnail = $imageName;
         }
 

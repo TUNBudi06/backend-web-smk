@@ -9,7 +9,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @OA\Schema(
  *     schema="Announcement",
  *     @OA\Property(property="id_pemberitahuan", type="integer", example=1),
- *     @OA\Property(property="title", type="string", example="Pengumuman Penting"),
+ *     @OA\Property(property="nama", type="string", example="Pengumuman Penting"),
  *     @OA\Property(property="target", type="string", example="Semua"),
  *     @OA\Property(property="date", type="string", example="2023-01-01"),
  *     @OA\Property(property="time", type="string", example="12:00"),

@@ -21,7 +21,7 @@
             <small id="namaId" class="text-muted">Hindari penggunaan slash (/,\)</small>
         </div>
         <div class="form-group">
-            <label for="pengumuman_target">Pengumuman Target</label>
+            <label for="pengumuman_target">Target Pengumuman</label>
             <input type="text" name="pengumuman_target" id="pengumuman_target" value="{{ old('pengumuman_target') }}" class="form-control @error('pengumuman_target') is-invalid @enderror" placeholder="Seluruh Jurusan / Hanya 1 Jurusan" aria-describedby="targetId">
             @error('pengumuman_target')
             <p class="text-danger">
@@ -29,6 +29,19 @@
             </p>
             @enderror
             <small id="targetId" class="text-muted">Contoh: Seluruh Jurusan / Hanya 1 Jurusan</small>
+        </div>
+        <div class="form-group">
+            <label for="news" class="form-label">Kategori Pengumuman</label>
+            <select class="form-control @error('id_category') is-invalid @enderror" name="id_category">
+                @foreach ($pengumuman as $p)
+                    <option value="{{ $p->id_category }}" {{ old('id_category') == $p->id_category ? 'selected' : '' }}>{{ $p->category_name }}</option>
+                @endforeach
+            </select>
+            @error('id_category')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
         <div class="row">
             <div class="col-6">
@@ -69,9 +82,36 @@
         <script>
             CKEDITOR.replace('texteditor');
         </script>
+        <div class="row">
+            <div class="col-md-6 py-md-5 py-3">
+                <div class="form-group">
+                    <label for="thumbnail">Thumbnail Pengumuman</label>
+                    <input onchange="loadFile(event)" type="file" name="thumbnail" id="image" class="form-control @error('thumbnail') is-invalid @enderror" placeholder="Purwosari, Pasuruan" aria-describedby="imageId">
+                    <small id="imageId" class="text-muted d-none"></small>
+                    @error('thumbnail')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <img class="w-100 rounded" id="preview" src="{{ asset('img/no_image.png') }}" alt="">
+            </div>
+        </div>
         <div class="text-right mb-4">
             <button type="submit" class="btn btn-warning mt-2 px-5 rounded-pill shadow-warning"><i class="fas fa-paper-plane"></i> Submit</button>
         </div>
     </form>
 </div>
+<script>
+    function loadFile(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var preview = document.getElementById('preview');
+            preview.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
 @endsection
