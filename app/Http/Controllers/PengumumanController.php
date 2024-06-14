@@ -149,7 +149,7 @@ class PengumumanController extends Controller
             'thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB'
         ]);
 
-        $data = tb_pemberitahuan::where('tb_pemberitahuan.type', 1)
+        $data = tb_pemberitahuan::where('tb_pemberitahuan.type', 2)
             ->findOrFail($id_pengumuman);
 
         if ($request->hasFile('thumbnail')) {
@@ -171,7 +171,7 @@ class PengumumanController extends Controller
         $data->update([
             'nama' => $request->nama,
             'target' => $request->target,
-            'id_pemberitahuan_category' => $request->pengumuman_category,
+            'category' => $request->id_pemberitahuan_category,
             'date' => $request->date,
             'time' => $request->time,
             'text' => $request->text,

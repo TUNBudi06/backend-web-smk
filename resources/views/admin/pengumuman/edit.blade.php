@@ -8,8 +8,8 @@
 @section('container')
 <div class="col-md-8 offset-md-2 pt-4">
     <a href="{{ route('pengumuman.index', ['token' => $token]) }}" class="btn btn-light border-warning px-4 mb-4"><i class="fas fa-arrow-left"></i> Kembali</a>
-    <form action="{{ route('pengumuman.update', ['token' => $token, 'pengumuman' => $pengumuman->id_pemberitahuan]) }}" method="post">
-        @method('put')
+    <form action="{{ route('pengumuman.update', ['token' => $token, 'pengumuman' => $pengumuman->id_pemberitahuan]) }}" method="post" enctype="multipart/form-data">
+        @method('patch')
         @csrf
         <div class="form-group">
             <label for="nama">Pengumuman</label>
@@ -90,7 +90,7 @@
             </div>
             <div class="col-md-6 text-center">
                 <img class="w-100 rounded" id="preview"
-                src="{{ asset('img/berita/'.$pengumuman->thumbnail) }}"
+                src="{{ asset('img/announcement/'.$pengumuman->thumbnail) }}"
                 alt="">
             </div>
         </div>
