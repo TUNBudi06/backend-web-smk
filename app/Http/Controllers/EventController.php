@@ -169,6 +169,7 @@ class EventController extends Controller
         $event->update([
             'nama' => $request->nama,
             'target' => $request->target,
+            'category' => $request->id_pemberitahuan_category,
             'text' => $request->text,
             'date' => $request->date,
             'location' => $request->location,
