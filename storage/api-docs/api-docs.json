@@ -1076,6 +1076,10 @@
                         "type": "string",
                         "example": "Pengumuman Penting"
                     },
+                    "thumbnail": {
+                        "type": "string",
+                        "example": "img/announcement/gambar.jpg"
+                    },
                     "target": {
                         "type": "string",
                         "example": "Semua"
@@ -1121,6 +1125,10 @@
                     "title": {
                         "type": "string",
                         "example": "Artikel Penting"
+                    },
+                    "thumbnail": {
+                        "type": "string",
+                        "example": "gambar.jpg"
                     },
                     "target": {
                         "type": "string",

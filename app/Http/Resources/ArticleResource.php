@@ -20,6 +20,11 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *         example="Artikel Penting"
  *     ),
  *     @OA\Property(
+ *         property="thumbnail",
+ *         type="string",
+ *         example="gambar.jpg"
+ *     ),
+ *     @OA\Property(
  *         property="target",
  *         type="string",
  *         example="Semua"
@@ -64,7 +69,7 @@ class ArticleResource extends JsonResource
         return [
             'id_pemberitahuan' => $this->id_pemberitahuan,
             'nama' => $this->nama,
-            'thumbnail' => $this->thumbnail,
+            'thumbnail' => url('img/artikel/' . $this->thumbnail),
             'date' => $this->date,
             'text' => $this->text,
             'level' => $this->level,

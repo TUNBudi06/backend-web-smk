@@ -10,6 +10,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *     schema="Announcement",
  *     @OA\Property(property="id_pemberitahuan", type="integer", example=1),
  *     @OA\Property(property="nama", type="string", example="Pengumuman Penting"),
+ *     @OA\Property(property="thumbnail", type="string", example="img/announcement/gambar.jpg"),
  *     @OA\Property(property="target", type="string", example="Semua"),
  *     @OA\Property(property="date", type="string", example="2023-01-01"),
  *     @OA\Property(property="time", type="string", example="12:00"),
@@ -33,6 +34,7 @@ class AnnouncementResource extends JsonResource
         return [
             'id_pemberitahuan' => $this->id_pemberitahuan,
             'title' => $this->nama,
+            'image' => url('img/announcement/' . $this->thumbnail),
             'target' => $this->target,
             'date' => $this->date,
             'time' => $this->time,
