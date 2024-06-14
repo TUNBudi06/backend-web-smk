@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AdminAuth;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\categories\ArtikelCategory;
 use App\Http\Controllers\categories\BeritaCategory;
+use App\Http\Controllers\categories\EventCategory;
 use App\Http\Controllers\categories\GalleryCategory;
 use App\Http\Controllers\categories\PengumumanCategory;
 use App\Http\Controllers\CategoryController;
@@ -69,6 +70,17 @@ Route::prefix('private/admin')->group(function () {
                 'edit' => 'artikel.category.edit',
                 'update' => 'artikel.category.update',
                 'destroy' => 'artikel.category.destroy',
+            ])->except(['show']);
+
+            Route::resource('event/eventArtikel', EventCategory::class)->parameters([
+                'eventArtikel' => 'event_category',
+            ])->names([
+                'index' => 'event.category.index',
+                'create' => 'event.category.create',
+                'store' => 'event.category.store',
+                'edit' => 'event.category.edit',
+                'update' => 'event.category.update',
+                'destroy' => 'event.category.destroy',
             ])->except(['show']);
 
             Route::resource('gallery/categoryGallery', GalleryCategory::class)->parameters([

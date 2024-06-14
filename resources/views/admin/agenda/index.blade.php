@@ -16,6 +16,7 @@
                         </div>
                         <div class="col-md-4 text-right">
                             <a href="{{ route('event.create', ['token' => $token]) }}" class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i> Agenda Baru</a>
+                            <a href="{{ route('event.category.index',['token' => $token]) }}" class="btn-print btn btn-white border-warning px-3 rounded-pill"><i class="fas fa-list"></i> Kategori</a>
                         </div>
                     </div>
                     @if(Session::get('success'))
@@ -30,20 +31,22 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th class="pl-4">Agenda</th>
+                                <th class="pl-4">Thumbnail</th>
+                                <th>Agenda</th>
+                                <th>Kategori</th>
                                 <th>Tanggal</th>
                                 <th>Tujuan</th>
-                                <th>Tanggal upload</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($event as $key => $data)
                             <tr>
-                                <td style="word-wrap: break-word; max-width: 300px;">{{ $data->nama }}</td>
+                                <td><img src="{{ asset('img/event/'.$data->thumbnail) }}" width="100px" class="rounded" alt=""></td>
+                                <td style="word-wrap: break-word; max-width: 230px;">{{ $data->nama }}</td>
+                                <td>{{ $data->kategori ? $data->kategori->pemberitahuan_category_name : 'No Category' }}</td>
                                 <td>{{ $data->date }} {{ $data->time }}</td>
-                                <td style="word-wrap: break-word; max-width: 200px;">{{ $data->target }}</td>
-                                <td>{{ $data->created_at }}</td>
+                                <td style="word-wrap: break-word; max-width: 180px;">{{ $data->target }}</td>
                                 <td>
                                     <a href="{{ route('event.show', ['event' => $data->id_pemberitahuan, 'token' => $token]) }}" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
                                     <a href="{{ route('event.edit', ['event' => $data->id_pemberitahuan, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>

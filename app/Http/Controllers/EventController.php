@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\tb_event;
 use App\Models\tb_pemberitahuan;
+use App\Models\tb_pemberitahuan_category;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -13,10 +14,12 @@ class EventController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = 10;
-        $event = tb_pemberitahuan::where(['tb_pemberitahuan.type' => 4])
-            ->orderBy('created_at', 'desc')->paginate($perPage);
-//        return $event;
+        $perPage = $request->input('show', 10);
+        $event = tb_pemberitahuan::where(['type' => 4])
+        ->with('kategori')
+        ->orderBy('created_at', 'desc')
+        ->paginate($perPage);
+
         $token = $request->session()->get('token') ?? $request->input('token');
         return view('admin.agenda.index', [
             'menu_active' => 'event',
@@ -34,6 +37,7 @@ class EventController extends Controller
 
         return view('admin.agenda.create', [
             'menu_active' => 'event',
+            'event' => tb_pemberitahuan_category::where(['type' => 4])->get(),
             'token' => $token,
         ]);
     }
@@ -46,27 +50,39 @@ class EventController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $request->validate([
-            'event_name' => 'required',
-            'event_type' => 'required',
-            'event_text' => 'required',
-            'event_date' => 'required|date',
-            'event_location' => 'required',
+            'nama' => 'required',
+            'id_pemberitahuan_category' => 'required',
+            'target' => 'required',
+            'text' => 'required',
+            'date' => 'required|date',
+            'location' => 'required',
         ], [
-            'event_name.required' => 'Kolom nama agenda harus diisi.',
-            'event_type.required' => 'Kolom tipe agenda harus diisi.',
-            'event_text.required' => 'Kolom isi agenda harus diisi.',
-            'event_date.required' => 'Kolom tanggal agenda harus diisi.',
-            'event_date.date' => 'Kolom tanggal agenda harus dalam format tanggal yang benar.',
-            'event_location.required' => 'Kolom lokasi agenda harus diisi.',
+            'nama.required' => 'Kolom nama agenda harus diisi.',
+            'id_pemberitahuan_category.required' => 'Kolom kategori agenda harus diisi.',
+            'target.required' => 'Kolom tipe agenda harus diisi.',
+            'text.required' => 'Kolom isi agenda harus diisi.',
+            'date.required' => 'Kolom tanggal agenda harus diisi.',
+            'date.date' => 'Kolom tanggal agenda harus dalam format tanggal yang benar.',
+            'location.required' => 'Kolom lokasi agenda harus diisi.',
         ]);
 
         $event = new tb_pemberitahuan();
-        $event->nama = $request->event_name;
-        $event->target = $request->event_type;
-        $event->text = $request->event_text;
-        $event->date = $request->event_date;
-        $event->location = $request->event_location;
+        $event->nama = $request->nama;
+        $event->category = $request->id_pemberitahuan_category;
+        $event->target = $request->target;
+        $event->text = $request->text;
+        $event->date = $request->date;
+        $event->location = $request->location;
         $event->type = 4;
+        $event->viewer = 0;
+        
+        if ($request->hasFile('thumbnail')) {
+            $fileContents = file_get_contents($request->file('thumbnail')->getRealPath());
+            $imageName = hash('sha256', $fileContents) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
+            $request->file('thumbnail')->move('img/event', $imageName);
+            $event->thumbnail = $imageName;
+        }
+
         $event->save();
         return redirect()->route('event.index', ['token' => $token])->with('success', 'Agenda baru berhasil ditambahkan.');
     }
@@ -98,12 +114,13 @@ class EventController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
         $event = tb_pemberitahuan::where(['tb_pemberitahuan.type' => 4])
             ->findOrFail($id_event);
-        // dd($event);
+            $categories = tb_pemberitahuan_category::where(["type" => 4])->get();
 
         return view('admin.agenda.edit', [
             'menu_active' => 'event',
             'token' => $token,
             'event' => $event,
+            'categories' => $categories,
         ]);
     }
 
@@ -114,28 +131,47 @@ class EventController extends Controller
     {
         $id_event = $request->route("event");
         $request->validate([
-            'event_name' => 'required',
-            'event_type' => 'required',
-            'event_text' => 'required',
-            'event_date' => 'required|date',
-            'event_location' => 'required',
+            'nama' => 'required',
+            'target' => 'required',
+            'text' => 'required',
+            'date' => 'required|date',
+            'location' => 'required',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240'
         ], [
-            'event_name.required' => 'Kolom nama agenda harus diisi.',
-            'event_type.required' => 'Kolom tipe agenda harus diisi.',
-            'event_text.required' => 'Kolom isi agenda harus diisi.',
-            'event_date.required' => 'Kolom tanggal agenda harus diisi.',
-            'event_date.date' => 'Kolom tanggal agenda harus dalam format tanggal yang benar.',
-            'event_location.required' => 'Kolom lokasi agenda harus diisi.',
+            'nama.required' => 'Kolom nama agenda harus diisi.',
+            'target.required' => 'Kolom tipe agenda harus diisi.',
+            'text.required' => 'Kolom isi agenda harus diisi.',
+            'date.required' => 'Kolom tanggal agenda harus diisi.',
+            'date.date' => 'Kolom tanggal agenda harus dalam format tanggal yang benar.',
+            'location.required' => 'Kolom lokasi agenda harus diisi.',
+            'thumbnail.required' => 'Kolom gambar wajib diisi',
+            'thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB'
         ]);
 
         $event = tb_pemberitahuan::where(['tb_pemberitahuan.type' => 4])
             ->findOrFail($id_event);
+
+            if ($request->hasFile('thumbnail')) {
+                // Hapus gambar sebelumnya jika ada
+                if (!empty($event->thumbnail)) {
+                    $oldImagePath = public_path('img/event/' . $event->thumbnail);
+                    if (file_exists($oldImagePath) && !is_dir($oldImagePath)) {
+                        unlink($oldImagePath);
+                    }
+                }
+        
+                // Simpan gambar baru
+                $imageName = $request->file('thumbnail')->hashName();
+                $request->file('thumbnail')->move('img/event', $imageName);
+                $event->thumbnail = $imageName;
+            }
+
         $event->update([
-            'nama' => $request->event_name,
-            'target' => $request->event_type,
-            'text' => $request->event_text,
-            'date' => $request->event_date,
-            'location' => $request->event_location,
+            'nama' => $request->nama,
+            'target' => $request->target,
+            'text' => $request->text,
+            'date' => $request->date,
+            'location' => $request->location,
         ]);
 
         return redirect()->route('event.index', ['token' => $request->token])->with('success', 'Agenda berhasil diperbarui.');

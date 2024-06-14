@@ -1244,6 +1244,10 @@
                         "type": "string",
                         "example": "Semua"
                     },
+                    "thumbnail": {
+                        "type": "string",
+                        "example": "img/event/gambar.jpg"
+                    },
                     "date": {
                         "type": "string",
                         "example": "2023-01-01"

@@ -25,6 +25,11 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *         example="Semua"
  *     ),
  *     @OA\Property(
+ *         property="thumbnail",
+ *         type="string",
+ *         example="img/event/gambar.jpg"
+ *     ),
+ *     @OA\Property(
  *         property="date",
  *         type="string",
  *         example="2023-01-01"
@@ -64,7 +69,8 @@ class EventResource extends JsonResource
         return [
             'id_pemberitahuan' => $this->id_pemberitahuan,
             'nama' => $this->nama,
-            'target' => $this->nama,
+            'target' => $this->target,
+            'thumbnail' => 'img/event/' . $this->thumbnail,
             'date' => $this->date,
             'text' => $this->text,
             'category' => $this->kategori ? [

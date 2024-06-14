@@ -38,7 +38,7 @@ class NewsResource extends JsonResource
         return [
             'id_pemberitahuan' => $this->id_pemberitahuan,
             'nama' => $this->nama,
-            'thumbnail' => url('img/berita/' . $this->thumbnail),
+            'thumbnail' => 'img/berita/' . $this->thumbnail,
             'text' => $this->text,
             'level' => $this->level,
             'location' => $this->location,

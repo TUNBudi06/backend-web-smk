@@ -34,7 +34,7 @@ class AnnouncementResource extends JsonResource
         return [
             'id_pemberitahuan' => $this->id_pemberitahuan,
             'title' => $this->nama,
-            'image' => url('img/announcement/' . $this->thumbnail),
+            'image' => 'img/announcement/' . $this->thumbnail,
             'target' => $this->target,
             'date' => $this->date,
             'time' => $this->time,

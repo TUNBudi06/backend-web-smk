@@ -40,7 +40,7 @@
                 <select class="form-control @error('id_pemberitahuan_category') is-invalid @enderror"
                     name="id_pemberitahuan_category">
                     @foreach ($pengumuman as $p)
-                        @if (old('jurusan_id') == $p->id_pemberitahuan_category)
+                        @if (old('id_pemberitahuan_category') == $p->id_pemberitahuan_category)
                             <option value="{{ $p->id_pemberitahuan_category }}" selected>{{ $p->pemberitahuan_category_name }}</option>
                         @else
                             <option value="{{ $p->id_pemberitahuan_category }}">{{ $p->pemberitahuan_category_name }}</option>

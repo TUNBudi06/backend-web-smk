@@ -17,7 +17,10 @@ class PengumumanController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('show', 10);
-        $pengumuman = tb_pemberitahuan::where(['type' => 2])->orderBy('date', 'desc')->paginate($perPage);
+        $pengumuman = tb_pemberitahuan::where(['type' => 2])
+        ->with('kategori')
+        ->orderBy('date', 'desc')
+        ->paginate($perPage);
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
@@ -145,29 +148,28 @@ class PengumumanController extends Controller
             'date.required' => 'Kolom tanggal pengumuman harus diisi.',
             'date.date' => 'Kolom tanggal pengumuman harus dalam format tanggal yang benar.',
             'time.required' => 'Kolom waktu pengumuman harus diisi.',
-            'thumbnail' => 'Kolom gambar wajib diisi',
+            'thumbnail.required' => 'Kolom gambar wajib diisi',
             'thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB'
         ]);
-
+    
         $data = tb_pemberitahuan::where('tb_pemberitahuan.type', 2)
             ->findOrFail($id_pengumuman);
-
+    
         if ($request->hasFile('thumbnail')) {
             // Hapus gambar sebelumnya jika ada
-            if ($data->thumbnail !== null) {
+            if (!empty($data->thumbnail)) {
                 $oldImagePath = public_path('img/announcement/' . $data->thumbnail);
-                if (file_exists($oldImagePath)) {
+                if (file_exists($oldImagePath) && !is_dir($oldImagePath)) {
                     unlink($oldImagePath);
                 }
             }
-
+    
             // Simpan gambar baru
             $imageName = $request->file('thumbnail')->hashName();
             $request->file('thumbnail')->move('img/announcement', $imageName);
             $data->thumbnail = $imageName;
         }
-
-
+    
         $data->update([
             'nama' => $request->nama,
             'target' => $request->target,
@@ -176,9 +178,10 @@ class PengumumanController extends Controller
             'time' => $request->time,
             'text' => $request->text,
         ]);
-
+    
         return redirect()->route('pengumuman.index', ['token' => $request->token])->with('success', 'Pengumuman berhasil diperbarui.');
     }
+    
 
     /**
      * Remove the specified resource from storage.

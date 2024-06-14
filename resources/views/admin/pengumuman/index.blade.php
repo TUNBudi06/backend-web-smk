@@ -45,7 +45,7 @@
                             <tr>
                                 <td><img src="{{ asset('img/announcement/'.$data->thumbnail) }}" width="100px" class="rounded" alt=""></td>
                                 <td style="word-wrap: break-word; max-width: 230px;">{{ $data->nama }}</td>
-                                <td>{{ $data->pemberitahuan_category_name }}</td>
+                                <td>{{ $data->kategori ? $data->kategori->pemberitahuan_category_name : 'No Category' }}</td>
                                 <td>{{ $data->date }} {{ $data->time }}</td>
                                 <td style="word-wrap: break-word; max-width: 180px;">{{ $data->target }}</td>
                                 <td>
