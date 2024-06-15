@@ -11,43 +11,50 @@
     <form action="{{ route('artikel.store', ['token' => $token]) }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
-            <label for="artikel_title">Judul Artikel</label>
-            <input type="text" name="artikel_title" id="artikel_title" class="form-control @error('artikel_title') is-invalid @enderror" value="{{ old('artikel_title') }}" placeholder="Besok ada sesuatu..." aria-describedby="nameId">
+            <label for="nama">Judul Artikel</label>
+            <input type="text" name="nama" id="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}" placeholder="Besok ada sesuatu..." aria-describedby="nameId">
             <small id="nameId" class="text-muted">Hindari penggunaan slash (/,\)</small>
-            @error('artikel_title')
+            @error('nama')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group">
-            <label for="artikel_level" class="form-label">Status</label>
-            <select class="form-control @error('artikel_level') is-invalid @enderror" id="artikel_level" name="artikel_level">
-                    <option value="1" {{ old('artikel_level') == '1' ? 'selected' : '' }}>Biasa</option>
-                    <option value="0" {{ old('artikel_level') == '0' ? 'selected' : '' }}>Penting</option>
+            <label for="level" class="form-label">Status</label>
+            <select class="form-control @error('level') is-invalid @enderror" id="level" name="level">
+                    <option value="1" {{ old('level') == '1' ? 'selected' : '' }}>Biasa</option>
+                    <option value="0" {{ old('level') == '0' ? 'selected' : '' }}>Penting</option>
             </select>
-            @error('artikel_level')
+            @error('level')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group">
-            <label for="id_category" class="form-label">Kategori Artikel</label>
-            <select class="form-control @error('id_category') is-invalid @enderror" name="id_category">
-                @foreach ($artikel as $n)
-                    <option value="{{ $n->id_pemberitahuan_category }}" {{ old('id_category') == $n->id_pemberitahuan_category ? 'selected' : '' }}>{{ $n->pemberitahuan_category_name }}</option>
+            <label for="artikel" class="form-label">Kategori Pengumuman</label>
+            <select class="form-control @error('id_pemberitahuan_category') is-invalid @enderror"
+                name="id_pemberitahuan_category">
+                @foreach ($artikel as $a)
+                    @if (old('id_pemberitahuan_category') == $a->id_pemberitahuan_category)
+                        <option value="{{ $a->id_pemberitahuan_category }}" selected>{{ $a->pemberitahuan_category_name }}</option>
+                    @else
+                        <option value="{{ $a->id_pemberitahuan_category }}">{{ $a->pemberitahuan_category_name }}</option>
+                    @endif
                 @endforeach
             </select>
-            @error('id_category')
-                <p class="text-danger">{{ $message }}</p>
+            @error('id_pemberitahuan_category')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
             @enderror
         </div>
         <div class="form-group">
-            <input type="hidden" name="artikel_viewer" id="artikel_viewer" class="form-control" value="0" aria-describedby="viewId">
+            <input type="hidden" name="viewer" id="viewer" class="form-control" value="0" aria-describedby="viewId">
                 <small id="viewId" class="text-muted d-none"></small>
         </div>
         <div class="form-group">
-            <label for="artikel_text">Deskripsi Artikel</label>
-            <textarea name="artikel_text" id="texteditor" cols="30" rows="10" class="form-control @error('artikel_text') is-invalid @enderror" placeholder="Isi dari artikel.." aria-describedby="textId">{{ old('artikel_text') }}</textarea>
+            <label for="text">Deskripsi Artikel</label>
+            <textarea name="text" id="texteditor" cols="30" rows="10" class="form-control @error('text') is-invalid @enderror" placeholder="Isi dari artikel.." aria-describedby="textId">{{ old('text') }}</textarea>
             <small id="textId" class="text-muted d-none"></small>
-            @error('artikel_text')
+            @error('text')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>

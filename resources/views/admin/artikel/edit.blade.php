@@ -10,53 +10,53 @@
     <a href="{{ route('artikel.index', ['token' => $token]) }}" class="btn btn-light border-warning px-4 mb-4"><i class="fas fa-arrow-left"></i> Kembali</a>
     <form action="{{ route('artikel.update', ['token' => $token, 'artikel' => $artikel->id_pemberitahuan]) }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @method('PUT')
+        @method('oatch')
         <div class="form-group">
-            <label for="artikel_title">Judul Artikel</label>
-            <input type="text" name="artikel_title" id="artikel_title" class="form-control" placeholder="Besok ada sesuatu..." aria-describedby="nameId" value="{{ $artikel->nama }}">
+            <label for="nama">Judul Artikel</label>
+            <input type="text" name="nama" id="nama" class="form-control" placeholder="Besok ada sesuatu..." aria-describedby="nameId" value="{{ $artikel->nama }}">
             <small id="nameId" class="text-muted">Hindari penggunaan slash (/,\)</small>
-            @error('artikel_title')
+            @error('nama')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
             @enderror
         </div>
         <div class="form-group">
-            <label for="artikel_level" class="form-label">Status</label>
-            <select class="form-control" id="artikel_level" name="artikel_level">
+            <label for="level" class="form-label">Status</label>
+            <select class="form-control" id="level" name="level">
                 <option value="1" {{ $artikel->level == 1 ? 'selected' : '' }}>Biasa</option>
                 <option value="0" {{ $artikel->level == 0 ? 'selected' : '' }}>Penting</option>
             </select>
-            @error('artikel_level')
+            @error('level')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
             @enderror
         </div>
         <div class="form-group">
-            <label for="artikel" class="form-label">Kategori artikel</label>
-            <select class="form-control" name="id_category">
+            <label for="artikel" class="form-label">Kategori Pengumuman</label>
+            <select class="form-control @error('id_pemberitahuan_category') is-invalid @enderror" name="id_pemberitahuan_category">
                 @foreach ($categories as $category)
                     <option value="{{ $category->id_pemberitahuan_category }}" {{ $artikel->category == $category->id_pemberitahuan_category ? 'selected' : '' }}>
                         {{ $category->pemberitahuan_category_name }}
                     </option>
                 @endforeach
             </select>
-          @error('id_category')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
+            @error('id_pemberitahuan_category')
+                <p class="text-danger">
+                    {{ $message }}
+                </p>
             @enderror
         </div>
         <div class="form-group">
-            <input type="hidden" name="artikel_viewer" id="artikel_viewer" class="form-control" value="{{ $artikel->viewer }}" aria-describedby="viewId">
+            <input type="hidden" name="viewer" id="viewer" class="form-control" value="{{ $artikel->viewer }}" aria-describedby="viewId">
                 <small id="viewId" class="text-muted d-none"></small>
         </div>
         <div class="form-group">
-            <label for="artikel_text">Deskripsi artikel</label>
-            <textarea name="artikel_text" id="texteditor" cols="30" rows="10" class="form-control" placeholder="Isi dari artikel.." aria-describedby="textId">{{ $artikel->text }}</textarea>
+            <label for="text">Deskripsi artikel</label>
+            <textarea name="text" id="texteditor" cols="30" rows="10" class="form-control" placeholder="Isi dari artikel.." aria-describedby="textId">{{ $artikel->text }}</textarea>
             <small id="textId" class="text-muted d-none"></small>
-            @error('artikel_text')
+            @error('text')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>

@@ -69,7 +69,7 @@ class ArticleResource extends JsonResource
         return [
             'id_pemberitahuan' => $this->id_pemberitahuan,
             'nama' => $this->nama,
-            'thumbnail' => 'img/artikel/' . $this->thumbnail,
+            'thumbnail' => $this->thumbnail ? 'img/artikel/' . $this->thumbnail : 'img/no_image.png',
             'date' => $this->date,
             'text' => $this->text,
             'level' => $this->level,

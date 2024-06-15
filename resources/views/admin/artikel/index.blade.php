@@ -44,7 +44,7 @@
                             <tr>
                                 <td><img src="{{ asset('img/artikel/'.$data->thumbnail) }}" width="100px" class="rounded" alt=""></td>
                                 <td style="word-wrap: break-word; max-width: 250px;">{{ $data->nama }}</td>
-                                <td>{{ $data->pemberitahuan_category_name }}</td>
+                                <td>{{ $data->kategori ? $data->kategori->pemberitahuan_category_name : 'No Category' }}</td>
                                 <td style="word-wrap: break-word; max-width: 150px;">{{ $data->created_at }}</td>
                                 <td>
                                     <a href="{{ route('artikel.show', ['artikel' => $data->id_pemberitahuan, 'token' => $token]) }}" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>

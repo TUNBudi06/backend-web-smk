@@ -15,12 +15,11 @@ class ArtikelController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = 10;
-        $artikel = tb_pemberitahuan::select('tb_pemberitahuan.*', 'tb_pemberitahuan_category.pemberitahuan_category_name')
-            ->join('tb_pemberitahuan_category', 'tb_pemberitahuan.category', '=', 'tb_pemberitahuan_category.id_pemberitahuan_category')
-            ->where(['tb_pemberitahuan.type'=> 1])
-            ->orderBy('tb_pemberitahuan.created_at', 'desc')
-            ->paginate($perPage);
+        $perPage = $request->input('show', 10);
+        $artikel = tb_pemberitahuan::where(['type' => 1])
+        ->with('kategori')
+        ->orderBy('created_at', 'desc')
+        ->paginate($perPage);
 
         $token = $request->session()->get('token') ?? $request->input('token');
         return view('admin.artikel.index', [
@@ -52,27 +51,28 @@ class ArtikelController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $request->validate([
-            'artikel_title' => 'required',
-            'artikel_level' => 'required',
-            'id_category' => 'required',
-            'artikel_text' => 'required',
+            'nama' => 'required',
+            'level' => 'required',
+            'id_pemberitahuan_category' => 'required',
+            'text' => 'required',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
         ], [
-            'artikel_title.required' => 'Kolom nama artikel harus diisi.',
-            'artikel_level.required' => 'Kolom level artikel harus diisi.',
-            'id_category.required' => 'Kolom kategori artikel harus diisi.',
-            'artikel_text.required' => 'Kolom isi artikel harus diisi.',
+            'nama.required' => 'Kolom nama artikel harus diisi.',
+            'level.required' => 'Kolom level artikel harus diisi.',
+            'id_pemberitahuan_category.required' => 'Kolom kategori artikel harus diisi.',
+            'text.required' => 'Kolom isi artikel harus diisi.',
             'thumbnail' => 'Kolom gambar wajib diisi',
             'thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
         ]);
 
         // Simpan data ke tabel artikel
         $data = new tb_pemberitahuan();
-        $data->nama = $request->artikel_title;
-        $data->level = $request->artikel_level;
-        $data->category = $request->id_category;
+        $data->nama = $request->nama;
+        $data->level = $request->level;
+        $data->category = $request->id_pemberitahuan_category;
         $data->type = 1;
-        $data->text = $request->artikel_text;
+        $data->viewer = 0;
+        $data->text = $request->text;
 
         // Simpan gambar
         if ($request->hasFile('thumbnail')) {
@@ -114,10 +114,7 @@ class ArtikelController extends Controller
     {
         $id_artikel = $request->route("artikel");
         $token = $request->session()->get('token') ?? $request->input('token');
-        $artikel = tb_pemberitahuan::select('tb_pemberitahuan.*', 'tb_pemberitahuan_category.pemberitahuan_category_name')
-            ->join('tb_pemberitahuan_category', 'tb_pemberitahuan.category', '=', 'tb_pemberitahuan_category.id_pemberitahuan_category')
-            ->where('tb_pemberitahuan.type', 1)
-            ->findOrFail($id_artikel);
+        $artikel = tb_pemberitahuan::where(['type' => 1])->findOrFail($id_artikel);
         $categories = tb_pemberitahuan_category::where("type", 1)->get();
 
 
@@ -138,16 +135,16 @@ class ArtikelController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $request->validate([
-            'artikel_title' => 'required',
-            'artikel_level' => 'required',
-            'id_category' => 'required',
-            'artikel_text' => 'required',
+            'nama' => 'required',
+            'level' => 'required',
+            'id_pemberitahuan_category' => 'required',
+            'text' => 'required',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
         ], [
-            'artikel_title.required' => 'Kolom nama artikel harus diisi.',
-            'artikel_level.required' => 'Kolom level artikel harus diisi.',
-            'id_category.required' => 'Kolom kategori artikel harus diisi.',
-            'artikel_text.required' => 'Kolom isi artikel harus diisi.',
+            'nama.required' => 'Kolom nama artikel harus diisi.',
+            'level.required' => 'Kolom level artikel harus diisi.',
+            'id_pemberitahuan_category.required' => 'Kolom kategori artikel harus diisi.',
+            'text.required' => 'Kolom isi artikel harus diisi.',
             'thumbnail' => 'Kolom gambar wajib diisi',
             'thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
         ]);
@@ -157,9 +154,9 @@ class ArtikelController extends Controller
 
         if ($request->hasFile('thumbnail')) {
             // Hapus gambar sebelumnya jika ada
-            if ($data->thumbnail !== null) {
+            if (!empty($data->thumbnail)) {
                 $oldImagePath = public_path('img/artikel/' . $data->thumbnail);
-                if (file_exists($oldImagePath)) {
+                if (file_exists($oldImagePath) && !is_dir($oldImagePath)) {
                     unlink($oldImagePath);
                 }
             }
@@ -172,10 +169,10 @@ class ArtikelController extends Controller
 
 
         $data->update([
-            'nama' => $request->artikel_title,
-            'level' => $request->artikel_level,
-            'category' => $request->id_category,
-            'text' => $request->artikel_text,
+            'nama' => $request->nama,
+            'level' => $request->level,
+            'category' => $request->id_pemberitahuan_category,
+            'text' => $request->text,
         ]);
 
         // Redirect dengan pesan sukses
