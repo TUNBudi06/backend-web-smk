@@ -10,7 +10,7 @@
     <a href="{{ route('artikel.index', ['token' => $token]) }}" class="btn btn-light border-warning px-4 mb-4"><i class="fas fa-arrow-left"></i> Kembali</a>
     <form action="{{ route('artikel.update', ['token' => $token, 'artikel' => $artikel->id_pemberitahuan]) }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @method('oatch')
+        @method('patch')
         <div class="form-group">
             <label for="nama">Judul Artikel</label>
             <input type="text" name="nama" id="nama" class="form-control" placeholder="Besok ada sesuatu..." aria-describedby="nameId" value="{{ $artikel->nama }}">

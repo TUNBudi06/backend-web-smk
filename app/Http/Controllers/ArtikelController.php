@@ -187,11 +187,17 @@ class ArtikelController extends Controller
         $id_artikel = $request->route("artikel");
         $token = $request->session()->get('token') ?? $request->input('token');
 
-        $artikel = tb_pemberitahuan::select('tb_pemberitahuan.*', 'tb_pemberitahuan_category.pemberitahuan_category_name')
-            ->join('tb_pemberitahuan_category', 'tb_pemberitahuan.category', '=', 'tb_pemberitahuan_category.id_pemberitahuan_category')
-            ->where('tb_pemberitahuan.type', 1)
-            ->findOrFail($id_artikel);
+        $artikel = tb_pemberitahuan::where('id_pemberitahuan', $id_artikel)
+        ->where('type', 4)
+        ->firstOrFail();
+
+        $imagePath = public_path('img/artikel/' . $artikel->thumbnail);
+
         $artikel->delete();
+
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
 
         return redirect()->route('artikel.index', ['token' => $request->token])->with('success', 'Artikel berhasil dihapus');
     }

@@ -188,7 +188,14 @@ class EventController extends Controller
 
         $event = tb_pemberitahuan::where(['tb_pemberitahuan.type' => 4])
             ->findOrFail($id_event);
+
+        $imagePath = public_path('img/event/' . $event->thumbnail);
+
         $event->delete();
+
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
 
         return redirect()->route('event.index', ['token' => $request->token])->with('success', 'Agenda berhasil dihapus.');
     }

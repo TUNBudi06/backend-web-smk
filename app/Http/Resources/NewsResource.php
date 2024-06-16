@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\File;
 
 /**
  * @OA\Schema(
@@ -35,10 +36,13 @@ class NewsResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $thumbnailPath = 'img/berita/' . $this->thumbnail;
+        $thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
+
         return [
             'id_pemberitahuan' => $this->id_pemberitahuan,
             'nama' => $this->nama,
-            'thumbnail' => $this->thumbnail ? 'img/berita/' . $this->thumbnail : 'img/no_image.png',
+            'thumbnail' => $thumbnail,
             'text' => $this->text,
             'level' => $this->level,
             'location' => $this->location,

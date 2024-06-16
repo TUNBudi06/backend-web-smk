@@ -191,8 +191,17 @@ class PengumumanController extends Controller
         $id_pengumuman = $request->route("pengumuman");
         $token = $request->session()->get('token') ?? $request->input('token');
 
-       $pengumuman = tb_pemberitahuan::where(['type' => 2])->findOrFail($id_pengumuman);
-       $pengumuman->delete();
+        $pengumuman = tb_pemberitahuan::where('id_pemberitahuan', $id_pengumuman)
+            ->where('type', 2)
+            ->firstOrFail();
+
+        $imagePath = public_path('img/announcement/' . $pengumuman->thumbnail);
+
+        $pengumuman->delete();
+
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
 
        return redirect()->route('pengumuman.index', ['token' => $request->token])->with('success', 'Pengumuman berhasil dihapus.');
 

@@ -11,22 +11,22 @@
     <form action="{{ route('berita.store', ['token' => $token]) }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
-            <label for="news_title">Judul Berita</label>
-            <input type="text" name="news_title" id="news_title" class="form-control @error('news_title') is-invalid @enderror" placeholder="Besok ada sesuatu..." aria-describedby="nameId" value="{{ old('news_title') }}">
+            <label for="nama">Judul Berita</label>
+            <input type="text" name="nama" id="nama" class="form-control @error('nama') is-invalid @enderror" placeholder="Besok ada sesuatu..." aria-describedby="nameId" value="{{ old('nama') }}">
             <small id="nameId" class="text-muted">Hindari penggunaan slash (/,\)</small>
-            @error('news_title')
+            @error('nama')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
             @enderror
         </div>
         <div class="form-group">
-            <label for="news_level" class="form-label">Status</label>
-            <select class="form-control @error('news_level') is-invalid @enderror" id="news_level" name="news_level">
-                <option value="1" {{ old('news_level') == '1' ? 'selected' : '' }}>Biasa</option>
-                <option value="0" {{ old('news_level') == '0' ? 'selected' : '' }}>Penting</option>
+            <label for="level" class="form-label">Status</label>
+            <select class="form-control @error('level') is-invalid @enderror" id="level" name="level">
+                <option value="1" {{ old('level') == '1' ? 'selected' : '' }}>Biasa</option>
+                <option value="0" {{ old('level') == '0' ? 'selected' : '' }}>Penting</option>
             </select>
-            @error('news_level')
+            @error('level')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
@@ -34,36 +34,41 @@
         </div>
         <div class="form-group">
             <label for="news" class="form-label">Kategori Berita</label>
-            <select class="form-control @error('id_category') is-invalid @enderror" name="id_category">
+            <select class="form-control @error('id_pemberitahuan_category') is-invalid @enderror"
+                name="id_pemberitahuan_category">
                 @foreach ($news as $n)
-                    <option value="{{ $n->id_category }}" {{ old('id_category') == $n->id_category ? 'selected' : '' }}>{{ $n->category_name }}</option>
+                    @if (old('id_pemberitahuan_category') == $n->id_pemberitahuan_category)
+                        <option value="{{ $n->id_pemberitahuan_category }}" selected>{{ $n->pemberitahuan_category_name }}</option>
+                    @else
+                        <option value="{{ $n->id_pemberitahuan_category }}">{{ $n->pemberitahuan_category_name }}</option>
+                    @endif
                 @endforeach
             </select>
-            @error('id_category')
+            @error('id_pemberitahuan_category')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
             @enderror
         </div>
         <div class="form-group">
-            <label for="news_location">Lokasi</label>
-            <input type="text" name="news_location" id="news_location" class="form-control @error('news_location') is-invalid @enderror" value="{{ old('news_location') }}" aria-describedby="waktuId">
+            <label for="location">Lokasi</label>
+            <input type="text" name="location" id="location" class="form-control @error('location') is-invalid @enderror" value="{{ old('location') }}" aria-describedby="waktuId">
             <small id="waktuId" class="text-muted d-none"></small>
-            @error('news_location')
+            @error('location')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
             @enderror
         </div>
         <div class="form-group">
-            <input type="hidden" name="news_viewer" id="news_viewer" class="form-control" value="0" aria-describedby="viewId">
+            <input type="hidden" name="viewer" id="viewer" class="form-control" value="0" aria-describedby="viewId">
             <small id="viewId" class="text-muted d-none"></small>
         </div>
         <div class="form-group">
-            <label for="news_content">Deskripsi Berita</label>
-            <textarea name="news_content" id="texteditor" cols="30" rows="10" class="form-control @error('news_content') is-invalid @enderror" placeholder="Isi dari news.." aria-describedby="textId">{{ old('news_content') }}</textarea>
+            <label for="text">Deskripsi Berita</label>
+            <textarea name="text" id="texteditor" cols="30" rows="10" class="form-control @error('text') is-invalid @enderror" placeholder="Isi dari news.." aria-describedby="textId">{{ old('text') }}</textarea>
             <small id="textId" class="text-muted d-none"></small>
-            @error('news_content')
+            @error('text')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
@@ -75,10 +80,10 @@
         <div class="row">
             <div class="col-md-6 py-md-5 py-3">
                 <div class="form-group">
-                    <label for="news_image">Thumbnail Berita</label>
-                    <input onchange="loadFile(event)" type="file" name="news_image" id="image" class="form-control @error('news_image') is-invalid @enderror" placeholder="Purwosari, Pasuruan" aria-describedby="imageId">
+                    <label for="thumbnail">Thumbnail Berita</label>
+                    <input onchange="loadFile(event)" type="file" name="thumbnail" id="image" class="form-control @error('thumbnail') is-invalid @enderror" placeholder="Purwosari, Pasuruan" aria-describedby="imageId">
                     <small id="imageId" class="text-muted d-none"></small>
-                    @error('news_image')
+                    @error('thumbnail')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
