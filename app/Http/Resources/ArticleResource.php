@@ -70,12 +70,14 @@ class ArticleResource extends JsonResource
         $thumbnailPath = 'img/artikel/' . $this->thumbnail;
         $thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
+        $cleanText = strip_tags(html_entity_decode($this->text));
+
         return [
             'id_pemberitahuan' => $this->id_pemberitahuan,
             'nama' => $this->nama,
             'thumbnail' => $thumbnail,
             'date' => $this->date,
-            'text' => $this->text,
+            'text' => $cleanText,
             'level' => $this->level,
             'category' => $this->kategori ? [
                 'id' => $this->kategori->id_pemberitahuan_category,

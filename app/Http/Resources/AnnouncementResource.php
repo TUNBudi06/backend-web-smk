@@ -35,6 +35,8 @@ class AnnouncementResource extends JsonResource
         $thumbnailPath = 'img/announcement/' . $this->thumbnail;
         $thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
+        $cleanText = strip_tags(html_entity_decode($this->text));
+
         return [
             'id_pemberitahuan' => $this->id_pemberitahuan,
             'nama' => $this->nama,
@@ -42,7 +44,7 @@ class AnnouncementResource extends JsonResource
             'target' => $this->target,
             'date' => $this->date,
             'time' => $this->time,
-            'text' => $this->text,
+            'text' => $cleanText,
             'category' => $this->kategori ? [
                 'id' => $this->kategori->id_pemberitahuan_category,
                 'nama' => $this->kategori->pemberitahuan_category_name,

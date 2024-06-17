@@ -39,11 +39,13 @@ class NewsResource extends JsonResource
         $thumbnailPath = 'img/berita/' . $this->thumbnail;
         $thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
+        $cleanText = strip_tags(html_entity_decode($this->text));
+
         return [
             'id_pemberitahuan' => $this->id_pemberitahuan,
             'nama' => $this->nama,
             'thumbnail' => $thumbnail,
-            'text' => $this->text,
+            'text' => $cleanText,
             'level' => $this->level,
             'location' => $this->location,
             'category' => [

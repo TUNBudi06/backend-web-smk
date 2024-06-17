@@ -37,6 +37,8 @@ class JurusanResource extends JsonResource
         $thumbnailPath = 'img/jurusan/' . $this->jurusan_thumbnail;
         $jurusan_thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
+        $cleanText = strip_tags(html_entity_decode($this->jurusan_text));
+
         return [
             'id_jurusan' => $this->id_jurusan,
             'jurusan_nama' => $this->jurusan_nama,
@@ -47,7 +49,7 @@ class JurusanResource extends JsonResource
                 'nama_prodi' => $this->prodis->prodi_name,
                 'prodi_short' => $this->prodis->prodi_short,
             ] : null,
-            'jurusan_text' => $this->jurusan_text,
+            'jurusan_text' => $cleanText,
         ];
     }
 }

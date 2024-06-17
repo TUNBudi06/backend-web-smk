@@ -29,10 +29,12 @@ class EkstraResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $cleanText = strip_tags(html_entity_decode($this->extra_text));
+
         return [
             'id_extra' => $this->id_extra,
             'extra_name' => $this->extra_name,
-            'extra_text' => $this->extra_text,
+            'extra_text' => $cleanText,
             'extra_type' => $this->extra_type,
             'extra_logo' => $this->extra_logo,
             'extra_image' => $this->extra_image,
