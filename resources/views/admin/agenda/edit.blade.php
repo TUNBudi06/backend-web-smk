@@ -12,7 +12,7 @@
         @method('patch')
         @csrf
         <div class="form-group">
-            <label for="nama">event</label>
+            <label for="nama">Agenda</label>
             <input value="{{$event->nama}}" type="text" name="nama" id="nama" class="form-control @error('nama') is-invalid @enderror" placeholder="Besok ada sesuatu..." aria-describedby="namaId">
             @error('nama')
                 <div class="text-danger">{{ $message }}</div>

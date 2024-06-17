@@ -411,7 +411,7 @@
                 }
             }
         },
-        "/api/user/facilities": {
+        "/api/user/profile/facilities": {
             "get": {
                 "tags": [
                     "Facilities"
@@ -461,7 +461,7 @@
                 }
             }
         },
-        "/api/user/facilities/{id}": {
+        "/api/user/profile/facilities/{id}": {
             "get": {
                 "tags": [
                     "Facilities"
@@ -1122,13 +1122,13 @@
                         "type": "integer",
                         "example": 1
                     },
-                    "title": {
+                    "nama": {
                         "type": "string",
                         "example": "Artikel Penting"
                     },
                     "thumbnail": {
                         "type": "string",
-                        "example": "gambar.jpg"
+                        "example": "img/artikel/gambar.jpg"
                     },
                     "target": {
                         "type": "string",
@@ -1236,7 +1236,7 @@
                         "type": "integer",
                         "example": 1
                     },
-                    "title": {
+                    "nama": {
                         "type": "string",
                         "example": "Event Penting"
                     },
@@ -1292,7 +1292,7 @@
                     },
                     "facility_image": {
                         "type": "string",
-                        "example": "lab_komputer.png"
+                        "example": "img/fasilitas/lab_komputer.png"
                     },
                     "prodi": {
                         "properties": {
@@ -1334,7 +1334,7 @@
                     },
                     "jurusan_thumbnail": {
                         "type": "string",
-                        "example": "http://example.com/images/thumbnail.jpg"
+                        "example": "img/jurusan/gambar.jpg"
                     },
                     "prodi": {
                         "properties": {

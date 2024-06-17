@@ -28,7 +28,7 @@ Route::prefix('user')->group(function () {
     Route::resource('events', EventController::class);
     Route::get('event-categories', [EventController::class, 'categoryEvent']);
     Route::prefix('profile')->group(function () {
-        Route::resource('majors', JurusanController::class); // durung ono
+        Route::resource('majors', JurusanController::class);
         Route::resource('facilities', FasilitasController::class);
         Route::resource('students', PDController::class);
         Route::resource('teachers', PTKController::class);

@@ -75,7 +75,7 @@ class JurusanController extends Controller
         if ($request->hasFile('jurusan_thumbnail')) {
             $fileContents = file_get_contents($request->file('jurusan_thumbnail')->getRealPath());
             $imageName = hash('sha256', $fileContents) . '.' . $request->file('jurusan_thumbnail')->getClientOriginalExtension();
-            $request->file('jurusan_thumbnail')->move('img/jurusan/thumbnail', $imageName);
+            $request->file('jurusan_thumbnail')->move('img/jurusan', $imageName);
             $data->jurusan_thumbnail = $imageName;
         }
 
@@ -141,7 +141,7 @@ class JurusanController extends Controller
         if ($request->hasFile('jurusan_thumbnail')) {
             // Hapus gambar sebelumnya jika ada
             if ($data->jurusan_thumbnail !== null) {
-                $oldImagePath = public_path('img/jurusan/thumbnail' . $data->jurusan_thumbnail);
+                $oldImagePath = public_path('img/jurusan' . $data->jurusan_thumbnail);
                 if (file_exists($oldImagePath)) {
                     unlink($oldImagePath);
                 }
@@ -149,7 +149,7 @@ class JurusanController extends Controller
 
             // Simpan gambar baru
             $imageName = $request->file('jurusan_thumbnail')->hashName();
-            $request->file('jurusan_thumbnail')->move('img/jurusan/thumbnail', $imageName);
+            $request->file('jurusan_thumbnail')->move('img/jurusan', $imageName);
             $data->jurusan_thumbnail = $imageName;
         }
 

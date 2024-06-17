@@ -13,7 +13,7 @@ class FasilitasController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/api/user/facilities",
+     *     path="/api/user/profile/facilities",
      *     tags={"Facilities"},
      *     summary="Get all facilities",
      *     description="Retrieve all facilities",
@@ -97,7 +97,7 @@ class FasilitasController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/user/facilities/{id}",
+     *     path="/api/user/profile/facilities/{id}",
      *     tags={"Facilities"},
      *     summary="Get specific facility",
      *     description="Retrieve a specific facility by its ID",

@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\File;
 
 /**
  * @OA\Schema(
@@ -22,7 +23,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *     @OA\Property(
  *         property="facility_image",
  *         type="string",
- *         example="lab_komputer.png"
+ *         example="img/fasilitas/lab_komputer.png"
  *     ),
  *     @OA\Property(
  *         property="prodi",
@@ -47,10 +48,13 @@ class FasilitasResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $thumbnailPath = 'img/fasilitas/' . $this->facility_image;
+        $facility_image = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
+
         return [
             'id_facility' => $this->id_facility,
             'facility_name' => $this->facility_name,
-            'facility_image' => $this->facility_image,
+            'facility_image' => $facility_image,
             'prodi' => $this->prodis ? [
                 'id' => $this->prodis->id_prodi,
                 'nama_prodi' => $this->prodis->prodi_name,

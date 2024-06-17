@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\File;
 
 /**
  * @OA\Schema(
@@ -15,7 +16,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *         example=1
  *     ),
  *     @OA\Property(
- *         property="title",
+ *         property="nama",
  *         type="string",
  *         example="Event Penting"
  *     ),
@@ -66,11 +67,14 @@ class EventResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $thumbnailPath = 'img/event/' . $this->thumbnail;
+        $thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
+
         return [
             'id_pemberitahuan' => $this->id_pemberitahuan,
             'nama' => $this->nama,
             'target' => $this->target,
-            'thumbnail' => 'img/event/' . $this->thumbnail,
+            'thumbnail' => $thumbnail,
             'date' => $this->date,
             'text' => $this->text,
             'category' => $this->kategori ? [

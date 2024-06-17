@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\File;
 
 /**
  * @OA\Schema(
@@ -12,7 +13,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *     @OA\Property(property="id_jurusan", type="integer", example=1),
  *     @OA\Property(property="jurusan_nama", type="string", example="Teknik Informatika"),
  *     @OA\Property(property="jurusan_short", type="string", example="TI"),
- *     @OA\Property(property="jurusan_thumbnail", type="string", example="http://example.com/images/thumbnail.jpg"),
+ *     @OA\Property(property="jurusan_thumbnail", type="string", example="img/jurusan/gambar.jpg"),
  *     @OA\Property(
  *         property="prodi",
  *         type="object",
@@ -33,11 +34,14 @@ class JurusanResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $thumbnailPath = 'img/jurusan/' . $this->jurusan_thumbnail;
+        $jurusan_thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
+
         return [
             'id_jurusan' => $this->id_jurusan,
             'jurusan_nama' => $this->jurusan_nama,
             'jurusan_short' => $this->jurusan_short,
-            'jurusan_thumbnail' => $this->jurusan_thumbnail,
+            'jurusan_thumbnail' => $jurusan_thumbnail,
             'prodi' => $this->prodis ? [
                 'id' => $this->prodis->id_prodi,
                 'nama_prodi' => $this->prodis->prodi_name,

@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\File;
 
 /**
  * @OA\Schema(
@@ -15,14 +16,14 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *         example=1
  *     ),
  *     @OA\Property(
- *         property="title",
+ *         property="nama",
  *         type="string",
  *         example="Artikel Penting"
  *     ),
  *     @OA\Property(
  *         property="thumbnail",
  *         type="string",
- *         example="gambar.jpg"
+ *         example="img/artikel/gambar.jpg"
  *     ),
  *     @OA\Property(
  *         property="target",
@@ -66,10 +67,13 @@ class ArticleResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $thumbnailPath = 'img/artikel/' . $this->thumbnail;
+        $thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
+
         return [
             'id_pemberitahuan' => $this->id_pemberitahuan,
             'nama' => $this->nama,
-            'thumbnail' => $this->thumbnail ? 'img/artikel/' . $this->thumbnail : 'img/no_image.png',
+            'thumbnail' => $thumbnail,
             'date' => $this->date,
             'text' => $this->text,
             'level' => $this->level,

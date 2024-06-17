@@ -34,7 +34,7 @@
             @enderror
         </div>
         <div class="form-group">
-            <label for="artikel" class="form-label">Kategori Pengumuman</label>
+            <label for="artikel" class="form-label">Kategori Artikel</label>
             <select class="form-control @error('id_pemberitahuan_category') is-invalid @enderror" name="id_pemberitahuan_category">
                 @foreach ($categories as $category)
                     <option value="{{ $category->id_pemberitahuan_category }}" {{ $artikel->category == $category->id_pemberitahuan_category ? 'selected' : '' }}>

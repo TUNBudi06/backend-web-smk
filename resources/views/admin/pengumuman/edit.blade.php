@@ -20,7 +20,7 @@
             <small id="namaId" class="text-muted">Hindari penggunaan slash (/,\)</small>
         </div>
         <div class="form-group">
-            <label for="target">Pengumuman Target</label>
+            <label for="target">Target Pengumuman</label>
             <input type="text" name="target" id="target" value="{{ $pengumuman->target }}" class="form-control @error('target') is-invalid @enderror" placeholder="Seluruh Jurusan / Hanya 1 Jurusan" aria-describedby="targetId">
             @error('target')
                 <div class="text-danger">{{ $message }}</div>

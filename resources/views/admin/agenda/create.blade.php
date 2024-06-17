@@ -27,7 +27,7 @@
             @enderror
         </div>
         <div class="form-group">
-            <label for="event" class="form-label">Kategori Pengumuman</label>
+            <label for="event" class="form-label">Kategori Agenda</label>
             <select class="form-control @error('id_pemberitahuan_category') is-invalid @enderror"
                 name="id_pemberitahuan_category">
                 @foreach ($event as $e)

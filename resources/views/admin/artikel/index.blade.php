@@ -43,7 +43,7 @@
 {{--                                @dd($data)--}}
                             <tr>
                                 <td><img src="{{ asset('img/artikel/'.$data->thumbnail) }}" width="100px" class="rounded" alt=""></td>
-                                <td style="word-wrap: break-word; max-width: 250px;">{{ $data->nama }}</td>
+                                <td style="word-wrap: break-word; max-width: 230px;">{{ $data->nama }}</td>
                                 <td>{{ $data->kategori ? $data->kategori->pemberitahuan_category_name : 'No Category' }}</td>
                                 <td style="word-wrap: break-word; max-width: 150px;">{{ $data->created_at }}</td>
                                 <td>
