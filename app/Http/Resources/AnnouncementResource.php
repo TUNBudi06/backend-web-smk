@@ -37,7 +37,7 @@ class AnnouncementResource extends JsonResource
 
         return [
             'id_pemberitahuan' => $this->id_pemberitahuan,
-            'title' => $this->nama,
+            'nama' => $this->nama,
             'thumbnail' => $thumbnail,
             'target' => $this->target,
             'date' => $this->date,
