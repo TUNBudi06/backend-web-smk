@@ -5,6 +5,7 @@ use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\EkstraController;
 use App\Http\Controllers\api\EventController;
 use App\Http\Controllers\api\FasilitasController;
+use App\Http\Controllers\api\GalleryController;
 use App\Http\Controllers\api\PengumumanController;
 use App\Http\Controllers\api\JurusanController;
 use App\Http\Controllers\api\NewsController;
@@ -27,6 +28,8 @@ Route::prefix('user')->group(function () {
     Route::get('news-categories', [NewsController::class, 'categoryNews']);
     Route::resource('events', EventController::class);
     Route::get('event-categories', [EventController::class, 'categoryEvent']);
+    Route::resource('galeri', GalleryController::class);
+    Route::get('galeri-categories', [GalleryController::class, 'categoryGaleri']);
     Route::prefix('profile')->group(function () {
         Route::resource('majors', JurusanController::class);
         Route::resource('facilities', FasilitasController::class);
