@@ -28,8 +28,8 @@ Route::prefix('user')->group(function () {
     Route::get('news-categories', [NewsController::class, 'categoryNews']);
     Route::resource('events', EventController::class);
     Route::get('event-categories', [EventController::class, 'categoryEvent']);
-    Route::resource('galeri', GalleryController::class);
-    Route::get('galeri-categories', [GalleryController::class, 'categoryGaleri']);
+    Route::resource('galleries', GalleryController::class);
+    Route::get('gallery-categories', [GalleryController::class, 'categoryGaleri']);
     Route::prefix('profile')->group(function () {
         Route::resource('majors', JurusanController::class);
         Route::resource('facilities', FasilitasController::class);

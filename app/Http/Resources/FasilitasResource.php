@@ -51,6 +51,8 @@ class FasilitasResource extends JsonResource
         $thumbnailPath = 'img/fasilitas/' . $this->facility_image;
         $facility_image = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
+        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->facility_text)));
+
         return [
             'id_facility' => $this->id_facility,
             'facility_name' => $this->facility_name,
@@ -60,7 +62,7 @@ class FasilitasResource extends JsonResource
                 'nama_prodi' => $this->prodis->prodi_name,
                 'prodi_short' => $this->prodis->prodi_short,
             ] : null,
-            'facility_text' => $this->facility_text,
+            'facility_text' => $cleanText,
         ];
     }
 }

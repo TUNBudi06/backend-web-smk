@@ -15,10 +15,10 @@ class GalleryController extends Controller
 {
        /**
      * @OA\Get(
-     *     path="/api/user/galeri",
-     *     tags={"Galeri"},
-     *     summary="Get all Galeri",
-     *     description="Retrieve all Galeri",
+     *     path="/api/user/galleries",
+     *     tags={"Gallery"},
+     *     summary="Get all Gallery",
+     *     description="Retrieve all Gallery",
      *     operationId="getAllGaleri",
      *     @OA\Response(
      *         response=200,
@@ -29,7 +29,7 @@ class GalleryController extends Controller
      *             @OA\Property(
      *                 property="data",
      *                 type="array",
-     *                 @OA\Items(ref="#/components/schemas/Galeri")
+     *                 @OA\Items(ref="#/components/schemas/Gallery")
      *             )
      *         )
      *     )
@@ -55,10 +55,10 @@ class GalleryController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/user/galeri/{id}",
-     *     tags={"Galeri"},
-     *     summary="Get galeri by ID",
-     *     description="Retrieve a single galeri entry by ID",
+     *     path="/api/user/galleries/{id}",
+     *     tags={"Gallery"},
+     *     summary="Get galleries by ID",
+     *     description="Retrieve a single galleries entry by ID",
      *     operationId="getGaleriById",
      *     @OA\Parameter(
      *         name="id",
@@ -69,7 +69,7 @@ class GalleryController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
-     *         @OA\JsonContent(ref="#/components/schemas/GalleryResource")
+     *         @OA\JsonContent(ref="#/components/schemas/Gallery")
      *     ),
      *     @OA\Response(
      *         response=404,
@@ -115,10 +115,10 @@ class GalleryController extends Controller
 
         /**
      * @OA\Get(
-     *     path="/api/user/galeri-categories",
-     *     tags={"Galeri"},
-     *     summary="Get galeri categories",
-     *     description="Retrieve categories of galeri",
+     *     path="/api/user/gallery-categories",
+     *     tags={"Gallery"},
+     *     summary="Get gallery categories",
+     *     description="Retrieve categories of gallery",
      *     operationId="getGaleriCategories",
      *     @OA\Response(
      *         response=200,

@@ -196,7 +196,7 @@
                 }
             }
         },
-        "/api/user/profile/ekstras/{id}": {
+        "/api/user/profile/ekstras/{id_extra}": {
             "get": {
                 "tags": [
                     "Ekstra"
@@ -206,7 +206,7 @@
                 "operationId": "getEkstraById",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "id_extra",
                         "in": "path",
                         "description": "ID of the Ekstra",
                         "required": true,
@@ -511,6 +511,113 @@
                                         }
                                     },
                                     "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/galleries": {
+            "get": {
+                "tags": [
+                    "Gallery"
+                ],
+                "summary": "Get all Gallery",
+                "description": "Retrieve all Gallery",
+                "operationId": "getAllGaleri",
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Gallery"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/galleries/{id}": {
+            "get": {
+                "tags": [
+                    "Gallery"
+                ],
+                "summary": "Get galleries by ID",
+                "description": "Retrieve a single galleries entry by ID",
+                "operationId": "getGaleriById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Gallery"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data tidak ditemukan"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/gallery-categories": {
+            "get": {
+                "tags": [
+                    "Gallery"
+                ],
+                "summary": "Get gallery categories",
+                "description": "Retrieve categories of gallery",
+                "operationId": "getGaleriCategories",
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CategoryGalleryResource"
+                                    }
                                 }
                             }
                         }
@@ -1166,6 +1273,18 @@
                 },
                 "type": "object"
             },
+            "CategoryGalleryResource": {
+                "title": "Category Gallery Resource",
+                "properties": {
+                    "id_category": {
+                        "type": "integer"
+                    },
+                    "category_name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "CategoryResource": {
                 "title": "Category Resource",
                 "properties": {
@@ -1314,6 +1433,39 @@
                     "facility_text": {
                         "type": "string",
                         "example": "Laboratorium komputer dengan fasilitas lengkap."
+                    }
+                },
+                "type": "object"
+            },
+            "Gallery": {
+                "properties": {
+                    "id_gallery": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "gallery_title": {
+                        "type": "string",
+                        "example": "Kegiatan MPLS"
+                    },
+                    "gallery_text": {
+                        "type": "string",
+                        "example": "MPLS dilaksanakan pada tanggal..."
+                    },
+                    "gallery_location": {
+                        "type": "string",
+                        "example": "SMKN 1 Purwosari"
+                    },
+                    "id_category": {
+                        "type": "string",
+                        "example": "MPLS/Kelas/dll"
+                    },
+                    "gallery_file": {
+                        "type": "string",
+                        "example": "img/gallery/image.png"
+                    },
+                    "file_type": {
+                        "type": "string",
+                        "example": "jpg/png/dll"
                     }
                 },
                 "type": "object"

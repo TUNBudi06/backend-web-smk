@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\File;
 
 /**
  * @OA\Schema(
@@ -29,15 +30,21 @@ class EkstraResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $cleanText = strip_tags(html_entity_decode($this->extra_text));
+        $image_logo = 'img/extrakurikuler/logo/' . $this->extra_logo;
+        $extra_logo = File::exists(public_path($image_logo)) ? $image_logo : 'img/no_image.png';
+
+        $image_cover = 'img/extrakurikuler/cover/' . $this->extra_image;
+        $extra_image = File::exists(public_path($image_cover)) ? $image_cover : 'img/no_image.png';
+
+        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->text)));
 
         return [
             'id_extra' => $this->id_extra,
             'extra_name' => $this->extra_name,
             'extra_text' => $cleanText,
             'extra_type' => $this->extra_type,
-            'extra_logo' => $this->extra_logo,
-            'extra_image' => $this->extra_image,
+            'extra_logo' => $extra_logo,
+            'extra_image' => $extra_image,
             'instagram' => $this->instagram,
             'telegram' => $this->telegram,
             'extra_hari' => $this->extra_hari,

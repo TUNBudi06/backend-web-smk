@@ -51,13 +51,13 @@ class EkstraController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/user/profile/ekstras/{id}",
+     *     path="/api/user/profile/ekstras/{id_extra}",
      *     tags={"Ekstra"},
      *     summary="Get specific Ekstra",
      *     description="Retrieve a specific Ekstra by ID",
      *     operationId="getEkstraById",
      *     @OA\Parameter(
-     *         name="id",
+     *         name="id_extra",
      *         in="path",
      *         description="ID of the Ekstra",
      *         required=true,
