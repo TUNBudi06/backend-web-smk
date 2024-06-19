@@ -70,9 +70,9 @@ class ArtikelController extends Controller
         $data->nama = $request->nama;
         $data->level = $request->level;
         $data->category = $request->id_pemberitahuan_category;
+        $data->text = $request->text;
         $data->type = 1;
         $data->viewer = 0;
-        $data->text = $request->text;
 
         // Simpan gambar
         if ($request->hasFile('thumbnail')) {

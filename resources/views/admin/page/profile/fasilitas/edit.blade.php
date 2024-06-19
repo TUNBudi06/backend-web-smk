@@ -12,7 +12,7 @@
         <form action="{{ route('fasilitas.update', ['token' => $token, 'fasilitas' => $fasilitas->id_facility]) }}"
             method="POST" enctype="multipart/form-data">
             @csrf
-            @method('PUT')
+            @method('patch')
             <div class="form-group">
                 <label for="fascility_name">Nama Fasilitas</label>
                 <input type="text" name="facility_name" id="facility_name"

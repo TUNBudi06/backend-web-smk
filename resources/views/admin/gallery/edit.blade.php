@@ -10,7 +10,7 @@
     <a href="{{ route('gallery.index', ['token' => $token]) }}" class="btn btn-light border-warning px-4 mb-4"><i class="fas fa-arrow-left"></i> Kembali</a>
     <form action="{{ route('gallery.update', ['token' => $token, 'gallery' => $gallery->id_gallery]) }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @method('PUT')
+        @method('patch')
         <div class="form-group">
             <label for="gallery_title">Judul Gallery</label>
             <input type="text" name="gallery_title" id="gallery_title" class="form-control @error('gallery_title') is-invalid @enderror" placeholder="Besok ada sesuatu..." aria-describedby="nameId" value="{{ $gallery->gallery_title }}">

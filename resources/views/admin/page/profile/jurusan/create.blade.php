@@ -70,7 +70,7 @@
                 </div>
             </div>
             <div class="col-md-6 text-center">
-                <img class="w-100 rounded" id="preview" src="{{ asset('img/berita/no_image.png') }}" alt="">
+                <img class="w-100 rounded" id="preview" src="{{ asset('img/no_image.png') }}" alt="">
             </div>
         </div>
         <div class="text-right mb-4">

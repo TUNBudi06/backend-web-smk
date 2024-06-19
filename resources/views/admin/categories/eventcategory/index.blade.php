@@ -21,7 +21,7 @@
                 <div class="w-100 rad bg-white position-relative shadow py-3 px-4">
                     <h5 class="poppins mb-0">Update Kategori</h5>
                     <form action="{{ route('event.category.update', ['token' => $token, 'event_category' => $category->id_pemberitahuan_category]) }}" method="post">
-                        @method('put')
+                        @method('patch')
                         @csrf
                         <div class="form-group">
                             <input type="hidden" value="{{$category->id_pemberitahuan_category}}" name="idCategory" id="idCategory" class="form-control" placeholder="Perayaan / Peristiwa" aria-describedby="namaID">

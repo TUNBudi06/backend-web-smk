@@ -46,7 +46,7 @@
                     <tr>
                         @foreach ($gallery as $key => $data)
                     <tr>
-                        <td><img src="{{ asset('img/gallery/' . $data->gallery_file) }}" width="100px" class="rounded"
+                        <td><img src="{{ asset(file_exists(public_path('img/gallery/' . $data->gallery_file)) ? 'img/gallery/' . $data->gallery_file : 'img/no_image.png') }}" width="100px" class="rounded"
                                 alt=""></td>
                         <td style="word-wrap: break-word; max-width: 250px;">{{ $data->gallery_title }}</td>
                         <td>{{ $data->category_gallery->category_name }}</td>

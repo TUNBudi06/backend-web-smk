@@ -10,7 +10,7 @@
     <a href="{{ route('jurusan.index', ['token' => $token]) }}" class="btn btn-light border-warning px-4 mb-4"><i class="fas fa-arrow-left"></i> Kembali</a>
     <form action="{{ route('jurusan.update', ['token' => $token, 'jurusan' => $jurusan->id_jurusan]) }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @method('PUT')
+        @method('patch')
         <div class="form-group">
             <label for="jurusan_nama">Nama Jurusan</label>
             <input type="text" name="jurusan_nama" id="jurusan_nama" class="form-control @error('jurusan_nama') is-invalid @enderror" placeholder="Besok ada sesuatu..." aria-describedby="nameId" value="{{ $jurusan->jurusan_nama }}">

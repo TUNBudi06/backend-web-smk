@@ -77,7 +77,7 @@ class BeritaController extends Controller
         $data->text = $request->text;
         $data->location = $request->location;
         $data->type = 3;
-        $data->viewer = $request->viewer;
+        $data->viewer = 0;
 
         // Simpan gambar
         if ($request->hasFile('thumbnail')) {

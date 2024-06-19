@@ -139,7 +139,6 @@ class JurusanController extends Controller
 
         // Periksa apakah ada pergantian gambar
         if ($request->hasFile('jurusan_thumbnail')) {
-            // Hapus gambar sebelumnya jika ada
             if ($data->jurusan_thumbnail !== null) {
                 $oldImagePath = public_path('img/jurusan' . $data->jurusan_thumbnail);
                 if (file_exists($oldImagePath)) {
@@ -173,7 +172,13 @@ class JurusanController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $jurusan = tb_jurusan::findOrFail($id_jurusan);
+        $imagePath = public_path('img/jurusan/' . $jurusan->jurusan_thumbnail);
+
         $jurusan->delete();
+
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
 
         return redirect()->route('jurusan.index', ['token' => $request->token])->with('success', 'Jurusan berhasil dihapus.');
     }

@@ -10,7 +10,7 @@
     <a href="{{ route('pd.index', ['token' => $token]) }}" class="btn btn-light border-warning px-4 mb-4"><i class="fas fa-arrow-left"></i> Kembali</a>
     <form action="{{ route('pd.update', ['token' => $token, 'pd' => $pd->id]) }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @method('PUT')
+        @method('patch')
         <div class="form-group">
             <label for="nisn">NISN</label>
             <input type="number" name="nisn" id="nisn" class="form-control @error('nisn') is-invalid @enderror" value="{{ $pd->nisn }}" placeholder="Masukkan NISN..." aria-describedby="namaId">

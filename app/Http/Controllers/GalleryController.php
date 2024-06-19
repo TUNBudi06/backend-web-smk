@@ -132,7 +132,7 @@ class GalleryController extends Controller
             'id_category' => 'required',
             'gallery_text' => 'required',
             'gallery_location' => 'required',
-            'gallery_file' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'gallery_file' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:10240',
         ], [
             'gallery_file.max' => 'The image may not be greater than 10MB.',
         ]);

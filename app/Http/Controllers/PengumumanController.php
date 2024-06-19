@@ -80,6 +80,7 @@ class PengumumanController extends Controller
         $data->text = $request->text;
         $data->date = $request->date;
         $data->time = $request->time;
+        $data->viewer = 0;
         $data->type = 2;
 
         if ($request->hasFile('thumbnail')) {

@@ -8,6 +8,7 @@ use App\Models\tb_extra;
 use App\Models\tb_facilities;
 use App\Models\tb_gallery;
 use App\Models\tb_news;
+use App\Models\tb_pemberitahuan;
 use App\Models\tb_pengumuman;
 use App\Models\tb_peserta_didik;
 use App\Models\tb_ptk;
@@ -24,11 +25,11 @@ class AdminController extends Controller
         return view('admin.page.dashboard', [
             'menu_active' => 'dashboard',
             'token' => $token,
-            "artikel"=> tb_artikel::count(),
-            "berita"=>tb_news::count(),
-            "event"=>tb_event::count(),
+            "artikel"=> tb_pemberitahuan::where('type', 1)->count(),
+            "pengumuman"=> tb_pemberitahuan::where('type', 2)->count(),
+            "berita"=> tb_pemberitahuan::where('type', 3)->count(),
+            "event"=> tb_pemberitahuan::where('type', 4)->count(),
             "gallery"=>tb_gallery::count(),
-            "pengumuman"=>tb_pengumuman::count(),
             'fasilitas' => tb_facilities::count(),
             'pd' => tb_peserta_didik::count(),
             'ptk' => tb_ptk::count(),

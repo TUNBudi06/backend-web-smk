@@ -87,7 +87,7 @@
                 </div>
             </div>
             <div class="col-md-6 text-center">
-                <img class="w-100 rounded" id="cover_preview" src="{{ asset('img/berita/no_image.png') }}" alt="Cover Preview">
+                <img class="w-100 rounded" id="cover_preview" src="{{ asset('img/no_image.png') }}" alt="Cover Preview">
             </div>
         </div>
         <div class="row">
@@ -104,7 +104,7 @@
                 </div>
             </div>
             <div class="col-md-6 text-center">
-                <img class="w-100 rounded" id="logo_preview" src="{{ asset('img/berita/no_image.png') }}" alt="Logo Preview">
+                <img class="w-100 rounded" id="logo_preview" src="{{ asset('img/no_image.png') }}" alt="Logo Preview">
             </div>
         </div>
         <div class="text-right mb-4">

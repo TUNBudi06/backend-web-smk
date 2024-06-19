@@ -10,7 +10,7 @@
     <a href="{{ route('extra.index', ['token' => $token]) }}" class="btn btn-light border-warning px-4 mb-4"><i class="fas fa-arrow-left"></i> Kembali</a>
     <form action="{{ route('extra.update', ['token' => $token, 'extra' => $extra->id_extra]) }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @method('PUT')
+        @method('patch')
         <div class="form-group">
             <label for="extra_name">Nama Extrakurikuler</label>
             <input type="text" name="extra_name" id="extra_name" class="form-control @error('extra_name') is-invalid @enderror" placeholder="Extrakurikuler bare..." aria-describedby="nameId" value="{{ old('extra_name', $extra->extra_name) }}">
@@ -88,7 +88,7 @@
                 </div>
             </div>
             <div class="col-md-6 text-center">
-                <img class="w-100 rounded" id="cover_preview" src="{{ $extra->extra_image ? asset('img/extrakurikuler/cover/' . $extra->extra_image) : asset('img/berita/no_image.png') }}" alt="Cover Preview">
+                <img class="w-100 rounded" id="cover_preview" src="{{ $extra->extra_image ? asset('img/extrakurikuler/cover/' . $extra->extra_image) : asset('img/no_image.png') }}" alt="Cover Preview">
             </div>
         </div>
         <div class="row">
@@ -105,7 +105,7 @@
                 </div>
             </div>
             <div class="col-md-6 text-center">
-                <img class="w-100 rounded" id="logo_preview" src="{{ $extra->extra_logo ? asset('img/extrakurikuler/logo/' . $extra->extra_logo) : asset('img/berita/no_image.png') }}" alt="Logo Preview">
+                <img class="w-100 rounded" id="logo_preview" src="{{ $extra->extra_logo ? asset('img/extrakurikuler/logo/' . $extra->extra_logo) : asset('img/no_image.png') }}" alt="Logo Preview">
             </div>
         </div>
         <div class="text-right mb-4">

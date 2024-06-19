@@ -9,7 +9,7 @@
 <div class="col-md-8 offset-md-2 pt-4">
     <a href="{{ route('ptk.index', ['token' => $token]) }}" class="btn btn-light border-warning px-4 mb-4"><i class="fas fa-arrow-left"></i> Kembali</a>
     <form action="{{ route('ptk.update', ['token' => $token, 'ptk' => $ptk->id]) }}" method="post">
-        @method('put')
+        @method('patch')
         @csrf
         <div class="form-group">
             <label for="nip">NIP</label>
