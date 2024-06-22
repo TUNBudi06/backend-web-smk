@@ -23,6 +23,7 @@ class tb_ptk extends Model
         'tanggal_lahir',
         'jenis_kelamin',
         'alamat',
+        'foto',
     ];
 
     public $timestamps = false;

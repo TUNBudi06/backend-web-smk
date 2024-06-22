@@ -62,10 +62,10 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>Foto</th>
                             <th>Nama</th>
                             <th>NIP</th>
                             <th>TTL</th>
-                            <th>Gender</th>
                             <th>Alamat</th>
                             <th>action</th>
                         </tr>
@@ -73,11 +73,14 @@
                     <tbody>
                         @foreach($ptk as $key => $data)
                         <tr>
-                            <td>{{ $data->nama }}</td>
-                            <td>{{ $data->nip }}</td>
-                            <td>{{ $data->tempat_lahir }}, {{ $data->tanggal_lahir }}</td>
-                            <td>{{ $data->jenis_kelamin }}</td>
-                            <td>{{ $data->alamat }}</td>
+                            <td>
+                                <img src="{{ asset($data->foto && file_exists(public_path('img/guru/' . $data->foto)) ? 'img/guru/' . $data->foto : 'img/illust/male.png') }}" width="100px" class="rounded" alt="">
+                            </td>
+                            <td style="word-wrap: break-word; max-width: 175px;">{{ $data->nama }}</td>
+                            <td style="word-wrap: break-word; max-width: 170px;">{{ $data->nip }}</td>
+                            <td style="word-wrap: break-word; max-width: 175px;">{{ $data->tempat_lahir }}, {{ $data->tanggal_lahir }}</td>
+                            {{-- <td>{{ $data->jenis_kelamin }}</td> --}}
+                            <td style="word-wrap: break-word; max-width: 175px;">{{ $data->alamat }}</td>
                             <td>
                                 <a href="#" target="_blank" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
                                 <a href="{{ route('ptk.edit', ['ptk' => $data->id, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>

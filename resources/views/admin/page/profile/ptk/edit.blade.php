@@ -8,7 +8,7 @@
 @section('container')
 <div class="col-md-8 offset-md-2 pt-4">
     <a href="{{ route('ptk.index', ['token' => $token]) }}" class="btn btn-light border-warning px-4 mb-4"><i class="fas fa-arrow-left"></i> Kembali</a>
-    <form action="{{ route('ptk.update', ['token' => $token, 'ptk' => $ptk->id]) }}" method="post">
+    <form action="{{ route('ptk.update', ['token' => $token, 'ptk' => $ptk->id]) }}" method="post" enctype="multipart/form-data">
         @method('patch')
         @csrf
         <div class="form-group">
@@ -76,9 +76,38 @@
             @enderror
             <small id="textId" class="text-muted d-none"></small>
         </div>
+        <div class="row">
+            <div class="col-md-6 py-md-5 py-3">
+                <div class="form-group">
+                    <label for="foto">Foto PTK</label>
+                    <input onchange="loadFile(event)" type="file" name="foto" id="image" class="form-control @error('foto') is-invalid @enderror" placeholder="Purwosari, Pasuruan" aria-describedby="imageId">
+                    <small id="imageId" class="text-muted d-none"></small>
+                    @error('foto')
+                        <p class="text-danger">
+                            {{ $message }}
+                        </p>
+                    @enderror
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <img class="w-100 rounded" id="preview"
+                src="{{ asset('img/guru/'.$ptk->foto) }}"
+                alt="">
+            </div>
+        </div>
         <div class="text-right mb-4">
             <button type="submit" class="btn btn-warning mt-2 px-5 rounded-pill shadow-warning"><i class="fas fa-paper-plane"></i> Submit</button>
         </div>
     </form>
 </div>
+<script>
+    function loadFile(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var preview = document.getElementById('preview');
+            preview.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
 @endsection

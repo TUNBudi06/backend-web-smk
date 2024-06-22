@@ -53,6 +53,7 @@ class PTKController extends Controller
             'tanggal_lahir' => 'required|date',
             'tempat_lahir' => 'required',
             'jenis_kelamin' => 'required',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240'
         ], [
             'nip.required' => 'Kolom NIP harus diisi.',
             'nuptk.required' => 'Kolom NUPTK harus diisi.',
@@ -61,9 +62,29 @@ class PTKController extends Controller
             'tanggal_lahir.date' => 'Kolom tanggal lahir harus dalam format tanggal yang benar.',
             'tempat_lahir.required' => 'Kolom tempat lahir harus diisi.',
             'jenis_kelamin.required' => 'Kolom jenis kelamin harus diisi.',
+            'foto.required' => 'Kolom foto wajib diisi',
+            'foto.max' => 'Ukuran foto tidak boleh lebih dari 10MB'
         ]);
 
-        tb_ptk::create($request->all());
+        $data = new tb_ptk();
+        $data->nip = $request->nip;
+        $data->nuptk = $request->nuptk;
+        $data->nama = $request->nama;
+        $data->tanggal_lahir = $request->tanggal_lahir;
+        $data->tempat_lahir = $request->tempat_lahir;
+        $data->alamat = $request->alamat;
+        $data->jenis_kelamin = $request->jenis_kelamin;
+
+        // Simpan gambar
+        if ($request->hasFile('foto')) {
+            $fileContents = file_get_contents($request->file('foto')->getRealPath());
+            $imageName = hash('sha256', $fileContents) . '.' . $request->file('foto')->getClientOriginalExtension();
+            $request->file('foto')->move('img/guru', $imageName);
+            $data->foto = $imageName;
+        }
+
+        $data->save();
+
         return redirect()->route('ptk.index', ['token' => $token])->with('success', 'PTK baru berhasil ditambahkan.');
     }
 
@@ -99,24 +120,42 @@ class PTKController extends Controller
     {
         $id_ptk = $request->route("ptk");
         $request->validate([
-            'nip' => 'required',
-            'nuptk' => 'required',
-            'nama' => 'required',
-            'tanggal_lahir' => 'required|date',
-            'tempat_lahir' => 'required',
-            'jenis_kelamin' => 'required',
+            'nip' => 'sometimes',
+            'nuptk' => 'sometimes',
+            'nama' => 'sometimes',
+            'tanggal_lahir' => 'sometimes|date',
+            'tempat_lahir' => 'sometimes',
+            'jenis_kelamin' => 'sometimes',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240'
         ], [
-            'nip.required' => 'Kolom NIP harus diisi.',
-            'nuptk.required' => 'Kolom NUPTK harus diisi.',
-            'nama.required' => 'Kolom isi PTK harus diisi.',
-            'tanggal_lahir.required' => 'Kolom tanggal lahir harus diisi.',
             'tanggal_lahir.date' => 'Kolom tanggal lahir harus dalam format tanggal yang benar.',
-            'tempat_lahir.required' => 'Kolom tempat lahir harus diisi.',
-            'jenis_kelamin.required' => 'Kolom jenis kelamin harus diisi.',
+            'foto.max' => 'Ukuran foto tidak boleh lebih dari 10MB'
         ]);
 
-        $ptk = tb_ptk::findOrFail($id_ptk);
-        $ptk->update($request->all());
+        $data = tb_ptk::findOrFail($id_ptk);
+
+        if ($request->hasFile('foto')) {
+            if (!empty($data->foto)) {
+                $oldImagePath = public_path('img/guru/' . $data->foto);
+                if (file_exists($oldImagePath) && !is_dir($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+    
+            $imageName = $request->file('foto')->hashName();
+            $request->file('foto')->move('img/guru', $imageName);
+            $data->foto = $imageName;
+        }
+    
+        $data->update([
+            'nip' => $request->nip,
+            'nuptk' => $request->nuptk,
+            'nama' => $request->nama,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'tempat_lahir' => $request->tempat_lahir,
+            'alamat' => $request->alamat,
+            'jenis_kelamin' => $request->jenis_kelamin,
+        ]);
 
         return redirect()->route('ptk.index', ['token' => $request->token])->with('success', 'PTK berhasil diperbarui.');
     }
@@ -130,7 +169,14 @@ class PTKController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $ptk = tb_ptk::findOrFail($id);
+
+        $imagePath = public_path('img/guru/' . $ptk->thumbnail);
+
         $ptk->delete();
+
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
 
         return redirect()->route('ptk.index', ['token' => $request->token])->with('success', 'PTK berhasil dihapus.');
     }
