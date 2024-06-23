@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\File;
 
 /**
  * @OA\Schema(
@@ -17,6 +18,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *     @OA\Property(property="tanggal_lahir", type="string", format="date", example="1980-05-15"),
  *     @OA\Property(property="jenis_kelamin", type="string", example="Perempuan"),
  *     @OA\Property(property="alamat", type="string", example="Jl. Merdeka No. 10")
+ *     @OA\Property(property="foto", type="string", example="img/guru/gambar.jpg")
  * )
  */
 class PTKResource extends JsonResource
@@ -28,6 +30,9 @@ class PTKResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $thumbnailPath = 'img/guru/' . $this->foto;
+        $foto = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/illust/male.png';
+
         return [
             'id' => $this->id,
             'nama' => $this->nama,
@@ -37,6 +42,7 @@ class PTKResource extends JsonResource
             'tanggal_lahir' => $this->tanggal_lahir,
             'jenis_kelamin' => $this->jenis_kelamin,
             'alamat' => $this->alamat,
+            'foto' => $foto,
         ];
     }
 }
