@@ -53,6 +53,7 @@ class PTKController extends Controller
             'tanggal_lahir' => 'required|date',
             'tempat_lahir' => 'required',
             'jenis_kelamin' => 'required',
+            'mata_pelajaran' => 'required',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240'
         ], [
             'nip.required' => 'Kolom NIP harus diisi.',
@@ -62,6 +63,7 @@ class PTKController extends Controller
             'tanggal_lahir.date' => 'Kolom tanggal lahir harus dalam format tanggal yang benar.',
             'tempat_lahir.required' => 'Kolom tempat lahir harus diisi.',
             'jenis_kelamin.required' => 'Kolom jenis kelamin harus diisi.',
+            'mata_pelajaran.required' => 'Kolom mata pelajaran harus diisi.',
             'foto.required' => 'Kolom foto wajib diisi',
             'foto.max' => 'Ukuran foto tidak boleh lebih dari 10MB'
         ]);
@@ -74,6 +76,7 @@ class PTKController extends Controller
         $data->tempat_lahir = $request->tempat_lahir;
         $data->alamat = $request->alamat;
         $data->jenis_kelamin = $request->jenis_kelamin;
+        $data->mata_pelajaran = $request->mata_pelajaran;
 
         // Simpan gambar
         if ($request->hasFile('foto')) {
@@ -126,6 +129,7 @@ class PTKController extends Controller
             'tanggal_lahir' => 'sometimes|date',
             'tempat_lahir' => 'sometimes',
             'jenis_kelamin' => 'sometimes',
+            'mata_pelajaran' => 'sometimes',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240'
         ], [
             'tanggal_lahir.date' => 'Kolom tanggal lahir harus dalam format tanggal yang benar.',
@@ -155,6 +159,7 @@ class PTKController extends Controller
             'tempat_lahir' => $request->tempat_lahir,
             'alamat' => $request->alamat,
             'jenis_kelamin' => $request->jenis_kelamin,
+            'mata_pelajaran' => $request->mata_pelajaran,
         ]);
 
         return redirect()->route('ptk.index', ['token' => $request->token])->with('success', 'PTK berhasil diperbarui.');

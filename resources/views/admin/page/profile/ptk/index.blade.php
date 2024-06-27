@@ -65,9 +65,10 @@
                             <th>Foto</th>
                             <th>Nama</th>
                             <th>NIP</th>
-                            <th>TTL</th>
+                            <th>Mapel</th>
+                            {{-- <th>TTL</th> --}}
                             <th>Alamat</th>
-                            <th>action</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -76,9 +77,10 @@
                             <td>
                                 <img src="{{ asset($data->foto && file_exists(public_path('img/guru/' . $data->foto)) ? 'img/guru/' . $data->foto : 'img/illust/male.png') }}" width="100px" class="rounded" alt="">
                             </td>
-                            <td style="word-wrap: break-word; max-width: 175px;">{{ $data->nama }}</td>
-                            <td style="word-wrap: break-word; max-width: 170px;">{{ $data->nip }}</td>
-                            <td style="word-wrap: break-word; max-width: 175px;">{{ $data->tempat_lahir }}, {{ $data->tanggal_lahir }}</td>
+                            <td style="word-wrap: break-word; max-width: 160px;">{{ $data->nama }}</td>
+                            <td style="word-wrap: break-word; max-width: 150px;">{{ $data->nip }}</td>
+                            <td style="word-wrap: break-word; max-width: 150px;">{{ $data->mata_pelajaran }}</td>
+                            {{-- <td style="word-wrap: break-word; max-width: 175px;">{{ $data->tempat_lahir }}, {{ $data->tanggal_lahir }}</td> --}}
                             {{-- <td>{{ $data->jenis_kelamin }}</td> --}}
                             <td style="word-wrap: break-word; max-width: 175px;">{{ $data->alamat }}</td>
                             <td>

@@ -34,6 +34,14 @@
             @enderror
             <small id="tanggalId" class="text-muted d-none"></small>
         </div>
+        <div class="form-group">
+            <label for="mata_pelajaran">Mata Pelajaran</label>
+            <input value="{{$ptk->mata_pelajaran}}" type="text" name="mata_pelajaran" id="mata_pelajaran" class="form-control @error('mata_pelajaran') is-invalid @enderror">
+            @error('mata_pelajaran')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+            <small id="tanggalId" class="text-muted d-none"></small>
+        </div>
         <div class="row">
             <div class="col-6">
                 <div class="form-group">

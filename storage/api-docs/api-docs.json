@@ -1615,6 +1615,10 @@
                         "type": "string",
                         "example": "Jane Doe"
                     },
+                    "mata_pelajaran": {
+                        "type": "string",
+                        "example": "Bahasa Indonesia"
+                    },
                     "nip": {
                         "type": "string",
                         "example": "123456789"
@@ -1639,6 +1643,10 @@
                     "alamat": {
                         "type": "string",
                         "example": "Jl. Merdeka No. 10"
+                    },
+                    "foto": {
+                        "type": "string",
+                        "example": "img/guru/gambar.jpg"
                     }
                 },
                 "type": "object"

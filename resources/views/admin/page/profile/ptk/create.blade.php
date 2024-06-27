@@ -33,6 +33,14 @@
                 <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
+        <div class="form-group">
+            <label for="tipe">Mata Pelajaran</label>
+            <input type="text" name="mata_pelajaran" id="mata_pelajaran" class="form-control @error('mata_pelajaran') is-invalid @enderror" value="{{ old('mata_pelajaran') }}" aria-describedby="tipeId">
+            <small id="tipeId" class="text-muted d-none"></small>
+            @error('mata_pelajaran')
+                <p class="text-danger">{{ $message }}</p>
+            @enderror
+        </div>
         <div class="row">
             <div class="col-6">
                 <div class="form-group">
