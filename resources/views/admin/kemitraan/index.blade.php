@@ -1,24 +1,23 @@
 @extends('layouts.main')
 
 @section('title')
-    <title>Profile Extrakulikuler | Admin Panel</title>
+    <title>Kemitraan | Admin Panel</title>
 @endsection
 
 @section('container')
     <div class="row">
         <div class="col-md-11 offset-md-1">
-            @include('admin.partials.nav_academic')
             <div class="w-100 table-parent bg-white">
                 <div class="row p-4">
                     <div class="col-md-8">
-                        <h4 class="poppins mb-0">Extrakulikuler</h4>
-                        <p class="montserrat" style="font-size: .85rem;">Daftar Extrakulikuler SMKN 1 Purwosari
+                        <h4 class="poppins mb-0">Kemitraan</h4>
+                        <p class="montserrat" style="font-size: .85rem;">Daftar Kemitraan SMKN 1 Purwosari
                         </p>
                     </div>
                     <div class="col-md-4 text-right">
-                        <a href="{{ route('extra.create', ['token' => $token]) }}"
+                        <a href="#"
                             class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i>
-                            Extrakurikuler Baru</a>
+                            Kemitraan Baru</a>
                     </div>
                 </div>
                 @if (Session::get('success'))
@@ -33,15 +32,16 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th class="pl-4">Cover</th>
+                            <th class="pl-4">Thumbnail</th>
                             <th>Logo</th>
-                            <th>Nama Extrakulikuler</th>
-                            <th>Jadwal</th>
+                            <th>Nama Perusahaan</th>
+                            <th>Deskripsi</th>
+                            <th>Informasi Lowongan</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($extra as $key => $data)
+                        {{-- @foreach ($extra as $key => $data)
                             <tr>
                                 <td><img src="{{ asset(file_exists(public_path('img/extrakurikuler/cover/' . $data->extra_image)) ? 'img/extrakurikuler/cover/' . $data->extra_image : 'img/no_image.png') }}" width="100px"
                                         class="rounded" alt=""></td>
@@ -64,7 +64,7 @@
                                     </form>
                                 </td>
                             </tr>
-                        @endforeach
+                        @endforeach --}}
                     </tbody>
                 </table>
                 <script>
@@ -113,7 +113,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-md-6 text-right">
+                    {{-- <div class="col-md-6 text-right">
                         <p class="montserrat d-inline" style="font-size: .7rem;">{{ $extra->firstItem() }} dari
                             {{ $extra->lastItem() }}</p>
                         <a href="{{ $extra->previousPageUrl() }}"
@@ -124,7 +124,7 @@
                             class="btn btn-sm p-0 px-2 btn-white {{ $extra->hasMorePages() ? 'active' : 'disabled' }}">
                             <i class="fas fa-caret-right text-warning"></i>
                         </a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

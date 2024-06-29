@@ -18,7 +18,7 @@ class PdController extends Controller
     
         $token = $request->session()->get('token') ?? $request->input('token');
         return view('admin.page.profile.peserta_didik.index', [
-            'menu_active' => 'profile',
+            'menu_active' => 'academic',
             'profile_active' => 'pd',
             'token' => $token,
             'pd' => $peserta_didik,
@@ -33,7 +33,7 @@ class PdController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
 
         return view('admin.page.profile.peserta_didik.create', [
-            'menu_active' => 'profile',
+            'menu_active' => 'academic',
             'profile_active' => 'pd',
             'token' => $token,
         ]);
@@ -71,20 +71,6 @@ class PdController extends Controller
             'alamat.required' => 'Kolom alamat harus diisi.',
         ]);
 
-
-        $data->update([
-            'nisn' => $request->nisn,
-            'nis' => $request->nis,
-            'nama' => $request->nama,
-            'kelas' => $request->kelas,
-            'tempat_lahir' => $request->tempat_lahir,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'agama' => $request->agama,
-            'gender' => $request->gender,
-            'telp' => $request->telp,
-            'alamat' => $request->alamat,
-        ]);
-
         tb_peserta_didik::create($request->all());
         return redirect()->route('pd.index', ['token' => $token])->with('success', 'Data peserta didik berhasil ditambahkan.');
     }
@@ -99,7 +85,7 @@ class PdController extends Controller
         $pd = tb_peserta_didik::findOrFail($id);
 
         return view('admin.page.profile.peserta_didik.show', [
-            'menu_active' => 'profile',
+            'menu_active' => 'academic',
             'profile_active' => 'pd',
             'token' => $token,
             'pd' => $pd,
@@ -116,7 +102,7 @@ class PdController extends Controller
         $pd = tb_peserta_didik::findOrFail($id);
 
         return view('admin.page.profile.peserta_didik.edit', [
-            'menu_active' => 'profile',
+            'menu_active' => 'academic',
             'profile_active' => 'pd',
             'token' => $token,
             'pd' => $pd,

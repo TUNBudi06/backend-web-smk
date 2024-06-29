@@ -23,7 +23,8 @@ class ArtikelController extends Controller
 
         $token = $request->session()->get('token') ?? $request->input('token');
         return view('admin.artikel.index', [
-            'menu_active' => 'artikel',
+            'menu_active' => 'informasi',
+            'info_active' => 'artikel',
             'token' => $token,
             'artikel' => $artikel,
         ]);
@@ -37,7 +38,8 @@ class ArtikelController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
 
         return view('admin.artikel.create', [
-            'menu_active' => 'artikel',
+            'menu_active' => 'informasi',
+            'info_active' => 'artikel',
             'artikel' => tb_pemberitahuan_category::where(["type" => 1])->get(),
             'token' => $token,
         ]);
@@ -100,7 +102,8 @@ class ArtikelController extends Controller
             ->findOrFail($id_artikel);
 
         return view('admin.artikel.show', [
-            'menu_active' => 'artikel',
+            'menu_active' => 'informasi',
+            'info_active' => 'artikel',
             'profile_active' => 'artikel',
             'token' => $token,
             'artikel' => $artikel
@@ -119,7 +122,8 @@ class ArtikelController extends Controller
 
 
         return view('admin.artikel.edit', [
-            'menu_active' => 'artikel',
+            'menu_active' => 'informasi',
+            'info_active' => 'artikel',
             'token' => $token,
             'artikel' => $artikel,
             "categories" => $categories

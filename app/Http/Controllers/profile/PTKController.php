@@ -19,7 +19,7 @@ class PTKController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
 
         return view('admin.page.profile.ptk.index', [
-            'menu_active' => 'profile',
+            'menu_active' => 'academic',
             'profile_active' => 'ptk',
             'token' => $token,
             'ptk' => $ptk,
@@ -34,7 +34,8 @@ class PTKController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
 
         return view('admin.page.profile.ptk.create', [
-            'menu_active' => 'ptk',
+            'menu_active' => 'academic',
+            'profile_active' => 'ptk',
             'token' => $token,
         ]);
     }
@@ -109,7 +110,7 @@ class PTKController extends Controller
         $ptk = tb_ptk::findOrFail($id);
 
         return view('admin.page.profile.ptk.edit', [
-            'menu_active' => 'profile',
+            'menu_active' => 'academic',
             'profile_active' => 'ptk',
             'token' => $token,
             'ptk' => $ptk,

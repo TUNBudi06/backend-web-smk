@@ -12,6 +12,7 @@ use App\Http\Controllers\categories\PengumumanCategory;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\KemitraanController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\profile\ExtraController;
 use App\Http\Controllers\profile\FasilitasController;
@@ -112,6 +113,7 @@ Route::prefix('private/admin')->group(function () {
 
             Route::resource('/artikel', ArtikelController::class);
             Route::resource('/gallery', GalleryController::class);
+            Route::resource('/kemitraan', KemitraanController::class);
             Route::get('/links', [AdminController::class, 'links'])->name('links');
 
             Route::get('/profile', [profileAdmin::class, 'index'])->name('profile');
@@ -131,7 +133,7 @@ Route::prefix('private/admin')->group(function () {
                 Route::resource('/fasilitas', FasilitasController::class)->parameters([
                     'fasilitas' => 'fasilitas',
                 ]);
-                Route::get('kemitraan', [AdminController::class, 'kemitraan'])->name('profile.kemitraan');
+                Route::get('kemitraans', [AdminController::class, 'kemitraan'])->name('profile.kemitraan');
             });
         });
     })->middleware(hasAdminToken::class);

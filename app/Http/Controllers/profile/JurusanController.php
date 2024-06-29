@@ -19,7 +19,7 @@ class JurusanController extends Controller
 
         $token = $request->session()->get('token') ?? $request->input('token');
         return view('admin.page.profile.jurusan.index', [
-            'menu_active' => 'profile',
+            'menu_active' => 'academic',
             'profile_active' => 'jurusan',
             'token' => $token,
             'jurusan' => $jurusan,
@@ -35,7 +35,7 @@ class JurusanController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
 
         return view('admin.page.profile.jurusan.create', [
-            'menu_active' => 'profile',
+            'menu_active' => 'academic',
             'profile_active' => 'jurusan',
             'prodi' => tb_prodi::all(),
             'token' => $token,
@@ -103,7 +103,7 @@ class JurusanController extends Controller
         $prodis = tb_prodi::all();
 
         return view('admin.page.profile.jurusan.edit', [
-            'menu_active' => 'profile',
+            'menu_active' => 'academic',
             'profile_active' => 'jurusan',
             'token' => $token,
             'jurusan' => $jurusan,

@@ -25,7 +25,8 @@ class PengumumanController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
 
         return view('admin.pengumuman.index', [
-            'menu_active' => 'pengumuman',
+            'menu_active' => 'informasi',
+            'info_active' => 'pengumuman',
             'token' => $token,
             'pengumuman' => $pengumuman,
         ]);
@@ -39,7 +40,8 @@ class PengumumanController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
 
         return view('admin.pengumuman.create', [
-            'menu_active' => 'pengumuman',
+            'menu_active' => 'informasi',
+            'info_active' => 'pengumuman',
             'pengumuman' => tb_pemberitahuan_category::where(['type' => 2])->get(),
             'token' => $token,
         ]);
@@ -104,8 +106,8 @@ class PengumumanController extends Controller
         $pengumuman = tb_pemberitahuan::where(['type' => 2])->findOrFail($id_pengumuman);
 
         return view('admin.pengumuman.show', [
-            'menu_active' => 'pengumuman',
-            'profile_active' => 'pengumuman',
+            'menu_active' => 'informasi',
+            'info_active' => 'pengumuman',
             'token' => $token,
             'pengumuman' => $pengumuman,
         ]);
@@ -122,7 +124,8 @@ class PengumumanController extends Controller
         $categories = tb_pemberitahuan_category::where(["type" => 2])->get();
 
         return view('admin.pengumuman.edit', [
-            'menu_active' => 'pengumuman',
+            'menu_active' => 'informasi',
+            'info_active' => 'pengumuman',
             'token' => $token,
             'pengumuman' => $pengumuman,
             'categories' => $categories,

@@ -18,7 +18,7 @@ class ExtraController extends Controller
 
         $token = $request->session()->get('token') ?? $request->input('token');
         return view('admin.page.profile.extra.index', [
-            'menu_active' => 'profile',
+            'menu_active' => 'academic',
             'profile_active' => 'extra',
             'token' => $token,
             'extra' => $extra,
@@ -33,7 +33,7 @@ class ExtraController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
 
         return view('admin.page.profile.extra.create', [
-            'menu_active' => 'profile',
+            'menu_active' => 'academic',
             'profile_active' => 'extra',
             'token' => $token,
         ]);
@@ -116,7 +116,7 @@ class ExtraController extends Controller
         $extra = tb_extra::findOrFail($id_extra);
 
         return view('admin.page.profile.extra.edit', [
-            'menu_active' => 'profile',
+            'menu_active' => 'academic',
             'profile_active' => 'extra',
             'token' => $token,
             'extra' => $extra,

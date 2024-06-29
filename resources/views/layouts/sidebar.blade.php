@@ -13,25 +13,21 @@
             <i class="fas fa-tachometer-alt"></i>
             <h6 class="label-menu d-none">Dashboard</h6>
         </div>
-        <div class="my-2 {{ ($menu_active ==="pengumuman") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('pengumuman.index', ['token' => $token]) }}';">
-            <i class="fas fa-bullhorn"></i>
-            <h6 class="label-menu d-none">Pengumuman</h6>
-        </div>
-        <div class="my-2 {{ ($menu_active ==="event") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('event.index', ['token' => $token]) }}';">
-            <i class="fas fa-calendar-alt mr-1"></i>
-            <h6 class="label-menu d-none">Agenda</h6>
-        </div>
-        <div class="my-2 {{ ($menu_active ==="berita") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('berita.index', ['token' => $token]) }}';">
-            <i class="fas fa-newspaper"></i>
-            <h6 class="label-menu d-none">Berita</h6>
-        </div>
-        <div class="my-2 {{ ($menu_active ==="artikel") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('artikel.index', ['token' => $token]) }}';">
-            <i class="fas fa-book mr-1"></i>
-            <h6 class="label-menu d-none">Artikel</h6>
+        <div class="my-2 {{ ($menu_active ==="informasi") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('artikel.index', ['token' => $token]) }}';">
+            <i class="fas fa-info"></i>
+            <h6 class="label-menu d-none">Informasi</h6>
         </div>
         <div class="my-2 {{ ($menu_active ==="gallery") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('gallery.index', ['token' => $token]) }}';">
             <i class="fas fa-images"></i>
             <h6 class="label-menu d-none">Galeri</h6>
+        </div>
+        <div class="my-2 {{ ($menu_active ==="academic") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('jurusan.index', ['token' => $token]) }}';">
+            <i class="fas fa-pen"></i>
+            <h6 class="label-menu d-none">Akademik</h6>
+        </div>
+        <div class="my-2 {{ ($menu_active ==="kemitraan") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('kemitraan.index', ['token' => $token]) }}';">
+            <i class="fas fa-handshake"></i>
+            <h6 class="label-menu d-none">Kemitraan</h6>
         </div>
         <div class="my-2 {{ ($menu_active ==="profile") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('jurusan.index', ['token' => $token]) }}';">
             <i class="fas fa-school"></i>

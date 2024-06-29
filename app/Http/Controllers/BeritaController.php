@@ -25,7 +25,8 @@ class BeritaController extends Controller
 
         $token = $request->session()->get('token') ?? $request->input('token');
         return view('admin.berita.index', [
-            'menu_active' => 'berita',
+            'menu_active' => 'informasi',
+            'info_active' => 'berita',
             'token' => $token,
             'news' => $news
         ]);
@@ -39,7 +40,8 @@ class BeritaController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
 
         return view('admin.berita.create', [
-            'menu_active' => 'berita',
+            'menu_active' => 'informasi',
+            'info_active' => 'berita',
             'news' => tb_pemberitahuan_category::where(['type' => 3])->get(),
             'token' => $token,
         ]);
@@ -105,7 +107,8 @@ class BeritaController extends Controller
             ->findOrFail($id_news);
 
         return view('admin.berita.show', [
-            'menu_active' => 'berita',
+            'menu_active' => 'informasi',
+            'info_active' => 'berita',
             'profile_active' => 'berita',
             'token' => $token,
             'news' => $news,
@@ -123,7 +126,8 @@ class BeritaController extends Controller
         $categories = tb_pemberitahuan_category::where(["type" => 3])->get();
 
         return view('admin.berita.edit', [
-            'menu_active' => 'berita',
+            'menu_active' => 'informasi',
+            'info_active' => 'berita',
             'token' => $token,
             'news' => $news,
             'categories' => $categories,

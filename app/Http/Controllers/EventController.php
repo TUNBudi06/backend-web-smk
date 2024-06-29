@@ -22,7 +22,8 @@ class EventController extends Controller
 
         $token = $request->session()->get('token') ?? $request->input('token');
         return view('admin.agenda.index', [
-            'menu_active' => 'event',
+            'menu_active' => 'informasi',
+            'info_active' => 'event',
             'token' => $token,
             'event' => $event,
         ]);
@@ -36,7 +37,8 @@ class EventController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
 
         return view('admin.agenda.create', [
-            'menu_active' => 'event',
+            'menu_active' => 'informasi',
+            'info_active' => 'event',
             'event' => tb_pemberitahuan_category::where(['type' => 4])->get(),
             'token' => $token,
         ]);
@@ -99,7 +101,8 @@ class EventController extends Controller
         // dd($event);
 
         return view('admin.agenda.show', [
-            'menu_active' => 'event',
+            'menu_active' => 'informasi',
+            'info_active' => 'event',
             'token' => $token,
             'event' => $event,
         ]);
@@ -117,7 +120,8 @@ class EventController extends Controller
             $categories = tb_pemberitahuan_category::where(["type" => 4])->get();
 
         return view('admin.agenda.edit', [
-            'menu_active' => 'event',
+            'menu_active' => 'informasi',
+            'info_active' => 'event',
             'token' => $token,
             'event' => $event,
             'categories' => $categories,
