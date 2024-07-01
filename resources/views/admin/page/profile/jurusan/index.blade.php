@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    <title>Profile Jurusan | Admin Panel</title>
+    <title>Jurusan | Admin Panel</title>
 @endsection
 
 @section('container')

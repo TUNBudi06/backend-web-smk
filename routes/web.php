@@ -18,6 +18,7 @@ use App\Http\Controllers\profile\ExtraController;
 use App\Http\Controllers\profile\FasilitasController;
 use App\Http\Controllers\profile\JurusanController;
 use App\Http\Controllers\profile\PdController;
+use App\Http\Controllers\profile\ProfileController;
 use App\Http\Controllers\profile\PTKController;
 use App\Http\Controllers\profileAdmin;
 use App\Http\Middleware\auth\adminLogin;
@@ -134,6 +135,8 @@ Route::prefix('private/admin')->group(function () {
                     'fasilitas' => 'fasilitas',
                 ]);
                 Route::get('kemitraans', [AdminController::class, 'kemitraan'])->name('profile.kemitraan');
+                Route::get('komite', [ProfileController::class, 'indexKomite'])->name('komite.index');
+                Route::get('struktur', [ProfileController::class, 'indexStruktur'])->name('struktur.index');
             });
         });
     })->middleware(hasAdminToken::class);

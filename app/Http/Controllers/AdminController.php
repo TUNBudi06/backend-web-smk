@@ -20,8 +20,6 @@ class AdminController extends Controller
     {
         $token = $request->session()->get('token') ?? $request->input('token');
 
-
-
         return view('admin.page.dashboard', [
             'menu_active' => 'dashboard',
             'token' => $token,

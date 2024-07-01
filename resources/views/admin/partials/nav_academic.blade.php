@@ -8,5 +8,5 @@
     <a href="{{ route('ptk.index',$token) }}"
         class="<?= $profile_active == 'ptk' ? 'btn my-1 btn-warning px-4 shadow-warning' : 'btn my-1 btn-light px-4 border-warning'?>">PTK</a>
     <a href="#"
-        class="<?= $profile_active == 'ptk' ? 'btn my-1 btn-warning px-4 shadow-warning' : 'btn my-1 btn-light px-4 border-warning'?>">Perangkat Ajar</a>
+        class="<?= $profile_active == '' ? 'btn my-1 btn-warning px-4 shadow-warning' : 'btn my-1 btn-light px-4 border-warning'?>">Perangkat Ajar</a>
 </div>

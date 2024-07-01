@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    <title>Profile Extrakulikuler | Admin Panel</title>
+    <title>Extrakulikuler | Admin Panel</title>
 @endsection
 
 @section('container')
