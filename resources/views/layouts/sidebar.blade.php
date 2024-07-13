@@ -13,8 +13,12 @@
             <i class="fas fa-tachometer-alt"></i>
             <h6 class="label-menu d-none">Dashboard</h6>
         </div>
+        <div class="my-2 {{ ($menu_active ==="user") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('user.index', ['token' => $token]) }}';">
+            <i class="fas fa-user"></i>
+            <h6 class="label-menu d-none">Atur Pengguna</h6>
+        </div>
         <div class="my-2 {{ ($menu_active ==="informasi") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('artikel.index', ['token' => $token]) }}';">
-            <i class="fas fa-info"></i>
+            <i class="fas fa-book-open"></i>
             <h6 class="label-menu d-none">Informasi</h6>
         </div>
         <div class="my-2 {{ ($menu_active ==="gallery") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('gallery.index', ['token' => $token]) }}';">

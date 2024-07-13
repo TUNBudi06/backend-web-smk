@@ -21,6 +21,7 @@ use App\Http\Controllers\profile\PdController;
 use App\Http\Controllers\profile\ProfileController;
 use App\Http\Controllers\profile\PTKController;
 use App\Http\Controllers\profileAdmin;
+use App\Http\Controllers\user\UserController;
 use App\Http\Middleware\auth\adminLogin;
 use App\Http\Middleware\hasAdminToken;
 use App\Http\Middleware\preventCallBack;
@@ -40,6 +41,10 @@ Route::prefix('private/admin')->group(function () {
 
         Route::middleware([preventCallBack::class,adminLogin::class])->group(function () {
             Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+
+            Route::prefix('management')->group(function () {
+                Route::resource('user', UserController::class);
+            });
 
             Route::resource('pengumuman/category', PengumumanCategory::class)->parameters([
                 'category' => 'pengumuman_category',
