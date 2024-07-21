@@ -40,7 +40,6 @@
             @error('mata_pelajaran')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
-            <small id="tanggalId" class="text-muted d-none"></small>
         </div>
         <div class="row">
             <div class="col-6">
