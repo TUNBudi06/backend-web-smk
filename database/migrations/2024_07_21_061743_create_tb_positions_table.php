@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tb_positions', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id_position');
+            $table->string('position_name')->nullable();
+            $table->string('position_type');
             $table->timestamps();
         });
     }

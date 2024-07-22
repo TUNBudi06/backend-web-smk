@@ -16,9 +16,13 @@ class tb_position extends Model
     protected $fillable = [
         'position_name',
         'position_type',
-        'position_description',
         'kemitraan_id',
     ];
 
     public $timestamps = true;
+
+    public function kemitraans()
+    {
+        return $this->belongsTo(tb_kemitraan::class, 'kemitraan_id', 'id_kemitraan');
+    }
 }
