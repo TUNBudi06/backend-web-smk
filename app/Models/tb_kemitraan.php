@@ -18,10 +18,8 @@ class tb_kemitraan extends Model
         'kemitraan_logo',
         'kemitraan_thumbnail', 
         'kemitraan_description',
-        'kemitraan_position',
         'kemitraan_city',
         'kemitraan_location_detail',
-        'kemitraan_available',
     ];
 
     public $timestamps = true;
