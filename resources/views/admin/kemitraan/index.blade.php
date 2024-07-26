@@ -7,6 +7,7 @@
 @section('container')
     <div class="row">
         <div class="col-md-11 offset-md-1">
+            @include('admin.partials.nav_kemitraan')
             <div class="w-100 table-parent bg-white">
                 <div class="row p-4">
                     <div class="col-md-8">
@@ -15,9 +16,8 @@
                         </p>
                     </div>
                     <div class="col-md-4 text-right">
-                        <a href="#"
-                            class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i>
-                            Kemitraan Baru</a>
+                        <a href="#" class="btn-print btn btn-warning shadow-warning px-4 rounded-pill"><i class="fas fa-plus"></i> Tambah Kemitraan</a>
+                        <a href="#" class="btn-print btn btn-white border-warning px-3 rounded-pill"><i class="fas fa-list"></i> Posisi Baru</a>
                     </div>
                 </div>
                 @if (Session::get('success'))

@@ -12,7 +12,7 @@ use App\Http\Controllers\categories\PengumumanCategory;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
-use App\Http\Controllers\KemitraanController;
+use App\Http\Controllers\mitra\KemitraanController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\profile\ExtraController;
 use App\Http\Controllers\profile\FasilitasController;
@@ -139,7 +139,7 @@ Route::prefix('private/admin')->group(function () {
                 Route::resource('/fasilitas', FasilitasController::class)->parameters([
                     'fasilitas' => 'fasilitas',
                 ]);
-                Route::get('kemitraans', [AdminController::class, 'kemitraan'])->name('profile.kemitraan');
+
                 Route::get('komite', [ProfileController::class, 'indexKomite'])->name('komite.index');
                 Route::get('struktur', [ProfileController::class, 'indexStruktur'])->name('struktur.index');
             });

@@ -23,4 +23,14 @@ class tb_kemitraan extends Model
     ];
 
     public $timestamps = true;
+
+    public function positions()
+    {
+        return $this->hasMany(tb_position::class, 'kemitraan_id', 'id_kemitraan');
+    }
+
+    public function lokers()
+    {
+        return $this->hasMany(tb_loker::class, 'kemitraan_id', 'id_kemitraan');
+    }
 }
