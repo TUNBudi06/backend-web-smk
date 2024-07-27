@@ -1,31 +1,32 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ArtikelController;
-use App\Http\Controllers\Auth\AdminAuth;
-use App\Http\Controllers\BeritaController;
-use App\Http\Controllers\categories\ArtikelCategory;
-use App\Http\Controllers\categories\BeritaCategory;
-use App\Http\Controllers\categories\EventCategory;
-use App\Http\Controllers\categories\GalleryCategory;
-use App\Http\Controllers\categories\PengumumanCategory;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\GalleryController;
-use App\Http\Controllers\mitra\KemitraanController;
-use App\Http\Controllers\PengumumanController;
-use App\Http\Controllers\profile\ExtraController;
-use App\Http\Controllers\profile\FasilitasController;
-use App\Http\Controllers\profile\JurusanController;
-use App\Http\Controllers\profile\PdController;
-use App\Http\Controllers\profile\ProfileController;
-use App\Http\Controllers\profile\PTKController;
-use App\Http\Controllers\profileAdmin;
-use App\Http\Controllers\user\UserController;
-use App\Http\Middleware\auth\adminLogin;
-use App\Http\Middleware\hasAdminToken;
-use App\Http\Middleware\preventCallBack;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\profileAdmin;
+use App\Http\Middleware\hasAdminToken;
+use App\Http\Controllers\Auth\AdminAuth;
+use App\Http\Middleware\auth\adminLogin;
+use App\Http\Middleware\preventCallBack;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\ArtikelController;
+use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\user\UserController;
+use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\profile\PdController;
+use App\Http\Controllers\profile\PTKController;
+use App\Http\Controllers\mitra\PosisiController;
+use App\Http\Controllers\profile\ExtraController;
+use App\Http\Controllers\categories\EventCategory;
+use App\Http\Controllers\categories\BeritaCategory;
+use App\Http\Controllers\mitra\KemitraanController;
+use App\Http\Controllers\profile\JurusanController;
+use App\Http\Controllers\profile\ProfileController;
+use App\Http\Controllers\categories\ArtikelCategory;
+use App\Http\Controllers\categories\GalleryCategory;
+use App\Http\Controllers\profile\FasilitasController;
+use App\Http\Controllers\categories\PengumumanCategory;
 
 Route::get('/', function () {
     return redirect('/private/admin/login/GUI-APP');
@@ -120,6 +121,7 @@ Route::prefix('private/admin')->group(function () {
             Route::resource('/artikel', ArtikelController::class);
             Route::resource('/gallery', GalleryController::class);
             Route::resource('/kemitraan', KemitraanController::class);
+            Route::resource('/posisi', PosisiController::class);
             Route::get('/links', [AdminController::class, 'links'])->name('links');
 
             Route::get('/profile', [profileAdmin::class, 'index'])->name('profile');
