@@ -12,7 +12,7 @@
         @csrf
         <div class="form-group">
             <label for="extra_name">Nama Extrakurikuler</label>
-            <input type="text" name="extra_name" id="extra_name" class="form-control @error('extra_name') is-invalid @enderror" placeholder="Extrakurikuler bare..." aria-describedby="nameId" value="{{ old('extra_name') }}">
+            <input type="text" name="extra_name" id="extra_name" class="form-control @error('extra_name') is-invalid @enderror" placeholder="Extrakurikuler baru..." aria-describedby="nameId" value="{{ old('extra_name') }}">
             <small id="nameId" class="text-muted">Hindari penggunaan slash (/,\)</small>
             @error('extra_name')
                 <div class="invalid-feedback">

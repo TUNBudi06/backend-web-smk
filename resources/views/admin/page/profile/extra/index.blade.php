@@ -45,7 +45,7 @@
                             <tr>
                                 <td><img src="{{ asset(file_exists(public_path('img/extrakurikuler/cover/' . $data->extra_image)) ? 'img/extrakurikuler/cover/' . $data->extra_image : 'img/no_image.png') }}" width="100px"
                                         class="rounded" alt=""></td>
-                                <td><img src="{{ asset(file_exists(public_path('img/extrakurikuler/logo/' . $data->extra_logo)) ? 'img/extrakurikuler/logo/' . $data->extra_logo : 'img/no_image.png') }}" width="100px"
+                                <td><img src="{{ asset(file_exists(public_path('img/extrakurikuler/logo/' . $data->extra_logo)) ? 'img/extrakurikuler/logo/' . $data->extra_logo : 'img/no_image.png') }}" width="80px"
                                         class="rounded" alt=""></td>
                                 <td>{{ $data->extra_name }}</td>
                                 <td>{{ $data->extra_hari }}</td>

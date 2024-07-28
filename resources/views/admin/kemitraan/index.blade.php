@@ -12,8 +12,7 @@
                 <div class="row p-4">
                     <div class="col-md-8">
                         <h4 class="poppins mb-0">Kemitraan</h4>
-                        <p class="montserrat" style="font-size: .85rem;">Daftar Kemitraan SMKN 1 Purwosari
-                        </p>
+                        <p class="montserrat" style="font-size: .85rem;">Daftar Kemitraan SMKN 1 Purwosari</p>
                     </div>
                     <div class="col-md-4 text-right">
                         <a href="#" class="btn-print btn btn-warning shadow-warning px-4 rounded-pill"><i class="fas fa-plus"></i> Tambah Kemitraan</a>
@@ -36,35 +35,29 @@
                             <th>Logo</th>
                             <th>Nama Perusahaan</th>
                             <th>Deskripsi</th>
-                            <th>Informasi Lowongan</th>
+                            <th>Lokasi Perusahaan</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @foreach ($extra as $key => $data)
+                        @foreach ($kemitraan as $key => $data)
                             <tr>
-                                <td><img src="{{ asset(file_exists(public_path('img/extrakurikuler/cover/' . $data->extra_image)) ? 'img/extrakurikuler/cover/' . $data->extra_image : 'img/no_image.png') }}" width="100px"
-                                        class="rounded" alt=""></td>
-                                <td><img src="{{ asset(file_exists(public_path('img/extrakurikuler/logo/' . $data->extra_logo)) ? 'img/extrakurikuler/logo/' . $data->extra_logo : 'img/no_image.png') }}" width="100px"
-                                        class="rounded" alt=""></td>
-                                <td>{{ $data->extra_name }}</td>
-                                <td>{{ $data->extra_hari }}</td>
+                                <td><img src="{{ asset(file_exists(public_path('img/kemitraan/cover/' . $data->kemitraan_thumbnail)) ? 'img/kemitraan/cover/' . $data->kemitraan_thumbnail : 'img/no_image.png') }}" width="100px" class="rounded" alt=""></td>
+                                <td><img src="{{ asset(file_exists(public_path('img/kemitraan/logo/' . $data->kemitraan_logo)) ? 'img/kemitraan/logo/' . $data->kemitraan_logo : 'img/no_image.png') }}" width="100px" class="rounded" alt=""></td>
+                                <td>{{ $data->kemitraan_name }}</td>
+                                <td>{{ Str::limit(strip_tags(str_replace(["\r", "\n"], '', $data->kemitraan_description)), 30, '...') }}</td>
+                                <td>{{ $data->kemitraan_city }}</td>
                                 <td>
-                                    <a href="#" target="_blank" class="btn btn-warning p-2"><i
-                                            class="fas fa-eye"></i></a>
-                                    <a href="{{ route('extra.edit', ['extra' => $data->id_extra, 'token' => $token]) }}"
-                                        class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                    <form
-                                        action="{{ route('extra.destroy', ['extra' => $data->id_extra, 'token' => $token]) }}"
-                                        method="post" class="d-inline">
+                                    <a href="#" target="_blank" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('kemitraan.edit', ['kemitraan' => $data->id_kemitraan, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
+                                    <form action="{{ route('kemitraan.destroy', ['kemitraan' => $data->id_kemitraan, 'token' => $token]) }}" method="post" class="d-inline" onclick="return confirm('Kemitraan akan dihapus?')">
                                         @csrf
                                         @method('delete')
-                                        <button type="submit" class="btn btn-danger p-2"><i
-                                                class="fas fa-trash"></i></button>
+                                        <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>
                                     </form>
                                 </td>
                             </tr>
-                        @endforeach --}}
+                        @endforeach
                     </tbody>
                 </table>
                 <script>
@@ -92,9 +85,7 @@
                             <form method="GET" id="show-form" name="showForm" action="">
                                 <div class="form-group d-inline-block">
                                     <input type="hidden" name="#">
-                                    <select id="show-select" name="show" onchange="showData()"
-                                        class="form-control form-control-sm d-inline-block"
-                                        style="width:70px; font-size: .7rem;" name="" id="">
+                                    <select id="show-select" name="show" onchange="showData()" class="form-control form-control-sm d-inline-block" style="width:70px; font-size: .7rem;" name="" id="">
                                         <option value="10">10</option>
                                         <option value="20">20</option>
                                         <option value="30">30</option>
@@ -113,18 +104,15 @@
                             </form>
                         </div>
                     </div>
-                    {{-- <div class="col-md-6 text-right">
-                        <p class="montserrat d-inline" style="font-size: .7rem;">{{ $extra->firstItem() }} dari
-                            {{ $extra->lastItem() }}</p>
-                        <a href="{{ $extra->previousPageUrl() }}"
-                            class="btn btn-sm p-0 px-2 btn-white {{ $extra->onFirstPage() ? 'disabled' : 'active' }}">
+                    <div class="col-md-6 text-right">
+                        <p class="montserrat d-inline" style="font-size: .7rem;">{{ $kemitraan->firstItem() }} dari {{ $kemitraan->lastItem() }}</p>
+                        <a href="{{ $kemitraan->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $kemitraan->onFirstPage() ? 'disabled' : 'active' }}">
                             <i class="fas fa-caret-left text-warning"></i>
                         </a>
-                        <a href="{{ $extra->nextPageUrl() }}"
-                            class="btn btn-sm p-0 px-2 btn-white {{ $extra->hasMorePages() ? 'active' : 'disabled' }}">
+                        <a href="{{ $kemitraan->nextPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $kemitraan->hasMorePages() ? 'active' : 'disabled' }}">
                             <i class="fas fa-caret-right text-warning"></i>
                         </a>
-                    </div> --}}
+                    </div>
                 </div>
             </div>
         </div>
