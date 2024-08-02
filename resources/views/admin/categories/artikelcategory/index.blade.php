@@ -10,7 +10,6 @@
         <div class="position-fixed w-100 alert alert-success alert-dismissible fade show" style="top: 0px; left: 0px; z-index: 1000 !important;" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
-                <span class="sr-only">Close</span>
             </button>
             <strong>{{ Session::get('success') }}</strong>
         </div>
@@ -24,12 +23,19 @@
                         @method('patch')
                         @csrf
                         <div class="form-group">
-                            <input type="hidden" value="{{$category->id_pemberitahuan_category}}" name="idCategory" id="idCategory" class="form-control" placeholder="Perayaan / Peristiwa" aria-describedby="namaID">
+                            <input type="hidden" value="{{$category->id_pemberitahuan_category}}" name="idCategory" id="idCategory" class="form-control" placeholder="Perayaan / Peristiwa">
                         </div>
                         <div class="form-group">
-                            <label for="nama" class="mt-3 mb-2">Nama Kategori</label>
-                            <input type="text" required value="{{$category->pemberitahuan_category_name}}" name="category_name" id="category_name" class="form-control" placeholder="Perayaan / Peristiwa" aria-describedby="namaID">
-                            <small id="namaID" class="text-muted d-none">Nama</small>
+                            <label for="category_name" class="mt-3 mb-2">Nama Kategori</label>
+                            <input type="text" required value="{{$category->pemberitahuan_category_name}}" name="category_name" id="category_name" class="form-control" placeholder="Perayaan / Peristiwa">
+                        </div>
+                        <div class="form-group">
+                            <label for="manual_color" class="mt-3 mb-2">Warna Kategori</label>
+                            <div class="input-group">
+                                <input type="color" name="manual_color" id="manual_color" class="form-control" style="width: 70px;">
+                                <input type="text" name="category_color" id="category_color" value="{{$category->pemberitahuan_category_color}}" class="form-control">
+                            </div>
+                            <small id="colorID" class="text-muted">Hex Color otomatis terisi saat warna dipilih</small>
                         </div>
                         <div class="text-right w-100 position-absolute" style="right: 10px;">
                             <a href="{{ route('artikel.category.create', ['token' => $token]) }}" class="btn btn-white px-4 rounded-pill border-warning">Tambah</a>
@@ -46,8 +52,15 @@
                         @csrf
                         <div class="form-group">
                           <label for="category_name" class="mt-3 mb-2">Nama Kategori</label>
-                          <input type="text" name="category_name" id="category_name" class="form-control" placeholder="Perayaan / Peristiwa" aria-describedby="namaID">
-                          <small id="namaID" class="text-muted d-none">Nama</small>
+                          <input type="text" name="category_name" id="category_name" class="form-control" placeholder="Perayaan / Peristiwa">
+                        </div>
+                        <div class="form-group">
+                            <label for="manual_color" class="mt-3 mb-2">Warna Kategori</label>
+                            <div class="input-group">
+                                <input type="color" name="manual_color" id="manual_color" class="form-control" style="width: 70px;">
+                                <input type="text" name="category_color" id="category_color" class="form-control">
+                            </div>
+                            <small id="colorID" class="text-muted">Hex Color otomatis terisi saat warna dipilih</small>
                         </div>
                         <div class="text-right w-100">
                             <button class="btn btn-warning px-4 rounded-pill shadow-warning position-absolute" style="right: 10px;">Simpan</button>
@@ -72,13 +85,15 @@
                         <thead>
                             <tr>
                                 <th>Nama Kategori</th>
+                                <th>Warna</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($articles as $key => $data)
+                            @foreach ($articles as $data)
                             <tr>
                                 <td>{{ $data->pemberitahuan_category_name }}</td>
+                                <td>{{ $data->pemberitahuan_category_color ?? '-' }}</td>
                                 <td>
                                     <a href="{{ route('artikel.category.edit', ['artikel_category' => $data->id_pemberitahuan_category, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
                                     <form action="{{ route('artikel.category.destroy', ['artikel_category' => $data->id_pemberitahuan_category, 'token' => $token]) }}" method="post" class="d-inline" onclick="return confirm('Pengumuman akan dihapus ?')">
@@ -119,7 +134,7 @@
                                         <input type="hidden" name="id_category" value="">
                                         <input type="hidden" name="action" value="">
                                         <select id="show-select" name="show" onchange="showData()" class="form-control form-control-sm d-inline-block"
-                                            style="width:70px; font-size: .7rem;" name="" id="">
+                                            style="width:70px; font-size: .7rem;">
                                             <option value="10" selected>10</option>
                                             <option value="20" >20</option>
                                             <option value="30" >30</option>
@@ -139,20 +154,31 @@
                             </div>
                         </div>
                         <div class="col-md-6 text-right">
-                            <p class="montserrat d-inline"
-                            style="font-size: .7rem;">
+                            <p class="montserrat d-inline" style="font-size: .7rem;">
                             {{ $articles->count() }} dari {{ $articles->count() }} data</p>
-                            <a href="#"
-                            class="btn btn-sm p-0 px-2 btn-white disabled"><i
-                                    class="fas fa-caret-left text-warning"></i></a>
-                            <a href="#"
-                            class="btn btn-sm p-0 px-2 btn-white active">
-                                <i class="fas fa-caret-right text-warning"></i>
-                            </a>
+                            <a href="#" class="btn btn-sm p-0 px-2 btn-white disabled"><i class="fas fa-caret-left text-warning"></i></a>
+                            <a href="#" class="btn btn-sm p-0 px-2 btn-white active"><i class="fas fa-caret-right text-warning"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const colorPicker = document.getElementById('manual_color');
+            const hexInput = document.getElementById('category_color');
+    
+            colorPicker.addEventListener('input', function() {
+                hexInput.value = colorPicker.value.toUpperCase();
+            });
+    
+            hexInput.addEventListener('input', function() {
+                if (/^#[0-9A-F]{6}$/i.test(hexInput.value)) {
+                    colorPicker.value = hexInput.value;
+                }
+            });
+        });
+    </script>
 @endsection

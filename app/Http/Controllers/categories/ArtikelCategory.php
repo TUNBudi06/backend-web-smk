@@ -55,6 +55,7 @@ class ArtikelCategory extends Controller
         // Create a new instance of the PemberitahuanCategory model
         $category = new tb_pemberitahuan_category();
         $category->pemberitahuan_category_name = $request->category_name;
+        $category->pemberitahuan_category_color = $request->category_color;
         $category->type = 1;
         $category->save();
 
@@ -92,6 +93,7 @@ class ArtikelCategory extends Controller
         $category = tb_pemberitahuan_category::where(["type" => 1])->findOrFail($artikel_category);
         $category->update([
             'pemberitahuan_category_name' => $request->category_name,
+            'pemberitahuan_category_color' => $request->category_color,
         ]);
 
         return redirect()->route('artikel.category.index', ['token' => $request->token])->with('success', 'Kategori berhasil diperbarui.');
