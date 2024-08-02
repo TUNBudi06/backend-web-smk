@@ -16,7 +16,7 @@
         </div>
         @endif
         <div class="row">
-            @if ($action == "update")
+            @if ($action == "update" && session('positions'))
             <div class="col-md-4 offset-md-1 mt-4 p-2">
                 <div class="w-100 rad bg-white position-relative shadow py-3 px-4">
                     <h5 class="poppins mb-0">Update Posisi</h5>
