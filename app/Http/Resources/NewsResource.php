@@ -20,7 +20,8 @@ use Illuminate\Support\Facades\File;
  *         @OA\Property(property="location", type="string"),
  *         @OA\Property(property="category", type="object",
  *             @OA\Property(property="id", type="integer"),
- *             @OA\Property(property="nama", type="string")
+ *             @OA\Property(property="nama", type="string"),
+ *             @OA\Property(property="color", type="string"),
  *         ),
  *         @OA\Property(property="viewer", type="integer"),
  *         @OA\Property(property="created_at", type="string", format="date-time"),
@@ -51,6 +52,7 @@ class NewsResource extends JsonResource
             'category' => [
                 'id' => $this->kategori->id_pemberitahuan_category,
                 'nama' => $this->kategori->pemberitahuan_category_name,
+                'color' => $this->kategori->pemberitahuan_category_color,
             ],
             'viewer' => $this->viewer,
             'created_at' => $this->created_at,

@@ -49,7 +49,8 @@ use Illuminate\Support\Facades\File;
  *         property="category",
  *         type="object",
  *         @OA\Property(property="id", type="integer", example=1),
- *         @OA\Property(property="nama", type="string", example="Kategori A")
+ *         @OA\Property(property="nama", type="string", example="Kategori A"),
+ *         @OA\Property(property="color", type="string", example="#FF0000"),
  *     ),
  *     @OA\Property(
  *         property="created_at",
@@ -82,6 +83,7 @@ class ArticleResource extends JsonResource
             'category' => $this->kategori ? [
                 'id' => $this->kategori->id_pemberitahuan_category,
                 'nama' => $this->kategori->pemberitahuan_category_name,
+                'color' => $this->kategori->pemberitahuan_category_color,
             ] : null,
             'viewer' => $this->viewer,
             'created_at' => $this->created_at,

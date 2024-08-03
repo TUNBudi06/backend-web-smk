@@ -18,7 +18,8 @@ use Illuminate\Support\Facades\File;
  *     @OA\Property(property="text", type="string", example="Ini adalah teks pengumuman."),
  *     @OA\Property(property="category", type="object",
  *         @OA\Property(property="id", type="integer", example=1),
- *         @OA\Property(property="nama", type="string", example="Kategori A")
+ *         @OA\Property(property="nama", type="string", example="Kategori A"),
+ *         @OA\Property(property="color", type="string", example="#FF0000"),
  *     ),
  *     @OA\Property(property="created_at", type="string", example="2023-01-01T12:00:00Z")
  * )
@@ -48,6 +49,7 @@ class AnnouncementResource extends JsonResource
             'category' => $this->kategori ? [
                 'id' => $this->kategori->id_pemberitahuan_category,
                 'nama' => $this->kategori->pemberitahuan_category_name,
+                'color' => $this->kategori->pemberitahuan_category_color,
             ] : null,
         ];
     }

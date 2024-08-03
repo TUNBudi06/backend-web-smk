@@ -1212,6 +1212,10 @@
                             "nama": {
                                 "type": "string",
                                 "example": "Kategori A"
+                            },
+                            "color": {
+                                "type": "string",
+                                "example": "#FF0000"
                             }
                         },
                         "type": "object"
@@ -1262,6 +1266,10 @@
                             "nama": {
                                 "type": "string",
                                 "example": "Kategori A"
+                            },
+                            "color": {
+                                "type": "string",
+                                "example": "#FF0000"
                             }
                         },
                         "type": "object"
@@ -1294,12 +1302,18 @@
                     "nama": {
                         "type": "string"
                     },
+                    "color": {
+                        "type": "string"
+                    },
                     "tipe": {
                         "properties": {
                             "id": {
                                 "type": "integer"
                             },
                             "nama": {
+                                "type": "string"
+                            },
+                            "color": {
                                 "type": "string"
                             }
                         },
@@ -1388,6 +1402,10 @@
                             "nama": {
                                 "type": "string",
                                 "example": "Kategori A"
+                            },
+                            "color": {
+                                "type": "string",
+                                "example": "#FF0000"
                             }
                         },
                         "type": "object"
@@ -1540,6 +1558,9 @@
                                 "type": "integer"
                             },
                             "nama": {
+                                "type": "string"
+                            },
+                            "color": {
                                 "type": "string"
                             }
                         },
