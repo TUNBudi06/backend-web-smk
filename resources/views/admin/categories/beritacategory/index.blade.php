@@ -21,7 +21,7 @@
                 <div class="w-100 rad bg-white position-relative shadow py-3 px-4">
                     <h5 class="poppins mb-0">Update Kategori</h5>
                     <form action="{{ route('berita.category.update', ['token' => $token, 'berita_category' => $category->id_pemberitahuan_category]) }}" method="post">
-                        @method('patch')
+                        @method('PUT')
                         @csrf
                         <div class="form-group">
                             <input type="hidden" value="{{$category->id_pemberitahuan_category}}" name="idCategory" id="idCategory" class="form-control" placeholder="Perayaan / Peristiwa" aria-describedby="namaID">
@@ -30,6 +30,14 @@
                             <label for="nama" class="mt-3 mb-2">Nama Kategori</label>
                             <input type="text" required value="{{$category->pemberitahuan_category_name}}" name="category_name" id="category_name" class="form-control" placeholder="Perayaan / Peristiwa" aria-describedby="namaID">
                             <small id="namaID" class="text-muted d-none">Nama</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="manual_color" class="mt-3 mb-2">Warna Kategori</label>
+                            <div class="input-group">
+                                <input type="color" name="manual_color" id="manual_color" class="form-control" style="width: 70px;">
+                                <input type="text" name="category_color" id="category_color" required value="{{$category->pemberitahuan_category_color}}" class="form-control">
+                            </div>
+                            <small id="colorID" class="text-muted">Hex Color otomatis terisi saat warna dipilih</small>
                         </div>
                         <div class="text-right w-100 position-absolute" style="right: 10px;">
                             <a href="{{ route('berita.category.create', ['token' => $token]) }}" class="btn btn-white px-4 rounded-pill border-warning">Tambah</a>
@@ -48,6 +56,14 @@
                           <label for="category_name" class="mt-3 mb-2">Nama Kategori</label>
                           <input type="text" required name="category_name" id="category_name" class="form-control" placeholder="Perayaan / Peristiwa" aria-describedby="namaID">
                           <small id="namaID" class="text-muted d-none">Nama</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="manual_color" class="mt-3 mb-2">Warna Kategori</label>
+                            <div class="input-group">
+                                <input type="color" name="manual_color" id="manual_color" class="form-control" style="width: 70px;">
+                                <input type="text" name="category_color" id="category_color" class="form-control" value="#">
+                            </div>
+                            <small id="colorID" class="text-muted">Hex Color otomatis terisi saat warna dipilih</small>
                         </div>
                         <div class="text-right w-100">
                             <button class="btn btn-warning px-4 rounded-pill shadow-warning position-absolute" style="right: 10px;">Simpan</button>
@@ -72,6 +88,7 @@
                         <thead>
                             <tr>
                                 <th>Nama Kategori</th>
+                                <th>Warna</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -79,6 +96,7 @@
                             @foreach ($news as $key => $data)
                             <tr>
                                 <td>{{ $data->pemberitahuan_category_name }}</td>
+                                <td>{{ $data->pemberitahuan_category_color ?? '-' }}</td>
                                 <td>
                                     <a href="{{ route('berita.category.edit', ['berita_category' => $data->id_pemberitahuan_category, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
                                     <form action="{{ route('berita.category.destroy', ['berita_category' => $data->id_pemberitahuan_category, 'token' => $token]) }}" method="post" class="d-inline" onclick="return confirm('Pengumuman akan dihapus ?')">
@@ -155,4 +173,21 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const colorPicker = document.getElementById('manual_color');
+            const hexInput = document.getElementById('category_color');
+    
+            colorPicker.addEventListener('input', function() {
+                hexInput.value = colorPicker.value.toUpperCase();
+            });
+    
+            hexInput.addEventListener('input', function() {
+                if (/^#[0-9A-F]{6}$/i.test(hexInput.value)) {
+                    colorPicker.value = hexInput.value;
+                }
+            });
+        });
+    </script>
 @endsection

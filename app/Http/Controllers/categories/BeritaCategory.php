@@ -46,16 +46,17 @@ class BeritaCategory extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'category_name' => 'required',
-        ]);
+        try {
+            $category = new tb_pemberitahuan_category();
+            $category->pemberitahuan_category_name = $request->category_name;
+            $category->pemberitahuan_category_color = $request->category_color;
+            $category->type = 3;
+            $category->save();
 
-        $category = new tb_pemberitahuan_category();
-        $category->pemberitahuan_category_name = $request->category_name;
-        $category->type = 3;
-        $category->save();
-
-        return redirect()->route('berita.category.index', ['token' => $request->token])->with('success', 'Kategori berhasil ditambahkan.');
+            return redirect()->route('berita.category.index', ['token' => $request->token])->with('success', 'Kategori berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('error', 'Gagal menyimpan kategori: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -89,6 +90,8 @@ class BeritaCategory extends Controller
         $category = tb_pemberitahuan_category::where(["type" => 3])->findOrFail($berita_category);
         $category->update([
             'pemberitahuan_category_name' => $request->category_name,
+            'pemberitahuan_category_color' => $request->category_color,
+            'type' => 3,
         ]);
 
         return redirect()->route('berita.category.index', ['token' => $request->token])->with('success', 'Kategori berhasil diperbarui.');

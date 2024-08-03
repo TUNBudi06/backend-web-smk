@@ -48,11 +48,10 @@ class ArtikelCategory extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'category_name' => 'required',
+            'pemberitahuan_category_name' => 'required',
+            'pemberitahuan_category_color' => 'required',
         ]);
 
-        // Simpan data kategori
-        // Create a new instance of the PemberitahuanCategory model
         $category = new tb_pemberitahuan_category();
         $category->pemberitahuan_category_name = $request->category_name;
         $category->pemberitahuan_category_color = $request->category_color;
@@ -94,6 +93,7 @@ class ArtikelCategory extends Controller
         $category->update([
             'pemberitahuan_category_name' => $request->category_name,
             'pemberitahuan_category_color' => $request->category_color,
+            'type' => 1,
         ]);
 
         return redirect()->route('artikel.category.index', ['token' => $request->token])->with('success', 'Kategori berhasil diperbarui.');

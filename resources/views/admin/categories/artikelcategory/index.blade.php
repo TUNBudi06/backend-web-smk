@@ -20,7 +20,7 @@
                 <div class="w-100 rad bg-white position-relative shadow py-3 px-4">
                     <h5 class="poppins mb-0">Update Kategori</h5>
                     <form action="{{ route('artikel.category.update', ['token' => $token, 'artikel_category' => $category->id_pemberitahuan_category]) }}" method="post">
-                        @method('patch')
+                        @method('PUT')
                         @csrf
                         <div class="form-group">
                             <input type="hidden" value="{{$category->id_pemberitahuan_category}}" name="idCategory" id="idCategory" class="form-control" placeholder="Perayaan / Peristiwa">
@@ -33,7 +33,7 @@
                             <label for="manual_color" class="mt-3 mb-2">Warna Kategori</label>
                             <div class="input-group">
                                 <input type="color" name="manual_color" id="manual_color" class="form-control" style="width: 70px;">
-                                <input type="text" name="category_color" id="category_color" value="{{$category->pemberitahuan_category_color}}" class="form-control">
+                                <input type="text" name="category_color" id="category_color" required value="{{$category->pemberitahuan_category_color}}" class="form-control">
                             </div>
                             <small id="colorID" class="text-muted">Hex Color otomatis terisi saat warna dipilih</small>
                         </div>
@@ -58,7 +58,7 @@
                             <label for="manual_color" class="mt-3 mb-2">Warna Kategori</label>
                             <div class="input-group">
                                 <input type="color" name="manual_color" id="manual_color" class="form-control" style="width: 70px;">
-                                <input type="text" name="category_color" id="category_color" class="form-control">
+                                <input type="text" name="category_color" id="category_color" class="form-control" value="#">
                             </div>
                             <small id="colorID" class="text-muted">Hex Color otomatis terisi saat warna dipilih</small>
                         </div>
@@ -74,11 +74,11 @@
                     <div class="row p-4">
                         <div class="col-md-8">
                             <h4 class="poppins mb-0">Kategori</h4>
-                            <p class="montserrat" style="font-size: .85rem;">Daftar Kategori artikel SMKN 1 Purwosari
+                            <p class="montserrat" style="font-size: .85rem;">Daftar Kategori Artikel SMKN 1 Purwosari
                             </p>
                         </div>
                         <div class="col-md-4 text-right">
-                            <a href="{{ route('artikel.index', ['token' => $token]) }}" class="btn-print btn btn-white border-warning px-3 rounded-pill"><i class="fas fa-newspaper"></i> artikel</a>
+                            <a href="{{ route('artikel.index', ['token' => $token]) }}" class="btn-print btn btn-white border-warning px-3 rounded-pill"><i class="fas fa-newspaper"></i> Artikel</a>
                         </div>
                     </div>
                     <table class="table">

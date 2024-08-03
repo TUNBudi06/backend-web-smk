@@ -45,16 +45,17 @@ class PengumumanCategory extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'pemberitahuan_category_name' => 'required',
-        ]);
+        try {
+            $category = new tb_pemberitahuan_category();
+            $category->pemberitahuan_category_name = $request->category_name;
+            $category->pemberitahuan_category_color = $request->category_color;
+            $category->type = 2;
+            $category->save();
 
-        $category = new tb_pemberitahuan_category();
-        $category->pemberitahuan_category_name = $request->pemberitahuan_category_name;
-        $category->type = 2;
-        $category->save();
-
-        return redirect()->route('pengumuman.category.index', ['token' => $request->token])->with('success', 'Kategori berhasil ditambahkan.');
+            return redirect()->route('pengumuman.category.index', ['token' => $request->token])->with('success', 'Kategori berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('error', 'Gagal menyimpan kategori: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -79,15 +80,14 @@ class PengumumanCategory extends Controller
      */
     public function update(Request $request)
     {
-        $request->validate([
-            'pemberitahuan_category_name' => 'required',
-        ]);
         $pengumuman_category = $request->route("pengumuman_category");
 
         // Update data category
         $category = tb_pemberitahuan_category::where(["type" => 2])->findOrFail($pengumuman_category);
         $category->update([
-            'pemberitahuan_category_name' => $request->pemberitahuan_category_name,
+            'pemberitahuan_category_name' => $request->category_name,
+            'pemberitahuan_category_color' => $request->category_color,
+            'type' => 2,
         ]);
 
         return redirect()->route('pengumuman.category.index', ['token' => $request->token])->with('success', 'Kategori berhasil diperbarui.');

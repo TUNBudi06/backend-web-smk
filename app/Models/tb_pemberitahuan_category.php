@@ -11,7 +11,8 @@ class tb_pemberitahuan_category extends Model
     protected $primaryKey = "id_pemberitahuan_category";
 
     protected $fillable = [
-        "pemberitahuan_category_name"
+        "pemberitahuan_category_name",
+        "pemberitahuan_category_color"
     ];
 
     public function tb_pemberitahuans()
