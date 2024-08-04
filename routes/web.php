@@ -27,6 +27,7 @@ use App\Http\Controllers\categories\ArtikelCategory;
 use App\Http\Controllers\categories\GalleryCategory;
 use App\Http\Controllers\profile\FasilitasController;
 use App\Http\Controllers\categories\PengumumanCategory;
+use App\Http\Controllers\mitra\LokerController;
 
 Route::get('/', function () {
     return redirect('/private/admin/login/GUI-APP');
@@ -121,6 +122,7 @@ Route::prefix('private/admin')->group(function () {
             Route::resource('/artikel', ArtikelController::class);
             Route::resource('/gallery', GalleryController::class);
             Route::resource('/kemitraan', KemitraanController::class);
+            Route::resource('/loker', LokerController::class);
             Route::resource('/posisi', PosisiController::class);
             Route::get('/links', [AdminController::class, 'links'])->name('links');
 
