@@ -146,12 +146,12 @@ class PTKController extends Controller
                     unlink($oldImagePath);
                 }
             }
-    
+
             $imageName = $request->file('foto')->hashName();
             $request->file('foto')->move('img/guru', $imageName);
             $data->foto = $imageName;
         }
-    
+
         $data->update([
             'nip' => $request->nip,
             'nuptk' => $request->nuptk,
@@ -176,13 +176,15 @@ class PTKController extends Controller
 
         $ptk = tb_ptk::findOrFail($id);
 
-        $imagePath = public_path('img/guru/' . $ptk->thumbnail);
+        if (!empty($ptk->thumbnail)) {
+            $imagePath = public_path('img/guru/' . $ptk->thumbnail);
+
+            if (file_exists($imagePath) && is_file($imagePath)) {
+                unlink($imagePath);
+            }
+        }
 
         $ptk->delete();
-
-        if (file_exists($imagePath)) {
-            unlink($imagePath);
-        }
 
         return redirect()->route('ptk.index', ['token' => $request->token])->with('success', 'PTK berhasil dihapus.');
     }

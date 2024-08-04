@@ -24,6 +24,7 @@ class tb_ptk extends Model
         'jenis_kelamin',
         'alamat',
         'foto',
+        'mata_pelajaran'
     ];
 
     public $timestamps = false;
