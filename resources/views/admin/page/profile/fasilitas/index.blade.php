@@ -33,6 +33,7 @@
                         <tr>
                             <th class="pl-4">Gambar Fasilitas</th>
                             <th>Nama Fasilitas</th>
+                            <th>Deskripsi</th>
                             <th>Prodi</th>
                             <th>Action</th>
                         </tr>
@@ -42,6 +43,7 @@
                         <tr>
                             <td><img src="{{ asset('img/fasilitas/'.$data->facility_image) }}" width="100px" class="rounded" alt=""></td>
                             <td>{{ $data->facility_name }}</td>
+                            <td>{{ Str::limit(strip_tags(str_replace(["\r", "\n"], '', $data->facility_text)), 30, '...') }}</td>
                             <td>{{ $data->prodis->prodi_name }}</td>
                             <td>
                                 <a href="#" target="_blank" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
