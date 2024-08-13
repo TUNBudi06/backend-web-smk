@@ -8,6 +8,7 @@
     <div class="row">
         @if ($action == "update")
         <div class="col-md-4 offset-md-1 mt-4 p-2">
+            @include('admin.partials.nav_information')
             <div class="w-100 rad bg-white position-relative shadow py-3 px-4">
                 <h5 class="poppins mb-0">Update Navbar</h5>
                 <form action="" method="post">
@@ -57,15 +58,15 @@
             <div class="w-100 table-parent bg-white">
                 <div class="row p-4">
                     <div class="col-md-8">
-                        <h4 class="poppins mb-0">Kategori</h4>
-                        <p class="montserrat" style="font-size: .85rem;">Daftar Kategori Berita SMKN 1 Purwosari
+                        <h4 class="poppins mb-0">Link</h4>
+                        <p class="montserrat" style="font-size: .85rem;">Daftar Link SMKN 1 Purwosari
                         </p>
                     </div>
                 </div>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Nama Kategori</th>
+                            <th>Nama Link</th>
                             <th>URL</th>
                             <th>Action</th>
                         </tr>

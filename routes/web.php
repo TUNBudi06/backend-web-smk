@@ -124,6 +124,7 @@ Route::prefix('private/admin')->group(function () {
             Route::resource('/kemitraan', KemitraanController::class);
             Route::resource('/loker', LokerController::class);
             Route::resource('/posisi', PosisiController::class);
+            Route::resource('/alert', PosisiController::class);
             Route::get('/links', [AdminController::class, 'links'])->name('links');
 
             Route::get('/profile', [profileAdmin::class, 'index'])->name('profile');
