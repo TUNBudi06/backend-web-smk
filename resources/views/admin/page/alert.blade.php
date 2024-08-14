@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    <title>Links | Admin Panel</title>
+    <title>Alerts | Admin Panel</title>
 @endsection
 
 @section('container')
@@ -10,18 +10,18 @@
         <div class="col-md-4 offset-md-1 mt-4 p-2">
             @include('admin.partials.nav_url')
             <div class="w-100 rad bg-white position-relative shadow py-3 px-4">
-                <h5 class="poppins mb-0">Update Navbar</h5>
+                <h5 class="poppins mb-0">Update Alert</h5>
                 <form action="" method="post">
                     <div class="form-group">
                         <input type="hidden" value="" name="id" id="id" class="form-control" placeholder="Perayaan / Peristiwa" aria-describedby="namaID">
                     </div>
                     <div class="form-group">
-                        <label for="nama" class="mt-3">Nama Navbar</label>
-                        <input type="text" value="" name="nama" id="nama" class="form-control" placeholder="E-raport / Instagram" aria-describedby="namaID">
+                        <label for="nama" class="mt-3">Nama Alert</label>
+                        <input type="text" value="" name="nama" id="nama" class="form-control" placeholder="Alert Text" aria-describedby="namaID">
                         <small id="namaID" class="text-muted d-none">Nama</small>
                     </div>
                     <div class="form-group">
-                        <label for="url" class="mb-2">Url Navbar</label>
+                        <label for="url" class="mb-2">Button Url</label>
                         <input required type="text" value="" name="url" id="url" class="form-control" placeholder="Perayaan / Peristiwa" aria-describedby="url">
                         <small id="url" class="text-muted d-none">Nama</small>
                     </div>
@@ -35,15 +35,15 @@
         @else
         <div class="col-md-4 offset-md-1 mt-4 p-2">
             <div class="w-100 rad bg-white position-relative shadow py-3 px-4">
-                <h5 class="poppins mb-0">Tambah Navbar</h5>
+                <h5 class="poppins mb-0">Tambah Alert</h5>
                 <form action="" method="post">
                     <div class="form-group">
-                        <label for="nama" class="mt-3 mb-2">Nama Kategori</label>
-                        <input type="text" name="nama"id="nama" class="form-control" placeholder="E-raport / Instagram" aria-describedby="namaID">
+                        <label for="nama" class="mt-3 mb-2">Alert Text</label>
+                        <input type="text" name="nama"id="nama" class="form-control" placeholder="Alert Text" aria-describedby="namaID">
                         <small id="namaID" class="text-muted d-none">Nama</small>
                     </div>
                     <div class="form-group">
-                        <label for="url" class="mb-2">Url Navbar</label>
+                        <label for="url" class="mb-2">Button Url</label>
                         <input required type="text" name="url" id="url" class="form-control" placeholder="https://..." aria-describedby="url">
                         <small id="url" class="text-muted d-none">Nama</small>
                     </div>
@@ -73,7 +73,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Nama Navbar</td>
+                            <td>Nama Alert</td>
                             <td><a href="#">https://...</a>
                             </td>
                             <td>

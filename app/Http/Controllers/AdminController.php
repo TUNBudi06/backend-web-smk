@@ -7,6 +7,7 @@ use App\Models\tb_event;
 use App\Models\tb_extra;
 use App\Models\tb_facilities;
 use App\Models\tb_gallery;
+use App\Models\tb_jurusan;
 use App\Models\tb_news;
 use App\Models\tb_pemberitahuan;
 use App\Models\tb_pengumuman;
@@ -32,6 +33,7 @@ class AdminController extends Controller
             'pd' => tb_peserta_didik::count(),
             'ptk' => tb_ptk::count(),
             'extra' => tb_extra::count(),
+            'jurusan' => tb_jurusan::count(),
         ]);
     }
 

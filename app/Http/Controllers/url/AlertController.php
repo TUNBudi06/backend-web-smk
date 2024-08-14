@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\url;
 
 use App\Http\Controllers\Controller;
+use App\Models\url\tb_alert;
 use Illuminate\Http\Request;
 
 class AlertController extends Controller
@@ -10,9 +11,18 @@ class AlertController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        
+        $token = $request->session()->get('token') ?? $request->input('token');
+        $alerts = tb_alert::get();
+        $action = $request->session()->get('update') ? 'update' : '';
+
+        return view('admin.page.alert', [
+            'menu_active' => 'links',
+            'action' => $action,
+            'alerts' => $alerts,
+            'token' => $token,
+        ]);
     }
 
     /**
