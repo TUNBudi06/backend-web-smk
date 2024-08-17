@@ -52,17 +52,39 @@ class AlertController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request)
     {
-        //
+        $id_position = $request->route("alert");
+        $token = $request->session()->get('token') ?? $request->input('token');
+        $action = 'update';
+        $request->session()->put('token',$token);
+        $alerts = tb_alert::findOrFail($id_position);
+        $data = [
+            'alerts' => $alerts,
+            'update' => $action,
+        ];
+        return redirect()->route("alert.index",$token)->with($data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'alert_title' => 'required',
+            'alert_url' => 'required',
+        ]);
+        $alert = $request->route("alert");
+
+        // Update data alert
+        $alert = tb_alert::findOrFail($alert);
+        $alert->update([
+            'alert_title' => $request->alert_title,
+            'alert_url' => $request->alert_url,
+        ]);
+
+        return redirect()->route('alert.index', ['token' => $request->token])->with('success', 'Alert berhasil diperbarui.');
     }
 
     /**

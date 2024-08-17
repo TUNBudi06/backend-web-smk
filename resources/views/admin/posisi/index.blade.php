@@ -21,7 +21,7 @@
                 <div class="w-100 rad bg-white position-relative shadow py-3 px-4">
                     <h5 class="poppins mb-0">Update Posisi</h5>
                     <form action="{{ route('posisi.update', ['token' => $token, 'posisi' => session('positions')->id_position]) }}" method="post">
-                        @method('patch')
+                        @method('put')
                         @csrf
                         <div class="form-group">
                             <label for="nama" class="mt-3 mb-2">Nama Posisi</label>
