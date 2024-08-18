@@ -1169,6 +1169,56 @@
                     }
                 }
             }
+        },
+        "/api/user/link/alerts": {
+            "get": {
+                "tags": [
+                    "Links"
+                ],
+                "summary": "Get alert",
+                "description": "Retrieve alert",
+                "operationId": "getAlert",
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/AlertResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data tidak ditemukan"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -1685,6 +1735,27 @@
                     "prodi_short": {
                         "type": "string",
                         "example": "TI"
+                    }
+                },
+                "type": "object"
+            },
+            "AlertResource": {
+                "properties": {
+                    "id_alert": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "alert_title": {
+                        "type": "string",
+                        "example": "Don't miss"
+                    },
+                    "alert_url": {
+                        "type": "string",
+                        "example": "https://..."
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "example": "2023-01-01T12:00:00Z"
                     }
                 },
                 "type": "object"

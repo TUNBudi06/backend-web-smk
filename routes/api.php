@@ -11,6 +11,7 @@ use App\Http\Controllers\api\JurusanController;
 use App\Http\Controllers\api\NewsController;
 use App\Http\Controllers\api\PDController;
 use App\Http\Controllers\api\PTKController;
+use App\Http\Controllers\link\LinkController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,9 @@ Route::prefix('user')->group(function () {
     Route::get('event-categories', [EventController::class, 'categoryEvent']);
     Route::resource('galleries', GalleryController::class);
     Route::get('gallery-categories', [GalleryController::class, 'categoryGaleri']);
+    Route::prefix('link')->group(function () {
+       Route::get('alerts', [LinkController::class, 'linkAlert']); 
+    });
     Route::prefix('profile')->group(function () {
         Route::resource('majors', JurusanController::class);
         Route::resource('facilities', FasilitasController::class);
