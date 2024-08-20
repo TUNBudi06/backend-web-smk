@@ -8,8 +8,11 @@ use App\Http\Controllers\api\FasilitasController;
 use App\Http\Controllers\api\GalleryController;
 use App\Http\Controllers\api\PengumumanController;
 use App\Http\Controllers\api\JurusanController;
+use App\Http\Controllers\api\KemitraanController;
+use App\Http\Controllers\api\LokerController;
 use App\Http\Controllers\api\NewsController;
 use App\Http\Controllers\api\PDController;
+use App\Http\Controllers\api\PosisiController;
 use App\Http\Controllers\api\PTKController;
 use App\Http\Controllers\link\LinkController;
 use Illuminate\Http\Request;
@@ -32,8 +35,12 @@ Route::prefix('user')->group(function () {
     Route::resource('galleries', GalleryController::class);
     Route::get('gallery-categories', [GalleryController::class, 'categoryGaleri']);
     Route::prefix('link')->group(function () {
-       Route::get('alerts', [LinkController::class, 'linkAlert']); 
+        Route::get('alerts', [LinkController::class, 'linkAlert']);
     });
+    Route::resource('kemitraans', KemitraanController::class);
+    Route::resource('position', PosisiController::class);
+    Route::resource('lokers', LokerController::class);
+    
     Route::prefix('profile')->group(function () {
         Route::resource('majors', JurusanController::class);
         Route::resource('facilities', FasilitasController::class);

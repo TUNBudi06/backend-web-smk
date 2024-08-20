@@ -15,7 +15,7 @@
                         <p class="montserrat" style="font-size: .85rem;">Daftar Kemitraan SMKN 1 Purwosari</p>
                     </div>
                     <div class="col-md-4 text-right">
-                        <a href="#" class="btn-print btn btn-warning shadow-warning px-4 rounded-pill"><i class="fas fa-plus"></i> Tambah Kemitraan</a>
+                        <a href="{{ route('kemitraan.create', ['token' => $token]) }}" class="btn-print btn btn-warning shadow-warning px-4 rounded-pill"><i class="fas fa-plus"></i> Tambah Kemitraan</a>
                         <a href="{{ route('posisi.index',$token) }}" class="btn-print btn btn-white border-warning px-3 rounded-pill"><i class="fas fa-list"></i> Posisi Baru</a>
                     </div>
                 </div>

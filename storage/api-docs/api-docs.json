@@ -717,6 +717,180 @@
                 }
             }
         },
+        "/api/user/kemitraans": {
+            "get": {
+                "tags": [
+                    "Kemitraan"
+                ],
+                "summary": "Get all Kemitraan",
+                "description": "Retrieve all Kemitraan",
+                "operationId": "getAllKemitraan",
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Kemitraan"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/kemitraans/{id_kemitraan}": {
+            "get": {
+                "tags": [
+                    "Kemitraan"
+                ],
+                "summary": "Get specific Kemitraan",
+                "description": "Retrieve a specific Kemitraan by ID",
+                "operationId": "getKemitraanById",
+                "parameters": [
+                    {
+                        "name": "id_kemitraan",
+                        "in": "path",
+                        "description": "ID of the Kemitraan",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Kemitraan"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "string",
+                                            "example": "Data tidak ditemukan"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/lokers": {
+            "get": {
+                "tags": [
+                    "Loker"
+                ],
+                "summary": "Get all Loker",
+                "description": "Retrieve all Loker",
+                "operationId": "getAllLoker",
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Loker"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/lokers/{id}": {
+            "get": {
+                "tags": [
+                    "Loker"
+                ],
+                "summary": "Get Loker by ID",
+                "description": "Retrieve a single Loker entry by ID",
+                "operationId": "getLokerById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Loker"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data tidak ditemukan"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/news": {
             "get": {
                 "tags": [
@@ -1170,6 +1344,88 @@
                 }
             }
         },
+        "/api/user/position": {
+            "get": {
+                "tags": [
+                    "Position"
+                ],
+                "summary": "Get all Position",
+                "description": "Retrieve all Position",
+                "operationId": "getAllPosition",
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Position"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/position/{id}": {
+            "get": {
+                "tags": [
+                    "Position"
+                ],
+                "summary": "Get Position by ID",
+                "description": "Retrieve a single Position entry by ID",
+                "operationId": "getPositionById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Position"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data tidak ditemukan"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/link/alerts": {
             "get": {
                 "tags": [
@@ -1581,6 +1837,68 @@
                 },
                 "type": "object"
             },
+            "Kemitraan": {
+                "properties": {
+                    "id_kemitraan": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "kemitraan_name": {
+                        "type": "string",
+                        "example": "Inafood/Honda/Mayora"
+                    },
+                    "kemitraan_logo": {
+                        "type": "string",
+                        "example": "logo.png"
+                    },
+                    "kemitraan_thumbnail": {
+                        "type": "string",
+                        "example": "image.png"
+                    },
+                    "kemitraan_description": {
+                        "type": "string",
+                        "example": "This industry is..."
+                    },
+                    "kemitraan_city": {
+                        "type": "string",
+                        "example": "Kabupaten/Kota"
+                    },
+                    "kemitraan_location_detail": {
+                        "type": "string",
+                        "example": "Provinsi, Kabupaten/Kota, Kecamatan"
+                    }
+                },
+                "type": "object"
+            },
+            "Loker": {
+                "properties": {
+                    "id_loker": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "loker_thumbnail": {
+                        "type": "string",
+                        "example": "img/loker/image.png"
+                    },
+                    "loker_type": {
+                        "type": "string",
+                        "example": "Kasir/Sales/Marketing"
+                    },
+                    "position_id": {
+                        "type": "string",
+                        "example": "Operator/Engineer/Finance"
+                    },
+                    "kemitraan_id": {
+                        "type": "string",
+                        "example": "Inafood/Honda/Mayora"
+                    },
+                    "loker_available": {
+                        "type": "string",
+                        "example": "Tersedia/Tidak Tersedia"
+                    }
+                },
+                "type": "object"
+            },
             "NewsResource": {
                 "title": "News Resource",
                 "properties": {
@@ -1718,6 +2036,27 @@
                     "foto": {
                         "type": "string",
                         "example": "img/guru/gambar.jpg"
+                    }
+                },
+                "type": "object"
+            },
+            "Position": {
+                "properties": {
+                    "id_position": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "position_name": {
+                        "type": "string",
+                        "example": "Operator/Engineer/Finance"
+                    },
+                    "position_type": {
+                        "type": "string",
+                        "example": "Fulltime/Parttime/Internship"
+                    },
+                    "kemitraan_id": {
+                        "type": "string",
+                        "example": "Inafood/Honda/Mayora"
                     }
                 },
                 "type": "object"
