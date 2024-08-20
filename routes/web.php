@@ -29,6 +29,7 @@ use App\Http\Controllers\profile\FasilitasController;
 use App\Http\Controllers\categories\PengumumanCategory;
 use App\Http\Controllers\mitra\LokerController;
 use App\Http\Controllers\url\AlertController;
+use App\Http\Controllers\url\KomiteController;
 
 Route::get('/', function () {
     return redirect('/private/admin/login/GUI-APP');
@@ -145,8 +146,8 @@ Route::prefix('private/admin')->group(function () {
                 Route::resource('/fasilitas', FasilitasController::class)->parameters([
                     'fasilitas' => 'fasilitas',
                 ]);
+                Route::resource('/komite', KomiteController::class);
 
-                Route::get('komite', [ProfileController::class, 'indexKomite'])->name('komite.index');
                 Route::get('struktur', [ProfileController::class, 'indexStruktur'])->name('struktur.index');
             });
         });
