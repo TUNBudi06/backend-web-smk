@@ -25,7 +25,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="nama" class="mt-3 mb-2">Nama Video(Opsional)</label>
-                            <input type="text" required value="{{ session('videos')->video_title }}" name="video_title" id="video_title" class="form-control" placeholder="Isi Video">
+                            <input type="text" required value="{{ session('videos')->video_title }}" name="video_title" id="video_title" class="form-control" placeholder="Judul Video">
                         </div>
                         <div class="form-group">
                             <label for="tipe" class="my-2">URL Video</label>
