@@ -1475,6 +1475,56 @@
                     }
                 }
             }
+        },
+        "/api/user/link/videos": {
+            "get": {
+                "tags": [
+                    "Videos"
+                ],
+                "summary": "Get video",
+                "description": "Retrieve video",
+                "operationId": "getVideo",
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/AlertResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data tidak ditemukan"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -2089,6 +2139,27 @@
                         "example": "Don't miss"
                     },
                     "alert_url": {
+                        "type": "string",
+                        "example": "https://..."
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "example": "2023-01-01T12:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "VideoResource": {
+                "properties": {
+                    "id_video": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "video_title": {
+                        "type": "string",
+                        "example": "Opening MPLS"
+                    },
+                    "video_url": {
                         "type": "string",
                         "example": "https://..."
                     },
