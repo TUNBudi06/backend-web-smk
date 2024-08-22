@@ -30,6 +30,7 @@ use App\Http\Controllers\categories\PengumumanCategory;
 use App\Http\Controllers\mitra\LokerController;
 use App\Http\Controllers\url\AlertController;
 use App\Http\Controllers\url\KomiteController;
+use App\Http\Controllers\url\VideoController;
 
 Route::get('/', function () {
     return redirect('/private/admin/login/GUI-APP');
@@ -147,6 +148,7 @@ Route::prefix('private/admin')->group(function () {
                     'fasilitas' => 'fasilitas',
                 ]);
                 Route::resource('/komite', KomiteController::class);
+                Route::resource('/video', VideoController::class);
 
                 Route::get('struktur', [ProfileController::class, 'indexStruktur'])->name('struktur.index');
             });

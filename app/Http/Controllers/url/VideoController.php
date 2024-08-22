@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\url;
 
 use App\Http\Controllers\Controller;
-use App\Models\url\tb_komite;
+use App\Models\url\tb_video;
 use Illuminate\Http\Request;
 
-class KomiteController extends Controller
+class VideoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,14 +14,14 @@ class KomiteController extends Controller
     public function index(Request $request)
     {
         $token = $request->session()->get('token') ?? $request->input('token');
-        $komite = tb_komite::get();
+        $videos = tb_video::get();
         $action = $request->session()->get('update') ? 'update' : '';
 
-        return view('admin.page.url.komite', [
+        return view('admin.page.url.video', [
             'menu_active' => 'profile',
-            'profile_active' => 'komite',
+            'profile_active' => 'video',
             'action' => $action,
-            'komite' => $komite,
+            'videos' => $videos,
             'token' => $token,
         ]);
     }
