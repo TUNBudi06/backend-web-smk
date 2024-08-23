@@ -10,8 +10,8 @@
             <div class="menu-profile-admin mb-4">
                 <a href="{{ route('user.index',$token) }}"
                    class="<?= \Illuminate\Support\Facades\Route::is('user.index')  ? 'btn my-1 btn-warning px-4 shadow-warning' : 'btn my-1 btn-light px-4 border-warning'?>">User</a>
-                <a href="{{ route('pengumuman.index',$token) }}"
-                   class="<?= \Illuminate\Support\Facades\Route::is('')? 'btn my-1 btn-warning px-4 shadow-warning' : 'btn my-1 btn-light px-4 border-warning'?>">Log</a>
+                <a href="{{ route('aproved-user-log.index',$token) }}"
+                   class="<?= \Illuminate\Support\Facades\Route::is('aproved-user-log.index')? 'btn my-1 btn-warning px-4 shadow-warning' : 'btn my-1 btn-light px-4 border-warning'?>">Log Pending</a>
             </div>
             <div class="w-100 table-parent bg-white">
                 <div class="row p-4">
@@ -35,35 +35,46 @@
                     <strong>{{ Session::get('success') }}</strong>
                 </div>
                 @endif
-                <table id="userTable">
-                    <thead>
-                    <tr>
-                        <th class="pl-4">Gambar</th>
-                        <th>Nama</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                <div class="p-2">
+                    <table id="userTable">
+                        <thead>
+                        <tr>
+                            <th class="pl-4">Gambar</th>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Token</th>
+                            <th>Role</th>
+                            <th>Dibuat Oleh</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         @foreach($user as $index => $userd)
                             <tr>
-                                <td><img src="" width="100px" class="rounded" alt=""></td>
+                                <td><img src="{{ $userd->image ? asset('img/users/' . $userd->image) : '' }}"
+                                         width="100px" class="rounded" alt=""></td>
                                 <td>{{$userd->name}}</td>
                                 <td>{{$userd->email}}</td>
+                                <td>{{$userd->token}}</td>
                                 <td>{{$userd->role == 1 ? 'SuperAdmin':'Admin'}}</td>
+                                <td>{{$userd->created_by}}</td>
                                 <td>
-                                    <a href="{{route('user.show',[$token,$userd->id_admin])}}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                    <form action="{{route('user.destroy',['token'=>$token,'user'=>$userd->id_admin])}}" onclick="return confirm('Data akan dihapus ?')" method="post" class="d-inline">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>
-                                    </form>
+                                    @if($token == $userd->token)
+                                        <div class="bg-warning">Pengguna Saat Ini</div>
+                                    @else
+                                        <a href="{{route('user.edit',[$token,$userd->id_admin])}}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
+                                        <form action="{{route('user.destroy',['token'=>$token,'user'=>$userd->id_admin])}}" onclick="return confirm('Data akan dihapus ?')" method="post" class="d-inline">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
                 <script>
                     $(document).ready(function () {
                         $('#userTable').DataTable({

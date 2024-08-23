@@ -40,11 +40,6 @@ class tb_admin extends Authincatable
         'remember_token',
     ];
 
-    public function role()
-    {
-        return $this->belongsTo(tb_role::class, 'role', 'id_role');
-    }
-
     /**
      * Get the attributes that should be cast.
      *

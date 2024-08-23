@@ -7,10 +7,13 @@
 
 @section('container')
     <div class="col-md-8 offset-md-2 pt-4">
-        <a href="{{ route('user.index', ['token' => $token]) }}" class="btn btn-light border-warning px-4 mb-4"><i
+        <a href="{{ route('user.index',['token'=>$token]) }}" class="btn btn-light border-warning px-4 mb-4"><i
                 class="fas fa-arrow-left"></i> Kembali</a>
-        <form action="{{ route('user.store', ['token' => $token]) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ $method == 'insert' ? route('user.store', ['token' => $token]):route('user.update', ['token' => $token, 'user' => $user->id_admin]) }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @if($method == 'edit')
+                @method('PATCH')
+            @endif
             <div class="form-group">
                 <label for="nama">Nama User</label>
                 <input type="text" name="nama" id="nama" value="{{ optional($user)->name ?? old('nama') }}"
@@ -35,6 +38,18 @@
                 <small id="targetId" class="text-muted">Contoh: xyz@gmail.com</small>
             </div>
             <div class="form-group">
+                <label for="password">Password User</label>
+                <input type="password" name="password" id="password"
+                       value="{{ old('password') }}"
+                       class="form-control @error('password') is-invalid @enderror"
+                       placeholder="Password User" aria-describedby="passwordId">
+                @error('password')
+                <p class="text-danger">
+                    {{ $message }}
+                </p>
+                @enderror
+            </div>
+            <div class="form-group">
                 <label for="username">Username User</label>
                 <input type="text" name="username" id="username"
                        value="{{ optional($user)->username ?? old('username') }}"
@@ -46,6 +61,20 @@
                 </p>
                 @enderror
             </div>
+            @if($method == 'insert')
+                <div class="form-group">
+                    <label for="token">Token User</label>
+                    <input type="text" name="token" id="token"
+                           value="{{ optional($user)->token ?? old('username') }}"
+                           class="form-control @error('token') is-invalid @enderror"
+                           placeholder="Token User" aria-describedby="usernameId">
+                    @error('token')
+                    <p class="text-danger">
+                        {{ $message }}
+                    </p>
+                    @enderror
+                </div>
+            @endif
             <div class="form-group">
                 <label for="role">Role User</label>
                 <select class="form-control @error('role') is-invalid @enderror"
@@ -79,7 +108,7 @@
                 </div>
                 <div class="col-md-6 text-center">
                     <img class="w-100 rounded" id="preview"
-                         src="{{ optional($user)->image ?? asset('img/no_image.png') }}"
+                         src="{{ $method == 'edit' ? asset('img/users/' . $user->image):asset('img/no_image.png') }}"
                          alt="">
                 </div>
             </div>

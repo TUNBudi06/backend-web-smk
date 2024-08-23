@@ -12,7 +12,7 @@ class profileAdmin extends Controller
     {
         $token = $request->session()->get('token') ?? $request->input('token');
         $user = tb_admin::where('token', $token)->first();
-        $user_role = $user->role();
+        $user_role = $user->role == 1 ? 'SuperAdmin' : 'Admin';
 
         return view('admin.page.profile', [
             'menu_active' => 'profile',
@@ -20,7 +20,7 @@ class profileAdmin extends Controller
             'email' => $user['email'],
             'nama' => $user['name'],
             'username' => $user['username'],
-            'user_type' => $user_role->value('name'),
+            'user_type' => $user_role,
         ]);
     }
 

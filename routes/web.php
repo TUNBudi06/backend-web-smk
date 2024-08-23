@@ -12,6 +12,7 @@ use App\Http\Controllers\categories\PengumumanCategory;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\logUserAproved;
 use App\Http\Controllers\mitra\KemitraanController;
 use App\Http\Controllers\mitra\LokerController;
 use App\Http\Controllers\mitra\PosisiController;
@@ -49,6 +50,9 @@ Route::prefix('private/admin')->group(function () {
 
             Route::prefix('management')->group(function () {
                 Route::resource('user', UserController::class);
+                Route::get('pendingLog', [logUserAproved::class, 'index'])->name('aproved-user-log.index');
+                Route::get('pendingLog/approve/{id}', [logUserAproved::class, 'approve'])->name('aproved-user-log.approved');
+                Route::delete('pendingLog/delete/{id}', [logUserAproved::class, 'deleted'])->name('aproved-user-log.deleted');
             });
 
             Route::resource('pengumuman/category', PengumumanCategory::class)->parameters([
