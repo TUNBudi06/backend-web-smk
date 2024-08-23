@@ -16,6 +16,7 @@ class tb_admin extends Authincatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'image',
         'name',
         'username',
         'email',
@@ -25,6 +26,7 @@ class tb_admin extends Authincatable
         'created_by',
         'verified_user',
         'password',
+
     ];
 
     /**

@@ -23,7 +23,8 @@ class tb_pemberitahuan extends Model
         'type',
         'category',
         'viewer',
-        'created_by',
+        'published_by',
+        'jurnal_by',
         'approved',
         'Approved_by',
     ];

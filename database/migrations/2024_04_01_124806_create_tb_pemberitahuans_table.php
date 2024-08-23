@@ -24,7 +24,8 @@ return new class extends Migration
             $table->unsignedBigInteger('category')->nullable();
             $table->foreign('category', 'kategori')->references('id_pemberitahuan_category')->on('tb_pemberitahuan_category')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('viewer');
-            $table->string('created_by')->nullable();
+            $table->string('published_by')->nullable();
+            $table->string('jurnal_by')->nullable();
             $table->boolean('approved')->default(false);
             $table->unsignedBigInteger('Approved_by')->nullable();
             $table->foreign('approved_by')->references('id_admin')->on('tb_admins')->onUpdate('cascade')->onDelete('set null');
