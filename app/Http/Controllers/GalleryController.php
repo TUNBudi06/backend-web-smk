@@ -18,6 +18,7 @@ class GalleryController extends Controller
         $gallery = tb_gallery::orderBy('id_gallery', 'desc')->paginate($perPage);
 
         $token = $request->session()->get('token') ?? $request->input('token');
+
         return view('admin.gallery.index', [
             'menu_active' => 'gallery',
             'token' => $token,
@@ -58,7 +59,7 @@ class GalleryController extends Controller
         ]);
 
         // Simpan data ke tabel gallery
-        $data = new tb_gallery();
+        $data = new tb_gallery;
         $data->gallery_title = $request->gallery_title;
         $data->id_category = $request->id_category;
         $data->gallery_text = $request->gallery_text;
@@ -75,19 +76,17 @@ class GalleryController extends Controller
             $data->file_type = $fileMimeType;
         }
 
-
         $data->save();
 
         return redirect()->route('gallery.index', ['token' => $token])->with('success', 'Data added successfully.');
     }
-
 
     /**
      * Display the specified resource.
      */
     public function show(Request $request)
     {
-        $id_gallery = $request->route("gallery");
+        $id_gallery = $request->route('gallery');
         $token = $request->session()->get('token') ?? $request->input('token');
         $gallery = tb_gallery::findOrFail($id_gallery);
         $categories = tb_category_gallery::all();
@@ -106,7 +105,7 @@ class GalleryController extends Controller
      */
     public function edit(Request $request)
     {
-        $id_gallery = $request->route("gallery");
+        $id_gallery = $request->route('gallery');
         $token = $request->session()->get('token') ?? $request->input('token');
         $gallery = tb_gallery::findOrFail($id_gallery);
         $categories = tb_category_gallery::all();
@@ -126,7 +125,7 @@ class GalleryController extends Controller
     {
         $token = $request->session()->get('token') ?? $request->input('token');
 
-        $id_gallery = $request->route("gallery");
+        $id_gallery = $request->route('gallery');
         $request->validate([
             'gallery_title' => 'required',
             'id_category' => 'required',
@@ -153,7 +152,7 @@ class GalleryController extends Controller
             // Hapus file lama jika ada dan simpan file baru
             if ($data->gallery_file) {
                 // Hapus file lama
-                Storage::delete('img/gallery/' . $data->gallery_file);
+                Storage::delete('img/gallery/'.$data->gallery_file);
             }
 
             // Simpan nama file dan tipe file ke dalam database
@@ -166,13 +165,12 @@ class GalleryController extends Controller
         return redirect()->route('gallery.index', ['token' => $token])->with('success', 'Data updated successfully.');
     }
 
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Request $request)
     {
-        $id_gallery = $request->route("gallery");
+        $id_gallery = $request->route('gallery');
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $gallery = tb_gallery::findOrFail($id_gallery);

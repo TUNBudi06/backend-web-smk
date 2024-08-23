@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
  * @OA\Schema(
  *     schema="FasilitasResource",
  *     type="object",
+ *
  *     @OA\Property(
  *         property="id_facility",
  *         type="integer",
@@ -48,7 +49,7 @@ class FasilitasResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $thumbnailPath = 'img/fasilitas/' . $this->facility_image;
+        $thumbnailPath = 'img/fasilitas/'.$this->facility_image;
         $facility_image = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
         $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->facility_text)));

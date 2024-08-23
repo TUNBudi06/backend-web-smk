@@ -4,31 +4,33 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryGalleryResource;
-use App\Http\Resources\CategoryResource;
 use App\Http\Resources\GalleryResource;
 use App\Models\tb_category_gallery;
 use App\Models\tb_gallery;
-use App\Models\tb_pemberitahuan_category;
 use Illuminate\Http\Request;
 
 class GalleryController extends Controller
 {
-       /**
+    /**
      * @OA\Get(
      *     path="/api/user/galleries",
      *     tags={"Gallery"},
      *     summary="Get all Gallery",
      *     description="Retrieve all Gallery",
      *     operationId="getAllGaleri",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(
      *                 property="data",
      *                 type="array",
+     *
      *                 @OA\Items(ref="#/components/schemas/Gallery")
      *             )
      *         )
@@ -60,21 +62,28 @@ class GalleryController extends Controller
      *     summary="Get galleries by ID",
      *     description="Retrieve a single galleries entry by ID",
      *     operationId="getGaleriById",
+     *
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
+     *
      *         @OA\Schema(type="string")
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/Gallery")
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Data tidak ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )
@@ -87,7 +96,7 @@ class GalleryController extends Controller
 
         if (empty($data)) {
             return response()->json([
-                'data' => 'Data tidak ditemukan'
+                'data' => 'Data tidak ditemukan',
             ], 404);
         }
 
@@ -113,18 +122,21 @@ class GalleryController extends Controller
         //
     }
 
-        /**
+    /**
      * @OA\Get(
      *     path="/api/user/gallery-categories",
      *     tags={"Gallery"},
      *     summary="Get gallery categories",
      *     description="Retrieve categories of gallery",
      *     operationId="getGaleriCategories",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
      *             type="array",
+     *
      *             @OA\Items(ref="#/components/schemas/CategoryGalleryResource")
      *         )
      *     )
@@ -135,7 +147,7 @@ class GalleryController extends Controller
         $data = tb_category_gallery::get();
 
         return response()->json([
-            'message' => 'Data ditemukan',  
+            'message' => 'Data ditemukan',
             'data' => CategoryGalleryResource::collection($data),
         ], 200);
     }

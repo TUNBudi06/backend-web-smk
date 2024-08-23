@@ -22,14 +22,14 @@ class DatabaseSeeder extends Seeder
                 'user_access' => data_manager::array2base(data_manager::accessRole()), // Example JSON array of user access
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]
+            ],
         ]);
         DB::table('tb_admins')->insert([
             [
                 'name' => 'Budi',
                 'username' => 'tunbudi06',
                 'email' => 'budi@tun06.tech',
-                'token' => "budi",
+                'token' => 'budi',
                 'role' => 1, // Assuming role ID 1 is for the admin role
                 'created_by' => 'Admin',
                 'password' => Hash::make('budi123'), // Hash the password
@@ -39,19 +39,19 @@ class DatabaseSeeder extends Seeder
             ],
             // Add more admin records as needed
         ]);
-        DB::table("tb_pemberitahuan_type")->insert([
-            ["pemberitahuan_type_name"=> "artikel",
+        DB::table('tb_pemberitahuan_type')->insert([
+            ['pemberitahuan_type_name' => 'artikel',
                 'created_at' => now(),
-                'updated_at' => now(),],
-            ["pemberitahuan_type_name"=> "pengumuman",
+                'updated_at' => now(), ],
+            ['pemberitahuan_type_name' => 'pengumuman',
                 'created_at' => now(),
-                'updated_at' => now(),],
-            ["pemberitahuan_type_name"=> "berita",
+                'updated_at' => now(), ],
+            ['pemberitahuan_type_name' => 'berita',
                 'created_at' => now(),
-                'updated_at' => now(),],
-            ["pemberitahuan_type_name"=> "event",
+                'updated_at' => now(), ],
+            ['pemberitahuan_type_name' => 'event',
                 'created_at' => now(),
-                'updated_at' => now(),],
+                'updated_at' => now(), ],
         ]);
     }
 }

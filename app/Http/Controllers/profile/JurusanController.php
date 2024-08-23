@@ -18,6 +18,7 @@ class JurusanController extends Controller
         $jurusan = tb_jurusan::orderBy('id_jurusan', 'desc')->paginate($perPage);
 
         $token = $request->session()->get('token') ?? $request->input('token');
+
         return view('admin.page.profile.jurusan.index', [
             'menu_active' => 'academic',
             'profile_active' => 'jurusan',
@@ -65,7 +66,7 @@ class JurusanController extends Controller
         ]);
 
         // Simpan data ke tabel jurusan
-        $data = new tb_jurusan();
+        $data = new tb_jurusan;
         $data->jurusan_nama = $request->jurusan_nama;
         $data->jurusan_short = $request->jurusan_short;
         $data->id_prodi = $request->id_prodi;
@@ -74,7 +75,7 @@ class JurusanController extends Controller
         // Simpan gambar
         if ($request->hasFile('jurusan_thumbnail')) {
             $fileContents = file_get_contents($request->file('jurusan_thumbnail')->getRealPath());
-            $imageName = hash('sha256', $fileContents) . '.' . $request->file('jurusan_thumbnail')->getClientOriginalExtension();
+            $imageName = hash('sha256', $fileContents).'.'.$request->file('jurusan_thumbnail')->getClientOriginalExtension();
             $request->file('jurusan_thumbnail')->move('img/jurusan', $imageName);
             $data->jurusan_thumbnail = $imageName;
         }
@@ -97,7 +98,7 @@ class JurusanController extends Controller
      */
     public function edit(Request $request)
     {
-        $id_jurusan = $request->route("jurusan");
+        $id_jurusan = $request->route('jurusan');
         $token = $request->session()->get('token') ?? $request->input('token');
         $jurusan = tb_jurusan::findOrFail($id_jurusan);
         $prodis = tb_prodi::all();
@@ -116,7 +117,7 @@ class JurusanController extends Controller
      */
     public function update(Request $request)
     {
-        $id_news = $request->route("jurusan");
+        $id_news = $request->route('jurusan');
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $request->validate([
@@ -140,7 +141,7 @@ class JurusanController extends Controller
         // Periksa apakah ada pergantian gambar
         if ($request->hasFile('jurusan_thumbnail')) {
             if ($data->jurusan_thumbnail !== null) {
-                $oldImagePath = public_path('img/jurusan' . $data->jurusan_thumbnail);
+                $oldImagePath = public_path('img/jurusan'.$data->jurusan_thumbnail);
                 if (file_exists($oldImagePath)) {
                     unlink($oldImagePath);
                 }
@@ -168,11 +169,11 @@ class JurusanController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id_jurusan = $request->route("jurusan");
+        $id_jurusan = $request->route('jurusan');
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $jurusan = tb_jurusan::findOrFail($id_jurusan);
-        $imagePath = public_path('img/jurusan/' . $jurusan->jurusan_thumbnail);
+        $imagePath = public_path('img/jurusan/'.$jurusan->jurusan_thumbnail);
 
         $jurusan->delete();
 

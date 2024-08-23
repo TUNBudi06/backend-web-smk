@@ -13,13 +13,13 @@ class tb_peserta_didik extends Model
 
     protected $primaryKey = 'id';
 
-    const CREATED_AT = "peserta_didik_timestamp";
+    const CREATED_AT = 'peserta_didik_timestamp';
 
     protected $fillable = [
         'nisn',
 
         'nis',
-        
+
         'nama',
 
         'kelas',
@@ -33,11 +33,10 @@ class tb_peserta_didik extends Model
         'gender',
 
         'telp',
-        
+
         'alamat',
 
     ];
 
     public $timestamps = false;
-
 }

@@ -18,7 +18,7 @@ class tb_news extends Model
         'news_content',
         'news_location',
         'news_image',
-        'news_viewer'
+        'news_viewer',
     ];
 
     protected $attributes = [
@@ -29,7 +29,7 @@ class tb_news extends Model
 
     public $timestamps = false;
 
-    const CREATED_AT = "news_timestamp";
+    const CREATED_AT = 'news_timestamp';
 
     public function category_news()
     {

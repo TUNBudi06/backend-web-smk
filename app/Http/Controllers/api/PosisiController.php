@@ -16,15 +16,19 @@ class PosisiController extends Controller
      *     summary="Get all Position",
      *     description="Retrieve all Position",
      *     operationId="getAllPosition",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(
      *                 property="data",
      *                 type="array",
+     *
      *                 @OA\Items(ref="#/components/schemas/Position")
      *             )
      *         )
@@ -56,21 +60,28 @@ class PosisiController extends Controller
      *     summary="Get Position by ID",
      *     description="Retrieve a single Position entry by ID",
      *     operationId="getPositionById",
+     *
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
+     *
      *         @OA\Schema(type="string")
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/Position")
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Data tidak ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )
@@ -83,7 +94,7 @@ class PosisiController extends Controller
 
         if (empty($data)) {
             return response()->json([
-                'data' => 'Data tidak ditemukan'
+                'data' => 'Data tidak ditemukan',
             ], 404);
         }
 

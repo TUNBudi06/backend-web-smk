@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authincatable;
-use Illuminate\Database\Eloquent\Model;
 
 class tb_admin extends Authincatable
 {
-    protected $table = "tb_admins";
-    protected $primaryKey = "id_admin";
+    protected $table = 'tb_admins';
+
+    protected $primaryKey = 'id_admin';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -17,13 +17,13 @@ class tb_admin extends Authincatable
      */
     protected $fillable = [
         'name',
-        "username",
+        'username',
         'email',
-        "token",
-        "role",
-        "email_verified_at",
-        "created_by",
-        "verified_user",
+        'token',
+        'role',
+        'email_verified_at',
+        'created_by',
+        'verified_user',
         'password',
     ];
 
@@ -33,14 +33,14 @@ class tb_admin extends Authincatable
      * @var array<int, string>
      */
     protected $hidden = [
-        "token",
+        'token',
         'password',
         'remember_token',
     ];
 
     public function role()
     {
-        return $this->belongsTo(tb_role::class,"role","id_role");
+        return $this->belongsTo(tb_role::class, 'role', 'id_role');
     }
 
     /**

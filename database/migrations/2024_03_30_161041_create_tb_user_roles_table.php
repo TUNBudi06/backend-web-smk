@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tb_user_roles', function (Blueprint $table) {
-            $table->bigIncrements("id_role")->primary();
-            $table->string("name");
-            $table->longText("user_access");
+            $table->bigIncrements('id_role')->primary();
+            $table->string('name');
+            $table->longText('user_access');
             $table->timestamps();
         });
     }

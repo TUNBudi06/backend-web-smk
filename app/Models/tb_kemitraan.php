@@ -16,7 +16,7 @@ class tb_kemitraan extends Model
     protected $fillable = [
         'kemitraan_name',
         'kemitraan_logo',
-        'kemitraan_thumbnail', 
+        'kemitraan_thumbnail',
         'kemitraan_description',
         'kemitraan_city',
         'kemitraan_location_detail',

@@ -16,15 +16,19 @@ class KemitraanController extends Controller
      *     summary="Get all Kemitraan",
      *     description="Retrieve all Kemitraan",
      *     operationId="getAllKemitraan",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(
      *                 property="data",
      *                 type="array",
+     *
      *                 @OA\Items(ref="#/components/schemas/Kemitraan")
      *             )
      *         )
@@ -56,27 +60,35 @@ class KemitraanController extends Controller
      *     summary="Get specific Kemitraan",
      *     description="Retrieve a specific Kemitraan by ID",
      *     operationId="getKemitraanById",
+     *
      *     @OA\Parameter(
      *         name="id_kemitraan",
      *         in="path",
      *         description="ID of the Kemitraan",
      *         required=true,
+     *
      *         @OA\Schema(type="string")
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", ref="#/components/schemas/Kemitraan")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Data tidak ditemukan",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="data", type="string", example="Data tidak ditemukan")
      *         )
      *     )
@@ -89,7 +101,7 @@ class KemitraanController extends Controller
 
         if (empty($data)) {
             return response()->json([
-                'data' => 'Data tidak ditemukan'
+                'data' => 'Data tidak ditemukan',
             ], 404);
         }
 

@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tb_user_pendings', function (Blueprint $table) {
-            $table->bigIncrements("id_user")->primary();
+            $table->bigIncrements('id_user')->primary();
             $table->string('name');
             $table->string('username');
             $table->string('email')->unique();
-            $table->string("NIP")->unique();
-            $table->string("foto_ktp");
+            $table->string('NIP')->unique();
+            $table->string('foto_ktp');
             $table->timestamp('email_verified_at')->nullable();
-            $table->boolean("verified_user")->default(false);
+            $table->boolean('verified_user')->default(false);
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

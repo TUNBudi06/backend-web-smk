@@ -11,6 +11,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *     type="object",
  *     title="Category Gallery Resource",
  *     properties={
+ *
  *         @OA\Property(property="id_category", type="integer"),
  *         @OA\Property(property="category_name", type="string"),
  *     }

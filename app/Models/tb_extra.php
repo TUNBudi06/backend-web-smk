@@ -15,15 +15,15 @@ class tb_extra extends Model
 
     protected $primaryKey = 'id_extra';
 
-    const CREATED_AT = "extra_timestamp";
+    const CREATED_AT = 'extra_timestamp';
 
     protected $fillable = [
         'extra_name',
-        
+
         'extra_text',
 
         'extra_type',
-        
+
         'extra_logo',
 
         'extra_image',

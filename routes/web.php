@@ -1,36 +1,36 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\profileAdmin;
-use App\Http\Middleware\hasAdminToken;
-use App\Http\Controllers\Auth\AdminAuth;
-use App\Http\Middleware\auth\adminLogin;
-use App\Http\Middleware\preventCallBack;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\ArtikelController;
-use App\Http\Controllers\GalleryController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\user\UserController;
-use App\Http\Controllers\PengumumanController;
-use App\Http\Controllers\profile\PdController;
-use App\Http\Controllers\profile\PTKController;
-use App\Http\Controllers\mitra\PosisiController;
-use App\Http\Controllers\profile\ExtraController;
-use App\Http\Controllers\categories\EventCategory;
-use App\Http\Controllers\categories\BeritaCategory;
-use App\Http\Controllers\mitra\KemitraanController;
-use App\Http\Controllers\profile\JurusanController;
-use App\Http\Controllers\profile\ProfileController;
+use App\Http\Controllers\Auth\AdminAuth;
+use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\categories\ArtikelCategory;
+use App\Http\Controllers\categories\BeritaCategory;
+use App\Http\Controllers\categories\EventCategory;
 use App\Http\Controllers\categories\GalleryCategory;
-use App\Http\Controllers\profile\FasilitasController;
 use App\Http\Controllers\categories\PengumumanCategory;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\mitra\KemitraanController;
 use App\Http\Controllers\mitra\LokerController;
+use App\Http\Controllers\mitra\PosisiController;
+use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\profile\ExtraController;
+use App\Http\Controllers\profile\FasilitasController;
+use App\Http\Controllers\profile\JurusanController;
+use App\Http\Controllers\profile\PdController;
+use App\Http\Controllers\profile\ProfileController;
+use App\Http\Controllers\profile\PTKController;
+use App\Http\Controllers\profileAdmin;
 use App\Http\Controllers\url\AlertController;
 use App\Http\Controllers\url\KomiteController;
 use App\Http\Controllers\url\VideoController;
+use App\Http\Controllers\user\UserController;
+use App\Http\Middleware\auth\adminLogin;
+use App\Http\Middleware\hasAdminToken;
+use App\Http\Middleware\preventCallBack;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect('/private/admin/login/GUI-APP');
@@ -44,7 +44,7 @@ Route::prefix('private/admin')->group(function () {
         Route::post('/login', [AdminAuth::class, 'login'])->name('guest.auth');
         Route::post('/logout', [AdminAuth::class, 'logout'])->name('logout');
 
-        Route::middleware([preventCallBack::class,adminLogin::class])->group(function () {
+        Route::middleware([preventCallBack::class, adminLogin::class])->group(function () {
             Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
             Route::prefix('management')->group(function () {
@@ -155,6 +155,5 @@ Route::prefix('private/admin')->group(function () {
         });
     })->middleware(hasAdminToken::class);
 });
-
 
 Route::fallback([AdminController::class, 'error']);

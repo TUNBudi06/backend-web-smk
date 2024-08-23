@@ -14,7 +14,7 @@ class PengumumanCategory extends Controller
     public function index(Request $request)
     {
         $token = $request->session()->get('token') ?? $request->input('token');
-        $pengumuman = tb_pemberitahuan_category::where(["type" => 2])->get();
+        $pengumuman = tb_pemberitahuan_category::where(['type' => 2])->get();
         $action = $_GET['action'] ?? '';
 
         return view('admin.categories.pengumumancategory.index', [
@@ -22,8 +22,8 @@ class PengumumanCategory extends Controller
             'action' => $action,
             'pengumuman' => $pengumuman,
             'token' => $token,
-            "category" => $request->session()->get("category") ?? null,
-            "action" => $request->session()->get("update") ?? false,
+            'category' => $request->session()->get('category') ?? null,
+            'action' => $request->session()->get('update') ?? false,
         ]);
     }
 
@@ -37,7 +37,8 @@ class PengumumanCategory extends Controller
         $data = [
             'update' => $action,
         ];
-        return redirect()->route("pengumuman.category.index",$token)->with($data);
+
+        return redirect()->route('pengumuman.category.index', $token)->with($data);
     }
 
     /**
@@ -46,7 +47,7 @@ class PengumumanCategory extends Controller
     public function store(Request $request)
     {
         try {
-            $category = new tb_pemberitahuan_category();
+            $category = new tb_pemberitahuan_category;
             $category->pemberitahuan_category_name = $request->category_name;
             $category->pemberitahuan_category_color = $request->category_color;
             $category->type = 2;
@@ -54,7 +55,7 @@ class PengumumanCategory extends Controller
 
             return redirect()->route('pengumuman.category.index', ['token' => $request->token])->with('success', 'Kategori berhasil ditambahkan.');
         } catch (\Exception $e) {
-            return redirect()->back()->withInput()->with('error', 'Gagal menyimpan kategori: ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('error', 'Gagal menyimpan kategori: '.$e->getMessage());
         }
     }
 
@@ -63,16 +64,17 @@ class PengumumanCategory extends Controller
      */
     public function edit(Request $request)
     {
-        $id_category = $request->route("pengumuman_category");
+        $id_category = $request->route('pengumuman_category');
         $token = $request->session()->get('token') ?? $request->input('token');
         $action = 'update';
-        $request->session()->put('token',$token);
-        $category = tb_pemberitahuan_category::where(["type" => 2])->findOrFail($id_category);
+        $request->session()->put('token', $token);
+        $category = tb_pemberitahuan_category::where(['type' => 2])->findOrFail($id_category);
         $data = [
             'category' => $category,
             'update' => $action,
         ];
-        return redirect()->route("pengumuman.category.index",$token)->with($data);
+
+        return redirect()->route('pengumuman.category.index', $token)->with($data);
     }
 
     /**
@@ -80,10 +82,10 @@ class PengumumanCategory extends Controller
      */
     public function update(Request $request)
     {
-        $pengumuman_category = $request->route("pengumuman_category");
+        $pengumuman_category = $request->route('pengumuman_category');
 
         // Update data category
-        $category = tb_pemberitahuan_category::where(["type" => 2])->findOrFail($pengumuman_category);
+        $category = tb_pemberitahuan_category::where(['type' => 2])->findOrFail($pengumuman_category);
         $category->update([
             'pemberitahuan_category_name' => $request->category_name,
             'pemberitahuan_category_color' => $request->category_color,
@@ -98,11 +100,11 @@ class PengumumanCategory extends Controller
      */
     public function destroy(Request $request)
     {
-        $id_category = $request->route("pengumuman_category");
+        $id_category = $request->route('pengumuman_category');
         $token = $request->session()->get('token') ?? $request->input('token');
 
-       $category = tb_pemberitahuan_category::where(["type" => 2])->findOrFail($id_category);
-       $category->delete();
+        $category = tb_pemberitahuan_category::where(['type' => 2])->findOrFail($id_category);
+        $category->delete();
 
         return redirect()->route('pengumuman.category.index', ['token' => $token])->with('success', 'Kategori berhasil dihapus.');
     }

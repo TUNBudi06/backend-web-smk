@@ -9,22 +9,26 @@ use Illuminate\Http\Request;
 
 class EkstraController extends Controller
 {
-        /**
+    /**
      * @OA\Get(
      *     path="/api/user/profile/ekstras",
      *     tags={"Ekstra"},
      *     summary="Get all Ekstra",
      *     description="Retrieve all Ekstra",
      *     operationId="getAllEkstra",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(
      *                 property="data",
      *                 type="array",
+     *
      *                 @OA\Items(ref="#/components/schemas/Ekstra")
      *             )
      *         )
@@ -56,27 +60,35 @@ class EkstraController extends Controller
      *     summary="Get specific Ekstra",
      *     description="Retrieve a specific Ekstra by ID",
      *     operationId="getEkstraById",
+     *
      *     @OA\Parameter(
      *         name="id_extra",
      *         in="path",
      *         description="ID of the Ekstra",
      *         required=true,
+     *
      *         @OA\Schema(type="string")
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", ref="#/components/schemas/Ekstra")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Data tidak ditemukan",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="data", type="string", example="Data tidak ditemukan")
      *         )
      *     )
@@ -89,7 +101,7 @@ class EkstraController extends Controller
 
         if (empty($data)) {
             return response()->json([
-                'data' => 'Data tidak ditemukan'
+                'data' => 'Data tidak ditemukan',
             ], 404);
         }
 

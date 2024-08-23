@@ -5,7 +5,6 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\JurusanResource;
 use App\Models\tb_jurusan;
-use App\Models\tb_prodi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -18,15 +17,19 @@ class JurusanController extends Controller
      *     summary="Get all Major",
      *     description="Retrieve all Major",
      *     operationId="getAllMajor",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(
      *                 property="data",
      *                 type="array",
+     *
      *                 @OA\Items(ref="#/components/schemas/Jurusan")
      *             )
      *         )
@@ -68,7 +71,7 @@ class JurusanController extends Controller
         }
 
         // Simpan data ke tabel jurusan
-        $data = new tb_jurusan();
+        $data = new tb_jurusan;
         $data->jurusan_nama = $request->jurusan_nama;
         $data->jurusan_short = $request->jurusan_short;
         $data->id_prodi = $request->id_prodi;
@@ -77,7 +80,7 @@ class JurusanController extends Controller
         // Simpan gambar
         if ($request->hasFile('jurusan_thumbnail')) {
             $fileContents = file_get_contents($request->file('jurusan_thumbnail')->getRealPath());
-            $imageName = hash('sha256', $fileContents) . '.' . $request->file('jurusan_thumbnail')->getClientOriginalExtension();
+            $imageName = hash('sha256', $fileContents).'.'.$request->file('jurusan_thumbnail')->getClientOriginalExtension();
             $request->file('jurusan_thumbnail')->move('img/jurusan/thumbnail', $imageName);
             $data->jurusan_thumbnail = $imageName;
         }
@@ -98,27 +101,35 @@ class JurusanController extends Controller
      *     summary="Get specific Major",
      *     description="Retrieve a specific Major by ID",
      *     operationId="getMajorById",
+     *
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         description="ID of the Major",
      *         required=true,
+     *
      *         @OA\Schema(type="integer")
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", ref="#/components/schemas/Jurusan")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Data tidak ditemukan",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="data", type="string", example="Data tidak ditemukan")
      *         )
      *     )
@@ -132,7 +143,7 @@ class JurusanController extends Controller
 
         if (empty($data)) {
             return response()->json([
-                'data' => 'Data tidak ditemukan'
+                'data' => 'Data tidak ditemukan',
             ], 404);
         }
 
@@ -151,7 +162,7 @@ class JurusanController extends Controller
         $data = tb_jurusan::find($id);
 
         // Jika data tidak ditemukan, kembalikan pesan kesalahan
-        if (!$data) {
+        if (! $data) {
             return response()->json(['errors' => 'Data jurusan tidak ditemukan'], 404);
         }
 
@@ -208,7 +219,7 @@ class JurusanController extends Controller
     {
         $jurusan = tb_jurusan::find($id);
 
-        if (!$jurusan) {
+        if (! $jurusan) {
             return response()->json([
                 'status' => false,
                 'message' => 'Data tidak ditemukan',

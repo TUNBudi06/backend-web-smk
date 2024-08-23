@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Http\Controllers\data_manager;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -21,7 +20,7 @@ class adminUser extends Seeder
                 'user_access' => data_manager::array2base(data_manager::accessRole()), // Example JSON array of user access
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]
+            ],
         ]);
         DB::table('tb_admins')->insert([
             // [
@@ -41,7 +40,7 @@ class adminUser extends Seeder
                 'name' => 'User',
                 'username' => 'usersmk',
                 'email' => 'smkuser@gmail.com',
-                'token' => "dava",
+                'token' => 'dava',
                 'role' => 1, // Assuming role ID 1 is for the admin role
                 'created_by' => 'Admin',
                 'password' => Hash::make('user123'), // Hash the password

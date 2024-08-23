@@ -11,6 +11,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *     type="object",
  *     title="Category Resource",
  *     properties={
+ *
  *         @OA\Property(property="id_pemberitahuan_category", type="integer"),
  *         @OA\Property(property="nama", type="string"),
  *         @OA\Property(property="color", type="string"),

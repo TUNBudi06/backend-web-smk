@@ -16,12 +16,16 @@ class PDController extends Controller
      *     summary="Get all peserta didik",
      *     description="Retrieve all peserta didik",
      *     operationId="getAllPesertaDidik",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", type="array",
+     *
      *                 @OA\Items(ref="#/components/schemas/PDResource")
      *             )
      *         )
@@ -35,7 +39,7 @@ class PDController extends Controller
         return response()->json([
             'message' => 'Data ditemukan',
             'data' => PDResource::collection($data),
-        ],200);
+        ], 200);
     }
 
     /**
@@ -43,14 +47,14 @@ class PDController extends Controller
      */
     public function store(Request $request)
     {
-        $dataPeserta_didik = new tb_peserta_didik();
+        $dataPeserta_didik = new tb_peserta_didik;
         $dataPeserta_didik = tb_peserta_didik::create($request->all());
 
         return response()->json([
             'status' => true,
             'message' => 'Sukses menambahkan data',
             'data' => $dataPeserta_didik,
-        ],200);
+        ], 200);
     }
 
     /**
@@ -60,26 +64,34 @@ class PDController extends Controller
      *     summary="Get specific peserta didik",
      *     description="Retrieve a specific peserta didik by its ID",
      *     operationId="getPesertaDidikById",
+     *
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
+     *
      *         @OA\Schema(
      *             type="string"
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", ref="#/components/schemas/PDResource")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Data tidak ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )
@@ -89,13 +101,13 @@ class PDController extends Controller
     {
         $peserta_didik = tb_peserta_didik::find($id);
 
-        if (!$peserta_didik) {
+        if (! $peserta_didik) {
             return response()->json([
                 'status' => false,
                 'message' => 'Data tidak ditemukan',
             ], 404);
         }
-    
+
         return response()->json([
             'status' => true,
             'message' => 'Data ditemukan',
@@ -110,15 +122,15 @@ class PDController extends Controller
     {
         $peserta_didik = tb_peserta_didik::find($id);
 
-        if (!$peserta_didik) {
+        if (! $peserta_didik) {
             return response()->json([
                 'status' => false,
                 'message' => 'Data tidak ditemukan',
             ], 404);
         }
-    
+
         $peserta_didik->update($request->all());
-    
+
         return response()->json([
             'status' => true,
             'message' => 'Data berhasil diperbarui',
@@ -132,15 +144,15 @@ class PDController extends Controller
     {
         $peserta_didik = tb_peserta_didik::find($id);
 
-        if (!$peserta_didik) {
+        if (! $peserta_didik) {
             return response()->json([
                 'status' => false,
                 'message' => 'Data tidak ditemukan',
             ], 404);
         }
-    
+
         $peserta_didik->delete();
-    
+
         return response()->json([
             'status' => true,
             'message' => 'Data berhasil dihapus',

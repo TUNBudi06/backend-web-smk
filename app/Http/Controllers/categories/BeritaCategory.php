@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\categories;
 
 use App\Http\Controllers\Controller;
-use App\Models\tb_category_news;
 use App\Models\tb_pemberitahuan_category;
 use Illuminate\Http\Request;
 
@@ -15,7 +14,7 @@ class BeritaCategory extends Controller
     public function index(Request $request)
     {
         $token = $request->session()->get('token') ?? $request->input('token');
-        $news = tb_pemberitahuan_category::where(["type" => 3])->get();
+        $news = tb_pemberitahuan_category::where(['type' => 3])->get();
         $action = $_GET['action'] ?? '';
 
         return view('admin.categories.beritacategory.index', [
@@ -23,8 +22,8 @@ class BeritaCategory extends Controller
             'action' => $action,
             'news' => $news,
             'token' => $token,
-            "category" => $request->session()->get("category") ?? null,
-            "action" => $request->session()->get("update") ?? false,
+            'category' => $request->session()->get('category') ?? null,
+            'action' => $request->session()->get('update') ?? false,
         ]);
     }
 
@@ -38,7 +37,8 @@ class BeritaCategory extends Controller
         $data = [
             'update' => $action,
         ];
-        return redirect()->route("berita.category.index",$token)->with($data);
+
+        return redirect()->route('berita.category.index', $token)->with($data);
     }
 
     /**
@@ -47,7 +47,7 @@ class BeritaCategory extends Controller
     public function store(Request $request)
     {
         try {
-            $category = new tb_pemberitahuan_category();
+            $category = new tb_pemberitahuan_category;
             $category->pemberitahuan_category_name = $request->category_name;
             $category->pemberitahuan_category_color = $request->category_color;
             $category->type = 3;
@@ -55,7 +55,7 @@ class BeritaCategory extends Controller
 
             return redirect()->route('berita.category.index', ['token' => $request->token])->with('success', 'Kategori berhasil ditambahkan.');
         } catch (\Exception $e) {
-            return redirect()->back()->withInput()->with('error', 'Gagal menyimpan kategori: ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('error', 'Gagal menyimpan kategori: '.$e->getMessage());
         }
     }
 
@@ -64,16 +64,17 @@ class BeritaCategory extends Controller
      */
     public function edit(Request $request)
     {
-        $id_category = $request->route("berita_category");
+        $id_category = $request->route('berita_category');
         $token = $request->session()->get('token') ?? $request->input('token');
         $action = 'update';
-        $request->session()->put('token',$token);
-        $category = tb_pemberitahuan_category::where(["type" => 3])->findOrFail($id_category);
+        $request->session()->put('token', $token);
+        $category = tb_pemberitahuan_category::where(['type' => 3])->findOrFail($id_category);
         $data = [
             'category' => $category,
             'update' => $action,
         ];
-        return redirect()->route("berita.category.index",$token)->with($data);
+
+        return redirect()->route('berita.category.index', $token)->with($data);
     }
 
     /**
@@ -84,10 +85,10 @@ class BeritaCategory extends Controller
         $request->validate([
             'category_name' => 'required',
         ]);
-        $berita_category = $request->route("berita_category");
+        $berita_category = $request->route('berita_category');
 
         // Update data category
-        $category = tb_pemberitahuan_category::where(["type" => 3])->findOrFail($berita_category);
+        $category = tb_pemberitahuan_category::where(['type' => 3])->findOrFail($berita_category);
         $category->update([
             'pemberitahuan_category_name' => $request->category_name,
             'pemberitahuan_category_color' => $request->category_color,
@@ -102,11 +103,11 @@ class BeritaCategory extends Controller
      */
     public function destroy(Request $request)
     {
-        $id_category = $request->route("berita_category");
+        $id_category = $request->route('berita_category');
         $token = $request->session()->get('token') ?? $request->input('token');
 
-       $category = tb_pemberitahuan_category::where(["type" => 3])->findOrFail($id_category);
-       $category->delete();
+        $category = tb_pemberitahuan_category::where(['type' => 3])->findOrFail($id_category);
+        $category->delete();
 
         return redirect()->route('berita.category.index', ['token' => $token])->with('success', 'Kategori berhasil dihapus.');
     }

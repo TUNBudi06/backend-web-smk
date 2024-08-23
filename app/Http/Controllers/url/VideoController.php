@@ -55,16 +55,17 @@ class VideoController extends Controller
      */
     public function edit(Request $request)
     {
-        $id_position = $request->route("video");
+        $id_position = $request->route('video');
         $token = $request->session()->get('token') ?? $request->input('token');
         $action = 'update';
-        $request->session()->put('token',$token);
+        $request->session()->put('token', $token);
         $videos = tb_video::findOrFail($id_position);
         $data = [
             'videos' => $videos,
             'update' => $action,
         ];
-        return redirect()->route("video.index",$token)->with($data);
+
+        return redirect()->route('video.index', $token)->with($data);
     }
 
     /**
@@ -75,7 +76,7 @@ class VideoController extends Controller
         $request->validate([
             'video_url' => 'required',
         ]);
-        $video = $request->route("video");
+        $video = $request->route('video');
 
         // Update data video
         $video = tb_video::findOrFail($video);

@@ -16,12 +16,16 @@ class PTKController extends Controller
      *     summary="Get all PTK",
      *     description="Retrieve all PTK",
      *     operationId="getAllPTK",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", type="array",
+     *
      *                 @OA\Items(ref="#/components/schemas/PTKResource")
      *             )
      *         )
@@ -35,7 +39,7 @@ class PTKController extends Controller
         return response()->json([
             'message' => 'Data ditemukan',
             'data' => PTKResource::collection($data),
-        ],200);
+        ], 200);
     }
 
     /**
@@ -43,14 +47,14 @@ class PTKController extends Controller
      */
     public function store(Request $request)
     {
-        $dataPTK = new tb_ptk();
+        $dataPTK = new tb_ptk;
         $dataPTK = tb_ptk::create($request->all());
 
         return response()->json([
             'status' => true,
             'message' => 'Sukses menambahkan data',
             'data' => $dataPTK,
-        ],200);
+        ], 200);
     }
 
     /**
@@ -60,26 +64,34 @@ class PTKController extends Controller
      *     summary="Get specific PTK",
      *     description="Retrieve a specific PTK by its ID",
      *     operationId="getPTKById",
+     *
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
+     *
      *         @OA\Schema(
      *             type="string"
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", ref="#/components/schemas/PTKResource")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Data tidak ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )
@@ -89,13 +101,13 @@ class PTKController extends Controller
     {
         $ptk = tb_ptk::find($id);
 
-        if (!$ptk) {
+        if (! $ptk) {
             return response()->json([
                 'status' => false,
                 'message' => 'Data tidak ditemukan',
             ], 404);
         }
-    
+
         return response()->json([
             'status' => true,
             'message' => 'Data ditemukan',
@@ -110,15 +122,15 @@ class PTKController extends Controller
     {
         $ptk = tb_ptk::find($id);
 
-        if (!$ptk) {
+        if (! $ptk) {
             return response()->json([
                 'status' => false,
                 'message' => 'Data tidak ditemukan',
             ], 404);
         }
-    
+
         $ptk->update($request->all());
-    
+
         return response()->json([
             'status' => true,
             'message' => 'Data berhasil diperbarui',
@@ -132,15 +144,15 @@ class PTKController extends Controller
     {
         $ptk = tb_ptk::find($id);
 
-        if (!$ptk) {
+        if (! $ptk) {
             return response()->json([
                 'status' => false,
                 'message' => 'Data tidak ditemukan',
             ], 404);
         }
-    
+
         $ptk->delete();
-    
+
         return response()->json([
             'status' => true,
             'message' => 'Data berhasil dihapus',

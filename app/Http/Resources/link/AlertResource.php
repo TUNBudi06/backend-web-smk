@@ -9,6 +9,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @OA\Schema(
  *     schema="AlertResource",
  *     type="object",
+ *
  *     @OA\Property(
  *         property="id_alert",
  *         type="integer",

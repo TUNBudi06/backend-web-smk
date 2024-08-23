@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\tb_admin;
 use App\Models\tb_pemberitahuan;
 use App\Models\tb_pemberitahuan_category;
-use Illuminate\Http\Request;
 use App\Models\tb_pengumuman;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class PengumumanController extends Controller
 {
@@ -18,9 +16,9 @@ class PengumumanController extends Controller
     {
         $perPage = $request->input('show', 10);
         $pengumuman = tb_pemberitahuan::where(['type' => 2])
-        ->with('kategori')
-        ->orderBy('date', 'desc')
-        ->paginate($perPage);
+            ->with('kategori')
+            ->orderBy('date', 'desc')
+            ->paginate($perPage);
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
@@ -61,7 +59,7 @@ class PengumumanController extends Controller
             'text' => 'required',
             'date' => 'required|date',
             'time' => 'required',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240'
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
         ], [
             'nama.required' => 'Kolom nama pengumuman harus diisi.',
             'id_pemberitahuan_category.required' => 'Kolom kategori pengumuman harus diisi.',
@@ -71,11 +69,11 @@ class PengumumanController extends Controller
             'date.date' => 'Kolom tanggal pengumuman harus dalam format tanggal yang benar.',
             'time.required' => 'Kolom waktu pengumuman harus diisi.',
             'thumbnail.required' => 'Kolom gambar wajib diisi',
-            'thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB'
+            'thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB',
         ]);
 
-//        tb_pengumuman::create($request->all());
-        $data = new tb_pemberitahuan();
+        //        tb_pengumuman::create($request->all());
+        $data = new tb_pemberitahuan;
         $data->nama = $request->nama;
         $data->category = $request->id_pemberitahuan_category;
         $data->target = $request->target;
@@ -87,12 +85,13 @@ class PengumumanController extends Controller
 
         if ($request->hasFile('thumbnail')) {
             $fileContents = file_get_contents($request->file('thumbnail')->getRealPath());
-            $imageName = hash('sha256', $fileContents) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
+            $imageName = hash('sha256', $fileContents).'.'.$request->file('thumbnail')->getClientOriginalExtension();
             $request->file('thumbnail')->move('img/announcement', $imageName);
             $data->thumbnail = $imageName;
         }
 
         $data->save();
+
         return redirect()->route('pengumuman.index', ['token' => $token])->with('success', 'Pengumuman baru berhasil ditambahkan.');
     }
 
@@ -101,7 +100,7 @@ class PengumumanController extends Controller
      */
     public function show(Request $request)
     {
-        $id_pengumuman = $request->route("pengumuman");
+        $id_pengumuman = $request->route('pengumuman');
         $token = $request->session()->get('token') ?? $request->input('token');
         $pengumuman = tb_pemberitahuan::where(['type' => 2])->findOrFail($id_pengumuman);
 
@@ -118,10 +117,10 @@ class PengumumanController extends Controller
      */
     public function edit(Request $request)
     {
-        $id_pengumuman = $request->route("pengumuman");
+        $id_pengumuman = $request->route('pengumuman');
         $token = $request->session()->get('token') ?? $request->input('token');
         $pengumuman = tb_pemberitahuan::where(['type' => 2])->findOrFail($id_pengumuman);
-        $categories = tb_pemberitahuan_category::where(["type" => 2])->get();
+        $categories = tb_pemberitahuan_category::where(['type' => 2])->get();
 
         return view('admin.pengumuman.edit', [
             'menu_active' => 'informasi',
@@ -137,14 +136,14 @@ class PengumumanController extends Controller
      */
     public function update(Request $request)
     {
-        $id_pengumuman = $request->route("pengumuman");
+        $id_pengumuman = $request->route('pengumuman');
         $request->validate([
             'nama' => 'required',
             'target' => 'required',
             'text' => 'required',
             'date' => 'required|date',
             'time' => 'required',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240'
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
         ], [
             'nama.required' => 'Kolom nama pengumuman harus diisi.',
             'target.required' => 'Kolom target pengumuman harus diisi.',
@@ -153,27 +152,27 @@ class PengumumanController extends Controller
             'date.date' => 'Kolom tanggal pengumuman harus dalam format tanggal yang benar.',
             'time.required' => 'Kolom waktu pengumuman harus diisi.',
             'thumbnail.required' => 'Kolom gambar wajib diisi',
-            'thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB'
+            'thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB',
         ]);
-    
+
         $data = tb_pemberitahuan::where('tb_pemberitahuan.type', 2)
             ->findOrFail($id_pengumuman);
-    
+
         if ($request->hasFile('thumbnail')) {
             // Hapus gambar sebelumnya jika ada
-            if (!empty($data->thumbnail)) {
-                $oldImagePath = public_path('img/announcement/' . $data->thumbnail);
-                if (file_exists($oldImagePath) && !is_dir($oldImagePath)) {
+            if (! empty($data->thumbnail)) {
+                $oldImagePath = public_path('img/announcement/'.$data->thumbnail);
+                if (file_exists($oldImagePath) && ! is_dir($oldImagePath)) {
                     unlink($oldImagePath);
                 }
             }
-    
+
             // Simpan gambar baru
             $imageName = $request->file('thumbnail')->hashName();
             $request->file('thumbnail')->move('img/announcement', $imageName);
             $data->thumbnail = $imageName;
         }
-    
+
         $data->update([
             'nama' => $request->nama,
             'target' => $request->target,
@@ -182,24 +181,23 @@ class PengumumanController extends Controller
             'time' => $request->time,
             'text' => $request->text,
         ]);
-    
+
         return redirect()->route('pengumuman.index', ['token' => $request->token])->with('success', 'Pengumuman berhasil diperbarui.');
     }
-    
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Request $request)
     {
-        $id_pengumuman = $request->route("pengumuman");
+        $id_pengumuman = $request->route('pengumuman');
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $pengumuman = tb_pemberitahuan::where('id_pemberitahuan', $id_pengumuman)
             ->where('type', 2)
             ->firstOrFail();
 
-        $imagePath = public_path('img/announcement/' . $pengumuman->thumbnail);
+        $imagePath = public_path('img/announcement/'.$pengumuman->thumbnail);
 
         $pengumuman->delete();
 
@@ -207,7 +205,7 @@ class PengumumanController extends Controller
             unlink($imagePath);
         }
 
-       return redirect()->route('pengumuman.index', ['token' => $request->token])->with('success', 'Pengumuman berhasil dihapus.');
+        return redirect()->route('pengumuman.index', ['token' => $request->token])->with('success', 'Pengumuman berhasil dihapus.');
 
     }
 }

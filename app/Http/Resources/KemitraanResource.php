@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
  * @OA\Schema(
  *     schema="Kemitraan",
  *     type="object",
+ *
  *     @OA\Property(property="id_kemitraan", type="integer", example=1),
  *     @OA\Property(property="kemitraan_name", type="string", example="Inafood/Honda/Mayora"),
  *     @OA\Property(property="kemitraan_logo", type="string", example="logo.png"),
@@ -28,10 +29,10 @@ class KemitraanResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $image_logo = 'img/kemitraan/logo/' . $this->kemitraan_logo;
+        $image_logo = 'img/kemitraan/logo/'.$this->kemitraan_logo;
         $kemitraan_logo = File::exists(public_path($image_logo)) ? $image_logo : 'img/no_image.png';
 
-        $image_cover = 'img/kemitraan/cover/' . $this->kemitraan_thumbnail;
+        $image_cover = 'img/kemitraan/cover/'.$this->kemitraan_thumbnail;
         $kemitraan_thumbnail = File::exists(public_path($image_cover)) ? $image_cover : 'img/no_image.png';
 
         $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->text)));

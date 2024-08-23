@@ -9,13 +9,13 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @OA\Schema(
  *     schema="Position",
  *     type="object",
+ *
  *     @OA\Property(property="id_position", type="integer", example=1),
  *     @OA\Property(property="position_name", type="string", example="Operator/Engineer/Finance"),
  *     @OA\Property(property="position_type", type="string", example="Fulltime/Parttime/Internship"),
  *     @OA\Property(property="kemitraan_id", type="string", example="Inafood/Honda/Mayora"),
  * )
  */
-
 class PosisiResource extends JsonResource
 {
     /**

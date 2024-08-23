@@ -1,0 +1,16 @@
+INSERT INTO `tb_category_artikel` (`id_category`, `category_name`) VALUES (1, 'Networkingg');
+INSERT INTO `tb_category_artikel` (`id_category`, `category_name`) VALUES (2, 'Editing');
+INSERT INTO `tb_category_artikel` (`id_category`, `category_name`) VALUES (3, 'Programming');
+INSERT INTO `tb_category_artikel` (`id_category`, `category_name`) VALUES (5, 'Khusus');
+INSERT INTO `tb_category_artikel` (`id_category`, `category_name`) VALUES (6, 'Budaya Idustri');
+INSERT INTO `tb_category_artikel` (`id_category`, `category_name`) VALUES (7, 'Info PPDB');
+INSERT INTO `tb_category_artikel` (`id_category`, `category_name`) VALUES (8, 'Mars SMKN 1 Purwosari');
+INSERT INTO `tb_category_artikel` (`id_category`, `category_name`) VALUES (9, 'Metaverse');
+INSERT INTO `tb_category_artikel` (`id_category`, `category_name`) VALUES (1, 'Networkingg');
+INSERT INTO `tb_category_artikel` (`id_category`, `category_name`) VALUES (2, 'Editing');
+INSERT INTO `tb_category_artikel` (`id_category`, `category_name`) VALUES (3, 'Programming');
+INSERT INTO `tb_category_artikel` (`id_category`, `category_name`) VALUES (5, 'Khusus');
+INSERT INTO `tb_category_artikel` (`id_category`, `category_name`) VALUES (6, 'Budaya Idustri');
+INSERT INTO `tb_category_artikel` (`id_category`, `category_name`) VALUES (7, 'Info PPDB');
+INSERT INTO `tb_category_artikel` (`id_category`, `category_name`) VALUES (8, 'Mars SMKN 1 Purwosari');
+INSERT INTO `tb_category_artikel` (`id_category`, `category_name`) VALUES (9, 'Metaverse');

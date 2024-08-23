@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\categories;
 
 use App\Http\Controllers\Controller;
-use App\Models\tb_category_artikel;
 use App\Models\tb_pemberitahuan_category;
 use Illuminate\Http\Request;
 
@@ -15,17 +14,17 @@ class ArtikelCategory extends Controller
     public function index(Request $request)
     {
         $token = $request->session()->get('token') ?? $request->input('token');
-        $articles = tb_pemberitahuan_category::where(["type" => 1])->get();
+        $articles = tb_pemberitahuan_category::where(['type' => 1])->get();
         $action = $_GET['action'] ?? '';
-//        return $request->session()->all();
+        //        return $request->session()->all();
 
         return view('admin.categories.artikelcategory.index', [
             'menu_active' => 'berita',
             'action' => $action,
             'articles' => $articles,
             'token' => $token,
-            "category" => $request->session()->get("category") ?? null,
-            "action" => $request->session()->get("update") ?? false,
+            'category' => $request->session()->get('category') ?? null,
+            'action' => $request->session()->get('update') ?? false,
         ]);
     }
 
@@ -39,7 +38,8 @@ class ArtikelCategory extends Controller
         $data = [
             'update' => $action,
         ];
-        return redirect()->route("artikel.category.index",$token)->with($data);
+
+        return redirect()->route('artikel.category.index', $token)->with($data);
     }
 
     /**
@@ -52,7 +52,7 @@ class ArtikelCategory extends Controller
             'pemberitahuan_category_color' => 'required',
         ]);
 
-        $category = new tb_pemberitahuan_category();
+        $category = new tb_pemberitahuan_category;
         $category->pemberitahuan_category_name = $request->category_name;
         $category->pemberitahuan_category_color = $request->category_color;
         $category->type = 1;
@@ -66,16 +66,17 @@ class ArtikelCategory extends Controller
      */
     public function edit(Request $request)
     {
-        $id_category = $request->route("artikel_category");
+        $id_category = $request->route('artikel_category');
         $token = $request->session()->get('token') ?? $request->input('token');
         $action = 'update';
-        $request->session()->put('token',$token);
-        $category = tb_pemberitahuan_category::where(["type" => 1])->findOrFail($id_category);
+        $request->session()->put('token', $token);
+        $category = tb_pemberitahuan_category::where(['type' => 1])->findOrFail($id_category);
         $data = [
             'category' => $category,
             'update' => $action,
         ];
-        return redirect()->route("artikel.category.index",$token)->with($data);
+
+        return redirect()->route('artikel.category.index', $token)->with($data);
     }
 
     /**
@@ -86,10 +87,10 @@ class ArtikelCategory extends Controller
         $request->validate([
             'category_name' => 'required',
         ]);
-        $artikel_category = $request->route("artikel_category");
+        $artikel_category = $request->route('artikel_category');
 
         // Update data category
-        $category = tb_pemberitahuan_category::where(["type" => 1])->findOrFail($artikel_category);
+        $category = tb_pemberitahuan_category::where(['type' => 1])->findOrFail($artikel_category);
         $category->update([
             'pemberitahuan_category_name' => $request->category_name,
             'pemberitahuan_category_color' => $request->category_color,
@@ -104,11 +105,11 @@ class ArtikelCategory extends Controller
      */
     public function destroy(Request $request)
     {
-        $id_category = $request->route("artikel_category");
+        $id_category = $request->route('artikel_category');
         $token = $request->session()->get('token') ?? $request->input('token');
 
-       $category = tb_pemberitahuan_category::where(["type" => 1])->findOrFail($id_category);
-       $category->delete();
+        $category = tb_pemberitahuan_category::where(['type' => 1])->findOrFail($id_category);
+        $category->delete();
 
         return redirect()->route('artikel.category.index', ['token' => $token])->with('success', 'Kategori berhasil dihapus.');
     }

@@ -17,6 +17,7 @@ class KemitraanController extends Controller
         $kemitraan = tb_kemitraan::orderBy('id_kemitraan', 'desc')->paginate($perPage);
 
         $token = $request->session()->get('token') ?? $request->input('token');
+
         return view('admin.kemitraan.index', [
             'menu_active' => 'kemitraan',
             'mitra_active' => 'kemitraan',
@@ -67,7 +68,7 @@ class KemitraanController extends Controller
         ]);
 
         // Simpan data ke tabel tb_kemitraan
-        $data = new tb_kemitraan();
+        $data = new tb_kemitraan;
         $data->kemitraan_name = $request->kemitraan_name;
         $data->kemitraan_description = $request->kemitraan_description;
         $data->kemitraan_city = $request->kemitraan_city;
@@ -75,14 +76,14 @@ class KemitraanController extends Controller
 
         if ($request->hasFile('kemitraan_thumbnail')) {
             $fileContents = file_get_contents($request->file('kemitraan_thumbnail')->getRealPath());
-            $imageName = substr(hash('sha256', $fileContents), 0, 40) . '.' . $request->file('kemitraan_thumbnail')->getClientOriginalExtension();
+            $imageName = substr(hash('sha256', $fileContents), 0, 40).'.'.$request->file('kemitraan_thumbnail')->getClientOriginalExtension();
             $request->file('kemitraan_thumbnail')->move(public_path('img/kemitraan/cover/'), $imageName);
             $data->kemitraan_thumbnail = $imageName;
         }
 
         if ($request->hasFile('kemitraan_logo')) {
             $fileContents = file_get_contents($request->file('kemitraan_logo')->getRealPath());
-            $logoName = substr(hash('sha256', $fileContents), 0, 40) . '.' . $request->file('kemitraan_logo')->getClientOriginalExtension();
+            $logoName = substr(hash('sha256', $fileContents), 0, 40).'.'.$request->file('kemitraan_logo')->getClientOriginalExtension();
             $request->file('kemitraan_logo')->move(public_path('img/kemitraan/logo/'), $logoName);
             $data->kemitraan_logo = $logoName;
         }
@@ -105,7 +106,7 @@ class KemitraanController extends Controller
      */
     public function edit(Request $request)
     {
-        $id_kemitraan = $request->route("kemitraan");
+        $id_kemitraan = $request->route('kemitraan');
         $token = $request->session()->get('token') ?? $request->input('token');
         $kemitraan = tb_kemitraan::findOrFail($id_kemitraan);
 
@@ -122,7 +123,7 @@ class KemitraanController extends Controller
      */
     public function update(Request $request)
     {
-        $id_kemitraan = $request->route("kemitraan");
+        $id_kemitraan = $request->route('kemitraan');
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $request->validate([
@@ -150,24 +151,24 @@ class KemitraanController extends Controller
 
         if ($request->hasFile('kemitraan_thumbnail')) {
             // Hapus gambar lama jika ada
-            if ($data->kemitraan_thumbnail && file_exists(public_path('img/kemitraan/cover/' . $data->kemitraan_thumbnail))) {
-                unlink(public_path('img/kemitraan/cover/' . $data->kemitraan_thumbnail));
+            if ($data->kemitraan_thumbnail && file_exists(public_path('img/kemitraan/cover/'.$data->kemitraan_thumbnail))) {
+                unlink(public_path('img/kemitraan/cover/'.$data->kemitraan_thumbnail));
             }
 
             $fileContents = file_get_contents($request->file('kemitraan_thumbnail')->getRealPath());
-            $imageName = substr(hash('sha256', $fileContents), 0, 40) . '.' . $request->file('kemitraan_thumbnail')->getClientOriginalExtension();
+            $imageName = substr(hash('sha256', $fileContents), 0, 40).'.'.$request->file('kemitraan_thumbnail')->getClientOriginalExtension();
             $request->file('kemitraan_thumbnail')->move(public_path('img/kemitraan/cover/'), $imageName);
             $data->kemitraan_thumbnail = $imageName;
         }
 
         if ($request->hasFile('kemitraan_logo')) {
             // Hapus logo lama jika ada
-            if ($data->kemitraan_logo && file_exists(public_path('img/kemitraan/logo/' . $data->kemitraan_logo))) {
-                unlink(public_path('img/kemitraan/logo/' . $data->kemitraan_logo));
+            if ($data->kemitraan_logo && file_exists(public_path('img/kemitraan/logo/'.$data->kemitraan_logo))) {
+                unlink(public_path('img/kemitraan/logo/'.$data->kemitraan_logo));
             }
 
             $fileContents = file_get_contents($request->file('kemitraan_logo')->getRealPath());
-            $logoName = substr(hash('sha256', $fileContents), 0, 40) . '.' . $request->file('kemitraan_logo')->getClientOriginalExtension();
+            $logoName = substr(hash('sha256', $fileContents), 0, 40).'.'.$request->file('kemitraan_logo')->getClientOriginalExtension();
             $request->file('kemitraan_logo')->move(public_path('img/kemitraan/logo/'), $logoName);
             $data->kemitraan_logo = $logoName;
         }
@@ -182,7 +183,7 @@ class KemitraanController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id_kemitraan = $request->route("kemitraan");
+        $id_kemitraan = $request->route('kemitraan');
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $kemitraan = tb_kemitraan::findOrFail($id_kemitraan);

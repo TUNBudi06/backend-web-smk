@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\tb_artikel;
-use App\Models\tb_category_artikel;
 use App\Models\tb_pemberitahuan;
 use App\Models\tb_pemberitahuan_category;
 use Illuminate\Http\Request;
@@ -17,11 +15,12 @@ class ArtikelController extends Controller
     {
         $perPage = $request->input('show', 10);
         $artikel = tb_pemberitahuan::where(['type' => 1])
-        ->with('kategori')
-        ->orderBy('created_at', 'desc')
-        ->paginate($perPage);
+            ->with('kategori')
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage);
 
         $token = $request->session()->get('token') ?? $request->input('token');
+
         return view('admin.artikel.index', [
             'menu_active' => 'informasi',
             'info_active' => 'artikel',
@@ -40,7 +39,7 @@ class ArtikelController extends Controller
         return view('admin.artikel.create', [
             'menu_active' => 'informasi',
             'info_active' => 'artikel',
-            'artikel' => tb_pemberitahuan_category::where(["type" => 1])->get(),
+            'artikel' => tb_pemberitahuan_category::where(['type' => 1])->get(),
             'token' => $token,
         ]);
     }
@@ -68,7 +67,7 @@ class ArtikelController extends Controller
         ]);
 
         // Simpan data ke tabel artikel
-        $data = new tb_pemberitahuan();
+        $data = new tb_pemberitahuan;
         $data->nama = $request->nama;
         $data->level = $request->level;
         $data->category = $request->id_pemberitahuan_category;
@@ -79,7 +78,7 @@ class ArtikelController extends Controller
         // Simpan gambar
         if ($request->hasFile('thumbnail')) {
             $file = $request->file('thumbnail');
-            $imageName = md5($file->getClientOriginalName() . microtime()) . '.' . $file->getClientOriginalExtension();
+            $imageName = md5($file->getClientOriginalName().microtime()).'.'.$file->getClientOriginalExtension();
             $file->move('img/artikel', $imageName);
             $data->thumbnail = $imageName;
         }
@@ -94,7 +93,7 @@ class ArtikelController extends Controller
      */
     public function show(Request $request)
     {
-        $id_artikel = $request->route("artikel");
+        $id_artikel = $request->route('artikel');
         $token = $request->session()->get('token') ?? $request->input('token');
         $artikel = tb_pemberitahuan::select('tb_pemberitahuan.*', 'tb_pemberitahuan_category.pemberitahuan_category_name')
             ->join('tb_pemberitahuan_category', 'tb_pemberitahuan.category', '=', 'tb_pemberitahuan_category.id_pemberitahuan_category')
@@ -106,7 +105,7 @@ class ArtikelController extends Controller
             'info_active' => 'artikel',
             'profile_active' => 'artikel',
             'token' => $token,
-            'artikel' => $artikel
+            'artikel' => $artikel,
         ]);
     }
 
@@ -115,18 +114,17 @@ class ArtikelController extends Controller
      */
     public function edit(Request $request)
     {
-        $id_artikel = $request->route("artikel");
+        $id_artikel = $request->route('artikel');
         $token = $request->session()->get('token') ?? $request->input('token');
         $artikel = tb_pemberitahuan::where(['type' => 1])->findOrFail($id_artikel);
-        $categories = tb_pemberitahuan_category::where("type", 1)->get();
-
+        $categories = tb_pemberitahuan_category::where('type', 1)->get();
 
         return view('admin.artikel.edit', [
             'menu_active' => 'informasi',
             'info_active' => 'artikel',
             'token' => $token,
             'artikel' => $artikel,
-            "categories" => $categories
+            'categories' => $categories,
         ]);
     }
 
@@ -135,7 +133,7 @@ class ArtikelController extends Controller
      */
     public function update(Request $request)
     {
-        $id_artikel = $request->route("artikel");
+        $id_artikel = $request->route('artikel');
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $request->validate([
@@ -158,9 +156,9 @@ class ArtikelController extends Controller
 
         if ($request->hasFile('thumbnail')) {
             // Hapus gambar sebelumnya jika ada
-            if (!empty($data->thumbnail)) {
-                $oldImagePath = public_path('img/artikel/' . $data->thumbnail);
-                if (file_exists($oldImagePath) && !is_dir($oldImagePath)) {
+            if (! empty($data->thumbnail)) {
+                $oldImagePath = public_path('img/artikel/'.$data->thumbnail);
+                if (file_exists($oldImagePath) && ! is_dir($oldImagePath)) {
                     unlink($oldImagePath);
                 }
             }
@@ -170,7 +168,6 @@ class ArtikelController extends Controller
             $request->file('thumbnail')->move('img/artikel', $imageName);
             $data->thumbnail = $imageName;
         }
-
 
         $data->update([
             'nama' => $request->nama,
@@ -188,14 +185,14 @@ class ArtikelController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id_artikel = $request->route("artikel");
+        $id_artikel = $request->route('artikel');
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $artikel = tb_pemberitahuan::where('id_pemberitahuan', $id_artikel)
-        ->where('type', 4)
-        ->firstOrFail();
+            ->where('type', 4)
+            ->firstOrFail();
 
-        $imagePath = public_path('img/artikel/' . $artikel->thumbnail);
+        $imagePath = public_path('img/artikel/'.$artikel->thumbnail);
 
         $artikel->delete();
 

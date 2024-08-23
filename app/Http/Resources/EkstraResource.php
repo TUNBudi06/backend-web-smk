@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
  * @OA\Schema(
  *     schema="Ekstra",
  *     type="object",
+ *
  *     @OA\Property(property="id_extra", type="integer", example=1),
  *     @OA\Property(property="extra_name", type="string", example="Basketball"),
  *     @OA\Property(property="extra_text", type="string", example="Basketball club for all grades."),
@@ -30,10 +31,10 @@ class EkstraResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $image_logo = 'img/extrakurikuler/logo/' . $this->extra_logo;
+        $image_logo = 'img/extrakurikuler/logo/'.$this->extra_logo;
         $extra_logo = File::exists(public_path($image_logo)) ? $image_logo : 'img/no_image.png';
 
-        $image_cover = 'img/extrakurikuler/cover/' . $this->extra_image;
+        $image_cover = 'img/extrakurikuler/cover/'.$this->extra_image;
         $extra_image = File::exists(public_path($image_cover)) ? $image_cover : 'img/no_image.png';
 
         $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->text)));

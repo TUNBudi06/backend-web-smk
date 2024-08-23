@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\tb_category_news;
-use App\Models\tb_news;
 use App\Models\tb_pemberitahuan;
 use App\Models\tb_pemberitahuan_category;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,16 +16,17 @@ class BeritaController extends Controller
     {
         $perPage = $request->input('show', 10);
         $news = tb_pemberitahuan::where(['type' => 3])
-        ->with('kategori')
-        ->orderBy('created_at', 'desc')
-        ->paginate($perPage);
+            ->with('kategori')
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage);
 
         $token = $request->session()->get('token') ?? $request->input('token');
+
         return view('admin.berita.index', [
             'menu_active' => 'informasi',
             'info_active' => 'berita',
             'token' => $token,
-            'news' => $news
+            'news' => $news,
         ]);
     }
 
@@ -60,7 +58,7 @@ class BeritaController extends Controller
             'id_pemberitahuan_category' => 'required',
             'text' => 'required',
             'location' => 'required',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240'
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
         ], [
             'nama.required' => 'Kolom nama berita harus diisi.',
             'level.required' => 'Kolom level berita harus diisi.',
@@ -68,11 +66,11 @@ class BeritaController extends Controller
             'text.required' => 'Kolom isi berita harus diisi.',
             'location.required' => 'Kolom lokasi berita harus diisi.',
             'thumbnail.required' => 'Kolom gambar wajib diisi',
-            'thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB'
+            'thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB',
         ]);
 
         // Simpan data ke tabel news
-        $data = new tb_pemberitahuan();
+        $data = new tb_pemberitahuan;
         $data->nama = $request->nama;
         $data->level = $request->level;
         $data->category = $request->id_pemberitahuan_category;
@@ -84,7 +82,7 @@ class BeritaController extends Controller
         // Simpan gambar
         if ($request->hasFile('thumbnail')) {
             $fileContents = file_get_contents($request->file('thumbnail')->getRealPath());
-            $imageName = hash('sha256', $fileContents) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
+            $imageName = hash('sha256', $fileContents).'.'.$request->file('thumbnail')->getClientOriginalExtension();
             $request->file('thumbnail')->move('img/berita', $imageName);
             $data->thumbnail = $imageName;
         }
@@ -99,11 +97,11 @@ class BeritaController extends Controller
      */
     public function show(Request $request)
     {
-        $id_news = $request->route("berita");
+        $id_news = $request->route('berita');
         $token = $request->session()->get('token') ?? $request->input('token');
         $news = tb_pemberitahuan::select('tb_pemberitahuan.*', 'tb_pemberitahuan_category.pemberitahuan_category_name')
             ->join('tb_pemberitahuan_category', 'tb_pemberitahuan.category', '=', 'tb_pemberitahuan_category.id_pemberitahuan_category')
-            ->where(['tb_pemberitahuan.type'=> 3])
+            ->where(['tb_pemberitahuan.type' => 3])
             ->findOrFail($id_news);
 
         return view('admin.berita.show', [
@@ -120,10 +118,10 @@ class BeritaController extends Controller
      */
     public function edit(Request $request)
     {
-        $id_news = $request->route("berita");
+        $id_news = $request->route('berita');
         $token = $request->session()->get('token') ?? $request->input('token');
         $news = tb_pemberitahuan::where(['type' => 3])->findOrFail($id_news);
-        $categories = tb_pemberitahuan_category::where(["type" => 3])->get();
+        $categories = tb_pemberitahuan_category::where(['type' => 3])->get();
 
         return view('admin.berita.edit', [
             'menu_active' => 'informasi',
@@ -139,7 +137,7 @@ class BeritaController extends Controller
      */
     public function update(Request $request)
     {
-        $id_news = $request->route("berita");
+        $id_news = $request->route('berita');
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $request->validate([
@@ -148,7 +146,7 @@ class BeritaController extends Controller
             'id_pemberitahuan_category' => 'required',
             'text' => 'required',
             'location' => 'required',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240'
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
         ], [
             'nama.required' => 'Kolom nama berita harus diisi.',
             'level.required' => 'Kolom level berita harus diisi.',
@@ -156,7 +154,7 @@ class BeritaController extends Controller
             'text.required' => 'Kolom isi berita harus diisi.',
             'location.required' => 'Kolom lokasi berita harus diisi.',
             'thumbnail' => 'Kolom gambar wajib diisi',
-            'thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB'
+            'thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB',
         ]);
 
         // Temukan data berita
@@ -166,13 +164,13 @@ class BeritaController extends Controller
         // Periksa apakah ada pergantian gambar
         if ($request->hasFile('thumbnail')) {
             // Hapus gambar sebelumnya jika ada
-            if (!empty($data->thumbnail)) {
-                $oldImagePath = public_path('img/berita/' . $data->thumbnail);
-                if (file_exists($oldImagePath) && !is_dir($oldImagePath)) {
+            if (! empty($data->thumbnail)) {
+                $oldImagePath = public_path('img/berita/'.$data->thumbnail);
+                if (file_exists($oldImagePath) && ! is_dir($oldImagePath)) {
                     unlink($oldImagePath);
                 }
             }
-    
+
             // Simpan gambar baru
             $imageName = $request->file('thumbnail')->hashName();
             $request->file('thumbnail')->move('img/berita', $imageName);
@@ -197,14 +195,14 @@ class BeritaController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id_news = $request->route("berita");
+        $id_news = $request->route('berita');
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $news = tb_pemberitahuan::where('id_pemberitahuan', $id_news)
             ->where('type', 3)
             ->firstOrFail();
 
-        $imagePath = public_path('img/berita/' . $news->thumbnail);
+        $imagePath = public_path('img/berita/'.$news->thumbnail);
 
         $news->delete();
 

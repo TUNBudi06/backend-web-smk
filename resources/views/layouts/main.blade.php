@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="{{ asset('css/jssocials-theme-flat.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jssocials-theme-minima.css') }}">
     <link rel="icon" type="image/x-icon" class="rounded-circle" href="{{ asset('favicon.ico') }}" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.4/css/dataTables.dataTables.css" />
+
+    <script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
     @if ($menu_active)
         <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     @endif
@@ -28,7 +31,7 @@
         @include('admin.partials.search')
         @yield('container')
     </div>
-    
+
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/all.min.js') }}"></script>
     <script src="{{ asset('js/sharer.min.js') }}"></script>

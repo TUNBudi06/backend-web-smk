@@ -18,20 +18,27 @@ class FasilitasController extends Controller
      *     summary="Get all facilities",
      *     description="Retrieve all facilities",
      *     operationId="getAllFacilities",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", type="array",
+     *
      *                 @OA\Items(ref="#/components/schemas/FasilitasResource")
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Data tidak ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )
@@ -72,7 +79,7 @@ class FasilitasController extends Controller
         }
 
         // Simpan data ke tabel facility
-        $data = new tb_facilities();
+        $data = new tb_facilities;
         $data->facility_name = $request->facility_name;
         $data->id_prodi = $request->id_prodi;
         $data->facility_text = $request->facility_text;
@@ -80,7 +87,7 @@ class FasilitasController extends Controller
         // Simpan gambar
         if ($request->hasFile('facility_image')) {
             $fileContents = file_get_contents($request->file('facility_image')->getRealPath());
-            $imageName = hash('sha256', $fileContents) . '.' . $request->file('facility_image')->getClientOriginalExtension();
+            $imageName = hash('sha256', $fileContents).'.'.$request->file('facility_image')->getClientOriginalExtension();
             $request->file('facility_image')->move('img/fasilitas/', $imageName);
             $data->facility_image = $imageName;
         }
@@ -94,7 +101,6 @@ class FasilitasController extends Controller
         ], 201);
     }
 
-
     /**
      * @OA\Get(
      *     path="/api/user/profile/facilities/{id}",
@@ -102,26 +108,34 @@ class FasilitasController extends Controller
      *     summary="Get specific facility",
      *     description="Retrieve a specific facility by its ID",
      *     operationId="getFacilityById",
+     *
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
+     *
      *         @OA\Schema(
      *             type="string"
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", ref="#/components/schemas/FasilitasResource")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Data tidak ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )
@@ -130,12 +144,12 @@ class FasilitasController extends Controller
     public function show(string $id)
     {
         $data = tb_facilities::with('prodis')
-        ->where('id_facility', $id)
-        ->first();
+            ->where('id_facility', $id)
+            ->first();
 
         if (empty($data)) {
             return response()->json([
-                'data' => 'Data tidak ditemukan'
+                'data' => 'Data tidak ditemukan',
             ], 404);
         }
 
@@ -154,7 +168,7 @@ class FasilitasController extends Controller
         $data = tb_facilities::find($id);
 
         // Jika data tidak ditemukan, kembalikan pesan kesalahan
-        if (!$data) {
+        if (! $data) {
             return response()->json(['errors' => 'Data fasilitas tidak ditemukan'], 404);
         }
 
@@ -184,7 +198,7 @@ class FasilitasController extends Controller
         // Jika ada file gambar yang diunggah, simpan gambar baru
         if ($request->hasFile('facility_image')) {
             $fileContents = file_get_contents($request->file('facility_image')->getRealPath());
-            $imageName = hash('sha256', $fileContents) . '.' . $request->file('facility_image')->getClientOriginalExtension();
+            $imageName = hash('sha256', $fileContents).'.'.$request->file('facility_image')->getClientOriginalExtension();
             $request->file('facility_image')->move('img/fasilitas/', $imageName);
             $data->facility_image = $imageName;
         }
@@ -206,7 +220,7 @@ class FasilitasController extends Controller
     {
         $facilities = tb_facilities::find($id);
 
-        if (!$facilities) {
+        if (! $facilities) {
             return response()->json([
                 'status' => false,
                 'message' => 'Data tidak ditemukan',

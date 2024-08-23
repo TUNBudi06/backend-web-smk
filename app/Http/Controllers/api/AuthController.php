@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Http\Controllers\Controller;
 use App\Models\tb_admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -15,8 +15,8 @@ class AuthController extends Controller
     public function addToken(request $request)
     {
         $token = $request->validate([
-            "token" => "required"
-        ])["token"];
+            'token' => 'required',
+        ])['token'];
 
         $result = DB::table('tb_admin')->where('token', $token)->first();
         if ($result !== null) {
@@ -39,28 +39,28 @@ class AuthController extends Controller
             'name' => 'required',
             'password' => 'required',
         ];
-    
+
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
                 'message' => 'Proses login gagal',
-                'data' => $validator->errors()
+                'data' => $validator->errors(),
             ], 401);
         }
-    
+
         $admin = tb_admin::where('name', $request->name)->first();
         $admin = tb_admin::where('password', $request->password)->first();
-    
-        if (!$admin) {
+
+        if (! $admin) {
             return response()->json([
                 'status' => false,
-                'message' => 'Name dan Password salah'
+                'message' => 'Name dan Password salah',
             ], 401);
         }
-    
+
         $token = $admin->createToken('admin-token');
-    
+
         return response()->json([
             'status' => true,
             'message' => 'Berhasil login',

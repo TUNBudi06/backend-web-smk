@@ -11,11 +11,11 @@ class tb_pengumuman extends Model
 
     protected $table = 'tb_pengumuman';
 
-//    protected $guarded = ['id_pengumuman'];
+    //    protected $guarded = ['id_pengumuman'];
 
     protected $primaryKey = 'id_pengumuman';
 
-    const CREATED_AT = "pengumuman_timestamp";
+    const CREATED_AT = 'pengumuman_timestamp';
 
     protected $fillable = [
         'pengumuman_nama',

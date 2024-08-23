@@ -18,20 +18,27 @@ class EventController extends Controller
      *     summary="Get all events",
      *     description="Retrieve all events with type 4",
      *     operationId="getAllEvents",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", type="array",
+     *
      *                 @OA\Items(ref="#/components/schemas/EventResource")
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Data tidak ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )
@@ -40,9 +47,9 @@ class EventController extends Controller
     public function index()
     {
         $event = tb_pemberitahuan::with('kategori')
-        ->where('type', 4)
-        ->orderBy('created_at', 'desc')
-        ->get();
+            ->where('type', 4)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return response()->json([
             'message' => 'Data ditemukan',
@@ -65,26 +72,34 @@ class EventController extends Controller
      *     summary="Get specific event",
      *     description="Retrieve a specific event by its ID",
      *     operationId="getEventById",
+     *
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
+     *
      *         @OA\Schema(
      *             type="string"
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", ref="#/components/schemas/EventResource")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Data tidak ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )
@@ -93,13 +108,13 @@ class EventController extends Controller
     public function show(string $id)
     {
         $news = tb_pemberitahuan::with('kategori')
-        ->where('id_pemberitahuan', $id)
-        ->where('type', 4)
-        ->first();
+            ->where('id_pemberitahuan', $id)
+            ->where('type', 4)
+            ->first();
 
         if (empty($news)) {
             return response()->json([
-                'data' => 'Data tidak ditemukan'
+                'data' => 'Data tidak ditemukan',
             ], 404);
         }
 
@@ -125,27 +140,34 @@ class EventController extends Controller
         //
     }
 
-        /**
+    /**
      * @OA\Get(
      *     path="/api/user/event-categories",
      *     tags={"Events"},
      *     summary="Get all event categories",
      *     description="Retrieve all categories for events",
      *     operationId="getEventCategories",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", type="array",
+     *
      *                 @OA\Items(ref="#/components/schemas/CategoryResource")
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Data tidak ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )
@@ -154,8 +176,8 @@ class EventController extends Controller
     public function categoryEvent()
     {
         $data = tb_pemberitahuan_category::with('tipe')
-        ->where('type', 4)
-        ->get();
+            ->where('type', 4)
+            ->get();
 
         return response()->json([
             'message' => 'Data ditemukan',

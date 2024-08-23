@@ -16,11 +16,12 @@ class hasAdminToken
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $token = $request->route("token");
-        $admin = tb_admin::where("token",$token)->first();
+        $token = $request->route('token');
+        $admin = tb_admin::where('token', $token)->first();
         if ($admin) {
             return $next($request);
         }
-        return abort(404,"not Found");
+
+        return abort(404, 'not Found');
     }
 }

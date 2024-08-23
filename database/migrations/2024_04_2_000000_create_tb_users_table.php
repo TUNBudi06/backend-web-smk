@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tb_users', function (Blueprint $table) {
-            $table->bigIncrements("id_user")->primary();
+            $table->bigIncrements('id_user')->primary();
             $table->string('name');
             $table->string('username');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->boolean("verified_user")->default(false);
-            $table->unsignedBigInteger("approved_by")->nullable();
-            $table->foreign("approved_by")->references("id_admin")->on("tb_admins")->onDelete("set null")->onUpdate("set null");
+            $table->boolean('verified_user')->default(false);
+            $table->unsignedBigInteger('approved_by')->nullable();
+            $table->foreign('approved_by')->references('id_admin')->on('tb_admins')->onDelete('set null')->onUpdate('set null');
             $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
@@ -50,5 +50,4 @@ return new class extends Migration
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
     }
-
 };

@@ -9,6 +9,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @OA\Schema(
  *     schema="PDResource",
  *     type="object",
+ *
  *     @OA\Property(property="id", type="integer", example=1),
  *     @OA\Property(property="nisn", type="string", example="1234567890"),
  *     @OA\Property(property="nis", type="string", example="12345"),

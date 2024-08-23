@@ -9,6 +9,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @OA\Schema(
  *     schema="VideoResource",
  *     type="object",
+ *
  *     @OA\Property(
  *         property="id_video",
  *         type="integer",

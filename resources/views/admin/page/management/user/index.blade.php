@@ -7,6 +7,12 @@
 @section('container')
     <div class="row">
         <div class="col-md-11 offset-md-1 mt-4 p-2">
+            <div class="menu-profile-admin mb-4">
+                <a href="{{ route('user.index',$token) }}"
+                   class="<?= \Illuminate\Support\Facades\Route::is('user.index')  ? 'btn my-1 btn-warning px-4 shadow-warning' : 'btn my-1 btn-light px-4 border-warning'?>">User</a>
+                <a href="{{ route('pengumuman.index',$token) }}"
+                   class="<?= \Illuminate\Support\Facades\Route::is('')? 'btn my-1 btn-warning px-4 shadow-warning' : 'btn my-1 btn-light px-4 border-warning'?>">Log</a>
+            </div>
             <div class="w-100 table-parent bg-white">
                 <div class="row p-4">
                     <div class="col-md-8">
@@ -29,20 +35,44 @@
                     <strong>{{ Session::get('success') }}</strong>
                 </div>
                 @endif
-                <table class="table">
+                <table id="userTable">
                     <thead>
-                        <tr>
-                            <th class="pl-4">Gambar</th>
-                            <th>Nama</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Action</th>
-                        </tr>
+                    <tr>
+                        <th class="pl-4">Gambar</th>
+                        <th>Nama</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
                     </thead>
                     <tbody>
-
+                        @foreach($user as $index => $userd)
+                            <tr>
+                                <td><img src="" width="100px" class="rounded" alt=""></td>
+                                <td>{{$userd->name}}</td>
+                                <td>{{$userd->email}}</td>
+                                <td>{{$userd->role == 1 ? 'SuperAdmin':'Admin'}}</td>
+                                <td>
+                                    <a href="{{route('user.show',[$token,$userd->id_admin])}}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
+                                    <form action="{{route('user.destroy',['token'=>$token,'user'=>$userd->id_admin])}}" onclick="return confirm('Data akan dihapus ?')" method="post" class="d-inline">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
+                <script>
+                    $(document).ready(function () {
+                        $('#userTable').DataTable({
+                            "createdRow": function (row) {
+                                $('td', row).css('border', '1px solid #000');
+                            }
+                        });
+                    });
+                </script>
                 <script>
                     $('.check-toggle').change(function() {
                         if (this.checked) {
@@ -62,46 +92,6 @@
                         }
                     });
                 </script>
-                <div class="row px-3">
-                    <div class="col-md-6">
-                        <div class="pb-3">
-                            <form method="GET" id="show-form" name="showForm" action="">
-                                <div class="form-group d-inline-block">
-                                    <input type="hidden" name="page" value="">
-                                    <select id="show-select" name="show" onchange="showData()"
-                                        class="form-control form-control-sm d-inline-block"
-                                        style="width:70px; font-size: .7rem;" name="" id="">
-                                        <option value="10" selected>10</option>
-                                        <option value="20">20</option>
-                                        <option value="30">30</option>
-                                        <option value="40">40</option>
-                                    </select>
-                                </div>
-                                <p class="montserrat d-inline" style="font-size: .7rem;">Data per halaman</p>
-                                <script>
-                                    function showData() {
-                                        $('#show-select').change(function() {
-                                            var value = $(this).val();
-                                            $('#show-form').submit()
-                                        });
-                                    }
-                                </script>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-md-6 text-right">
-                        <p class="montserrat d-inline" style="font-size: .7rem;">{{ $user->firstItem() }} dari
-                            {{ $user->lastItem() }}</p>
-                        <a href="{{ $user->previousPageUrl() }}"
-                            class="btn btn-sm p-0 px-2 btn-white {{ $user->onFirstPage() ? 'disabled' : 'active' }}">
-                            <i class="fas fa-caret-left text-warning"></i>
-                        </a>
-                        <a href="{{ $user->nextPageUrl() }}"
-                            class="btn btn-sm p-0 px-2 btn-white {{ $user->hasMorePages() ? 'active' : 'disabled' }}">
-                            <i class="fas fa-caret-right text-warning"></i>
-                        </a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

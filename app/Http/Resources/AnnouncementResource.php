@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\File;
 /**
  * @OA\Schema(
  *     schema="Announcement",
+ *
  *     @OA\Property(property="id_pemberitahuan", type="integer", example=1),
  *     @OA\Property(property="nama", type="string", example="Pengumuman Penting"),
  *     @OA\Property(property="thumbnail", type="string", example="img/announcement/gambar.jpg"),
@@ -33,7 +34,7 @@ class AnnouncementResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $thumbnailPath = 'img/announcement/' . $this->thumbnail;
+        $thumbnailPath = 'img/announcement/'.$this->thumbnail;
         $thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
         $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->text)));

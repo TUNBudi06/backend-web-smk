@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
  * @OA\Schema(
  *     schema="Jurusan",
  *     type="object",
+ *
  *     @OA\Property(property="id_jurusan", type="integer", example=1),
  *     @OA\Property(property="jurusan_nama", type="string", example="Teknik Informatika"),
  *     @OA\Property(property="jurusan_short", type="string", example="TI"),
@@ -34,7 +35,7 @@ class JurusanResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $thumbnailPath = 'img/jurusan/' . $this->jurusan_thumbnail;
+        $thumbnailPath = 'img/jurusan/'.$this->jurusan_thumbnail;
         $jurusan_thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
         $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->text)));

@@ -13,10 +13,10 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = 10;
-        $user = tb_admin::orderBy('id_admin', 'desc')->paginate($perPage);
+        $user = tb_admin::orderBy('id_admin', 'desc')->get();
 
         $token = $request->session()->get('token') ?? $request->input('token');
+
         return view('admin.page.management.user.index', [
             'menu_active' => 'user',
             'token' => $token,
@@ -49,9 +49,18 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, string $id, int $user)
     {
-        //
+        $token = $request->session()->get('token') ?? $request->input('token');
+
+        $userInput = $request->route('user');
+        $user = tb_admin::findOrFail($userInput);
+
+        return view('admin.page.management.user.create', [
+            'menu_active' => 'user',
+            'user' => $user,
+            'token' => $token,
+        ]);
     }
 
     /**

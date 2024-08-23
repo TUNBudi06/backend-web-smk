@@ -7,7 +7,6 @@ use App\Http\Resources\link\AlertResource;
 use App\Http\Resources\link\VideoResource;
 use App\Models\url\tb_alert;
 use App\Models\url\tb_video;
-use Illuminate\Http\Request;
 
 class LinkController extends Controller
 {
@@ -18,20 +17,27 @@ class LinkController extends Controller
      *     summary="Get alert",
      *     description="Retrieve alert",
      *     operationId="getAlert",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", type="array",
+     *
      *                 @OA\Items(ref="#/components/schemas/AlertResource")
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Data tidak ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )
@@ -46,7 +52,7 @@ class LinkController extends Controller
             'data' => AlertResource::collection($data),
         ], 200);
     }
-    
+
     /**
      * @OA\Get(
      *     path="/api/user/link/videos",
@@ -54,20 +60,27 @@ class LinkController extends Controller
      *     summary="Get video",
      *     description="Retrieve video",
      *     operationId="getVideo",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", type="array",
+     *
      *                 @OA\Items(ref="#/components/schemas/AlertResource")
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Data tidak ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )

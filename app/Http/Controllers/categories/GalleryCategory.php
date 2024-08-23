@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class GalleryCategory extends Controller
 {
-     /**
+    /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
@@ -16,15 +16,15 @@ class GalleryCategory extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
         $gallerys = tb_category_gallery::all();
         $action = $_GET['action'] ?? '';
-//        return $request->session()->all();
+        //        return $request->session()->all();
 
         return view('admin.categories.gallerycategory.index', [
             'menu_active' => 'gallery',
             'action' => $action,
             'gallerys' => $gallerys,
             'token' => $token,
-            "category" => $request->session()->get("category") ?? null,
-            "action" => $request->session()->get("update") ?? false,
+            'category' => $request->session()->get('category') ?? null,
+            'action' => $request->session()->get('update') ?? false,
         ]);
     }
 
@@ -38,7 +38,8 @@ class GalleryCategory extends Controller
         $data = [
             'update' => $action,
         ];
-        return redirect()->route("gallery.category.index",$token)->with($data);
+
+        return redirect()->route('gallery.category.index', $token)->with($data);
     }
 
     /**
@@ -63,16 +64,17 @@ class GalleryCategory extends Controller
      */
     public function edit(Request $request)
     {
-        $id_category = $request->route("gallery_category");
+        $id_category = $request->route('gallery_category');
         $token = $request->session()->get('token') ?? $request->input('token');
         $action = 'update';
-        $request->session()->put('token',$token);
+        $request->session()->put('token', $token);
         $category = tb_category_gallery::findOrFail($id_category);
         $data = [
             'category' => $category,
             'update' => $action,
         ];
-        return redirect()->route("gallery.category.index",$token)->with($data);
+
+        return redirect()->route('gallery.category.index', $token)->with($data);
     }
 
     /**
@@ -83,7 +85,7 @@ class GalleryCategory extends Controller
         $request->validate([
             'category_name' => 'required',
         ]);
-        $gallery_category = $request->route("gallery_category");
+        $gallery_category = $request->route('gallery_category');
 
         // Update data category
         $category = tb_category_gallery::findOrFail($gallery_category);
@@ -99,11 +101,11 @@ class GalleryCategory extends Controller
      */
     public function destroy(Request $request)
     {
-        $id_category = $request->route("gallery_category");
+        $id_category = $request->route('gallery_category');
         $token = $request->session()->get('token') ?? $request->input('token');
 
-       $category = tb_category_gallery::findOrFail($id_category);
-       $category->delete();
+        $category = tb_category_gallery::findOrFail($id_category);
+        $category->delete();
 
         return redirect()->route('gallery.category.index', ['token' => $token])->with('success', 'Kategori berhasil dihapus.');
     }

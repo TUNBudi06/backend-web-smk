@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\File;
  *     type="object",
  *     title="News Resource",
  *     properties={
+ *
  *         @OA\Property(property="id_pemberitahuan", type="integer"),
  *         @OA\Property(property="nama", type="string"),
  *         @OA\Property(property="thumbnail", type="string"),
@@ -37,7 +38,7 @@ class NewsResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $thumbnailPath = 'img/berita/' . $this->thumbnail;
+        $thumbnailPath = 'img/berita/'.$this->thumbnail;
         $thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
         $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->text)));

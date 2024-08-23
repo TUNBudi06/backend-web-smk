@@ -18,7 +18,7 @@ class tb_artikel extends Model
         'category_name',
         'artikel_text',
         'artikel_image',
-        'artikel_viewer'
+        'artikel_viewer',
     ];
 
     protected $attributes = [
@@ -29,7 +29,7 @@ class tb_artikel extends Model
 
     public $timestamps = false;
 
-    const CREATED_AT = "artikel_timestamp";
+    const CREATED_AT = 'artikel_timestamp';
 
     public function category_artikel()
     {

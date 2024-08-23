@@ -11,7 +11,7 @@ class tb_ptk extends Model
 
     protected $table = 'tb_ptk';
 
-//    protected $guarded = ['id_pengumuman'];
+    //    protected $guarded = ['id_pengumuman'];
 
     protected $primaryKey = 'id';
 
@@ -24,7 +24,7 @@ class tb_ptk extends Model
         'jenis_kelamin',
         'alamat',
         'foto',
-        'mata_pelajaran'
+        'mata_pelajaran',
     ];
 
     public $timestamps = false;

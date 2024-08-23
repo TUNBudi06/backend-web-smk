@@ -18,20 +18,27 @@ class ArticleController extends Controller
      *     summary="Get all articles",
      *     description="Retrieve all articles with type 1",
      *     operationId="getAllArticles",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", type="array",
+     *
      *                 @OA\Items(ref="#/components/schemas/ArticleResource")
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Data tidak ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )
@@ -40,16 +47,16 @@ class ArticleController extends Controller
     public function index(Request $request)
     {
         $artikel = tb_pemberitahuan::with('kategori')
-        ->where('type', 1)
-        ->orderBy('created_at', 'desc')
-        ->get();
+            ->where('type', 1)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return response()->json([
             'message' => 'Data ditemukan',
             'data' => ArticleResource::collection($artikel),
         ], 200);
     }
-    
+
     /**
      * Store a newly created resource in storage.
      */
@@ -65,26 +72,34 @@ class ArticleController extends Controller
      *     summary="Get specific article",
      *     description="Retrieve a specific article by its ID",
      *     operationId="getArticleById",
+     *
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
+     *
      *         @OA\Schema(
      *             type="string"
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", ref="#/components/schemas/ArticleResource")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Data tidak ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )
@@ -93,13 +108,13 @@ class ArticleController extends Controller
     public function show(string $id)
     {
         $artikel = tb_pemberitahuan::with('kategori')
-        ->where('id_pemberitahuan', $id)
-        ->where('type', 1)
-        ->first();
+            ->where('id_pemberitahuan', $id)
+            ->where('type', 1)
+            ->first();
 
         if (empty($artikel)) {
             return response()->json([
-                'data' => 'Data tidak ditemukan'
+                'data' => 'Data tidak ditemukan',
             ], 404);
         }
 
@@ -132,20 +147,27 @@ class ArticleController extends Controller
      *     summary="Get all article categories",
      *     description="Retrieve all categories for articles",
      *     operationId="getArticle-categories",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", type="array",
+     *
      *                 @OA\Items(ref="#/components/schemas/CategoryResource")
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Data tidak ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )
@@ -154,8 +176,8 @@ class ArticleController extends Controller
     public function categoryArticle()
     {
         $data = tb_pemberitahuan_category::with('tipe')
-        ->where('type', 1)
-        ->get();
+            ->where('type', 1)
+            ->get();
 
         return response()->json([
             'message' => 'Data ditemukan',

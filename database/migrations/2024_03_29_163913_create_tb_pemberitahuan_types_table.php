@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tb_pemberitahuan_type', function (Blueprint $table) {
-            $table->id("id_pemberitahuan_type");
-            $table->string("pemberitahuan_type_name");
+            $table->id('id_pemberitahuan_type');
+            $table->string('pemberitahuan_type_name');
             $table->timestamps();
         });
     }

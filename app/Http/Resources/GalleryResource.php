@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
  * @OA\Schema(
  *     schema="Gallery",
  *     type="object",
+ *
  *     @OA\Property(property="id_gallery", type="integer", example=1),
  *     @OA\Property(property="gallery_title", type="string", example="Kegiatan MPLS"),
  *     @OA\Property(property="gallery_text", type="string", example="MPLS dilaksanakan pada tanggal..."),
@@ -19,7 +20,6 @@ use Illuminate\Support\Facades\File;
  *     @OA\Property(property="file_type", type="string", example="jpg/png/dll"),
  * )
  */
-
 class GalleryResource extends JsonResource
 {
     /**
@@ -29,7 +29,7 @@ class GalleryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $thumbnailPath = 'img/gallery/' . $this->gallery_file;
+        $thumbnailPath = 'img/gallery/'.$this->gallery_file;
         $gallery_file = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
         $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->text)));

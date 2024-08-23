@@ -19,6 +19,7 @@ class LokerController extends Controller
         $loker = tb_loker::with(['position', 'kemitraan'])->orderBy('created_at', 'desc')->paginate($perPage);
 
         $token = $request->session()->get('token') ?? $request->input('token');
+
         return view('admin.loker.index', [
             'menu_active' => 'kemitraan',
             'mitra_active' => 'loker',
@@ -66,7 +67,7 @@ class LokerController extends Controller
             'kemitraan_id.exists' => 'Kemitraan tidak valid.',
         ]);
 
-        $data = new tb_loker();
+        $data = new tb_loker;
         $data->loker_type = $request->loker_type;
         $data->position_id = $request->position_id;
         $data->kemitraan_id = $request->kemitraan_id;
@@ -74,7 +75,7 @@ class LokerController extends Controller
 
         if ($request->hasFile('loker_thumbnail')) {
             $fileContents = file_get_contents($request->file('loker_thumbnail')->getRealPath());
-            $imageName = substr(hash('sha256', $fileContents), 0, 40) . '.' . $request->file('loker_thumbnail')->getClientOriginalExtension();
+            $imageName = substr(hash('sha256', $fileContents), 0, 40).'.'.$request->file('loker_thumbnail')->getClientOriginalExtension();
             $request->file('loker_thumbnail')->move(public_path('img/loker/'), $imageName);
             $data->loker_thumbnail = $imageName;
         }
@@ -97,7 +98,7 @@ class LokerController extends Controller
      */
     public function edit(Request $request)
     {
-        $id_loker = $request->route("loker");
+        $id_loker = $request->route('loker');
         $token = $request->session()->get('token') ?? $request->input('token');
         $loker = tb_loker::with(['position', 'kemitraan'])->findOrFail($id_loker);
 
@@ -107,7 +108,7 @@ class LokerController extends Controller
             'token' => $token,
             'loker' => $loker,
             'positions' => tb_position::all(),
-            'kemitraans' => tb_kemitraan::all(), 
+            'kemitraans' => tb_kemitraan::all(),
         ]);
     }
 
@@ -116,7 +117,7 @@ class LokerController extends Controller
      */
     public function update(Request $request)
     {
-        $id_loker = $request->route("loker");
+        $id_loker = $request->route('loker');
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $request->validate([
@@ -139,7 +140,7 @@ class LokerController extends Controller
 
         if ($request->hasFile('loker_thumbnail')) {
             $fileContents = file_get_contents($request->file('loker_thumbnail')->getRealPath());
-            $imageName = substr(hash('sha256', $fileContents), 0, 40) . '.' . $request->file('loker_thumbnail')->getClientOriginalExtension();
+            $imageName = substr(hash('sha256', $fileContents), 0, 40).'.'.$request->file('loker_thumbnail')->getClientOriginalExtension();
             $request->file('loker_thumbnail')->move(public_path('img/loker/'), $imageName);
             $data->loker_thumbnail = $imageName;
         }
@@ -154,13 +155,13 @@ class LokerController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id_loker = $request->route("loker");
+        $id_loker = $request->route('loker');
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $loker = tb_loker::findOrFail($id_loker);
 
-        if ($loker->loker_thumbnail && file_exists(public_path('img/loker/' . $loker->loker_thumbnail)) && is_file(public_path('img/loker/' . $loker->loker_thumbnail))) {
-            unlink(public_path('img/loker/' . $loker->loker_thumbnail));
+        if ($loker->loker_thumbnail && file_exists(public_path('img/loker/'.$loker->loker_thumbnail)) && is_file(public_path('img/loker/'.$loker->loker_thumbnail))) {
+            unlink(public_path('img/loker/'.$loker->loker_thumbnail));
         }
 
         $loker->delete();

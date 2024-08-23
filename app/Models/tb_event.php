@@ -15,7 +15,7 @@ class tb_event extends Model
 
     protected $primaryKey = 'id_event';
 
-    const CREATED_AT = "event_timestamp";
+    const CREATED_AT = 'event_timestamp';
 
     protected $fillable = [
         'event_name',

@@ -9,6 +9,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @OA\Schema(
  *     schema="Prodi",
  *     type="object",
+ *
  *     @OA\Property(property="id", type="integer", example=1),
  *     @OA\Property(property="nama_prodi", type="string", example="Teknik Informatika"),
  *     @OA\Property(property="prodi_short", type="string", example="TI"),

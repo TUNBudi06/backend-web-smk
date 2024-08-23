@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
  * @OA\Schema(
  *     schema="ArticleResource",
  *     type="object",
+ *
  *     @OA\Property(
  *         property="id_pemberitahuan",
  *         type="integer",
@@ -68,7 +69,7 @@ class ArticleResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $thumbnailPath = 'img/artikel/' . $this->thumbnail;
+        $thumbnailPath = 'img/artikel/'.$this->thumbnail;
         $thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
         $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->text)));

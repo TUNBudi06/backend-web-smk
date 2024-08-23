@@ -13,12 +13,13 @@ class AdminAuth extends Controller
     public function firstAuth(request $request)
     {
         $token = $request->validate([
-            "token" => "required"
-        ])["token"];
+            'token' => 'required',
+        ])['token'];
 
         $result = tb_admin::where('token', $token)->first();
         if ($result !== null) {
             $nToken = $token;
+
             return redirect()->route('guest.login', ['token' => $token]);
         } else {
             return back()->with('tokenError', 'Incorrect Token');
@@ -27,12 +28,13 @@ class AdminAuth extends Controller
 
     public function tokenPage()
     {
-        return view("admin.guest.token");
+        return view('admin.guest.token');
     }
 
     public function checkTokenUrl($token)
     {
         $result = tb_admin::where('token', $token)->first();
+
         return $result;
     }
 
@@ -41,16 +43,18 @@ class AdminAuth extends Controller
         return $token;
     }
 
-    public function loginPage($token,Request $request)
+    public function loginPage($token, Request $request)
     {
-        if(Auth::guard("admin")->check() && (Auth::guard("admin")->getUser()["token"] == $token)) {
+        if (Auth::guard('admin')->check() && (Auth::guard('admin')->getUser()['token'] == $token)) {
             $user_id = Auth::guard('admin')->getUser();
             // return $user_id;
-//            return ["user"=>$user_id["token"],"session"=>session()->all()];
+            //            return ["user"=>$user_id["token"],"session"=>session()->all()];
             $request->session()->put('token', $token);
             $request->session()->put('status', 'true');
-            return redirect()->route('dashboard', ['token' => $user_id["token"]]);
+
+            return redirect()->route('dashboard', ['token' => $user_id['token']]);
         }
+
         return view('admin.guest.login', [
             'token' => $token,
         ]);
@@ -60,7 +64,7 @@ class AdminAuth extends Controller
     {
         $email = $request->input('email');
         $password = $request->input('password');
-        if($request->has("cookie")) {
+        if ($request->has('cookie')) {
             $cookie = true;
         } else {
             $cookie = false;
@@ -71,7 +75,7 @@ class AdminAuth extends Controller
             ->where('token', $token)
             ->first();
 
-        if ($user && Auth::guard("admin")->attempt(["email"=>$email,"password"=>$password],$cookie)) {
+        if ($user && Auth::guard('admin')->attempt(['email' => $email, 'password' => $password], $cookie)) {
             if (password_verify($password, $user->password)) {
                 // Set session user
                 Auth::logoutOtherDevices($password);
@@ -99,6 +103,7 @@ class AdminAuth extends Controller
         session()->regenerate();
         session()->flush();
         $_SESSION = [];
+
         return redirect()->route('guest.token');
     }
 }

@@ -9,22 +9,26 @@ use Illuminate\Http\Request;
 
 class LokerController extends Controller
 {
-       /**
+    /**
      * @OA\Get(
      *     path="/api/user/lokers",
      *     tags={"Loker"},
      *     summary="Get all Loker",
      *     description="Retrieve all Loker",
      *     operationId="getAllLoker",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(
      *                 property="data",
      *                 type="array",
+     *
      *                 @OA\Items(ref="#/components/schemas/Loker")
      *             )
      *         )
@@ -49,28 +53,35 @@ class LokerController extends Controller
         //
     }
 
-   /**
+    /**
      * @OA\Get(
      *     path="/api/user/lokers/{id}",
      *     tags={"Loker"},
      *     summary="Get Loker by ID",
      *     description="Retrieve a single Loker entry by ID",
      *     operationId="getLokerById",
+     *
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
+     *
      *         @OA\Schema(type="string")
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/Loker")
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Data tidak ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )
@@ -83,7 +94,7 @@ class LokerController extends Controller
 
         if (empty($data)) {
             return response()->json([
-                'data' => 'Data tidak ditemukan'
+                'data' => 'Data tidak ditemukan',
             ], 404);
         }
 

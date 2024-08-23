@@ -32,6 +32,7 @@ class PosisiController extends Controller
     {
         $token = $request->session()->get('token') ?? $request->input('token');
         $request->session()->put('update', 'create');
+
         return redirect()->route('posisi.index');
     }
 
@@ -45,7 +46,7 @@ class PosisiController extends Controller
             'position_type' => 'required',
         ]);
 
-        $positions = new tb_position();
+        $positions = new tb_position;
         $positions->position_name = $request->position_name;
         $positions->position_type = $request->position_type;
         $positions->save();
@@ -58,16 +59,17 @@ class PosisiController extends Controller
      */
     public function edit(Request $request)
     {
-        $id_position = $request->route("posisi");
+        $id_position = $request->route('posisi');
         $token = $request->session()->get('token') ?? $request->input('token');
         $action = 'update';
-        $request->session()->put('token',$token);
+        $request->session()->put('token', $token);
         $positions = tb_position::findOrFail($id_position);
         $data = [
             'positions' => $positions,
             'update' => $action,
         ];
-        return redirect()->route("posisi.index",$token)->with($data);
+
+        return redirect()->route('posisi.index', $token)->with($data);
     }
 
     /**
@@ -79,7 +81,7 @@ class PosisiController extends Controller
             'position_name' => 'required',
             'position_type' => 'required',
         ]);
-        $position = $request->route("posisi");
+        $position = $request->route('posisi');
 
         // Update data position
         $position = tb_position::findOrFail($position);
@@ -96,11 +98,11 @@ class PosisiController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id_position = $request->route("posisi");
+        $id_position = $request->route('posisi');
         $token = $request->session()->get('token') ?? $request->input('token');
 
-       $position = tb_position::findOrFail($id_position);
-       $position->delete();
+        $position = tb_position::findOrFail($id_position);
+        $position->delete();
 
         return redirect()->route('posisi.index', ['token' => $token])->with('success', 'Posisi berhasil dihapus.');
     }

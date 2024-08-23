@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
  * @OA\Schema(
  *     schema="PTKResource",
  *     type="object",
+ *
  *     @OA\Property(property="id", type="integer", example=1),
  *     @OA\Property(property="nama", type="string", example="Jane Doe"),
  *     @OA\Property(property="mata_pelajaran", type="string", example="Bahasa Indonesia"),
@@ -31,7 +32,7 @@ class PTKResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $thumbnailPath = 'img/guru/' . $this->foto;
+        $thumbnailPath = 'img/guru/'.$this->foto;
         $foto = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/illust/male.png';
 
         return [

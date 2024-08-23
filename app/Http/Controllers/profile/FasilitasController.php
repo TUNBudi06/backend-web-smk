@@ -18,6 +18,7 @@ class FasilitasController extends Controller
         $fasilitas = tb_facilities::orderBy('id_facility', 'desc')->paginate($perPage);
 
         $token = $request->session()->get('token') ?? $request->input('token');
+
         return view('admin.page.profile.fasilitas.index', [
             'menu_active' => 'profile',
             'profile_active' => 'fasilitas',
@@ -63,7 +64,7 @@ class FasilitasController extends Controller
         ]);
 
         // Simpan data ke tabel facility
-        $data = new tb_facilities();
+        $data = new tb_facilities;
         $data->facility_name = $request->facility_name;
         $data->id_prodi = $request->id_prodi;
         $data->facility_text = $request->facility_text;
@@ -71,7 +72,7 @@ class FasilitasController extends Controller
         // Simpan gambar
         if ($request->hasFile('facility_image')) {
             $fileContents = file_get_contents($request->file('facility_image')->getRealPath());
-            $imageName = hash('sha256', $fileContents) . '.' . $request->file('facility_image')->getClientOriginalExtension();
+            $imageName = hash('sha256', $fileContents).'.'.$request->file('facility_image')->getClientOriginalExtension();
             $request->file('facility_image')->move('img/fasilitas/', $imageName);
             $data->facility_image = $imageName;
         }
@@ -94,7 +95,7 @@ class FasilitasController extends Controller
      */
     public function edit(Request $request)
     {
-        $id_facility = $request->route("fasilitas");
+        $id_facility = $request->route('fasilitas');
         $token = $request->session()->get('token') ?? $request->input('token');
         $fasilitas = tb_facilities::findOrFail($id_facility);
         $prodis = tb_prodi::all();
@@ -113,7 +114,7 @@ class FasilitasController extends Controller
      */
     public function update(Request $request)
     {
-        $id_facility = $request->route("fasilitas");
+        $id_facility = $request->route('fasilitas');
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $request->validate([
@@ -135,7 +136,7 @@ class FasilitasController extends Controller
         if ($request->hasFile('facility_image')) {
             // Hapus gambar sebelumnya jika ada
             if ($data->facility_image !== null) {
-                $oldImagePath = public_path('img/fasilitas/' . $data->facility_image);
+                $oldImagePath = public_path('img/fasilitas/'.$data->facility_image);
                 if (file_exists($oldImagePath)) {
                     unlink($oldImagePath);
                 }
@@ -162,7 +163,7 @@ class FasilitasController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id_facility = $request->route("fasilitas");
+        $id_facility = $request->route('fasilitas');
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $facility = tb_facilities::findOrFail($id_facility);

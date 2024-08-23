@@ -17,6 +17,7 @@ class ExtraController extends Controller
         $extra = tb_extra::orderBy('id_extra', 'desc')->paginate($perPage);
 
         $token = $request->session()->get('token') ?? $request->input('token');
+
         return view('admin.page.profile.extra.index', [
             'menu_active' => 'academic',
             'profile_active' => 'extra',
@@ -71,7 +72,7 @@ class ExtraController extends Controller
         ]);
 
         // Simpan data ke tabel tb_extra
-        $data = new tb_extra();
+        $data = new tb_extra;
         $data->extra_name = $request->extra_name;
         $data->extra_text = $request->extra_text;
         $data->extra_type = $request->extra_type;
@@ -81,14 +82,14 @@ class ExtraController extends Controller
 
         if ($request->hasFile('extra_image')) {
             $fileContents = file_get_contents($request->file('extra_image')->getRealPath());
-            $imageName = substr(hash('sha256', $fileContents), 0, 40) . '.' . $request->file('extra_image')->getClientOriginalExtension();
+            $imageName = substr(hash('sha256', $fileContents), 0, 40).'.'.$request->file('extra_image')->getClientOriginalExtension();
             $request->file('extra_image')->move(public_path('img/extrakurikuler/cover/'), $imageName);
             $data->extra_image = $imageName;
         }
 
         if ($request->hasFile('extra_logo')) {
             $fileContents = file_get_contents($request->file('extra_logo')->getRealPath());
-            $logoName = substr(hash('sha256', $fileContents), 0, 40) . '.' . $request->file('extra_logo')->getClientOriginalExtension();
+            $logoName = substr(hash('sha256', $fileContents), 0, 40).'.'.$request->file('extra_logo')->getClientOriginalExtension();
             $request->file('extra_logo')->move(public_path('img/extrakurikuler/logo/'), $logoName);
             $data->extra_logo = $logoName;
         }
@@ -111,7 +112,7 @@ class ExtraController extends Controller
      */
     public function edit(Request $request)
     {
-        $id_extra = $request->route("extra");
+        $id_extra = $request->route('extra');
         $token = $request->session()->get('token') ?? $request->input('token');
         $extra = tb_extra::findOrFail($id_extra);
 
@@ -128,7 +129,7 @@ class ExtraController extends Controller
      */
     public function update(Request $request)
     {
-        $id_extra = $request->route("extra");
+        $id_extra = $request->route('extra');
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $request->validate([
@@ -162,24 +163,24 @@ class ExtraController extends Controller
 
         if ($request->hasFile('extra_image')) {
             // Hapus gambar lama jika ada
-            if ($data->extra_image && file_exists(public_path('img/extrakurikuler/cover/' . $data->extra_image))) {
-                unlink(public_path('img/extrakurikuler/cover/' . $data->extra_image));
+            if ($data->extra_image && file_exists(public_path('img/extrakurikuler/cover/'.$data->extra_image))) {
+                unlink(public_path('img/extrakurikuler/cover/'.$data->extra_image));
             }
 
             $fileContents = file_get_contents($request->file('extra_image')->getRealPath());
-            $imageName = substr(hash('sha256', $fileContents), 0, 40) . '.' . $request->file('extra_image')->getClientOriginalExtension();
+            $imageName = substr(hash('sha256', $fileContents), 0, 40).'.'.$request->file('extra_image')->getClientOriginalExtension();
             $request->file('extra_image')->move(public_path('img/extrakurikuler/cover/'), $imageName);
             $data->extra_image = $imageName;
         }
 
         if ($request->hasFile('extra_logo')) {
             // Hapus logo lama jika ada
-            if ($data->extra_logo && file_exists(public_path('img/extrakurikuler/logo/' . $data->extra_logo))) {
-                unlink(public_path('img/extrakurikuler/logo/' . $data->extra_logo));
+            if ($data->extra_logo && file_exists(public_path('img/extrakurikuler/logo/'.$data->extra_logo))) {
+                unlink(public_path('img/extrakurikuler/logo/'.$data->extra_logo));
             }
 
             $fileContents = file_get_contents($request->file('extra_logo')->getRealPath());
-            $logoName = substr(hash('sha256', $fileContents), 0, 40) . '.' . $request->file('extra_logo')->getClientOriginalExtension();
+            $logoName = substr(hash('sha256', $fileContents), 0, 40).'.'.$request->file('extra_logo')->getClientOriginalExtension();
             $request->file('extra_logo')->move(public_path('img/extrakurikuler/logo/'), $logoName);
             $data->extra_logo = $logoName;
         }
@@ -194,7 +195,7 @@ class ExtraController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id_extra = $request->route("extra");
+        $id_extra = $request->route('extra');
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $extra = tb_extra::findOrFail($id_extra);

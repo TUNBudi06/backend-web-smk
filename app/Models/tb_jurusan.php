@@ -15,7 +15,7 @@ class tb_jurusan extends Model
 
     protected $primaryKey = 'id_jurusan';
 
-    const CREATED_AT = "jurusan_timestamp";
+    const CREATED_AT = 'jurusan_timestamp';
 
     protected $fillable = [
         'jurusan_nama',

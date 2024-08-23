@@ -11,9 +11,10 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected $table = 'tb_users';
 
-    protected $table = "tb_users";
-    protected $primaryKey = "id_user";
+    protected $primaryKey = 'id_user';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,11 +22,11 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        "username",
+        'username',
         'email',
-        "email_verified_at",
-        "verified_user",
-        "approved_by",
+        'email_verified_at',
+        'verified_user',
+        'approved_by',
         'password',
     ];
 
@@ -35,14 +36,14 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        "token",
+        'token',
         'password',
         'remember_token',
     ];
 
     public function role()
     {
-        return $this->belongsTo(tb_role::class,"role","id_role");
+        return $this->belongsTo(tb_role::class, 'role', 'id_role');
     }
 
     /**
