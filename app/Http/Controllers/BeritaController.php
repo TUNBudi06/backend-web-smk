@@ -76,6 +76,8 @@ class BeritaController extends Controller
         $data->category = $request->id_pemberitahuan_category;
         $data->text = $request->text;
         $data->location = $request->location;
+        $data->approved = $request->session()->get('user')->role == 1 ? 1 : 0;
+        $data->
         $data->type = 3;
         $data->viewer = 0;
 

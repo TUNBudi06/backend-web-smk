@@ -72,6 +72,8 @@ class ArtikelController extends Controller
         $data->level = $request->level;
         $data->category = $request->id_pemberitahuan_category;
         $data->text = $request->text;
+        $data->approved = $request->session()->get('user')->role == 1 ? 1 : 0;
+        $data->Approved_by = $request->session()->get('user')->name;
         $data->type = 1;
         $data->viewer = 0;
 

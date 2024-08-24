@@ -37,7 +37,6 @@ class tb_pemberitahuan extends Model
         return [
             'jenis' => $this->belongsTo(tb_pemberitahuan_type::class, 'type', 'id_pemberitahuan_type'),
             'kategori' => $this->belongsTo(tb_pemberitahuan_category::class, 'category', 'id_pemberitahuan_category'),
-            'approver' => $this->belongsTo(tb_admin::class, 'Approved_by', 'id_admin'),
         ];
     }
 
