@@ -17,7 +17,7 @@ class ArtikelController extends Controller
         $artikel = tb_pemberitahuan::where(['type' => 1])
             ->with('kategori')
             ->orderBy('created_at', 'desc')
-            ->paginate($perPage);
+            ->get();
 
         $token = $request->session()->get('token') ?? $request->input('token');
 

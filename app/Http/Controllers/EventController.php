@@ -17,7 +17,7 @@ class EventController extends Controller
         $event = tb_pemberitahuan::where(['type' => 4])
             ->with('kategori')
             ->orderBy('created_at', 'desc')
-            ->paginate($perPage);
+            ->get();
 
         $token = $request->session()->get('token') ?? $request->input('token');
 

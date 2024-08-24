@@ -18,7 +18,7 @@ class BeritaController extends Controller
         $news = tb_pemberitahuan::where(['type' => 3])
             ->with('kategori')
             ->orderBy('created_at', 'desc')
-            ->paginate($perPage);
+            ->get();
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
