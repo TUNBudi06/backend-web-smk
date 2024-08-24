@@ -13,14 +13,17 @@
             <i class="fas fa-tachometer-alt"></i>
             <h6 class="label-menu d-none">Dashboard</h6>
         </div>
+        @if(session()->get('user')->role == 1)
         <div class="my-2 {{ ($menu_active ==="user") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('user.index', ['token' => $token]) }}';">
             <i class="fas fa-user"></i>
             <h6 class="label-menu d-none">Atur Pengguna</h6>
         </div>
+        @endif
         <div class="my-2 {{ ($menu_active ==="informasi") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('artikel.index', ['token' => $token]) }}';">
             <i class="fas fa-book-open"></i>
             <h6 class="label-menu d-none">Informasi</h6>
         </div>
+        @if(session()->get('user')->role == 1)
         <div class="my-2 {{ ($menu_active ==="gallery") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('gallery.index', ['token' => $token]) }}';">
             <i class="fas fa-images"></i>
             <h6 class="label-menu d-none">Galeri</h6>
@@ -41,6 +44,7 @@
             <i class="fas fa-link"></i>
             <h6 class="label-menu d-none">Links</h6>
         </div>
+        @endif
 
     </div>
     <div class="w-80 bg-white exit-menu ml-4" style="left: 0;">

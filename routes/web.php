@@ -30,6 +30,7 @@ use App\Http\Controllers\url\VideoController;
 use App\Http\Controllers\user\UserController;
 use App\Http\Middleware\auth\adminLogin;
 use App\Http\Middleware\hasAdminToken;
+use App\Http\Middleware\preventAccessForAdminUsers;
 use App\Http\Middleware\preventCallBack;
 use Illuminate\Support\Facades\Route;
 
@@ -48,7 +49,7 @@ Route::prefix('private/admin')->group(function () {
         Route::middleware([preventCallBack::class, adminLogin::class])->group(function () {
             Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
-            Route::prefix('management')->group(function () {
+            Route::middleware(preventAccessForAdminUsers::class)->prefix('management')->group(function () {
                 Route::resource('user', UserController::class);
                 Route::get('pendingLog', [logUserAproved::class, 'index'])->name('aproved-user-log.index');
                 Route::get('pendingLog/approve/{id}', [logUserAproved::class, 'approve'])->name('aproved-user-log.approved');
@@ -88,8 +89,8 @@ Route::prefix('private/admin')->group(function () {
                 'destroy' => 'artikel.category.destroy',
             ])->except(['show']);
 
-            Route::resource('event/eventArtikel', EventCategory::class)->parameters([
-                'eventArtikel' => 'event_category',
+            Route::resource('event/eventCategory', EventCategory::class)->parameters([
+                'eventCategory' => 'event_category',
             ])->names([
                 'index' => 'event.category.index',
                 'create' => 'event.category.create',
@@ -127,35 +128,33 @@ Route::prefix('private/admin')->group(function () {
             ]);
 
             Route::resource('/artikel', ArtikelController::class);
-            Route::resource('/gallery', GalleryController::class);
-            Route::resource('/kemitraan', KemitraanController::class);
-            Route::resource('/loker', LokerController::class);
-            Route::resource('/posisi', PosisiController::class);
-            Route::resource('/alert', AlertController::class);
-            Route::get('/links', [AdminController::class, 'links'])->name('links');
+            Route::middleware(preventAccessForAdminUsers::class)->group(function () {
+                Route::resource('/gallery', GalleryController::class);
+                Route::resource('/kemitraan', KemitraanController::class);
+                Route::resource('/loker', LokerController::class);
+                Route::resource('/posisi', PosisiController::class);
+                Route::resource('/alert', AlertController::class);
+                Route::get('/links', [AdminController::class, 'links'])->name('links');
+                Route::prefix('profile')->group(function () {
+                    Route::resource('/jurusan', JurusanController::class);
+                    Route::resource('pd', PdController::class)->parameters([
+                        'pd' => 'pd',
+                    ]);
+                    Route::resource('/ptk', PTKController::class);
+                    Route::resource('/extra', ExtraController::class);
+                    Route::resource('/fasilitas', FasilitasController::class)->parameters([
+                        'fasilitas' => 'fasilitas',
+                    ]);
+                    Route::resource('/komite', KomiteController::class);
+                    Route::resource('/video', VideoController::class);
+
+                    Route::get('struktur', [ProfileController::class, 'indexStruktur'])->name('struktur.index');
+                });
+            });
 
             Route::get('/profile', [profileAdmin::class, 'index'])->name('profile');
             Route::put('/profile/token', [profileAdmin::class, 'updateToken'])->name('profile.token');
             Route::put('/profile/admin', [profileAdmin::class, 'updateAdmin'])->name('profile.admin');
-
-            Route::get('/artikel/category', [CategoryController::class, 'categoryArtikel'])->name('category.artikel');
-            Route::get('/gallery/category', [CategoryController::class, 'categoryGallery'])->name('category.gallery');
-
-            Route::prefix('profile')->group(function () {
-                Route::resource('/jurusan', JurusanController::class);
-                Route::resource('pd', PdController::class)->parameters([
-                    'pd' => 'pd',
-                ]);
-                Route::resource('/ptk', PTKController::class);
-                Route::resource('/extra', ExtraController::class);
-                Route::resource('/fasilitas', FasilitasController::class)->parameters([
-                    'fasilitas' => 'fasilitas',
-                ]);
-                Route::resource('/komite', KomiteController::class);
-                Route::resource('/video', VideoController::class);
-
-                Route::get('struktur', [ProfileController::class, 'indexStruktur'])->name('struktur.index');
-            });
         });
     })->middleware(hasAdminToken::class);
 });
