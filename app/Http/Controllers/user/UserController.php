@@ -164,7 +164,7 @@ class UserController extends Controller
 
         $data->save();
 
-        return redirect()->route('user.index', ['token' => $token])->with('success', 'User berhasil ditambahkan.');
+        return redirect()->route('user.index', ['token' => $token])->with('success', 'User berhasil diperbarui.');
     }
 
     /**
