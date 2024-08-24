@@ -27,9 +27,8 @@ return new class extends Migration
             $table->string('published_by')->nullable();
             $table->string('jurnal_by')->nullable();
             $table->boolean('approved')->default(false);
-            $table->unsignedBigInteger('Approved_by')->nullable();
-            $table->foreign('approved_by')->references('id_admin')->on('tb_admins')->onUpdate('cascade')->onDelete('set null');
-            $table->timestamps(); // Laravel timestamps, 'created_at' and 'updated_at'
+            $table->string('Approved_by')->nullable();
+            $table->timestamps();
         });
     }
 

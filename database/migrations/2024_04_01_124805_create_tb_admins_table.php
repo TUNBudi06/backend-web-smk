@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('token')->nullable();
             $table->unsignedBigInteger('role')->nullable();
-            $table->foreign('role')->references('id_role')->on('tb_user_roles')->onDelete('set null')->onUpdate('set null');
             $table->string('created_by');
             $table->string('password');
             $table->rememberToken();
