@@ -48,7 +48,7 @@ class EventController extends Controller
     {
         $event = tb_pemberitahuan::with('kategori')
             ->where('type', 4)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'desc')->where('approved', 1)
             ->get();
 
         return response()->json([

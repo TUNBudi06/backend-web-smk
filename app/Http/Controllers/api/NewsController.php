@@ -45,7 +45,7 @@ class NewsController extends Controller
     {
         $news = tb_pemberitahuan::with('kategori')
             ->where('type', 3)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'desc')->where('approved', 1)
             ->get();
 
         return response()->json([
