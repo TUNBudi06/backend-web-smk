@@ -76,7 +76,7 @@ class EventController extends Controller
         $event->date = $request->date;
         $event->location = $request->location;
         $event->approved = $request->session()->get('user')->role == 1 ? 1 : 0;
-        $event->Approved_by = $request->session()->get('user')->name;
+        $event->published_by = $request->session()->get('user')->name;
         $event->type = 4;
         $event->viewer = 0;
 

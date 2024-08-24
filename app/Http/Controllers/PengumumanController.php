@@ -82,7 +82,7 @@ class PengumumanController extends Controller
         $data->time = $request->time;
         $data->viewer = 0;
         $data->approved = $request->session()->get('user')->role == 1 ? 1 : 0;
-        $data->Approved_by = $request->session()->get('user')->name;
+        $data->published_by = $request->session()->get('user')->name;
         $data->type = 2;
 
         if ($request->hasFile('thumbnail')) {
