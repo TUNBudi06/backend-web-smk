@@ -41,6 +41,7 @@
             @else
             <div class="col-md-8 offset-md-2 mt-4 p-2">
             @endif
+                @include('admin.partials.nav_profile')
                 <div class="w-100 table-parent bg-white">
                     <div class="row p-4">
                         <div class="col-md-8">
