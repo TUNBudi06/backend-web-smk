@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\link\AlertResource;
 use App\Http\Resources\link\VideoResource;
 use App\Models\url\tb_alert;
-use App\Models\url\tb_video;
+use App\Models\url\tb_other;
+use OpenApi\Annotations as OA;
 
 class LinkController extends Controller
 {
@@ -88,11 +89,17 @@ class LinkController extends Controller
      */
     public function linkVideo()
     {
-        $data = tb_video::get();
+        $data = tb_other::whereBetween('id_link', [1, 2])->get();
+        $video = null;
+        $data->map(function ($item) use (&$video) {
+            if ($item->is_used) {
+                $video = VideoResource::collection(tb_other::where('id_link', $item->id_link)->get());
+            }
+        });
 
         return response()->json([
             'message' => 'Data ditemukan',
-            'data' => VideoResource::collection($data),
+            'data' => $video,
         ], 200);
     }
 }

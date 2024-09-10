@@ -4,6 +4,7 @@ namespace App\Http\Resources\link;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use OpenApi\Annotations as OA;
 
 /**
  * @OA\Schema(
@@ -20,6 +21,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *         type="string",
  *         example="Opening MPLS"
  *     ),
+ *     @OA\Property(
+ *     property="video_description",
+ *     type="string",
+ *     example="Opening MPLS"
+ *      ),
+ *
  *     @OA\Property(
  *         property="video_url",
  *         type="string",
@@ -42,9 +49,9 @@ class VideoResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id_video' => $this->id_video,
-            'video_title' => $this->video_title,
-            'video_url' => $this->video_url,
+            'id_video' => $this->id_link,
+            'video_title' => $this->title,
+            'video_url' => $this->url,
             'updated_at' => $this->updated_at,
         ];
     }

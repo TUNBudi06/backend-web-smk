@@ -9,7 +9,6 @@ use App\Http\Controllers\categories\BeritaCategory;
 use App\Http\Controllers\categories\EventCategory;
 use App\Http\Controllers\categories\GalleryCategory;
 use App\Http\Controllers\categories\PengumumanCategory;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\logUserAproved;
@@ -25,7 +24,7 @@ use App\Http\Controllers\profile\ProfileController;
 use App\Http\Controllers\profile\PTKController;
 use App\Http\Controllers\profileAdmin;
 use App\Http\Controllers\url\AlertController;
-use App\Http\Controllers\url\KomiteController;
+use App\Http\Controllers\url\otherController;
 use App\Http\Controllers\url\VideoController;
 use App\Http\Controllers\user\UserController;
 use App\Http\Middleware\auth\adminLogin;
@@ -145,7 +144,9 @@ Route::prefix('private/admin')->group(function () {
                     Route::resource('/fasilitas', FasilitasController::class)->parameters([
                         'fasilitas' => 'fasilitas',
                     ]);
-                    Route::resource('/komite', KomiteController::class);
+                    Route::prefix('lainnya')->group(function () {
+                        Route::get('index', [otherController::class, 'index'])->name('lainnya.index');
+                    });
                     Route::resource('/video', VideoController::class);
 
                     Route::get('struktur', [ProfileController::class, 'indexStruktur'])->name('struktur.index');

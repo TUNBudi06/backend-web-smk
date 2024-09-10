@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\url;
 
 use App\Http\Controllers\Controller;
-use App\Models\url\tb_video;
+use App\Models\url\tb_other;
 use Illuminate\Http\Request;
 
 class VideoController extends Controller
@@ -14,7 +14,7 @@ class VideoController extends Controller
     public function index(Request $request)
     {
         $token = $request->session()->get('token') ?? $request->input('token');
-        $videos = tb_video::get();
+        $videos = tb_other::whereBetween('id_link', [1, 2])->get();
         $action = $request->session()->get('update') ? 'update' : '';
 
         return view('admin.page.url.video', [
@@ -45,9 +45,22 @@ class VideoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, string $id)
     {
-        //
+        $id_position = $request->route('video');
+        $token = $request->session()->get('token') ?? $request->input('token');
+        $video1 = tb_other::where('id_link', 1)->first();
+        $video2 = tb_other::where('id_link', 2)->first();
+        if ($id_position == 1) {
+            $video1->is_used = true;
+            $video2->is_used = false;
+        } else {
+            $video1->is_used = false;
+            $video2->is_used = true;
+        }
+        $video1->save();
+        $video2->save();
+        return redirect()->route('video.index', ['token' => $token])->with('success', 'Video berhasil diubah.');
     }
 
     /**
@@ -59,13 +72,17 @@ class VideoController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
         $action = 'update';
         $request->session()->put('token', $token);
-        $videos = tb_video::findOrFail($id_position);
-        $data = [
-            'videos' => $videos,
-            'update' => $action,
-        ];
+        $video = tb_other::findOrFail($id_position);
+        $videos = tb_other::whereBetween('id_link', [1, 2])->get();
 
-        return redirect()->route('video.index', $token)->with($data);
+        return view('admin.page.url.video', [
+            'menu_active' => 'profile',
+            'profile_active' => 'video',
+            'action' => $action,
+            'video' => $video,
+            'videos' => $videos,
+            'token' => $token,
+        ]);
     }
 
     /**
@@ -79,11 +96,11 @@ class VideoController extends Controller
         $video = $request->route('video');
 
         // Update data video
-        $video = tb_video::findOrFail($video);
-        $video->update([
-            'video_title' => $request->video_title,
-            'video_url' => $request->video_url,
-        ]);
+        $video = tb_other::findOrFail($video);
+        $video->url = $request->video_url;
+        $video->title = $request->video_title;
+        $video->description = $request->video_description;
+        $video->save();
 
         return redirect()->route('video.index', ['token' => $request->token])->with('success', 'Video berhasil diperbarui.');
     }

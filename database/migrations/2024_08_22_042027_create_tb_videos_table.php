@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tb_videos', function (Blueprint $table) {
-            $table->bigIncrements('id_video');
-            $table->string('video_url');
-            $table->string('video_title')->nullable();
+        Schema::create('tb_other', function (Blueprint $table) {
+            $table->bigIncrements('id_link');
+            $table->string('title')->nullable();
+            $table->text('description')->nullable();
+            $table->boolean('is_used')->default(false);
+            $table->enum('type', ['file', 'url'])->default('url');
+            $table->string('url');
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tb_videos');
+        Schema::dropIfExists('tb_other');
     }
 };
