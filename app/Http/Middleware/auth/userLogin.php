@@ -21,8 +21,8 @@ class userLogin
         $email = session('user') ?? null;
         $token = $request->route('token');
         $rToken = $request->session()->get('token') ?? $request->input('token');
-        Log::info($request->session()->get('token').' | '.$request->input('token'));
-        Log::info($email);
+//        Log::info($request->session()->get('token').' | '.$request->input('token'));
+//        Log::info($email);
         if ($rToken != $token) {
             return redirect()->route('guest.token');
         }

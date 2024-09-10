@@ -70,7 +70,7 @@ class AdminAuth extends Controller
             $cookie = false;
         }
 
-        Log::info($cookie);
+//        Log::info($cookie);
         $user = tb_admin::where('email', $email)
             ->where('token', $token)
             ->first();
