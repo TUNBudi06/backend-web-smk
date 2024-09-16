@@ -146,6 +146,10 @@ Route::prefix('private/admin')->group(function () {
                     ]);
                     Route::prefix('lainnya')->group(function () {
                         Route::get('index', [otherController::class, 'index'])->name('lainnya.index');
+                        Route::get('show/{id}', [otherController::class, 'show'])->name('lainnya.show');
+                        Route::get('edit/{id}', [otherController::class, 'editOther'])->name('lainnya.edit');
+                        Route::put('update/{id}', [otherController::class, 'updateOther'])->name('lainnya.update');
+                        Route::delete('delete', [otherController::class, 'destroy'])->name('lainnya.destroy');
                     });
                     Route::resource('/video', VideoController::class);
 

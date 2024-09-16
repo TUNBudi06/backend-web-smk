@@ -59,7 +59,7 @@
                             @foreach($videos as $index => $data)
                                 <div class="col-6">
                                     <div class="card" style="width: 18rem;">
-                                        <iframe class="card-img-top" src="https://www.youtube.com/embed/{{ \Illuminate\Support\Str::after($data->url, 'youtu.be/') }}" frameborder="0" allowfullscreen></iframe>
+                                        <iframe class="card-img-top" src="https://www.youtube.com/embed/{{ \Illuminate\Support\Str::after($data->url, 'youtu.be/') }}?autoplay=1&mute=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                                         <div class="card-body">
                                             <h5 class="card-title">{{$data->title}}</h5>
                                             <p class="card-text">{{ $data->description }}</p>

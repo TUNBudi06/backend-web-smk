@@ -35,7 +35,7 @@ class KemitraanResource extends JsonResource
         $image_cover = 'img/kemitraan/cover/'.$this->kemitraan_thumbnail;
         $kemitraan_thumbnail = File::exists(public_path($image_cover)) ? $image_cover : 'img/no_image.png';
 
-        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->text)));
+        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->kemitraan_description)));
 
         return [
             'id_kemitraan' => $this->id_kemitraan,

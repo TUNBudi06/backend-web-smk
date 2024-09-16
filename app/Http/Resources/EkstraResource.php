@@ -37,7 +37,7 @@ class EkstraResource extends JsonResource
         $image_cover = 'img/extrakurikuler/cover/'.$this->extra_image;
         $extra_image = File::exists(public_path($image_cover)) ? $image_cover : 'img/no_image.png';
 
-        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->text)));
+        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->extra_text)));
 
         return [
             'id_extra' => $this->id_extra,

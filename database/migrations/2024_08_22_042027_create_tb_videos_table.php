@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->boolean('is_used')->default(false);
-            $table->enum('type', ['file', 'url'])->default('url');
+            $table->enum('type', ['file', 'url', 'text'])->default('url');
             $table->string('url');
             $table->timestamps();
         });

@@ -43,5 +43,6 @@
         <script src="{{ asset('js/admin.js') }}"></script>
     @endif
     <script src="{{ asset('js/script.js') }}"></script>
+    @yield('script')
 </body>
 </html>

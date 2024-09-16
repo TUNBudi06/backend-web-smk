@@ -2159,6 +2159,10 @@
                         "type": "string",
                         "example": "Opening MPLS"
                     },
+                    "video_description": {
+                        "type": "string",
+                        "example": "Opening MPLS"
+                    },
                     "video_url": {
                         "type": "string",
                         "example": "https://..."
