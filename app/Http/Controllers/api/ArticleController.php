@@ -16,8 +16,30 @@ class ArticleController extends Controller
      *     path="/api/user/articles",
      *     tags={"Articles"},
      *     summary="Get all articles",
-     *     description="Retrieve all articles with type 1",
+     *     description="Retrieve all articles with type 1. Supports search by 'nama' and filtering by date range using 'created_at'.",
      *     operationId="getAllArticles",
+     *
+     *     @OA\Parameter(
+     *         name="search",
+     *         in="query",
+     *         description="Search keyword for article names",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="start_date",
+     *         in="query",
+     *         description="Start date for filtering articles (format: YYYY-MM-DD)",
+     *         required=false,
+     *         @OA\Schema(type="string", format="date")
+     *     ),
+     *     @OA\Parameter(
+     *         name="end_date",
+     *         in="query",
+     *         description="End date for filtering articles (format: YYYY-MM-DD)",
+     *         required=false,
+     *         @OA\Schema(type="string", format="date")
+     *     ),
      *
      *     @OA\Response(
      *         response=200,
@@ -46,10 +68,30 @@ class ArticleController extends Controller
      */
     public function index(Request $request)
     {
-        $artikel = tb_pemberitahuan::with('kategori')
+        $query = tb_pemberitahuan::with('kategori')
             ->where('type', 1)
-            ->orderBy('created_at', 'desc')->where('approved', 1)
-            ->get();
+            ->where('approved', 1);
+
+        # Search by name
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('nama', 'LIKE', '%' . $search . '%');
+        }
+
+        # Filter by date range
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $startDate = $request->input('start_date');
+            $endDate = $request->input('end_date');
+            $query->whereBetween('created_at', [$startDate, $endDate]);
+        }
+
+        $artikel = $query->orderBy('created_at', 'desc')->get();
+
+        if ($artikel->isEmpty()) {
+            return response()->json([
+                'message' => 'Data tidak ditemukan',
+            ], 404);
+        }
 
         return response()->json([
             'message' => 'Data ditemukan',
