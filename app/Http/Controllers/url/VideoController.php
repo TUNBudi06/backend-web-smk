@@ -15,11 +15,13 @@ class VideoController extends Controller
     {
         $token = $request->session()->get('token') ?? $request->input('token');
         $videos = tb_other::whereBetween('id_link', [1, 2])->get();
+        $videos_kemitraan = tb_other::find(3);
         $action = $request->session()->get('update') ? 'update' : '';
 
         return view('admin.page.url.video', [
             'menu_active' => 'profile',
             'profile_active' => 'video',
+            'kemitraan' => $videos_kemitraan,
             'action' => $action,
             'videos' => $videos,
             'token' => $token,
@@ -60,6 +62,7 @@ class VideoController extends Controller
         }
         $video1->save();
         $video2->save();
+
         return redirect()->route('video.index', ['token' => $token])->with('success', 'Video berhasil diubah.');
     }
 
@@ -71,6 +74,7 @@ class VideoController extends Controller
         $id_position = $request->route('video');
         $token = $request->session()->get('token') ?? $request->input('token');
         $action = 'update';
+        $videos_kemitraan = tb_other::find(3);
         $request->session()->put('token', $token);
         $video = tb_other::findOrFail($id_position);
         $videos = tb_other::whereBetween('id_link', [1, 2])->get();
@@ -78,6 +82,7 @@ class VideoController extends Controller
         return view('admin.page.url.video', [
             'menu_active' => 'profile',
             'profile_active' => 'video',
+            'kemitraan' => $videos_kemitraan,
             'action' => $action,
             'video' => $video,
             'videos' => $videos,

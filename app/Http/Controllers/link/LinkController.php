@@ -102,4 +102,47 @@ class LinkController extends Controller
             'data' => $video,
         ], 200);
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/user/link/videos/kemitraan",
+     *     tags={"Videos"},
+     *     summary="Get video kemitraan",
+     *     description="Retrieve video kwemitraan",
+     *     operationId="getVideoKemtiraan",
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Data ditemukan",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="message", type="string", example="Data ditemukan"),
+     *             @OA\Property(property="data", type="array",
+     *
+     *                 @OA\Items(ref="#/components/schemas/AlertResource")
+     *             )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=404,
+     *         description="Data tidak ditemukan",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
+     *         )
+     *     )
+     * )
+     */
+    public function linkVideoKemitraan()
+    {
+        $data = tb_other::where('id_link', 3)->get();
+
+        return response()->json([
+            'message' => 'Data ditemukan',
+            'data' => VideoResource::collection($data),
+        ], 200);
+    }
 }

@@ -37,11 +37,7 @@
             height: 500,
         };
         $(document).ready(function () {
-            @if($data->type == 'file')
-            $('#PDFView').pdfViewer('{{asset('data-pdf/' . $data->url)}}', options);
-            @elseif($data->type == 'url')
             $('#PDFView').pdfViewer('{{$data->url}}', options);
-            @endif
         });
     </script><script>
 @endsection

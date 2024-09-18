@@ -151,7 +151,16 @@ Route::prefix('private/admin')->group(function () {
                         Route::put('update/{id}', [otherController::class, 'updateOther'])->name('lainnya.update');
                         Route::delete('delete', [otherController::class, 'destroy'])->name('lainnya.destroy');
                     });
-                    Route::resource('/video', VideoController::class);
+                    //set name for this route
+                    Route::resource('/video', VideoController::class)->names([
+                        'index' => 'video.index',
+                        'create' => 'video.create',
+                        'store' => 'video.store',
+                        'show' => 'video.show',
+                        'edit' => 'video.edit',
+                        'update' => 'video.update',
+                        'destroy' => 'video.destroy',
+                    ]);
 
                     Route::get('struktur', [ProfileController::class, 'indexStruktur'])->name('struktur.index');
                 });

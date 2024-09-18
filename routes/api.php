@@ -37,6 +37,7 @@ Route::prefix('user')->group(function () {
     Route::prefix('link')->group(function () {
         Route::get('alerts', [LinkController::class, 'linkAlert']);
         Route::get('videos', [LinkController::class, 'linkVideo']);
+        Route::get('videos/kemitraan', [LinkController::class, 'linkVideoKemitraan']);
     });
     Route::resource('kemitraans', KemitraanController::class);
     Route::resource('position', PosisiController::class);

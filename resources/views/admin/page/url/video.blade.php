@@ -73,6 +73,16 @@
                                     </div>
                                 </div>
                             @endforeach
+                        <div class="col-12 pt-4">
+                            <div class="card" >
+                                <iframe class="card-img-top" style="height: 20rem" src="https://www.youtube.com/embed/{{ \Illuminate\Support\Str::after($kemitraan->url, 'youtu.be/') }}?autoplay=1&mute=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{$kemitraan->title}}</h5>
+                                    <p class="card-text">{{ $kemitraan->description }}</p>
+                                    <a href="{{route('video.edit',[$token,$kemitraan->id_link])}}" class="btn btn-warning">Edit</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

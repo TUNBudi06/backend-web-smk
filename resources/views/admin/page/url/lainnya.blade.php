@@ -2,6 +2,13 @@
 
 @section('title')
     <title> Profile Lainnya | Admin Panel</title>
+    <script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.14.0/dist/sweetalert2.all.min.js
+"></script>
+    <link href="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.14.0/dist/sweetalert2.min.css
+" rel="stylesheet">
+
 @endsection
 
 @section('container')
@@ -32,6 +39,7 @@
                                 <th>no</th>
                                 <th>id_link</th>
                                 <th>title</th>
+                                <th>description</th>
                                 <th>jenis</th>
                                 <th>Action</th>
                             </tr>
@@ -42,6 +50,13 @@
                                 <td>{{ $index }}</td>
                                 <td>{{ $data->id_link }}</td>
                                 <td>{{$data->title}}</td>
+                                @if($data->type == 'text')
+                                    <td>Text</td>
+                                @elseif($data->type == 'file')
+                                    <td>{{$data->description}}</td>
+                                @else
+                                    <td>Link</td>
+                                @endif
                                 <td>
                                     {{$data->type}}
                                 </td>
@@ -50,13 +65,6 @@
                                        class="btn btn-info px-4 shadow-info">Detail</a>
                                     <a href="{{ route('lainnya.edit', ['token' => $token, 'id' => $data->id_link]) }}"
                                        class="btn btn-warning px-4 shadow-warning">Edit</a>
-                                    <form action="{{ route('lainnya.destroy', ['token' => $token]) }}"
-                                          method="post" class="d-inline">
-                                        <input type="hidden" value="{{$data->id_link}}" name="idName">
-                                        @method('delete')
-                                        @csrf
-                                        <button class="btn btn-danger px-4 shadow-danger">Delete</button>
-                                    </form>
                                 </td>
                             </tr>
                             @endforeach
@@ -71,4 +79,20 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script type="text/javascript">
+        $(document).ready(function () {
+            @if(Session::get('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ Session::get('success') }}',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            @endif
+        });
+    </script>
 @endsection
