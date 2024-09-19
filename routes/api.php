@@ -8,6 +8,7 @@ use App\Http\Controllers\api\FasilitasController;
 use App\Http\Controllers\api\GalleryController;
 use App\Http\Controllers\api\JurusanController;
 use App\Http\Controllers\api\KemitraanController;
+use App\Http\Controllers\api\link\profile;
 use App\Http\Controllers\api\LokerController;
 use App\Http\Controllers\api\NewsController;
 use App\Http\Controllers\api\PDController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\api\PengumumanController;
 use App\Http\Controllers\api\PosisiController;
 use App\Http\Controllers\api\PTKController;
 use App\Http\Controllers\link\LinkController;
+use App\Http\Controllers\profile\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +40,13 @@ Route::prefix('user')->group(function () {
         Route::get('alerts', [LinkController::class, 'linkAlert']);
         Route::get('videos', [LinkController::class, 'linkVideo']);
         Route::get('videos/kemitraan', [LinkController::class, 'linkVideoKemitraan']);
+    });
+
+    Route::prefix('profile')->group(function () {
+        Route::get('komite-sekolah', [profile::class, 'komiteSekolah']);
+        Route::get('program-kerja', [profile::class, 'programKerja']);
+        Route::get('struktur-organisasi', [profile::class, 'strukturOrganisasi']);
+        Route::get('visi-misi', [profile::class, 'visiMisi']);
     });
     Route::resource('kemitraans', KemitraanController::class);
     Route::resource('position', PosisiController::class);

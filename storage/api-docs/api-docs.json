@@ -1457,6 +1457,142 @@
                 }
             }
         },
+        "/api/user/profile/komite-sekolah": {
+            "get": {
+                "tags": [
+                    "Sekolah"
+                ],
+                "summary": "Get Komite Sekolah",
+                "description": "Retrieve Komite Sekolah",
+                "operationId": "getKomiteSekolah",
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ProfileData"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/profile/program-kerja": {
+            "get": {
+                "tags": [
+                    "Sekolah"
+                ],
+                "summary": "Get Program Kerja Sekolah",
+                "description": "Retrieve Program Kerja Sekolah",
+                "operationId": "getProgramKerjaSekolah",
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ProfileData"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/profile/struktur-organisasi": {
+            "get": {
+                "tags": [
+                    "Sekolah"
+                ],
+                "summary": "Get Struktur Organisasi Sekolah",
+                "description": "Retrieve Struktur Organisasi  Sekolah",
+                "operationId": "getStrukturOrganisasiSekolah",
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ProfileData"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/profile/visi-misi": {
+            "get": {
+                "tags": [
+                    "Sekolah"
+                ],
+                "summary": "Get Visi Misi Sekolah",
+                "description": "Retrieve Visi Misi  Sekolah",
+                "operationId": "getVisiMisiSekolah",
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ProfileData"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/link/alerts": {
             "get": {
                 "tags": [
@@ -2251,6 +2387,31 @@
                     "updated_at": {
                         "type": "string",
                         "example": "2023-01-01T12:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "ProfileData": {
+                "properties": {
+                    "id_profile": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "profile_name": {
+                        "type": "string",
+                        "example": "Komite Sekolah"
+                    },
+                    "name_data": {
+                        "type": "string",
+                        "example": "name of file data if type = data"
+                    },
+                    "type_data": {
+                        "type": "string",
+                        "example": "text,'url','file'"
+                    },
+                    "profile_data": {
+                        "type": "string",
+                        "example": "https://..."
                     }
                 },
                 "type": "object"

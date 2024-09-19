@@ -8,6 +8,7 @@ use App\Http\Resources\CategoryResource;
 use App\Models\tb_pemberitahuan;
 use App\Models\tb_pemberitahuan_category;
 use Illuminate\Http\Request;
+use OpenApi\Annotations as OA;
 
 class ArticleController extends Controller
 {
