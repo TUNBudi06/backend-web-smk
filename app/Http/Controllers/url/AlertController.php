@@ -19,6 +19,7 @@ class AlertController extends Controller
 
         return view('admin.page.alert', [
             'menu_active' => 'links',
+            'navlink_active' => 'alert',
             'action' => $action,
             'alerts' => $alerts,
             'token' => $token,

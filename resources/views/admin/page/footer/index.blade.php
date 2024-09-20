@@ -15,31 +15,46 @@
         </div>
         @endif
         <div class="row">
+            <div class="offset-md-1 col-12">
+                @include('admin.partials.nav_link')
+            </div>
             @if ($action == "update")
             <div class="col-md-4 offset-md-1 mt-4 p-2">
                 <div class="w-100 rad bg-white position-relative shadow py-3 px-4">
                     <h5 class="poppins mb-0">Update Kategori</h5>
-                    <form action="{{ route('artikel.category.update', ['token' => $token, 'artikel_category' => $category->id_pemberitahuan_category]) }}" method="post">
-                        @method('PUT')
+                    <form action="{{ route('footer.update', ['token' => $token]) }}" method="post">
+                        @method('PATCH')
                         @csrf
                         <div class="form-group">
-                            <input type="hidden" value="{{$category->id_pemberitahuan_category}}" name="idCategory" id="idCategory" class="form-control" placeholder="Perayaan / Peristiwa">
+                            <input type="hidden" value="{{$footer->id_footer}}" name="idName" id="idName" class="form-control" >
                         </div>
                         <div class="form-group">
-                            <label for="category_name" class="mt-3 mb-2">Nama Kategori</label>
-                            <input type="text" required value="{{$category->pemberitahuan_category_name}}" name="category_name" id="category_name" class="form-control" placeholder="Perayaan / Peristiwa">
+                            <label for="label" class="mt-3 mb-2">Label</label>
+                            <input type="text" name="label" id="label" value="{{$footer->label}}" class="form-control @error('Label') is-invalid @enderror" placeholder="Pelayanan / Berita">
+                            @error('Label')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
-                            <label for="manual_color" class="mt-3 mb-2">Warna Kategori</label>
-                            <div class="input-group">
-                                <input type="color" name="manual_color" id="manual_color" class="form-control" style="width: 70px;">
-                                <input type="text" name="category_color" id="category_color" required value="{{$category->pemberitahuan_category_color}}" class="form-control">
-                            </div>
-                            <small id="colorID" class="text-muted">Hex Color otomatis terisi saat warna dipilih</small>
+                            <label for="url" class="mt-3 mb-2">URL</label>
+                            <input type="url" name="url" id="url" value="{{$footer->url}}" class="form-control @error('url') is-invalid @enderror" placeholder="http://...">
+                            @error('url')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
-                        <div class="text-right w-100 position-absolute" style="right: 10px;">
-                            <a href="{{ route('artikel.category.create', ['token' => $token]) }}" class="btn btn-white px-4 rounded-pill border-warning">Tambah</a>
-                            <button class="btn btn-warning px-4 rounded-pill shadow-warning">Update</button>
+                        <div class="form-group">
+                            <label for="footer_tipe" class="mt-3 mb-2">pilih tipe footer</label>
+                            <select class="form-control @error('footer_tipe') is-invalid @enderror" name="footer_tipe" id="footer_tipe">
+                                <option value="1" {{$footer->type == '1' ? 'selected':''}}>Unit Produksi Sekolah</option>
+                                <option value="2" {{$footer->type == '2' ? 'selected':''}}>Aplikasi & Layanan</option>
+                                <option value="3" {{$footer->type == '3' ? 'selected':''}}>Lainnya</option>
+                            </select>
+                            @error('footer_tipe')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="text-right w-100">
+                            <button class="btn btn-warning px-4 rounded-pill shadow-warning position-absolute" style="right: 10px;">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -48,19 +63,33 @@
             <div class="col-md-4 offset-md-1 mt-4 p-2">
                 <div class="w-100 rad bg-white position-relative shadow py-3 px-4">
                     <h5 class="poppins mb-0">Tambah Kategori</h5>
-                    <form action="{{ route('artikel.category.store', ['token' => $token]) }}" method="post">
+                    <form action="{{ route('footer.store', ['token' => $token]) }}" method="post">
                         @csrf
                         <div class="form-group">
-                          <label for="category_name" class="mt-3 mb-2">Nama Kategori</label>
-                          <input type="text" name="category_name" id="category_name" class="form-control" placeholder="Perayaan / Peristiwa">
+                          <label for="label" class="mt-3 mb-2">Label</label>
+                          <input type="text" name="label" id="label" class="form-control @error('Label') is-invalid @enderror" placeholder="Pelayanan / Berita">
+                          @error('Label')
+                          <div class="invalid-feedback">{{ $message }}</div>
+                          @enderror
                         </div>
                         <div class="form-group">
-                            <label for="manual_color" class="mt-3 mb-2">Warna Kategori</label>
-                            <div class="input-group">
-                                <input type="color" name="manual_color" id="manual_color" class="form-control" style="width: 70px;">
-                                <input type="text" name="category_color" id="category_color" class="form-control" value="#">
-                            </div>
-                            <small id="colorID" class="text-muted">Hex Color otomatis terisi saat warna dipilih</small>
+                            <label for="url" class="mt-3 mb-2">URL</label>
+                            <input type="url" name="url" id="url" class="form-control @error('url') is-invalid @enderror" placeholder="http://...">
+                            @error('url')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="footer_tipe" class="mt-3 mb-2">pilih tipe footer</label>
+                            <select class="form-control @error('footer_tipe') is-invalid @enderror" name="footer_tipe" id="footer_tipe">
+                                <option disabled selected hidden>pilih tipe</option>
+                                <option value="1">Unit Produksi Sekolah</option>
+                                <option value="2">Aplikasi & Layanan</option>
+                                <option value="3">Lainnya</option>
+                            </select>
+                            @error('footer_tipe')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="text-right w-100">
                             <button class="btn btn-warning px-4 rounded-pill shadow-warning position-absolute" style="right: 10px;">Simpan</button>
@@ -78,27 +107,30 @@
                             </p>
                         </div>
                         <div class="col-md-4 text-right">
-                            <a href="{{ route('artikel.index', ['token' => $token]) }}" class="btn-print btn btn-white border-warning px-3 rounded-pill"><i class="fas fa-newspaper"></i> Artikel</a>
+                            <a href="{{ route('footer', ['token' => $token]) }}" class="btn-print btn btn-white border-warning px-3 rounded-pill"><i class="fas fa-newspaper"></i> Footer  Link</a>
                         </div>
                     </div>
-                    <table class="table">
+                    <table id="myTable">
                         <thead>
                             <tr>
-                                <th>Nama Kategori</th>
-                                <th>Warna</th>
+                                <th>Label</th>
+                                <th>URL</th>
+                                <th>Tipe</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($articles as $data)
+                            @foreach ($footers as $data)
                             <tr>
-                                <td>{{ $data->pemberitahuan_category_name }}</td>
-                                <td>{{ $data->pemberitahuan_category_color ?? '-' }}</td>
+                                <td>{{ $data->label }}</td>
+                                <td>{{ $data->url ?? '-' }}</td>
+                                <td>{{ $data->type == "1" ? 'Unit Produksi Sekolah' : ($data->type == "2" ? 'Aplikasi & Layanan' : 'Lainnya') }}</td>
                                 <td>
-                                    <a href="{{ route('artikel.category.edit', ['artikel_category' => $data->id_pemberitahuan_category, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                    <form action="{{ route('artikel.category.destroy', ['artikel_category' => $data->id_pemberitahuan_category, 'token' => $token]) }}" method="post" class="d-inline" onclick="return confirm('Pengumuman akan dihapus ?')">
+                                    <a href="{{ route('footer.edit', ['id' => $data->id_footer, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
+                                    <form action="{{ route('footer.destroy', ['token' => $token]) }}" method="post" class="d-inline" onclick="return confirm('Pengumuman akan dihapus ?')">
                                         @csrf
                                         @method('delete')
+                                        <input type="hidden" value="{{$data->id_footer}}" name="idName">
                                         <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>
                                     </form>
                                 </td>
@@ -106,79 +138,14 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <script>
-                        $('.check-toggle').change(function() {
-                            if(this.checked) {
-                                $('.btn-print').removeAttr('disabled').removeClass('disabled')
-                                $('.check-respond').prop('checked', true);
-                            } else {
-                                $('.btn-print').addClass('disabled').attr('disabled')
-                                $('.check-respond').prop('checked', false);
-                            }
-                        });
-                        $('input[name="checkPrint[]"]').change(function() {
-                            var atLeastOneIsChecked = $('input[name="checkPrint[]"]:checked').length > 0;
-                            if(atLeastOneIsChecked) {
-                                $('.btn-print').removeAttr('disabled').removeClass('disabled')
-                            } else {
-                                $('.btn-print').addClass('disabled').attr('disabled')
-                            }
-                        });
-                    </script>
-                    <div class="row px-3">
-                        <div class="col-md-6">
-                            <div class="pb-3">
-                                <form method="GET" id="show-form" name="showForm" action="">
-                                    <div class="form-group d-inline-block">
-                                        <input type="hidden" name="page" value="">
-                                        <input type="hidden" name="id_category" value="">
-                                        <input type="hidden" name="action" value="">
-                                        <select id="show-select" name="show" onchange="showData()" class="form-control form-control-sm d-inline-block"
-                                            style="width:70px; font-size: .7rem;">
-                                            <option value="10" selected>10</option>
-                                            <option value="20" >20</option>
-                                            <option value="30" >30</option>
-                                            <option value="40" >40</option>
-                                        </select>
-                                    </div>
-                                    <p class="montserrat d-inline" style="font-size: .7rem;">Data per halaman</p>
-                                    <script>
-                                        function showData() {
-                                            $('#show-select').change(function() {
-                                                var value = $(this).val();
-                                                $('#show-form').submit()
-                                            });
-                                        }
-                                    </script>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <p class="montserrat d-inline" style="font-size: .7rem;">
-                            {{ $articles->count() }} dari {{ $articles->count() }} data</p>
-                            <a href="#" class="btn btn-sm p-0 px-2 btn-white disabled"><i class="fas fa-caret-left text-warning"></i></a>
-                            <a href="#" class="btn btn-sm p-0 px-2 btn-white active"><i class="fas fa-caret-right text-warning"></i></a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const colorPicker = document.getElementById('manual_color');
-            const hexInput = document.getElementById('category_color');
-
-            colorPicker.addEventListener('input', function() {
-                hexInput.value = colorPicker.value.toUpperCase();
-            });
-
-            hexInput.addEventListener('input', function() {
-                if (/^#[0-9A-F]{6}$/i.test(hexInput.value)) {
-                    colorPicker.value = hexInput.value;
-                }
-            });
+        $(document).ready(function() {
+            $('#myTable').DataTable();
         });
     </script>
 @endsection

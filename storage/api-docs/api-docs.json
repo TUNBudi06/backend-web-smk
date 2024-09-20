@@ -1457,6 +1457,52 @@
                 }
             }
         },
+        "/api/user/footer": {
+            "get": {
+                "tags": [
+                    "Footer navigation"
+                ],
+                "summary": "Get Footer Navigation",
+                "description": "Retrieve Footer Navigation",
+                "operationId": "getFooterNavigation",
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "List": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "1": {
+                                                        "type": "string",
+                                                        "example": "Unit Produksi Sekolah"
+                                                    },
+                                                    "data": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "$ref": "#/components/schemas/FooterSchemas"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/profile/komite-sekolah": {
             "get": {
                 "tags": [
@@ -2024,6 +2070,33 @@
                     "facility_text": {
                         "type": "string",
                         "example": "Laboratorium komputer dengan fasilitas lengkap."
+                    }
+                },
+                "type": "object"
+            },
+            "FooterSchemas": {
+                "title": "FooterSchemas",
+                "description": "FooterSchemas",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "label": {
+                        "description": "Label",
+                        "type": "string",
+                        "example": "Label"
+                    },
+                    "url": {
+                        "description": "URL",
+                        "type": "string",
+                        "example": "URL"
+                    },
+                    "type": {
+                        "description": "Type",
+                        "type": "integer",
+                        "example": "1"
                     }
                 },
                 "type": "object"

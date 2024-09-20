@@ -8,6 +8,7 @@ use App\Http\Controllers\api\FasilitasController;
 use App\Http\Controllers\api\GalleryController;
 use App\Http\Controllers\api\JurusanController;
 use App\Http\Controllers\api\KemitraanController;
+use App\Http\Controllers\api\link\footerAPI;
 use App\Http\Controllers\api\link\profile;
 use App\Http\Controllers\api\LokerController;
 use App\Http\Controllers\api\NewsController;
@@ -48,6 +49,8 @@ Route::prefix('user')->group(function () {
         Route::get('struktur-organisasi', [profile::class, 'strukturOrganisasi']);
         Route::get('visi-misi', [profile::class, 'visiMisi']);
     });
+
+    Route::get('footer', [footerAPI::class, 'footer']);
     Route::resource('kemitraans', KemitraanController::class);
     Route::resource('position', PosisiController::class);
     Route::resource('lokers', LokerController::class);

@@ -11,6 +11,7 @@ use App\Http\Controllers\categories\GalleryCategory;
 use App\Http\Controllers\categories\PengumumanCategory;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\link\footerController;
 use App\Http\Controllers\logUserAproved;
 use App\Http\Controllers\mitra\KemitraanController;
 use App\Http\Controllers\mitra\LokerController;
@@ -132,7 +133,6 @@ Route::prefix('private/admin')->group(function () {
                 Route::resource('/kemitraan', KemitraanController::class);
                 Route::resource('/loker', LokerController::class);
                 Route::resource('/posisi', PosisiController::class);
-                Route::resource('/alert', AlertController::class);
                 Route::get('/links', [AdminController::class, 'links'])->name('links');
                 Route::prefix('profile')->group(function () {
                     Route::resource('/jurusan', JurusanController::class);
@@ -161,6 +161,18 @@ Route::prefix('private/admin')->group(function () {
                         'update' => 'video.update',
                         'destroy' => 'video.destroy',
                     ]);
+
+                    Route::prefix('link')->group(function () {
+                        Route::resource('/alert', AlertController::class);
+
+                        Route::prefix('footer')->group(function () {
+                            Route::get('index', [footerController::class, 'index'])->name('footer');
+                            Route::post('store', [footerController::class, 'store'])->name('footer.store');
+                            Route::get('edit/{id}', [footerController::class, 'edit'])->name('footer.edit');
+                            Route::patch('update', [footerController::class, 'update'])->name('footer.update');
+                            Route::delete('delete', [footerController::class, 'destroy'])->name('footer.destroy');
+                        });
+                    });
 
                     Route::get('struktur', [ProfileController::class, 'indexStruktur'])->name('struktur.index');
                 });
