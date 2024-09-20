@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    <title> | Admin Panel</title>
+    <title> Footer Navigation | Admin Panel</title>
 @endsection
 
 @section('container')
