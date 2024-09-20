@@ -14,6 +14,16 @@ use Illuminate\Support\Facades\File;
  *     @OA\Property(property="nama", type="string", example="Pengumuman Penting"),
  *     @OA\Property(property="thumbnail", type="string", example="img/announcement/gambar.jpg"),
  *     @OA\Property(property="target", type="string", example="Semua"),
+ *     @OA\Property(
+ *           property="published_by",
+ *           type="string",
+ *           example="Admin"
+ *       ),
+ *       @OA\Property(
+ *           property="jurnal_by",
+ *           type="string",
+ *           example="Jurnal A"
+ *       ),
  *     @OA\Property(property="date", type="string", example="2023-01-01"),
  *     @OA\Property(property="time", type="string", example="12:00"),
  *     @OA\Property(property="text", type="string", example="Ini adalah teks pengumuman."),
@@ -44,6 +54,8 @@ class AnnouncementResource extends JsonResource
             'nama' => $this->nama,
             'thumbnail' => $thumbnail,
             'target' => $this->target,
+            'published_by' => $this->published_by,
+            'jurnal_by' => $this->jurnal_by,
             'date' => $this->date,
             'time' => $this->time,
             'text' => $cleanText,

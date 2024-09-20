@@ -11,22 +11,22 @@ use Illuminate\Support\Facades\File;
  *     schema="NewsResource",
  *     type="object",
  *     title="News Resource",
- *     properties={
  *
- *         @OA\Property(property="id_pemberitahuan", type="integer"),
- *         @OA\Property(property="nama", type="string"),
- *         @OA\Property(property="thumbnail", type="string"),
- *         @OA\Property(property="text", type="string"),
- *         @OA\Property(property="level", type="string"),
- *         @OA\Property(property="location", type="string"),
- *         @OA\Property(property="category", type="object",
- *             @OA\Property(property="id", type="integer"),
- *             @OA\Property(property="nama", type="string"),
- *             @OA\Property(property="color", type="string"),
- *         ),
- *         @OA\Property(property="viewer", type="integer"),
- *         @OA\Property(property="created_at", type="string", format="date-time"),
- *     }
+ *     @OA\Property(property="id_pemberitahuan", type="integer", example=1),
+ *     @OA\Property(property="nama", type="string", example="Berita Terbaru"),
+ *     @OA\Property(property="thumbnail", type="string", example="img/berita/thumbnail.jpg"),
+ *     @OA\Property(property="text", type="string", example="Konten berita..."),
+ *     @OA\Property(property="level", type="string", example="1"),
+ *     @OA\Property(property="location", type="string", example="Jakarta"),
+ *     @OA\Property(property="category", type="object",
+ *         @OA\Property(property="id", type="integer", example=1),
+ *         @OA\Property(property="nama", type="string", example="Kategori A"),
+ *         @OA\Property(property="color", type="string", example="#FF0000"),
+ *     ),
+ *     @OA\Property(property="viewer", type="integer", example=100),
+ *     @OA\Property(property="created_at", type="string", format="date-time", example="2023-09-19T12:00:00Z"),
+ *     @OA\Property(property="published_by", type="string", example="Admin"),
+ *     @OA\Property(property="jurnal_by", type="string", example="Jurnal B")
  * )
  */
 class NewsResource extends JsonResource
@@ -49,6 +49,8 @@ class NewsResource extends JsonResource
             'thumbnail' => $thumbnail,
             'text' => $cleanText,
             'level' => $this->level,
+            'published_by' => $this->published_by,
+            'jurnal_by' => $this->jurnal_by,
             'location' => $this->location,
             'category' => [
                 'id' => $this->kategori->id_pemberitahuan_category,

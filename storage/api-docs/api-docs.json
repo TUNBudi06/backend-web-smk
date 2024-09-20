@@ -1810,6 +1810,14 @@
                         "type": "string",
                         "example": "Semua"
                     },
+                    "published_by": {
+                        "type": "string",
+                        "example": "Admin"
+                    },
+                    "jurnal_by": {
+                        "type": "string",
+                        "example": "Jurnal A"
+                    },
                     "date": {
                         "type": "string",
                         "example": "2023-01-01"
@@ -1875,6 +1883,22 @@
                     "text": {
                         "type": "string",
                         "example": "Ini adalah teks artikel."
+                    },
+                    "level": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "published_by": {
+                        "type": "string",
+                        "example": "Admin"
+                    },
+                    "jurnal_by": {
+                        "type": "string",
+                        "example": "Jurnal A"
+                    },
+                    "viewer": {
+                        "type": "integer",
+                        "example": 100
                     },
                     "category": {
                         "properties": {
@@ -2003,6 +2027,14 @@
                     "date": {
                         "type": "string",
                         "example": "2023-01-01"
+                    },
+                    "published_by": {
+                        "type": "string",
+                        "example": "Admin"
+                    },
+                    "jurnal_by": {
+                        "type": "string",
+                        "example": "Jurnal A"
                     },
                     "time": {
                         "type": "string",
@@ -2243,43 +2275,62 @@
                 "title": "News Resource",
                 "properties": {
                     "id_pemberitahuan": {
-                        "type": "integer"
+                        "type": "integer",
+                        "example": 1
                     },
                     "nama": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "Berita Terbaru"
                     },
                     "thumbnail": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "img/berita/thumbnail.jpg"
                     },
                     "text": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "Konten berita..."
                     },
                     "level": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "1"
                     },
                     "location": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "Jakarta"
                     },
                     "category": {
                         "properties": {
                             "id": {
-                                "type": "integer"
+                                "type": "integer",
+                                "example": 1
                             },
                             "nama": {
-                                "type": "string"
+                                "type": "string",
+                                "example": "Kategori A"
                             },
                             "color": {
-                                "type": "string"
+                                "type": "string",
+                                "example": "#FF0000"
                             }
                         },
                         "type": "object"
                     },
                     "viewer": {
-                        "type": "integer"
+                        "type": "integer",
+                        "example": 100
                     },
                     "created_at": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date-time",
+                        "example": "2023-09-19T12:00:00Z"
+                    },
+                    "published_by": {
+                        "type": "string",
+                        "example": "Admin"
+                    },
+                    "jurnal_by": {
+                        "type": "string",
+                        "example": "Jurnal B"
                     }
                 },
                 "type": "object"

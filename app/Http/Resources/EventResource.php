@@ -37,6 +37,16 @@ use Illuminate\Support\Facades\File;
  *         example="2023-01-01"
  *     ),
  *     @OA\Property(
+ *           property="published_by",
+ *           type="string",
+ *           example="Admin"
+ *       ),
+ *       @OA\Property(
+ *           property="jurnal_by",
+ *           type="string",
+ *           example="Jurnal A"
+ *       ),
+ *     @OA\Property(
  *         property="time",
  *         type="string",
  *         example="12:00"
@@ -80,6 +90,8 @@ class EventResource extends JsonResource
             'target' => $this->target,
             'thumbnail' => $thumbnail,
             'date' => $this->date,
+            'published_by' => $this->published_by,
+            'jurnal_by' => $this->jurnal_by,
             'text' => $cleanText,
             'category' => $this->kategori ? [
                 'id' => $this->kategori->id_pemberitahuan_category,

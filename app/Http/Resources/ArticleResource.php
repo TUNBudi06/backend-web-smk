@@ -46,6 +46,26 @@ use Illuminate\Support\Facades\File;
  *         type="string",
  *         example="Ini adalah teks artikel."
  *     ),
+ *          @OA\Property(
+ *          property="level",
+ *          type="integer",
+ *          example=1
+ *      ),
+ *      @OA\Property(
+ *          property="published_by",
+ *          type="string",
+ *          example="Admin"
+ *      ),
+ *      @OA\Property(
+ *          property="jurnal_by",
+ *          type="string",
+ *          example="Jurnal A"
+ *      ),
+ *      @OA\Property(
+ *          property="viewer",
+ *          type="integer",
+ *          example=100
+ *      ),
  *     @OA\Property(
  *         property="category",
  *         type="object",
@@ -81,6 +101,8 @@ class ArticleResource extends JsonResource
             'date' => $this->date,
             'text' => $cleanText,
             'level' => $this->level,
+            'published_by' => $this->published_by,
+            'jurnal_by' => $this->jurnal_by,
             'category' => $this->kategori ? [
                 'id' => $this->kategori->id_pemberitahuan_category,
                 'nama' => $this->kategori->pemberitahuan_category_name,
