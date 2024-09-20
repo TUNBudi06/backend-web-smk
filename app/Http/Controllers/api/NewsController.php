@@ -16,8 +16,30 @@ class NewsController extends Controller
      *     path="/api/user/news",
      *     tags={"News"},
      *     summary="Get all news data",
-     *     description="Retrieve all news data",
+     *     description="Retrieve all news data. Supports search by 'nama' and filtering by date range using 'created_at'.",
      *     operationId="getAllNews",
+     *
+     *     @OA\Parameter(
+     *         name="search",
+     *         in="query",
+     *         description="Search keyword for news names",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="start_date",
+     *         in="query",
+     *         description="Start date for filtering news (format: YYYY-MM-DD)",
+     *         required=false,
+     *         @OA\Schema(type="string", format="date")
+     *     ),
+     *     @OA\Parameter(
+     *         name="end_date",
+     *         in="query",
+     *         description="End date for filtering news (format: YYYY-MM-DD)",
+     *         required=false,
+     *         @OA\Schema(type="string", format="date")
+     *     ),
      *
      *     @OA\Response(
      *         response=200,
@@ -25,7 +47,6 @@ class NewsController extends Controller
      *
      *         @OA\JsonContent(
      *             type="array",
-     *
      *             @OA\Items(ref="#/components/schemas/NewsResource")
      *         )
      *     ),
@@ -35,22 +56,41 @@ class NewsController extends Controller
      *         description="Data tidak ditemukan",
      *
      *         @OA\JsonContent(
-     *
      *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )
      * )
      */
-    public function index()
+    public function index(Request $request)
     {
-        $news = tb_pemberitahuan::with('kategori')
+        $query = tb_pemberitahuan::with('kategori')
             ->where('type', 3)
-            ->orderBy('created_at', 'desc')->where('approved', 1)
-            ->get();
+            ->where('approved', 1);
+
+        # Search by name
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('nama', 'LIKE', '%' . $search . '%');
+        }
+
+        # Filter by date range
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $startDate = $request->input('start_date');
+            $endDate = $request->input('end_date');
+            $query->whereBetween('created_at', [$startDate, $endDate]);
+        }
+
+        $berita = $query->orderBy('created_at', 'desc')->get();
+
+        if ($berita->isEmpty()) {
+            return response()->json([
+                'message' => 'Data tidak ditemukan',
+            ], 404);
+        }
 
         return response()->json([
             'message' => 'Data ditemukan',
-            'data' => NewsResource::collection($news),
+            'data' => NewsResource::collection($berita),
         ], 200);
     }
 
