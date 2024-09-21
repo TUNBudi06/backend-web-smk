@@ -12,6 +12,7 @@ use App\Http\Controllers\api\link\footerAPI;
 use App\Http\Controllers\api\link\profile;
 use App\Http\Controllers\api\LokerController;
 use App\Http\Controllers\api\NewsController;
+use App\Http\Controllers\api\PAController;
 use App\Http\Controllers\api\PDController;
 use App\Http\Controllers\api\PengumumanController;
 use App\Http\Controllers\api\PosisiController;
@@ -51,6 +52,7 @@ Route::prefix('user')->group(function () {
     });
 
     Route::get('footer', [footerAPI::class, 'footer']);
+    Route::get('PerangkatAjar', [PAController::class, 'index']);
     Route::resource('kemitraans', KemitraanController::class);
     Route::resource('position', PosisiController::class);
     Route::resource('lokers', LokerController::class);

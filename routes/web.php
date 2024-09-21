@@ -17,6 +17,7 @@ use App\Http\Controllers\mitra\KemitraanController;
 use App\Http\Controllers\mitra\LokerController;
 use App\Http\Controllers\mitra\PosisiController;
 use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\perangkatAjarController;
 use App\Http\Controllers\profile\ExtraController;
 use App\Http\Controllers\profile\FasilitasController;
 use App\Http\Controllers\profile\JurusanController;
@@ -172,6 +173,15 @@ Route::prefix('private/admin')->group(function () {
                             Route::patch('update', [footerController::class, 'update'])->name('footer.update');
                             Route::delete('delete', [footerController::class, 'destroy'])->name('footer.destroy');
                         });
+                    });
+
+                    Route::prefix('Teachings/tools')->group(function () {
+                        Route::get('index', [perangkatAjarController::class, 'indexTools'])->name('tools.index');
+                        Route::get('create', [perangkatAjarController::class, 'createTools'])->name('tools.create');
+                        Route::post('store', [perangkatAjarController::class, 'storeTools'])->name('tools.store');
+                        Route::get('edit/{id}', [perangkatAjarController::class, 'editTools'])->name('tools.edit');
+                        Route::put('update', [perangkatAjarController::class, 'updateTools'])->name('tools.update');
+                        Route::delete('delete', [perangkatAjarController::class, 'destroyTools'])->name('tools.destroy');
                     });
 
                     Route::get('struktur', [ProfileController::class, 'indexStruktur'])->name('struktur.index');

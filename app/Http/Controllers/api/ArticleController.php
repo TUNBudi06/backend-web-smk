@@ -129,9 +129,7 @@ class ArticleController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
-     *
      *         @OA\JsonContent(
-     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", ref="#/components/schemas/ArticleResource")
      *         )
@@ -142,7 +140,6 @@ class ArticleController extends Controller
      *         description="Data tidak ditemukan",
      *
      *         @OA\JsonContent(
-     *
      *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )

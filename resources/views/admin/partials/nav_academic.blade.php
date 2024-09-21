@@ -7,6 +7,6 @@
         class="<?= $profile_active == 'pd' ? 'btn my-1 btn-warning px-4 shadow-warning' : 'btn my-1 btn-light px-4 border-warning'?>">PD</a>
     <a href="{{ route('ptk.index',$token) }}"
         class="<?= $profile_active == 'ptk' ? 'btn my-1 btn-warning px-4 shadow-warning' : 'btn my-1 btn-light px-4 border-warning'?>">PTK</a>
-    <a href="#"
-        class="<?= $profile_active == '' ? 'btn my-1 btn-warning px-4 shadow-warning' : 'btn my-1 btn-light px-4 border-warning'?>">Perangkat Ajar</a>
+    <a href="{{ route('tools.index',$token) }}"
+        class="<?= $profile_active == 'tools' ? 'btn my-1 btn-warning px-4 shadow-warning' : 'btn my-1 btn-light px-4 border-warning'?>">Perangkat Ajar</a>
 </div>

@@ -1067,6 +1067,76 @@
                 }
             }
         },
+        "/api/user/PerangkatAjar": {
+            "get": {
+                "tags": [
+                    "Perangkat Ajar"
+                ],
+                "summary": "Get all Perangkat Ajar",
+                "description": "Retrieve all Perangkat Ajar with type 1. Supports search by 'nama' and 'kelas'.",
+                "operationId": "getAllPerangkatAjar",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search keyword for Materi Bahan Ajar",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "kelas",
+                        "in": "query",
+                        "description": "Search keyword for class Materi Bahan Ajar",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/PerangkatAjarResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data tidak ditemukan"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/profile/students": {
             "get": {
                 "tags": [
@@ -2542,6 +2612,32 @@
                     "updated_at": {
                         "type": "string",
                         "example": "2023-01-01T12:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "PerangkatAjarResource": {
+                "properties": {
+                    "id_pa": {
+                        "description": "ID of the Perangkat Ajar",
+                        "type": "integer"
+                    },
+                    "title": {
+                        "description": "Title of the Perangkat Ajar",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Description of the Perangkat Ajar",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "Type of the Perangkat Ajar",
+                        "type": "string"
+                    },
+                    "url": {
+                        "description": "URL of the Perangkat Ajar",
+                        "type": "string",
+                        "format": "url"
                     }
                 },
                 "type": "object"
