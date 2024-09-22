@@ -9,35 +9,61 @@ use Illuminate\Http\Request;
 
 class KemitraanController extends Controller
 {
-    /**
+/**
      * @OA\Get(
      *     path="/api/user/kemitraans",
      *     tags={"Kemitraan"},
      *     summary="Get all Kemitraan",
-     *     description="Retrieve all Kemitraan",
+     *     description="Retrieve all Kemitraan data. Supports search by 'kemitraan_name'.",
      *     operationId="getAllKemitraan",
+     *
+     *     @OA\Parameter(
+     *         name="search",
+     *         in="query",
+     *         description="Search keyword for Kemitraan names",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
      *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
-     *
      *         @OA\JsonContent(
      *             type="object",
-     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(
      *                 property="data",
      *                 type="array",
-     *
      *                 @OA\Items(ref="#/components/schemas/Kemitraan")
      *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Data tidak ditemukan",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )
      * )
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = tb_kemitraan::get();
+        $query = tb_kemitraan::query();
+
+        // Search by kemitraan_name
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('kemitraan_name', 'LIKE', '%' . $search . '%');
+        }
+
+        $data = $query->get();
+
+        if ($data->isEmpty()) {
+            return response()->json([
+                'message' => 'Data tidak ditemukan',
+            ], 404);
+        }
 
         return response()->json([
             'message' => 'Data ditemukan',

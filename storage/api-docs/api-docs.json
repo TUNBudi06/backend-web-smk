@@ -788,8 +788,19 @@
                     "Kemitraan"
                 ],
                 "summary": "Get all Kemitraan",
-                "description": "Retrieve all Kemitraan",
+                "description": "Retrieve all Kemitraan data. Supports search by 'kemitraan_name'.",
                 "operationId": "getAllKemitraan",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search keyword for Kemitraan names",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Data ditemukan",
@@ -806,6 +817,22 @@
                                             "items": {
                                                 "$ref": "#/components/schemas/Kemitraan"
                                             }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data tidak ditemukan"
                                         }
                                     },
                                     "type": "object"
