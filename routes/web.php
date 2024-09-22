@@ -25,6 +25,7 @@ use App\Http\Controllers\profile\PdController;
 use App\Http\Controllers\profile\ProfileController;
 use App\Http\Controllers\profile\PTKController;
 use App\Http\Controllers\profileAdmin;
+use App\Http\Controllers\SkController;
 use App\Http\Controllers\url\AlertController;
 use App\Http\Controllers\url\otherController;
 use App\Http\Controllers\url\VideoController;
@@ -182,6 +183,14 @@ Route::prefix('private/admin')->group(function () {
                         Route::get('edit/{id}', [perangkatAjarController::class, 'editTools'])->name('tools.edit');
                         Route::put('update', [perangkatAjarController::class, 'updateTools'])->name('tools.update');
                         Route::delete('delete', [perangkatAjarController::class, 'destroyTools'])->name('tools.destroy');
+                    });
+
+                    Route::prefix('slider/keungggulan')->group(function () {
+                        Route::get('index', [SkController::class, 'indexSlider'])->name('slider.index');
+                        Route::post('store', [SkController::class, 'storeSlider'])->name('slider.store');
+                        Route::get('edit/{id}', [SkController::class, 'editSlider'])->name('slider.edit');
+                        Route::patch('update', [SkController::class, 'updateSlider'])->name('slider.update');
+                        Route::delete('delete', [SkController::class, 'destroySlider'])->name('slider.destroy');
                     });
 
                     Route::get('struktur', [ProfileController::class, 'indexStruktur'])->name('struktur.index');

@@ -5,6 +5,40 @@
         "version": "1.0"
     },
     "paths": {
+        "/api/user/slider/keunggulan": {
+            "get": {
+                "tags": [
+                    "Slider Keunggulan"
+                ],
+                "summary": "Get Slider Keunggulan",
+                "description": "Retrieve Slider Keunggulan",
+                "operationId": "getSliderKeunggulan",
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/SkResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/articles": {
             "get": {
                 "tags": [
@@ -2566,6 +2600,23 @@
                     "prodi_short": {
                         "type": "string",
                         "example": "TI"
+                    }
+                },
+                "type": "object"
+            },
+            "SkResource": {
+                "properties": {
+                    "id_sk": {
+                        "description": "ID of the SkResource",
+                        "type": "integer"
+                    },
+                    "title": {
+                        "description": "Title of the SkResource",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Description of the SkResource",
+                        "type": "string"
                     }
                 },
                 "type": "object"
