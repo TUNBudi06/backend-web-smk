@@ -9,32 +9,60 @@ use Illuminate\Http\Request;
 
 class PTKController extends Controller
 {
-    /**
+/**
      * @OA\Get(
      *     path="/api/user/profile/teachers",
      *     tags={"PTK"},
      *     summary="Get all PTK",
-     *     description="Retrieve all PTK",
+     *     description="Retrieve all PTK. Supports search by 'nama'.",
      *     operationId="getAllPTK",
+     *
+     *     @OA\Parameter(
+     *         name="search_nama",
+     *         in="query",
+     *         description="Search by nama",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
      *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
      *
      *         @OA\JsonContent(
-     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", type="array",
-     *
      *                 @OA\Items(ref="#/components/schemas/PTKResource")
      *             )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=404,
+     *         description="Data tidak ditemukan",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )
      * )
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = tb_ptk::get();
+        $query = tb_ptk::query();
+
+        # Search by nama
+        if ($request->has('search_nama')) {
+            $search = $request->input('search_nama');
+            $query->where('nama', 'LIKE', '%' . $search . '%');
+        }
+
+        $data = $query->get();
+
+        if ($data->isEmpty()) {
+            return response()->json([
+                'message' => 'Data tidak ditemukan',
+            ], 404);
+        }
 
         return response()->json([
             'message' => 'Data ditemukan',

@@ -907,8 +907,39 @@
                     "Loker"
                 ],
                 "summary": "Get all Loker",
-                "description": "Retrieve all Loker",
+                "description": "Retrieve all Loker data. Supports search by 'kemitraan_name' and filter by 'created_at'.",
                 "operationId": "getAllLoker",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search keyword for Kemitraan names",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "description": "Start date for filtering (YYYY-MM-DD format)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "End date for filtering (YYYY-MM-DD format)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Data ditemukan",
@@ -925,6 +956,22 @@
                                             "items": {
                                                 "$ref": "#/components/schemas/Loker"
                                             }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data tidak ditemukan"
                                         }
                                     },
                                     "type": "object"
@@ -1204,8 +1251,19 @@
                     "PD"
                 ],
                 "summary": "Get all peserta didik",
-                "description": "Retrieve all peserta didik",
+                "description": "Retrieve all peserta didik. Supports search by 'nama'.",
                 "operationId": "getAllPesertaDidik",
+                "parameters": [
+                    {
+                        "name": "search_nama",
+                        "in": "query",
+                        "description": "Search by nama",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Data ditemukan",
@@ -1222,6 +1280,22 @@
                                             "items": {
                                                 "$ref": "#/components/schemas/PDResource"
                                             }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data tidak ditemukan"
                                         }
                                     },
                                     "type": "object"
@@ -1295,8 +1369,19 @@
                     "PTK"
                 ],
                 "summary": "Get all PTK",
-                "description": "Retrieve all PTK",
+                "description": "Retrieve all PTK. Supports search by 'nama'.",
                 "operationId": "getAllPTK",
+                "parameters": [
+                    {
+                        "name": "search_nama",
+                        "in": "query",
+                        "description": "Search by nama",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Data ditemukan",
@@ -1313,6 +1398,22 @@
                                             "items": {
                                                 "$ref": "#/components/schemas/PTKResource"
                                             }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data tidak ditemukan"
                                         }
                                     },
                                     "type": "object"
@@ -2418,17 +2519,51 @@
                         "type": "string",
                         "example": "Kasir/Sales/Marketing"
                     },
-                    "position_id": {
-                        "type": "string",
-                        "example": "Operator/Engineer/Finance"
+                    "position": {
+                        "properties": {
+                            "id_position": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "position_name": {
+                                "type": "string",
+                                "example": "Operator"
+                            },
+                            "position_type": {
+                                "type": "string",
+                                "example": "Full-time"
+                            }
+                        },
+                        "type": "object"
                     },
-                    "kemitraan_id": {
-                        "type": "string",
-                        "example": "Inafood/Honda/Mayora"
+                    "kemitraan": {
+                        "properties": {
+                            "id_kemitraan": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "kemitraan_name": {
+                                "type": "string",
+                                "example": "Inafood"
+                            },
+                            "kemitraan_description": {
+                                "type": "string",
+                                "example": "A partnership with Inafood"
+                            },
+                            "kemitraan_logo": {
+                                "type": "string",
+                                "example": "img/kemitraan/logo.png"
+                            },
+                            "kemitraan_thumbnail": {
+                                "type": "string",
+                                "example": "img/kemitraan/thumbnail.png"
+                            }
+                        },
+                        "type": "object"
                     },
                     "loker_available": {
                         "type": "string",
-                        "example": "Tersedia/Tidak Tersedia"
+                        "example": "Tersedia"
                     }
                 },
                 "type": "object"

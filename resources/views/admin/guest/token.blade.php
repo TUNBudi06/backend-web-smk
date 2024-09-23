@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{ asset('css/jssocials-theme-classic.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jssocials-theme-flat.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jssocials-theme-minima.css') }}">
-    <link rel="icon" type="image/x-icon" class="rounded-circle" href="{{ asset('favicon.ico') }}" />
+    <link rel="icon" type="image/x-icon" class="rounded-circle" href="{{ asset('smkicon.ico') }}" />
     <title>Login Admin</title>
 </head>
 <body>

@@ -14,27 +14,55 @@ class PDController extends Controller
      *     path="/api/user/profile/students",
      *     tags={"PD"},
      *     summary="Get all peserta didik",
-     *     description="Retrieve all peserta didik",
+     *     description="Retrieve all peserta didik. Supports search by 'nama'.",
      *     operationId="getAllPesertaDidik",
+     *
+     *     @OA\Parameter(
+     *         name="search_nama",
+     *         in="query",
+     *         description="Search by nama",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
      *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
      *
      *         @OA\JsonContent(
-     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", type="array",
-     *
      *                 @OA\Items(ref="#/components/schemas/PDResource")
      *             )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=404,
+     *         description="Data tidak ditemukan",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )
      * )
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = tb_peserta_didik::get();
+        $query = tb_peserta_didik::query();
+
+        # Search by nama
+        if ($request->has('search_nama')) {
+            $search = $request->input('search_nama');
+            $query->where('nama', 'LIKE', '%' . $search . '%');
+        }
+
+        $data = $query->get();
+
+        if ($data->isEmpty()) {
+            return response()->json([
+                'message' => 'Data tidak ditemukan',
+            ], 404);
+        }
 
         return response()->json([
             'message' => 'Data ditemukan',
