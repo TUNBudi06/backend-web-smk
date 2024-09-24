@@ -5,13 +5,24 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AnnouncementResource;
 use App\Http\Resources\ArticleResource;
+use App\Http\Resources\EkstraResource;
 use App\Http\Resources\EventResource;
+use App\Http\Resources\FasilitasResource;
+use App\Http\Resources\GalleryResource;
+use App\Http\Resources\JurusanResource;
 use App\Http\Resources\KemitraanResource;
 use App\Http\Resources\LokerResource;
 use App\Http\Resources\NewsResource;
+use App\Http\Resources\perangkatAjarResource;
+use App\Models\tb_extra;
+use App\Models\tb_facilities;
+use App\Models\tb_gallery;
 use App\Models\tb_kemitraan;
 use App\Models\tb_loker;
 use App\Models\tb_pemberitahuan;
+use App\Models\tb_perangkatAjar;
+use App\Models\tb_peserta_didik;
+use App\Models\tb_ptk;
 use Illuminate\Http\Request;
 
 class GlobalController extends Controller
@@ -44,6 +55,13 @@ class GlobalController extends Controller
      *                 @OA\Property(property="announcements", type="array", @OA\Items(ref="#/components/schemas/AnnouncementResource")),
      *                 @OA\Property(property="news", type="array", @OA\Items(ref="#/components/schemas/NewsResource")),
      *                 @OA\Property(property="events", type="array", @OA\Items(ref="#/components/schemas/EventResource")),
+     *                 @OA\Property(property="ekstras", type="array", @OA\Items(ref="#/components/schemas/EkstraResource")),
+     *                 @OA\Property(property="facilities", type="array", @OA\Items(ref="#/components/schemas/FasilitasResource")),
+     *                 @OA\Property(property="galleries", type="array", @OA\Items(ref="#/components/schemas/Gallery")),
+     *                 @OA\Property(property="jurusans", type="array", @OA\Items(ref="#/components/schemas/Jurusan")),
+     *                 @OA\Property(property="pa", type="array", @OA\Items(ref="#/components/schemas/PerangkatAjarResource")),
+     *                 @OA\Property(property="pd", type="array", @OA\Items(ref="#/components/schemas/PDResource")),
+     *                 @OA\Property(property="ptk", type="array", @OA\Items(ref="#/components/schemas/PTKResource")),
      *                 @OA\Property(property="kemitraan", type="array", @OA\Items(ref="#/components/schemas/KemitraanResource")),
      *                 @OA\Property(property="lokers", type="array", @OA\Items(ref="#/components/schemas/LokerResource")),
      *             )
@@ -75,6 +93,30 @@ class GlobalController extends Controller
             ->where('nama', 'LIKE', '%' . $query . '%')
             ->get();
 
+        // Search in Ekstra
+        $ekstras = tb_extra::where('extra_name', 'LIKE', '%' . $query . '%')
+            ->get();
+
+        // Search in Facility
+        $facilities = tb_facilities::where('facility_name', 'LIKE', '%' . $query . '%')
+            ->get();
+
+        // Search in Gallery
+        $galleries = tb_gallery::where('gallery_title', 'LIKE', '%' . $query . '%')
+            ->get();
+
+        // Search in Jurusan
+        $jurusans = tb_kemitraan::where('jurusan_nama', 'LIKE', '%' . $query . '%')
+            ->get();
+
+        // Search in Perangkat Ajar
+        $pa = tb_perangkatAjar::where('title', 'LIKE', '%' . $query . '%')
+            ->get();
+
+        // Search in PD
+        $pd = tb_peserta_didik::where('nama', 'LIKE', '%' . $query . '%')
+            ->get();
+
         // Search in Kemitraan
         $kemitraan = tb_kemitraan::where('kemitraan_name', 'LIKE', '%' . $query . '%')
             ->get();
@@ -84,6 +126,10 @@ class GlobalController extends Controller
             ->where('loker_type', 'LIKE', '%' . $query . '%')
             ->get();
 
+        // Search in PTK
+        $ptk = tb_ptk::where('nama', 'LIKE', '%' . $query . '%')
+            ->get();
+
         return response()->json([
             'message' => 'Data ditemukan',
             'data' => [
@@ -91,6 +137,11 @@ class GlobalController extends Controller
                 'announcements' => AnnouncementResource::collection($announcements),
                 'news' => NewsResource::collection($news),
                 'events' => EventResource::collection($events),
+                'ekstras' => EkstraResource::collection($ekstras),
+                'facilities' => FasilitasResource::collection($facilities),
+                'galleries' => GalleryResource::collection($galleries),
+                'jurusans' => JurusanResource::collection($jurusans),
+                'pa' => perangkatAjarResource::collection($pa),
                 'kemitraan' => KemitraanResource::collection($kemitraan),
                 'lokers' => LokerResource::collection($lokers),
             ],
