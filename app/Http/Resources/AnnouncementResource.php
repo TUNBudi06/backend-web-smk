@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\File;
 
 /**
  * @OA\Schema(
- *     schema="Announcement",
+ *     schema="AnnouncementResource",
  *
  *     @OA\Property(property="id_pemberitahuan", type="integer", example=1),
  *     @OA\Property(property="nama", type="string", example="Pengumuman Penting"),

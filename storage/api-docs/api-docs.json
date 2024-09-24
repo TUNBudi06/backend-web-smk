@@ -696,7 +696,7 @@
                     "Global Search"
                 ],
                 "summary": "Search globally across multiple tables",
-                "description": "Perform a search across articles, news, kemitraan, and loker.",
+                "description": "Perform a search for all section",
                 "operationId": "globalSearch",
                 "parameters": [
                     {
@@ -728,10 +728,22 @@
                                                         "$ref": "#/components/schemas/ArticleResource"
                                                     }
                                                 },
+                                                "announcements": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/AnnouncementResource"
+                                                    }
+                                                },
                                                 "news": {
                                                     "type": "array",
                                                     "items": {
                                                         "$ref": "#/components/schemas/NewsResource"
+                                                    }
+                                                },
+                                                "events": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/EventResource"
                                                     }
                                                 },
                                                 "kemitraan": {
@@ -1571,7 +1583,7 @@
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/Announcement"
+                                                "$ref": "#/components/schemas/AnnouncementResource"
                                             }
                                         }
                                     },
@@ -1629,7 +1641,7 @@
                                             "example": "Data ditemukan"
                                         },
                                         "data": {
-                                            "$ref": "#/components/schemas/Announcement"
+                                            "$ref": "#/components/schemas/AnnouncementResource"
                                         }
                                     },
                                     "type": "object"
@@ -2123,7 +2135,7 @@
     },
     "components": {
         "schemas": {
-            "Announcement": {
+            "AnnouncementResource": {
                 "properties": {
                     "id_pemberitahuan": {
                         "type": "integer",

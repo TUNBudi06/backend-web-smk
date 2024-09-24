@@ -28,7 +28,7 @@ class PengumumanController extends Controller
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", type="array",
      *
-     *                 @OA\Items(ref="#/components/schemas/Announcement")
+     *                 @OA\Items(ref="#/components/schemas/AnnouncementResource")
      *             )
      *         )
      *     ),
@@ -98,7 +98,7 @@ class PengumumanController extends Controller
      *         @OA\JsonContent(
      *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
-     *             @OA\Property(property="data", ref="#/components/schemas/Announcement")
+     *             @OA\Property(property="data", ref="#/components/schemas/AnnouncementResource")
      *         )
      *     ),
      *
