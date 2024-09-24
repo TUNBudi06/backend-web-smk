@@ -34,7 +34,7 @@ class KemitraanController extends Controller
      *             @OA\Property(
      *                 property="data",
      *                 type="array",
-     *                 @OA\Items(ref="#/components/schemas/Kemitraan")
+     *                 @OA\Items(ref="#/components/schemas/KemitraanResource")
      *             )
      *         )
      *     ),
@@ -104,7 +104,7 @@ class KemitraanController extends Controller
      *             type="object",
      *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
-     *             @OA\Property(property="data", ref="#/components/schemas/Kemitraan")
+     *             @OA\Property(property="data", ref="#/components/schemas/KemitraanResource")
      *         )
      *     ),
      *

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\File;
 
 /**
  * @OA\Schema(
- *     schema="Loker",
+ *     schema="LokerResource",
  *     type="object",
  *
  *     @OA\Property(property="id_loker", type="integer", example=1),

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\File;
 
 /**
  * @OA\Schema(
- *     schema="Kemitraan",
+ *     schema="KemitraanResource",
  *     type="object",
  *
  *     @OA\Property(property="id_kemitraan", type="integer", example=1),

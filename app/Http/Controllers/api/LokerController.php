@@ -48,7 +48,7 @@ class LokerController extends Controller
      *             @OA\Property(
      *                 property="data",
      *                 type="array",
-     *                 @OA\Items(ref="#/components/schemas/Loker")
+     *                 @OA\Items(ref="#/components/schemas/LokerResource")
      *             )
      *         )
      *     ),
@@ -122,7 +122,7 @@ class LokerController extends Controller
      *         response=200,
      *         description="Data ditemukan",
      *
-     *         @OA\JsonContent(ref="#/components/schemas/Loker")
+     *         @OA\JsonContent(ref="#/components/schemas/LokerResource")
      *     ),
      *
      *     @OA\Response(

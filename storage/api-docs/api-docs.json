@@ -690,6 +690,74 @@
                 }
             }
         },
+        "/api/user/search": {
+            "get": {
+                "tags": [
+                    "Global Search"
+                ],
+                "summary": "Search globally across multiple tables",
+                "description": "Perform a search across articles, news, kemitraan, and loker.",
+                "operationId": "globalSearch",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Search keyword",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "articles": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/ArticleResource"
+                                                    }
+                                                },
+                                                "news": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/NewsResource"
+                                                    }
+                                                },
+                                                "kemitraan": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/KemitraanResource"
+                                                    }
+                                                },
+                                                "lokers": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/LokerResource"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/profile/majors": {
             "get": {
                 "tags": [
@@ -815,7 +883,7 @@
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/Kemitraan"
+                                                "$ref": "#/components/schemas/KemitraanResource"
                                             }
                                         }
                                     },
@@ -874,7 +942,7 @@
                                             "example": "Data ditemukan"
                                         },
                                         "data": {
-                                            "$ref": "#/components/schemas/Kemitraan"
+                                            "$ref": "#/components/schemas/KemitraanResource"
                                         }
                                     },
                                     "type": "object"
@@ -954,7 +1022,7 @@
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/Loker"
+                                                "$ref": "#/components/schemas/LokerResource"
                                             }
                                         }
                                     },
@@ -1006,7 +1074,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Loker"
+                                    "$ref": "#/components/schemas/LokerResource"
                                 }
                             }
                         }
@@ -2472,7 +2540,7 @@
                 },
                 "type": "object"
             },
-            "Kemitraan": {
+            "KemitraanResource": {
                 "properties": {
                     "id_kemitraan": {
                         "type": "integer",
@@ -2505,7 +2573,7 @@
                 },
                 "type": "object"
             },
-            "Loker": {
+            "LokerResource": {
                 "properties": {
                     "id_loker": {
                         "type": "integer",

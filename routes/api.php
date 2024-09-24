@@ -6,6 +6,7 @@ use App\Http\Controllers\api\EkstraController;
 use App\Http\Controllers\api\EventController;
 use App\Http\Controllers\api\FasilitasController;
 use App\Http\Controllers\api\GalleryController;
+use App\Http\Controllers\api\GlobalController;
 use App\Http\Controllers\api\JurusanController;
 use App\Http\Controllers\api\KemitraanController;
 use App\Http\Controllers\api\link\footerAPI;
@@ -29,6 +30,7 @@ Route::get('/user', function (Request $request) {
 
 Route::prefix('user')->group(function () {
     Route::post('login/GUI-APP', [AuthController::class, 'addToken']);
+    Route::get('/search', [GlobalController::class, 'index']);
     Route::resource('announcements', PengumumanController::class);
     Route::get('announcement-categories', [PengumumanController::class, 'categoryAnnouncement']);
     Route::resource('articles', ArticleController::class);
