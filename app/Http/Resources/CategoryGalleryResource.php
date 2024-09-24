@@ -14,6 +14,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *
  *         @OA\Property(property="id_category", type="integer"),
  *         @OA\Property(property="category_name", type="string"),
+ *         @OA\Property(property="icon_type", type="string"),
  *     }
  * )
  */
@@ -29,6 +30,7 @@ class CategoryGalleryResource extends JsonResource
         return [
             'id_category' => $this->id_category,
             'category_name' => $this->category_name,
+            'icon_type' => 'Category Gallery',
         ];
     }
 }

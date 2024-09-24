@@ -32,6 +32,11 @@ use Illuminate\Support\Facades\File;
  *         example="img/event/gambar.jpg"
  *     ),
  *     @OA\Property(
+ *         property="icon_type",
+ *         type="string",
+ *         example="Event"
+ *     ),
+ *     @OA\Property(
  *         property="date",
  *         type="string",
  *         example="2023-01-01"
@@ -89,6 +94,7 @@ class EventResource extends JsonResource
             'nama' => $this->nama,
             'target' => $this->target,
             'thumbnail' => $thumbnail,
+            'icon_type' => 'Event',
             'date' => $this->date,
             'published_by' => $this->published_by,
             'jurnal_by' => $this->jurnal_by,

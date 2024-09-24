@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\File;
  *
  *     @OA\Property(property="id_extra", type="integer", example=1),
  *     @OA\Property(property="extra_name", type="string", example="Basketball"),
+ *     @OA\Property(property="icon_type", type="string", example="Ekstra"),
  *     @OA\Property(property="extra_text", type="string", example="Basketball club for all grades."),
  *     @OA\Property(property="extra_type", type="string", example="Sport"),
  *     @OA\Property(property="extra_logo", type="string", example="logo.png"),
@@ -42,6 +43,7 @@ class EkstraResource extends JsonResource
         return [
             'id_extra' => $this->id_extra,
             'extra_name' => $this->extra_name,
+            'icon_type' => 'Ekstra',
             'extra_text' => $cleanText,
             'extra_type' => $this->extra_type,
             'extra_logo' => $extra_logo,

@@ -26,6 +26,12 @@ class FooterSChemas extends JsonResource
      *     example="Label"
      *   ),
      *     @OA\Property(
+     *     property="icon_type",
+     *     type="string",
+     *     description="Icon Type",
+     *     example="Footer"
+     *   ),
+     *     @OA\Property(
      *     property="url",
      *     type="string",
      *     description="URL",
@@ -48,6 +54,7 @@ class FooterSChemas extends JsonResource
         return [
             'id' => $this->id_footer,
             'label' => $this->label,
+            'icon_type' => 'Footer',
             'url' => $this->url,
             'type' => $this->type,
         ];

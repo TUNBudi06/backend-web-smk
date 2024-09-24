@@ -22,6 +22,11 @@ use OpenApi\Annotations as OA;
  *         example="Opening MPLS"
  *     ),
  *     @OA\Property(
+ *         property="icon_type",
+ *         type="string",
+ *         example="Video"
+ *     ),
+ *     @OA\Property(
  *     property="video_description",
  *     type="string",
  *     example="Opening MPLS"
@@ -51,6 +56,7 @@ class VideoResource extends JsonResource
         return [
             'id_video' => $this->id_link,
             'video_title' => $this->title,
+            'icon_type' => 'Video',
             'video_url' => $this->url,
             'updated_at' => $this->updated_at,
         ];

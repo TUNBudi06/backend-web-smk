@@ -14,6 +14,7 @@ class SkResource extends JsonResource
      *
      *     @OA\Property(property="id_sk", type="integer", description="ID of the SkResource"),
      *     @OA\Property(property="title", type="string", description="Title of the SkResource"),
+     *     @OA\Property(property="icon_type", type="string", description="Slider"),
      *     @OA\Property(property="description", type="string", description="Description of the SkResource")
      * )
      *
@@ -26,6 +27,7 @@ class SkResource extends JsonResource
         return [
             'id_sk' => $this->id_sk,
             'title' => $this->title,
+            'icon_type' => 'Slider',
             'description' => $this->description,
         ];
     }

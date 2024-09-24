@@ -2149,6 +2149,10 @@
                         "type": "string",
                         "example": "img/announcement/gambar.jpg"
                     },
+                    "icon_type": {
+                        "type": "string",
+                        "example": "Announcement"
+                    },
                     "target": {
                         "type": "string",
                         "example": "Semua"
@@ -2210,6 +2214,10 @@
                     "thumbnail": {
                         "type": "string",
                         "example": "img/artikel/gambar.jpg"
+                    },
+                    "icon_type": {
+                        "type": "string",
+                        "example": "Articles"
                     },
                     "target": {
                         "type": "string",
@@ -2275,6 +2283,9 @@
                     },
                     "category_name": {
                         "type": "string"
+                    },
+                    "icon_type": {
+                        "type": "string"
                     }
                 },
                 "type": "object"
@@ -2286,6 +2297,9 @@
                         "type": "integer"
                     },
                     "nama": {
+                        "type": "string"
+                    },
+                    "icon_type": {
                         "type": "string"
                     },
                     "color": {
@@ -2317,6 +2331,10 @@
                     "extra_name": {
                         "type": "string",
                         "example": "Basketball"
+                    },
+                    "icon_type": {
+                        "type": "string",
+                        "example": "Ekstra"
                     },
                     "extra_text": {
                         "type": "string",
@@ -2366,6 +2384,10 @@
                     "thumbnail": {
                         "type": "string",
                         "example": "img/event/gambar.jpg"
+                    },
+                    "icon_type": {
+                        "type": "string",
+                        "example": "Event"
                     },
                     "date": {
                         "type": "string",
@@ -2425,6 +2447,10 @@
                         "type": "string",
                         "example": "img/fasilitas/lab_komputer.png"
                     },
+                    "icon_type": {
+                        "type": "string",
+                        "example": "Fasilitas"
+                    },
                     "prodi": {
                         "properties": {
                             "id": {
@@ -2463,6 +2489,11 @@
                         "type": "string",
                         "example": "Label"
                     },
+                    "icon_type": {
+                        "description": "Icon Type",
+                        "type": "string",
+                        "example": "Footer"
+                    },
                     "url": {
                         "description": "URL",
                         "type": "string",
@@ -2485,6 +2516,10 @@
                     "gallery_title": {
                         "type": "string",
                         "example": "Kegiatan MPLS"
+                    },
+                    "icon_type": {
+                        "type": "string",
+                        "example": "Gallery"
                     },
                     "gallery_text": {
                         "type": "string",
@@ -2518,6 +2553,10 @@
                     "jurusan_nama": {
                         "type": "string",
                         "example": "Teknik Informatika"
+                    },
+                    "icon_type": {
+                        "type": "string",
+                        "example": "Jurusan"
                     },
                     "jurusan_short": {
                         "type": "string",
@@ -2566,6 +2605,10 @@
                         "type": "string",
                         "example": "logo.png"
                     },
+                    "icon_type": {
+                        "type": "string",
+                        "example": "Kemitraan"
+                    },
                     "kemitraan_thumbnail": {
                         "type": "string",
                         "example": "image.png"
@@ -2609,6 +2652,10 @@
                                 "type": "string",
                                 "example": "Operator"
                             },
+                            "icon_type": {
+                                "type": "string",
+                                "example": "Posisi"
+                            },
                             "position_type": {
                                 "type": "string",
                                 "example": "Full-time"
@@ -2625,6 +2672,10 @@
                             "kemitraan_name": {
                                 "type": "string",
                                 "example": "Inafood"
+                            },
+                            "icon_type": {
+                                "type": "string",
+                                "example": "Loker"
                             },
                             "kemitraan_description": {
                                 "type": "string",
@@ -2776,6 +2827,10 @@
                         "type": "string",
                         "example": "Bahasa Indonesia"
                     },
+                    "icon_type": {
+                        "type": "string",
+                        "example": "PTK"
+                    },
                     "nip": {
                         "type": "string",
                         "example": "123456789"
@@ -2818,6 +2873,10 @@
                         "type": "string",
                         "example": "Operator/Engineer/Finance"
                     },
+                    "icon_type": {
+                        "type": "string",
+                        "example": "Posisi"
+                    },
                     "position_type": {
                         "type": "string",
                         "example": "Fulltime/Parttime/Internship"
@@ -2839,6 +2898,10 @@
                         "type": "string",
                         "example": "Teknik Informatika"
                     },
+                    "icon_type": {
+                        "type": "string",
+                        "example": "Prodi"
+                    },
                     "prodi_short": {
                         "type": "string",
                         "example": "TI"
@@ -2854,6 +2917,10 @@
                     },
                     "title": {
                         "description": "Title of the SkResource",
+                        "type": "string"
+                    },
+                    "icon_type": {
+                        "description": "Slider",
                         "type": "string"
                     },
                     "description": {
@@ -2872,6 +2939,10 @@
                     "alert_title": {
                         "type": "string",
                         "example": "Don't miss"
+                    },
+                    "icon_type": {
+                        "type": "string",
+                        "example": "Alert"
                     },
                     "alert_url": {
                         "type": "string",
@@ -2893,6 +2964,10 @@
                     "video_title": {
                         "type": "string",
                         "example": "Opening MPLS"
+                    },
+                    "icon_type": {
+                        "type": "string",
+                        "example": "Video"
                     },
                     "video_description": {
                         "type": "string",
@@ -2956,6 +3031,10 @@
                     "profile_data": {
                         "type": "string",
                         "example": "https://..."
+                    },
+                    "icon_type": {
+                        "type": "string",
+                        "example": "Profile"
                     }
                 },
                 "type": "object"

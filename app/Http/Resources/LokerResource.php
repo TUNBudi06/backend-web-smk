@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\File;
  *         type="object",
  *         @OA\Property(property="id_position", type="integer", example=1),
  *         @OA\Property(property="position_name", type="string", example="Operator"),
+ *         @OA\Property(property="icon_type", type="string", example="Posisi"),
  *         @OA\Property(property="position_type", type="string", example="Full-time"),
  *     ),
  *     
@@ -28,6 +29,7 @@ use Illuminate\Support\Facades\File;
  *         type="object",
  *         @OA\Property(property="id_kemitraan", type="integer", example=1),
  *         @OA\Property(property="kemitraan_name", type="string", example="Inafood"),
+ *         @OA\Property(property="icon_type", type="string", example="Loker"),
  *         @OA\Property(property="kemitraan_description", type="string", example="A partnership with Inafood"),
  *         @OA\Property(property="kemitraan_logo", type="string", example="img/kemitraan/logo.png"),
  *         @OA\Property(property="kemitraan_thumbnail", type="string", example="img/kemitraan/thumbnail.png"),
@@ -51,6 +53,7 @@ class LokerResource extends JsonResource
         return [
             'id_loker' => $this->id_loker,
             'loker_thumbnail' => $loker_thumbnail,
+            'icon_type' => 'Loker',
             'loker_type' => $this->loker_type,
             'position' => [
                 'id_position' => $this->position->id_position,

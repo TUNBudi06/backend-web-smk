@@ -35,6 +35,11 @@ use OpenApi\Annotations as OA;
  *     type="string",
  *     example="https://..."
  *   ),
+ *     @OA\Property(
+ *     property="icon_type",
+ *     type="string",
+ *     example="Profile"
+ *   ),
  *     )
  * */
 class profileController extends JsonResource
@@ -59,6 +64,8 @@ class profileController extends JsonResource
             $ret['type_data'] = 'text';
         }
 
+        $ret['icon_type'] = 'Profile';
+        
         return $ret;
     }
 }

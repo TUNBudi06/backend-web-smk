@@ -47,6 +47,7 @@ class NewsResource extends JsonResource
             'id_pemberitahuan' => $this->id_pemberitahuan,
             'nama' => $this->nama,
             'thumbnail' => $thumbnail,
+            'icon_type' => 'news',
             'text' => $cleanText,
             'level' => $this->level,
             'published_by' => $this->published_by,

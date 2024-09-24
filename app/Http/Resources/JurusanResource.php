@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\File;
  *
  *     @OA\Property(property="id_jurusan", type="integer", example=1),
  *     @OA\Property(property="jurusan_nama", type="string", example="Teknik Informatika"),
+ *     @OA\Property(property="icon_type", type="string", example="Jurusan"),
  *     @OA\Property(property="jurusan_short", type="string", example="TI"),
  *     @OA\Property(property="jurusan_thumbnail", type="string", example="img/jurusan/gambar.jpg"),
  *     @OA\Property(
@@ -43,6 +44,7 @@ class JurusanResource extends JsonResource
         return [
             'id_jurusan' => $this->id_jurusan,
             'jurusan_nama' => $this->jurusan_nama,
+            'icon_type' => 'Jurusan',
             'jurusan_short' => $this->jurusan_short,
             'jurusan_thumbnail' => $jurusan_thumbnail,
             'prodi' => $this->prodis ? [

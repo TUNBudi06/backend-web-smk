@@ -14,6 +14,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *
  *         @OA\Property(property="id_pemberitahuan_category", type="integer"),
  *         @OA\Property(property="nama", type="string"),
+ *         @OA\Property(property="icon_type", type="string"),
  *         @OA\Property(property="color", type="string"),
  *         @OA\Property(property="tipe", type="object",
  *             @OA\Property(property="id", type="integer"),
@@ -35,6 +36,7 @@ class CategoryResource extends JsonResource
         return [
             'id_pemberitahuan_category' => $this->id_pemberitahuan_category,
             'nama' => $this->pemberitahuan_category_name,
+            'icon_type' => 'Category',
             'color' => $this->pemberitahuan_category_color,
             'tipe' => $this->tipe ? [
                 'id' => $this->tipe->id_pemberitahuan_type,

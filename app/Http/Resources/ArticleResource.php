@@ -27,6 +27,11 @@ use Illuminate\Support\Facades\File;
  *         example="img/artikel/gambar.jpg"
  *     ),
  *     @OA\Property(
+ *         property="icon_type",
+ *         type="string",
+ *         example="Articles"
+ *     ),
+ *     @OA\Property(
  *         property="target",
  *         type="string",
  *         example="Semua"
@@ -98,6 +103,7 @@ class ArticleResource extends JsonResource
             'id_pemberitahuan' => $this->id_pemberitahuan,
             'nama' => $this->nama,
             'thumbnail' => $thumbnail,
+            'icon_type' => 'Articles',
             'date' => $this->date,
             'text' => $cleanText,
             'level' => $this->level,

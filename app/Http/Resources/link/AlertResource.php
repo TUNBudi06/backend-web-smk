@@ -21,6 +21,11 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *         example="Don't miss"
  *     ),
  *     @OA\Property(
+ *         property="icon_type",
+ *         type="string",
+ *         example="Alert"
+ *     ),
+ *     @OA\Property(
  *         property="alert_url",
  *         type="string",
  *         example="https://..."
@@ -44,6 +49,7 @@ class AlertResource extends JsonResource
         return [
             'id_alert' => $this->id_alert,
             'alert_title' => $this->alert_title,
+            'icon_type' => 'Alert',
             'alert_url' => $this->alert_url,
             'updated_at' => $this->updated_at,
         ];

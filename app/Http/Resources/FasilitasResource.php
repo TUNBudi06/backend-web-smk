@@ -27,6 +27,11 @@ use Illuminate\Support\Facades\File;
  *         example="img/fasilitas/lab_komputer.png"
  *     ),
  *     @OA\Property(
+ *         property="icon_type",
+ *         type="string",
+ *         example="Fasilitas"
+ *     ),
+ *     @OA\Property(
  *         property="prodi",
  *         type="object",
  *         @OA\Property(property="id", type="integer", example=1),
@@ -58,6 +63,7 @@ class FasilitasResource extends JsonResource
             'id_facility' => $this->id_facility,
             'facility_name' => $this->facility_name,
             'facility_image' => $facility_image,
+            'icon_type' => 'Fasilitas',
             'prodi' => $this->prodis ? [
                 'id' => $this->prodis->id_prodi,
                 'nama_prodi' => $this->prodis->prodi_name,

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\File;
  *
  *     @OA\Property(property="id_gallery", type="integer", example=1),
  *     @OA\Property(property="gallery_title", type="string", example="Kegiatan MPLS"),
+ *     @OA\Property(property="icon_type", type="string", example="Gallery"),
  *     @OA\Property(property="gallery_text", type="string", example="MPLS dilaksanakan pada tanggal..."),
  *     @OA\Property(property="gallery_location", type="string", example="SMKN 1 Purwosari"),
  *     @OA\Property(property="id_category", type="string", example="MPLS/Kelas/dll"),
@@ -37,6 +38,7 @@ class GalleryResource extends JsonResource
         return [
             'id_gallery' => $this->id_gallery,
             'gallery_title' => $this->gallery_title,
+            'icon_type' => 'Gallery',
             'gallery_text' => $cleanText,
             'gallery_location' => $this->gallery_location,
             'id_category' => $this->id_category,

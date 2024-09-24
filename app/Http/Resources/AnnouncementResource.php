@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\File;
  *     @OA\Property(property="id_pemberitahuan", type="integer", example=1),
  *     @OA\Property(property="nama", type="string", example="Pengumuman Penting"),
  *     @OA\Property(property="thumbnail", type="string", example="img/announcement/gambar.jpg"),
+ *     @OA\Property(property="icon_type", type="string", example="Announcement"),
  *     @OA\Property(property="target", type="string", example="Semua"),
  *     @OA\Property(
  *           property="published_by",
@@ -53,6 +54,7 @@ class AnnouncementResource extends JsonResource
             'id_pemberitahuan' => $this->id_pemberitahuan,
             'nama' => $this->nama,
             'thumbnail' => $thumbnail,
+            'icon_type' => 'Announcement',
             'target' => $this->target,
             'published_by' => $this->published_by,
             'jurnal_by' => $this->jurnal_by,
