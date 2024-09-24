@@ -746,6 +746,48 @@
                                                         "$ref": "#/components/schemas/EventResource"
                                                     }
                                                 },
+                                                "ekstras": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/Ekstra"
+                                                    }
+                                                },
+                                                "facilities": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/FasilitasResource"
+                                                    }
+                                                },
+                                                "galleries": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/Gallery"
+                                                    }
+                                                },
+                                                "jurusans": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/Jurusan"
+                                                    }
+                                                },
+                                                "pa": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/PerangkatAjarResource"
+                                                    }
+                                                },
+                                                "pd": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/PDResource"
+                                                    }
+                                                },
+                                                "ptk": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/PTKResource"
+                                                    }
+                                                },
                                                 "kemitraan": {
                                                     "type": "array",
                                                     "items": {

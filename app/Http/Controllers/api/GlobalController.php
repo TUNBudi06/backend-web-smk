@@ -13,10 +13,13 @@ use App\Http\Resources\JurusanResource;
 use App\Http\Resources\KemitraanResource;
 use App\Http\Resources\LokerResource;
 use App\Http\Resources\NewsResource;
+use App\Http\Resources\PDResource;
 use App\Http\Resources\perangkatAjarResource;
+use App\Http\Resources\PTKResource;
 use App\Models\tb_extra;
 use App\Models\tb_facilities;
 use App\Models\tb_gallery;
+use App\Models\tb_jurusan;
 use App\Models\tb_kemitraan;
 use App\Models\tb_loker;
 use App\Models\tb_pemberitahuan;
@@ -55,7 +58,7 @@ class GlobalController extends Controller
      *                 @OA\Property(property="announcements", type="array", @OA\Items(ref="#/components/schemas/AnnouncementResource")),
      *                 @OA\Property(property="news", type="array", @OA\Items(ref="#/components/schemas/NewsResource")),
      *                 @OA\Property(property="events", type="array", @OA\Items(ref="#/components/schemas/EventResource")),
-     *                 @OA\Property(property="ekstras", type="array", @OA\Items(ref="#/components/schemas/EkstraResource")),
+     *                 @OA\Property(property="ekstras", type="array", @OA\Items(ref="#/components/schemas/Ekstra")),
      *                 @OA\Property(property="facilities", type="array", @OA\Items(ref="#/components/schemas/FasilitasResource")),
      *                 @OA\Property(property="galleries", type="array", @OA\Items(ref="#/components/schemas/Gallery")),
      *                 @OA\Property(property="jurusans", type="array", @OA\Items(ref="#/components/schemas/Jurusan")),
@@ -106,7 +109,7 @@ class GlobalController extends Controller
             ->get();
 
         // Search in Jurusan
-        $jurusans = tb_kemitraan::where('jurusan_nama', 'LIKE', '%' . $query . '%')
+        $jurusans = tb_jurusan::where('jurusan_nama', 'LIKE', '%' . $query . '%')
             ->get();
 
         // Search in Perangkat Ajar
@@ -142,6 +145,8 @@ class GlobalController extends Controller
                 'galleries' => GalleryResource::collection($galleries),
                 'jurusans' => JurusanResource::collection($jurusans),
                 'pa' => perangkatAjarResource::collection($pa),
+                'pd' => PDResource::collection($pd),
+                'ptk' => PTKResource::collection($ptk),
                 'kemitraan' => KemitraanResource::collection($kemitraan),
                 'lokers' => LokerResource::collection($lokers),
             ],
