@@ -133,23 +133,25 @@ class GlobalController extends Controller
         $ptk = tb_ptk::where('nama', 'LIKE', '%' . $query . '%')
             ->get();
 
+        $data = array_filter([
+            'articles' => ArticleResource::collection($articles)->isNotEmpty() ? ArticleResource::collection($articles) : null,
+            'announcements' => AnnouncementResource::collection($announcements)->isNotEmpty() ? AnnouncementResource::collection($announcements) : null,
+            'news' => NewsResource::collection($news)->isNotEmpty() ? NewsResource::collection($news) : null,
+            'events' => EventResource::collection($events)->isNotEmpty() ? EventResource::collection($events) : null,
+            'ekstras' => EkstraResource::collection($ekstras)->isNotEmpty() ? EkstraResource::collection($ekstras) : null,
+            'facilities' => FasilitasResource::collection($facilities)->isNotEmpty() ? FasilitasResource::collection($facilities) : null,
+            'galleries' => GalleryResource::collection($galleries)->isNotEmpty() ? GalleryResource::collection($galleries) : null,
+            'jurusans' => JurusanResource::collection($jurusans)->isNotEmpty() ? JurusanResource::collection($jurusans) : null,
+            'pa' => perangkatAjarResource::collection($pa)->isNotEmpty() ? perangkatAjarResource::collection($pa) : null,
+            'pd' => PDResource::collection($pd)->isNotEmpty() ? PDResource::collection($pd) : null,
+            'ptk' => PTKResource::collection($ptk)->isNotEmpty() ? PTKResource::collection($ptk) : null,
+            'kemitraan' => KemitraanResource::collection($kemitraan)->isNotEmpty() ? KemitraanResource::collection($kemitraan) : null,
+            'lokers' => LokerResource::collection($lokers)->isNotEmpty() ? LokerResource::collection($lokers) : null,
+        ]);
+    
         return response()->json([
             'message' => 'Data ditemukan',
-            'data' => [
-                'articles' => ArticleResource::collection($articles),
-                'announcements' => AnnouncementResource::collection($announcements),
-                'news' => NewsResource::collection($news),
-                'events' => EventResource::collection($events),
-                'ekstras' => EkstraResource::collection($ekstras),
-                'facilities' => FasilitasResource::collection($facilities),
-                'galleries' => GalleryResource::collection($galleries),
-                'jurusans' => JurusanResource::collection($jurusans),
-                'pa' => perangkatAjarResource::collection($pa),
-                'pd' => PDResource::collection($pd),
-                'ptk' => PTKResource::collection($ptk),
-                'kemitraan' => KemitraanResource::collection($kemitraan),
-                'lokers' => LokerResource::collection($lokers),
-            ],
+            'data' => $data
         ], 200);
     }
 
