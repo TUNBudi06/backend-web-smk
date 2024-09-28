@@ -68,7 +68,7 @@ class LokerResource extends JsonResource
             'kemitraan' => [
                 'id_kemitraan' => $this->kemitraan->id_kemitraan,
                 'kemitraan_name' => $this->kemitraan->kemitraan_name,
-                'kemitraan_description' => $this->kemitraan->kemitraan_description,
+                'kemitraan_description' => $cleanText,
                 'kemitraan_logo' => $this->kemitraan->kemitraan_logo,
                 'kemitraan_thumbnail' => $this->kemitraan->kemitraan_thumbnail,
                 'kemitraan_city' => $this->kemitraan->kemitraan_city,
