@@ -2730,6 +2730,14 @@
                             "kemitraan_thumbnail": {
                                 "type": "string",
                                 "example": "img/kemitraan/thumbnail.png"
+                            },
+                            "kemitraan_city": {
+                                "type": "string",
+                                "example": "Jakarta"
+                            },
+                            "kemitraan_location_detail": {
+                                "type": "string",
+                                "example": "Jl. Jendral Sudirman No. 1, Jakarta"
                             }
                         },
                         "type": "object"

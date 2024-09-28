@@ -33,6 +33,8 @@ use Illuminate\Support\Facades\File;
  *         @OA\Property(property="kemitraan_description", type="string", example="A partnership with Inafood"),
  *         @OA\Property(property="kemitraan_logo", type="string", example="img/kemitraan/logo.png"),
  *         @OA\Property(property="kemitraan_thumbnail", type="string", example="img/kemitraan/thumbnail.png"),
+ *         @OA\Property(property="kemitraan_city", type="string", example="Jakarta"),
+ *         @OA\Property(property="kemitraan_location_detail", type="string", example="Jl. Jendral Sudirman No. 1, Jakarta"),
  *     ),
  *     
  *     @OA\Property(property="loker_available", type="string", example="Tersedia"),
@@ -50,11 +52,14 @@ class LokerResource extends JsonResource
         $thumbnailPath = 'img/loker/'.$this->loker_thumbnail;
         $loker_thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
+        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->kemitraan_description)));
+
         return [
             'id_loker' => $this->id_loker,
             'loker_thumbnail' => $loker_thumbnail,
             'icon_type' => 'Loker',
             'loker_type' => $this->loker_type,
+            'loker_available' => $this->loker_available == 1 ? 'Tersedia' : 'Tidak Tersedia',
             'position' => [
                 'id_position' => $this->position->id_position,
                 'position_name' => $this->position->position_name,
@@ -66,8 +71,9 @@ class LokerResource extends JsonResource
                 'kemitraan_description' => $this->kemitraan->kemitraan_description,
                 'kemitraan_logo' => $this->kemitraan->kemitraan_logo,
                 'kemitraan_thumbnail' => $this->kemitraan->kemitraan_thumbnail,
+                'kemitraan_city' => $this->kemitraan->kemitraan_city,
+                'kemitraan_location_detail' => $this->kemitraan->kemitraan_location_detail,
             ],
-            'loker_available' => $this->loker_available,
         ];
     }
 }
