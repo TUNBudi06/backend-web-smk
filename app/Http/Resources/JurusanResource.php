@@ -39,7 +39,7 @@ class JurusanResource extends JsonResource
         $thumbnailPath = 'img/jurusan/'.$this->jurusan_thumbnail;
         $jurusan_thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
-        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->jurusan_text)));
+        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n", "\t"], '', $this->jurusan_text)));
 
         return [
             'id_jurusan' => $this->id_jurusan,

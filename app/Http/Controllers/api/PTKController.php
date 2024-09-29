@@ -9,18 +9,32 @@ use Illuminate\Http\Request;
 
 class PTKController extends Controller
 {
-/**
+    /**
      * @OA\Get(
      *     path="/api/user/profile/teachers",
      *     tags={"PTK"},
      *     summary="Get all PTK",
-     *     description="Retrieve all PTK. Supports search by 'nama'.",
+     *     description="Retrieve all PTK. Supports search by 'nama', 'nip', and 'nuptk'.",
      *     operationId="getAllPTK",
      *
      *     @OA\Parameter(
      *         name="search_nama",
      *         in="query",
      *         description="Search by nama",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="search_nip",
+     *         in="query",
+     *         description="Search by NIP",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="search_nuptk",
+     *         in="query",
+     *         description="Search by NUPTK",
      *         required=false,
      *         @OA\Schema(type="string")
      *     ),
@@ -52,8 +66,20 @@ class PTKController extends Controller
 
         # Search by nama
         if ($request->has('search_nama')) {
-            $search = $request->input('search_nama');
-            $query->where('nama', 'LIKE', '%' . $search . '%');
+            $searchNama = $request->input('search_nama');
+            $query->where('nama', 'LIKE', '%' . $searchNama . '%');
+        }
+
+        # Search by NIP
+        if ($request->has('search_nip')) {
+            $searchNip = $request->input('search_nip');
+            $query->where('nip', 'LIKE', '%' . $searchNip . '%');
+        }
+
+        # Search by NUPTK
+        if ($request->has('search_nuptk')) {
+            $searchNuptk = $request->input('search_nuptk');
+            $query->where('nuptk', 'LIKE', '%' . $searchNuptk . '%');
         }
 
         $data = $query->get();

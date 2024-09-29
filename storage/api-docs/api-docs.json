@@ -1373,13 +1373,22 @@
                     "PD"
                 ],
                 "summary": "Get all peserta didik",
-                "description": "Retrieve all peserta didik. Supports search by 'nama'.",
+                "description": "Retrieve all peserta didik. Supports search by 'nama' and 'kelas'.",
                 "operationId": "getAllPesertaDidik",
                 "parameters": [
                     {
                         "name": "search_nama",
                         "in": "query",
                         "description": "Search by nama",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "search_kelas",
+                        "in": "query",
+                        "description": "Search by kelas",
                         "required": false,
                         "schema": {
                             "type": "string"
@@ -1491,13 +1500,31 @@
                     "PTK"
                 ],
                 "summary": "Get all PTK",
-                "description": "Retrieve all PTK. Supports search by 'nama'.",
+                "description": "Retrieve all PTK. Supports search by 'nama', 'nip', and 'nuptk'.",
                 "operationId": "getAllPTK",
                 "parameters": [
                     {
                         "name": "search_nama",
                         "in": "query",
                         "description": "Search by nama",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "search_nip",
+                        "in": "query",
+                        "description": "Search by NIP",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "search_nuptk",
+                        "in": "query",
+                        "description": "Search by NUPTK",
                         "required": false,
                         "schema": {
                             "type": "string"

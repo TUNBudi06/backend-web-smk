@@ -14,13 +14,20 @@ class PDController extends Controller
      *     path="/api/user/profile/students",
      *     tags={"PD"},
      *     summary="Get all peserta didik",
-     *     description="Retrieve all peserta didik. Supports search by 'nama'.",
+     *     description="Retrieve all peserta didik. Supports search by 'nama' and 'kelas'.",
      *     operationId="getAllPesertaDidik",
      *
      *     @OA\Parameter(
      *         name="search_nama",
      *         in="query",
      *         description="Search by nama",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="search_kelas",
+     *         in="query",
+     *         description="Search by kelas",
      *         required=false,
      *         @OA\Schema(type="string")
      *     ),
@@ -52,8 +59,14 @@ class PDController extends Controller
 
         # Search by nama
         if ($request->has('search_nama')) {
-            $search = $request->input('search_nama');
-            $query->where('nama', 'LIKE', '%' . $search . '%');
+            $searchNama = $request->input('search_nama');
+            $query->where('nama', 'LIKE', '%' . $searchNama . '%');
+        }
+
+        # Search by kelas
+        if ($request->has('search_kelas')) {
+            $searchKelas = $request->input('search_kelas');
+            $query->where('kelas', 'LIKE', '%' . $searchKelas . '%');
         }
 
         $data = $query->get();
