@@ -63,7 +63,7 @@ class FasilitasResource extends JsonResource
             'id_facility' => $this->id_facility,
             'facility_name' => $this->facility_name,
             'facility_image' => $facility_image,
-            'icon_type' => 'Fasilitas',
+            'icon_type' => 'Facilities',
             'prodi' => $this->prodis ? [
                 'id' => $this->prodis->id_prodi,
                 'nama_prodi' => $this->prodis->prodi_name,

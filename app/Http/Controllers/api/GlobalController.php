@@ -42,7 +42,6 @@ class GlobalController extends Controller
      *         name="query",
      *         in="query",
      *         description="Search keyword",
-     *         required=true,
      *         @OA\Schema(type="string")
      *     ),
      *
@@ -133,21 +132,21 @@ class GlobalController extends Controller
         $ptk = tb_ptk::where('nama', 'LIKE', '%' . $query . '%')
             ->get();
 
-        $data = array_filter([
-            'articles' => ArticleResource::collection($articles)->isNotEmpty() ? ArticleResource::collection($articles) : null,
-            'announcements' => AnnouncementResource::collection($announcements)->isNotEmpty() ? AnnouncementResource::collection($announcements) : null,
-            'news' => NewsResource::collection($news)->isNotEmpty() ? NewsResource::collection($news) : null,
-            'events' => EventResource::collection($events)->isNotEmpty() ? EventResource::collection($events) : null,
-            'ekstras' => EkstraResource::collection($ekstras)->isNotEmpty() ? EkstraResource::collection($ekstras) : null,
-            'facilities' => FasilitasResource::collection($facilities)->isNotEmpty() ? FasilitasResource::collection($facilities) : null,
-            'galleries' => GalleryResource::collection($galleries)->isNotEmpty() ? GalleryResource::collection($galleries) : null,
-            'jurusans' => JurusanResource::collection($jurusans)->isNotEmpty() ? JurusanResource::collection($jurusans) : null,
-            'pa' => perangkatAjarResource::collection($pa)->isNotEmpty() ? perangkatAjarResource::collection($pa) : null,
-            'pd' => PDResource::collection($pd)->isNotEmpty() ? PDResource::collection($pd) : null,
-            'ptk' => PTKResource::collection($ptk)->isNotEmpty() ? PTKResource::collection($ptk) : null,
-            'kemitraan' => KemitraanResource::collection($kemitraan)->isNotEmpty() ? KemitraanResource::collection($kemitraan) : null,
-            'lokers' => LokerResource::collection($lokers)->isNotEmpty() ? LokerResource::collection($lokers) : null,
-        ]);
+        $data = [
+            'articles' => $articles->isEmpty() ? ['icon_type' => 'Articles'] : ArticleResource::collection($articles),
+            'announcements' => $announcements->isEmpty() ? ['icon_type' => 'Announcement'] : AnnouncementResource::collection($announcements),
+            'news' => $news->isEmpty() ? ['icon_type' => 'News'] : NewsResource::collection($news),
+            'events' => $events->isEmpty() ? ['icon_type' => 'Event'] : EventResource::collection($events),
+            'ekstras' => $ekstras->isEmpty() ? ['icon_type' => 'Ekstra'] : EkstraResource::collection($ekstras),
+            'facilities' => $facilities->isEmpty() ? ['icon_type' => 'Facilities'] : FasilitasResource::collection($facilities),
+            'galleries' => $galleries->isEmpty() ? ['icon_type' => 'Gallery'] : GalleryResource::collection($galleries),
+            'jurusans' => $jurusans->isEmpty() ? ['icon_type' => 'Jurusan'] : JurusanResource::collection($jurusans),
+            'pa' => $pa->isEmpty() ? ['icon_type' => 'Perangkat Ajar'] : perangkatAjarResource::collection($pa),
+            'pd' => $pd->isEmpty() ? ['icon_type' => 'Peserta Didik'] : PDResource::collection($pd),
+            'ptk' => $ptk->isEmpty() ? ['icon_type' => 'PTK'] : PTKResource::collection($ptk),
+            'kemitraan' => $kemitraan->isEmpty() ? ['icon_type' => 'Kemitraan'] : KemitraanResource::collection($kemitraan),
+            'lokers' => $lokers->isEmpty() ? ['icon_type' => 'Loker'] : LokerResource::collection($lokers),
+        ];
     
         return response()->json([
             'message' => 'Data ditemukan',

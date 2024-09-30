@@ -37,7 +37,7 @@ class PDResource extends JsonResource
             'nisn' => $this->nisn,
             'nis' => $this->nis,
             'nama' => $this->nama,
-            'icon_type' => 'peserta didik',
+            'icon_type' => 'Peserta Didik',
             'kelas' => $this->kelas,
             'tempat_lahir' => $this->tempat_lahir,
             'tanggal_lahir' => $this->tanggal_lahir,
