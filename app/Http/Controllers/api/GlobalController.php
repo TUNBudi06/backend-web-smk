@@ -42,14 +42,17 @@ class GlobalController extends Controller
      *         name="query",
      *         in="query",
      *         description="Search keyword",
+     *
      *         @OA\Schema(type="string")
      *     ),
      *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", type="array", @OA\Items(type="object"))
      *         )
@@ -62,47 +65,47 @@ class GlobalController extends Controller
 
         // Perform search in all tables
         $articles = tb_pemberitahuan::where('type', 1)
-            ->where('nama', 'LIKE', '%' . $query . '%')
+            ->where('nama', 'LIKE', '%'.$query.'%')
             ->get();
 
         $announcements = tb_pemberitahuan::where('type', 2)
-            ->where('nama', 'LIKE', '%' . $query . '%')
+            ->where('nama', 'LIKE', '%'.$query.'%')
             ->get();
 
         $news = tb_pemberitahuan::where('type', 3)
-            ->where('nama', 'LIKE', '%' . $query . '%')
+            ->where('nama', 'LIKE', '%'.$query.'%')
             ->get();
 
         $events = tb_pemberitahuan::where('type', 4)
-            ->where('nama', 'LIKE', '%' . $query . '%')
+            ->where('nama', 'LIKE', '%'.$query.'%')
             ->get();
 
-        $ekstras = tb_extra::where('extra_name', 'LIKE', '%' . $query . '%')
+        $ekstras = tb_extra::where('extra_name', 'LIKE', '%'.$query.'%')
             ->get();
 
-        $facilities = tb_facilities::where('facility_name', 'LIKE', '%' . $query . '%')
+        $facilities = tb_facilities::where('facility_name', 'LIKE', '%'.$query.'%')
             ->get();
 
-        $galleries = tb_gallery::where('gallery_title', 'LIKE', '%' . $query . '%')
+        $galleries = tb_gallery::where('gallery_title', 'LIKE', '%'.$query.'%')
             ->get();
 
-        $jurusans = tb_jurusan::where('jurusan_nama', 'LIKE', '%' . $query . '%')
+        $jurusans = tb_jurusan::where('jurusan_nama', 'LIKE', '%'.$query.'%')
             ->get();
 
-        $pa = tb_perangkatAjar::where('title', 'LIKE', '%' . $query . '%')
+        $pa = tb_perangkatAjar::where('title', 'LIKE', '%'.$query.'%')
             ->get();
 
-        $pd = tb_peserta_didik::where('nama', 'LIKE', '%' . $query . '%')
+        $pd = tb_peserta_didik::where('nama', 'LIKE', '%'.$query.'%')
             ->get();
 
-        $kemitraan = tb_kemitraan::where('kemitraan_name', 'LIKE', '%' . $query . '%')
+        $kemitraan = tb_kemitraan::where('kemitraan_name', 'LIKE', '%'.$query.'%')
             ->get();
 
         $lokers = tb_loker::with('position', 'kemitraan')
-            ->where('loker_type', 'LIKE', '%' . $query . '%')
+            ->where('loker_type', 'LIKE', '%'.$query.'%')
             ->get();
 
-        $ptk = tb_ptk::where('nama', 'LIKE', '%' . $query . '%')
+        $ptk = tb_ptk::where('nama', 'LIKE', '%'.$query.'%')
             ->get();
 
         // Gabungkan semua hasil, tambahkan icon_type untuk data kosong
@@ -122,9 +125,11 @@ class GlobalController extends Controller
             $lokers->isEmpty() ? [['icon_type' => 'Loker']] : LokerResource::collection($lokers)->toArray($request)
         );
 
+        $data = array_slice($data, 0, 10);
+
         return response()->json([
             'message' => 'Data ditemukan',
-            'data' => $data
+            'data' => $data,
         ], 200);
     }
 
