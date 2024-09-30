@@ -729,87 +729,10 @@
                                             "example": "Data ditemukan"
                                         },
                                         "data": {
-                                            "properties": {
-                                                "articles": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/ArticleResource"
-                                                    }
-                                                },
-                                                "announcements": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/AnnouncementResource"
-                                                    }
-                                                },
-                                                "news": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/NewsResource"
-                                                    }
-                                                },
-                                                "events": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/EventResource"
-                                                    }
-                                                },
-                                                "ekstras": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Ekstra"
-                                                    }
-                                                },
-                                                "facilities": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/FasilitasResource"
-                                                    }
-                                                },
-                                                "galleries": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Gallery"
-                                                    }
-                                                },
-                                                "jurusans": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Jurusan"
-                                                    }
-                                                },
-                                                "pa": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/PerangkatAjarResource"
-                                                    }
-                                                },
-                                                "pd": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/PDResource"
-                                                    }
-                                                },
-                                                "ptk": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/PTKResource"
-                                                    }
-                                                },
-                                                "kemitraan": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/KemitraanResource"
-                                                    }
-                                                },
-                                                "lokers": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/LokerResource"
-                                                    }
-                                                }
-                                            },
-                                            "type": "object"
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
                                         }
                                     },
                                     "type": "object"
