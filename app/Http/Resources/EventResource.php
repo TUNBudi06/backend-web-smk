@@ -72,7 +72,9 @@ use Illuminate\Support\Facades\File;
  *         property="created_at",
  *         type="string",
  *         example="2023-01-01T12:00:00Z"
- *     )
+ *     ),
+ *     @OA\Property(property="viewer", type="integer", example="100"),
+ *      @OA\Property(property="created_at", type="string", example="2023-01-01T12:00:00Z")
  * )
  */
 class EventResource extends JsonResource
@@ -104,6 +106,7 @@ class EventResource extends JsonResource
                 'nama' => $this->kategori->pemberitahuan_category_name,
                 'color' => $this->kategori->pemberitahuan_category_color,
             ] : null,
+            'viewer' => $this->viewer,
             'created_at' => $this->created_at,
         ];
     }
