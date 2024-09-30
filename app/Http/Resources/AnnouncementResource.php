@@ -33,6 +33,7 @@ use Illuminate\Support\Facades\File;
  *         @OA\Property(property="nama", type="string", example="Kategori A"),
  *         @OA\Property(property="color", type="string", example="#FF0000"),
  *     ),
+ *     @OA\Property(property="viewer", type="integer", example="100"),
  *     @OA\Property(property="created_at", type="string", example="2023-01-01T12:00:00Z")
  * )
  */
@@ -66,6 +67,8 @@ class AnnouncementResource extends JsonResource
                 'nama' => $this->kategori->pemberitahuan_category_name,
                 'color' => $this->kategori->pemberitahuan_category_color,
             ] : null,
+            'viewer' => $this->viewer,
+            'created_at' => $this->created_at,
         ];
     }
 }
