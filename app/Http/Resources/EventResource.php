@@ -68,13 +68,8 @@ use Illuminate\Support\Facades\File;
  *         @OA\Property(property="nama", type="string", example="Kategori A"),
  *         @OA\Property(property="color", type="string", example="#FF0000"),
  *     ),
- *     @OA\Property(
- *         property="created_at",
- *         type="string",
- *         example="2023-01-01T12:00:00Z"
- *     ),
  *     @OA\Property(property="viewer", type="integer", example="100"),
- *      @OA\Property(property="created_at", type="string", example="2023-01-01T12:00:00Z")
+ *      @OA\Property(property="created_at", type="string", example="2023-01-01T12:00:00Z"),
  * )
  */
 class EventResource extends JsonResource

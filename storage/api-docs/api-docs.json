@@ -2281,6 +2281,10 @@
                         },
                         "type": "object"
                     },
+                    "viewer": {
+                        "type": "integer",
+                        "example": "100"
+                    },
                     "created_at": {
                         "type": "string",
                         "example": "2023-01-01T12:00:00Z"
@@ -2512,6 +2516,10 @@
                             }
                         },
                         "type": "object"
+                    },
+                    "viewer": {
+                        "type": "integer",
+                        "example": "100"
                     },
                     "created_at": {
                         "type": "string",
