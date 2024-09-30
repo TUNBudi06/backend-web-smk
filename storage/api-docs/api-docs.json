@@ -703,7 +703,6 @@
                         "name": "query",
                         "in": "query",
                         "description": "Search keyword",
-                        "required": true,
                         "schema": {
                             "type": "string"
                         }

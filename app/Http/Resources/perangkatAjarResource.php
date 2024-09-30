@@ -28,7 +28,7 @@ class perangkatAjarResource extends JsonResource
         return [
             'id_pa' => $this->id_pa,
             'title' => $this->title,
-            'icon_type' => 'perangkat ajar',
+            'icon_type' => 'Perangkat Ajar',
             'description' => $this->description,
             'type' => $this->type,
             'url' => $this->url,
