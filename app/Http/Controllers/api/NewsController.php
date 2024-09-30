@@ -24,20 +24,34 @@ class NewsController extends Controller
      *         in="query",
      *         description="Search keyword for news names",
      *         required=false,
+     *
      *         @OA\Schema(type="string")
      *     ),
+     *
+     *     @OA\Parameter(
+     *          name="search_category",
+     *          in="query",
+     *          description="Search keyword for news category names",
+     *          required=false,
+     *
+     *          @OA\Schema(type="integer")
+     *      ),
+     *
      *     @OA\Parameter(
      *         name="start_date",
      *         in="query",
      *         description="Start date for filtering news (format: YYYY-MM-DD)",
      *         required=false,
+     *
      *         @OA\Schema(type="string", format="date")
      *     ),
+     *
      *     @OA\Parameter(
      *         name="end_date",
      *         in="query",
      *         description="End date for filtering news (format: YYYY-MM-DD)",
      *         required=false,
+     *
      *         @OA\Schema(type="string", format="date")
      *     ),
      *
@@ -47,6 +61,7 @@ class NewsController extends Controller
      *
      *         @OA\JsonContent(
      *             type="array",
+     *
      *             @OA\Items(ref="#/components/schemas/NewsResource")
      *         )
      *     ),
@@ -56,6 +71,7 @@ class NewsController extends Controller
      *         description="Data tidak ditemukan",
      *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )
@@ -67,13 +83,18 @@ class NewsController extends Controller
             ->where('type', 3)
             ->where('approved', 1);
 
-        # Search by name
+        // Search by name
         if ($request->has('search')) {
             $search = $request->input('search');
-            $query->where('nama', 'LIKE', '%' . $search . '%');
+            $query->where('nama', 'LIKE', '%'.$search.'%');
         }
 
-        # Filter by date range
+        if ($request->has('search_category')) {
+            $search = $request->input('search_category');
+            $query->where('category', 'LIKE', '%'.$search.'%');
+        }
+
+        // Filter by date range
         if ($request->has('start_date') && $request->has('end_date')) {
             $startDate = $request->input('start_date');
             $endDate = $request->input('end_date');
