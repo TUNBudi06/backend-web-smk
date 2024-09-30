@@ -45,7 +45,7 @@
                     "Articles"
                 ],
                 "summary": "Get all articles",
-                "description": "Retrieve all articles with type 1. Supports search by 'nama' and filtering by date range using 'created_at'.",
+                "description": "Retrieve all articles with type 1. Supports search by 'nama' and 'category' and filtering by date range using 'created_at'.",
                 "operationId": "getAllArticles",
                 "parameters": [
                     {
@@ -55,6 +55,15 @@
                         "required": false,
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "search_category",
+                        "in": "query",
+                        "description": "Search keyword for category article names",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
                         }
                     },
                     {
@@ -1168,6 +1177,15 @@
                         "required": false,
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "search_category",
+                        "in": "query",
+                        "description": "Search keyword for news category names",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
                         }
                     },
                     {

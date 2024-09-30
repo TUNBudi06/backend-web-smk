@@ -17,7 +17,7 @@ class ArticleController extends Controller
      *     path="/api/user/articles",
      *     tags={"Articles"},
      *     summary="Get all articles",
-     *     description="Retrieve all articles with type 1. Supports search by 'nama' and filtering by date range using 'created_at'.",
+     *     description="Retrieve all articles with type 1. Supports search by 'nama' and 'category' and filtering by date range using 'created_at'.",
      *     operationId="getAllArticles",
      *
      *     @OA\Parameter(
@@ -25,20 +25,34 @@ class ArticleController extends Controller
      *         in="query",
      *         description="Search keyword for article names",
      *         required=false,
+     *
      *         @OA\Schema(type="string")
      *     ),
+     *
+     *     @OA\Parameter(
+     *          name="search_category",
+     *          in="query",
+     *          description="Search keyword for category article names",
+     *          required=false,
+     *
+     *          @OA\Schema(type="integer")
+     *      ),
+     *
      *     @OA\Parameter(
      *         name="start_date",
      *         in="query",
      *         description="Start date for filtering articles (format: YYYY-MM-DD)",
      *         required=false,
+     *
      *         @OA\Schema(type="string", format="date")
      *     ),
+     *
      *     @OA\Parameter(
      *         name="end_date",
      *         in="query",
      *         description="End date for filtering articles (format: YYYY-MM-DD)",
      *         required=false,
+     *
      *         @OA\Schema(type="string", format="date")
      *     ),
      *
@@ -73,13 +87,18 @@ class ArticleController extends Controller
             ->where('type', 1)
             ->where('approved', 1);
 
-        # Search by name
+        // Search by name
         if ($request->has('search')) {
             $search = $request->input('search');
-            $query->where('nama', 'LIKE', '%' . $search . '%');
+            $query->where('nama', 'LIKE', '%'.$search.'%');
         }
 
-        # Filter by date range
+        if ($request->has('search_category')) {
+            $search = $request->input('search_category');
+            $query->where('category', 'LIKE', '%'.$search.'%');
+        }
+
+        // Filter by date range
         if ($request->has('start_date') && $request->has('end_date')) {
             $startDate = $request->input('start_date');
             $endDate = $request->input('end_date');
@@ -129,7 +148,9 @@ class ArticleController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", ref="#/components/schemas/ArticleResource")
      *         )
@@ -140,6 +161,7 @@ class ArticleController extends Controller
      *         description="Data tidak ditemukan",
      *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )
