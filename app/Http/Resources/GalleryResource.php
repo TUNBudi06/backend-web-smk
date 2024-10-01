@@ -33,7 +33,7 @@ class GalleryResource extends JsonResource
         $thumbnailPath = 'img/gallery/'.$this->gallery_file;
         $gallery_file = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
-        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->text)));
+        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->gallery_text)));
 
         return [
             'id_gallery' => $this->id_gallery,
