@@ -108,22 +108,28 @@ class GlobalController extends Controller
         $ptk = tb_ptk::where('nama', 'LIKE', '%'.$query.'%')
             ->get();
 
-        // Gabungkan semua hasil, tambahkan icon_type untuk data kosong
-        $data = array_merge(
-            $articles->isEmpty() ? [] : ArticleResource::collection($articles)->toArray($request),
-            $announcements->isEmpty() ? [] : AnnouncementResource::collection($announcements)->toArray($request),
-            $news->isEmpty() ? [] : NewsResource::collection($news)->toArray($request),
-            $events->isEmpty() ? [] : EventResource::collection($events)->toArray($request),
-            $ekstras->isEmpty() ? [] : EkstraResource::collection($ekstras)->toArray($request),
-            $facilities->isEmpty() ? [] : FasilitasResource::collection($facilities)->toArray($request),
-            $galleries->isEmpty() ? [] : GalleryResource::collection($galleries)->toArray($request),
-            $jurusans->isEmpty() ? [] : JurusanResource::collection($jurusans)->toArray($request),
-            $pa->isEmpty() ? [] : perangkatAjarResource::collection($pa)->toArray($request),
-            $pd->isEmpty() ? [] : PDResource::collection($pd)->toArray($request),
-            $ptk->isEmpty() ? []: PTKResource::collection($ptk)->toArray($request),
-            $kemitraan->isEmpty() ? [] : KemitraanResource::collection($kemitraan)->toArray($request),
-            $lokers->isEmpty() ? [] : LokerResource::collection($lokers)->toArray($request)
-        );
+        $list_var = [
+            'articles' => ArticleResource::class,
+            'announcements' => AnnouncementResource::class,
+            'news' => NewsResource::class,
+            'events' => EventResource::class,
+            'ekstras' => EkstraResource::class,
+            'facilities' => FasilitasResource::class,
+            'galleries' => GalleryResource::class,
+            'jurusans' => JurusanResource::class,
+            'pa' => perangkatAjarResource::class,
+            'pd' => PDResource::class,
+            'ptk' => PTKResource::class,
+            'kemitraan' => KemitraanResource::class,
+            'lokers' => LokerResource::class,
+        ];
+
+        $data = [];
+        foreach ($list_var as $index => $var) {
+            if (! $$index->isEmpty()) {
+                $data = array_merge($data, $var::collection($$index)->toArray($request));
+            }
+        }
 
         $data = array_slice($data, 0, 10);
 
