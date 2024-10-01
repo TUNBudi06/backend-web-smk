@@ -110,19 +110,19 @@ class GlobalController extends Controller
 
         // Gabungkan semua hasil, tambahkan icon_type untuk data kosong
         $data = array_merge(
-            $articles->isEmpty() ? [['icon_type' => 'Articles']] : ArticleResource::collection($articles)->toArray($request),
-            $announcements->isEmpty() ? [['icon_type' => 'Announcement']] : AnnouncementResource::collection($announcements)->toArray($request),
-            $news->isEmpty() ? [['icon_type' => 'News']] : NewsResource::collection($news)->toArray($request),
-            $events->isEmpty() ? [['icon_type' => 'Event']] : EventResource::collection($events)->toArray($request),
-            $ekstras->isEmpty() ? [['icon_type' => 'Ekstra']] : EkstraResource::collection($ekstras)->toArray($request),
-            $facilities->isEmpty() ? [['icon_type' => 'Facilities']] : FasilitasResource::collection($facilities)->toArray($request),
-            $galleries->isEmpty() ? [['icon_type' => 'Gallery']] : GalleryResource::collection($galleries)->toArray($request),
-            $jurusans->isEmpty() ? [['icon_type' => 'Jurusan']] : JurusanResource::collection($jurusans)->toArray($request),
-            $pa->isEmpty() ? [['icon_type' => 'Perangkat Ajar']] : perangkatAjarResource::collection($pa)->toArray($request),
-            $pd->isEmpty() ? [['icon_type' => 'Peserta Didik']] : PDResource::collection($pd)->toArray($request),
-            $ptk->isEmpty() ? [['icon_type' => 'PTK']] : PTKResource::collection($ptk)->toArray($request),
-            $kemitraan->isEmpty() ? [['icon_type' => 'Kemitraan']] : KemitraanResource::collection($kemitraan)->toArray($request),
-            $lokers->isEmpty() ? [['icon_type' => 'Loker']] : LokerResource::collection($lokers)->toArray($request)
+            $articles->isEmpty() ? null : ArticleResource::collection($articles)->toArray($request),
+            $announcements->isEmpty() ? null : AnnouncementResource::collection($announcements)->toArray($request),
+            $news->isEmpty() ? null : NewsResource::collection($news)->toArray($request),
+            $events->isEmpty() ? null : EventResource::collection($events)->toArray($request),
+            $ekstras->isEmpty() ? null : EkstraResource::collection($ekstras)->toArray($request),
+            $facilities->isEmpty() ? null : FasilitasResource::collection($facilities)->toArray($request),
+            $galleries->isEmpty() ? null : GalleryResource::collection($galleries)->toArray($request),
+            $jurusans->isEmpty() ? null : JurusanResource::collection($jurusans)->toArray($request),
+            $pa->isEmpty() ? null : perangkatAjarResource::collection($pa)->toArray($request),
+            $pd->isEmpty() ? null : PDResource::collection($pd)->toArray($request),
+            $ptk->isEmpty() ? null: PTKResource::collection($ptk)->toArray($request),
+            $kemitraan->isEmpty() ? null : KemitraanResource::collection($kemitraan)->toArray($request),
+            $lokers->isEmpty() ? null : LokerResource::collection($lokers)->toArray($request)
         );
 
         $data = array_slice($data, 0, 10);
