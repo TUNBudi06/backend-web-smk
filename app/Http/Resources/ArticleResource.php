@@ -97,6 +97,11 @@ class ArticleResource extends JsonResource
         $thumbnailPath = 'img/artikel/'.$this->thumbnail;
         $thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
+        // Menangkap URL dari iframe secara manual
+        preg_match('/src="([^"]+)"/', $this->text, $match);
+        $iframeUrl = isset($match[1]) ? $match[1] : null;
+
+        // Membersihkan teks tetapi mempertahankan URL iframe
         $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->text)));
 
         return [
@@ -105,7 +110,7 @@ class ArticleResource extends JsonResource
             'thumbnail' => $thumbnail,
             'icon_type' => 'Articles',
             'date' => $this->date,
-            'text' => $cleanText,
+            'text' => $iframeUrl ? $iframeUrl : $cleanText,
             'level' => $this->level,
             'published_by' => $this->published_by,
             'jurnal_by' => $this->jurnal_by,
