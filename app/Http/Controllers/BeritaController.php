@@ -78,6 +78,7 @@ class BeritaController extends Controller
         $data->location = $request->location;
         $data->approved = $request->session()->get('user')->role == 1 ? 1 : 0;
         $data->published_by = $request->session()->get('user')->name;
+        $data->jurnal_by = $request->jurnal_by ?? '-';
         $data->type = 3;
         $data->viewer = 0;
 
@@ -87,6 +88,8 @@ class BeritaController extends Controller
             $imageName = hash('sha256', $fileContents).'.'.$request->file('thumbnail')->getClientOriginalExtension();
             $request->file('thumbnail')->move('img/berita', $imageName);
             $data->thumbnail = $imageName;
+        } else {
+            $data->thumbnail = 'img/no_image.png';
         }
 
         $data->save();
@@ -187,6 +190,7 @@ class BeritaController extends Controller
             'text' => $request->text,
             'location' => $request->location,
             'viewer' => $request->viewer,
+            'jurnal_by' => $request->jurnal_by,
         ]);
 
         return redirect()->route('berita.index', ['token' => $token])->with('success', 'Berita berhasil diperbarui.');

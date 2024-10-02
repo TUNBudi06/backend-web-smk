@@ -29,8 +29,9 @@
                         <strong>{{ Session::get('success') }}</strong>
                     </div>
                     @endif
-                    <table id="table">
-                        <thead>
+                    <div class="col-11">
+                        <table id="table">
+                            <thead>
                             <tr>
                                 <th class="pl-4">Thumbnail</th>
                                 <th>Judul</th>
@@ -41,36 +42,39 @@
                                 <th>disutujui oleh</th>
                                 <th>Action</th>
                             </tr>
-                        </thead>
-                        <tbody>
+                            </thead>
+                            <tbody>
                             @foreach($news as $key => $data)
 
-                            <tr>
-                                <td>
-                                    <img src="{{ asset(file_exists(public_path('img/berita/' . $data->thumbnail)) ? 'img/berita/' . $data->thumbnail : 'img/no_image.png') }}" width="100px" class="rounded" alt="">
-                                </td>
-                                <td style="word-wrap: break-word; max-width: 230px;">{{ $data->nama }}</td>
-                                <td>{{ $data->kategori ? $data->kategori->pemberitahuan_category_name : 'No Category' }}</td>
-                                <td>{{ $data->location }}</td>
-                                <td style="word-wrap: break-word; max-width: 150px;">{{ $data->created_at }}</td>
-                                <td> <div class="{{ $data->approved ? "badge-success" : 'badge-warning' }}">{{ $data->approved ? "Publik" : 'Pending' }}</div></td>
-                                <td>{{$data->approved ? $data->Approved_by ? $data->Approved_by : "SuperAdmin" : 'Belum Disetujui'}}</td>
-                                <td>
-                                    <a href="{{ route('berita.show', ['berita' => $data->id_pemberitahuan, 'token' => $token]) }}" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
-                                    <a href="{{ route('berita.edit', ['berita' => $data->id_pemberitahuan, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                    <form action="{{ route('berita.destroy', ['berita' => $data->id_pemberitahuan, 'token' => $token]) }}" onclick="return confirm('Data akan dihapus ?')" method="post" class="d-inline">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>
-                                    </form>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>
+                                        <img src="{{ asset(file_exists(public_path('img/berita/' . $data->thumbnail)) ? 'img/berita/' . $data->thumbnail : 'img/no_image.png') }}" width="120px" height="60px" class="rounded" alt="">
+                                    </td>
+                                    <td style="word-wrap: break-word; max-width: 230px;">{{ $data->nama }}</td>
+                                    <td>{{ $data->kategori ? $data->kategori->pemberitahuan_category_name : 'No Category' }}</td>
+                                    <td>{{ $data->location }}</td>
+                                    <td style="word-wrap: break-word; max-width: 150px;">{{ $data->created_at }}</td>
+                                    <td> <div class="{{ $data->approved ? "badge-success" : 'badge-warning' }}">{{ $data->approved ? "Publik" : 'Pending' }}</div></td>
+                                    <td>{{$data->approved ? $data->Approved_by ? $data->Approved_by : "SuperAdmin" : 'Belum Disetujui'}}</td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <a href="{{ route('berita.show', ['berita' => $data->id_pemberitahuan, 'token' => $token]) }}" class="btn btn-warning p-2 m-1"><i class="fas fa-eye"></i></a>
+                                            <a href="{{ route('berita.edit', ['berita' => $data->id_pemberitahuan, 'token' => $token]) }}" class="btn btn-success p-2 m-1"><i class="fas fa-pen-alt"></i></a>
+                                            <form action="{{ route('berita.destroy', ['berita' => $data->id_pemberitahuan, 'token' => $token]) }}" onclick="return confirm('Data akan dihapus ?')" method="post" class="d-inline">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="btn btn-danger p-2 m-1"><i class="fas fa-trash"></i></button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
                             @endforeach
-                        </tbody>
-                    </table>
-                    <script>
-                        $('#table').dataTable()
-                    </script>
+                            </tbody>
+                        </table>
+                        <script>
+                            $('#table').dataTable()
+                        </script>
+                    </div>
                 </div>
             </div>
         </div>

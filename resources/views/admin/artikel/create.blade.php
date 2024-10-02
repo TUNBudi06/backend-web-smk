@@ -61,6 +61,14 @@
         <script>
             CKEDITOR.replace('texteditor');
         </script>
+        <div class="form-group">
+            <label for="jurnal_by">Jurnal By</label>
+            <input type="text" name="jurnal_by" id="jurnal_by" class="form-control @error('jurnal_by') is-invalid @enderror" value="{{ old('jurnal_by') }}" placeholder="Jurnal By" aria-describedby="jurnalById">
+            <small id="jurnalById" class="text-muted">Hindari penggunaan slash (/,\)</small>
+            @error('jurnal_by')
+                <p class="text-danger">{{ $message }}</p>
+            @enderror
+        </div>
         <div class="row">
             <div class="col-md-6 py-md-5 py-3">
                 <div class="form-group">

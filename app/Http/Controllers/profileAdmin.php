@@ -15,7 +15,7 @@ class profileAdmin extends Controller
         $user_role = $user->role == 1 ? 'SuperAdmin' : 'Admin';
 
         return view('admin.page.profile', [
-            'menu_active' => 'profile',
+            'menu_active' => 'user',
             'token' => $token,
             'email' => $user['email'],
             'nama' => $user['name'],

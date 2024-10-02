@@ -50,8 +50,8 @@ class NewsResource extends JsonResource
             'icon_type' => 'News',
             'text' => $cleanText,
             'level' => $this->level,
-            'published_by' => $this->published_by,
-            'jurnal_by' => $this->jurnal_by,
+            'published_by' => $this->published_by ?? 'Humas',
+            'jurnal_by' => $this->jurnal_by ?? '-',
             'location' => $this->location,
             'category' => [
                 'id' => $this->kategori->id_pemberitahuan_category,

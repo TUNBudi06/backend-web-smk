@@ -56,13 +56,12 @@ class ArtikelController extends Controller
             'level' => 'required',
             'id_pemberitahuan_category' => 'required',
             'text' => 'required',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
         ], [
             'nama.required' => 'Kolom nama artikel harus diisi.',
             'level.required' => 'Kolom level artikel harus diisi.',
             'id_pemberitahuan_category.required' => 'Kolom kategori artikel harus diisi.',
             'text.required' => 'Kolom isi artikel harus diisi.',
-            'thumbnail' => 'Kolom gambar wajib diisi',
             'thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
         ]);
 
@@ -74,6 +73,7 @@ class ArtikelController extends Controller
         $data->text = $request->text;
         $data->approved = $request->session()->get('user')->role == 1 ? 1 : 0;
         $data->published_by = $request->session()->get('user')->name;
+        $data->jurnal_by = $request->jurnal_by ?? '-';
         $data->type = 1;
         $data->viewer = 0;
 
@@ -83,6 +83,8 @@ class ArtikelController extends Controller
             $imageName = md5($file->getClientOriginalName().microtime()).'.'.$file->getClientOriginalExtension();
             $file->move('img/artikel', $imageName);
             $data->thumbnail = $imageName;
+        } else {
+            $data->thumbnail = 'img/no_image.png';
         }
 
         $data->save();
@@ -176,6 +178,7 @@ class ArtikelController extends Controller
             'level' => $request->level,
             'category' => $request->id_pemberitahuan_category,
             'text' => $request->text,
+            'jurnal_by' => $request->jurnal_by ?? '-',
         ]);
 
         // Redirect dengan pesan sukses

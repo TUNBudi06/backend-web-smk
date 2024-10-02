@@ -112,8 +112,8 @@ class ArticleResource extends JsonResource
             'date' => $this->date,
             'text' => $iframeUrl ? $iframeUrl : $cleanText,
             'level' => $this->level,
-            'published_by' => $this->published_by,
-            'jurnal_by' => $this->jurnal_by,
+            'published_by' => $this->published_by ?? 'Humas',
+            'jurnal_by' => $this->jurnal_by ?? '-',
             'category' => $this->kategori ? [
                 'id' => $this->kategori->id_pemberitahuan_category,
                 'nama' => $this->kategori->pemberitahuan_category_name,

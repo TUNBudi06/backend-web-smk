@@ -44,7 +44,7 @@
             </div>
             <div class="col-md-6 mt-4 p-2">
             @else
-            <div class="col-md-8 offset-md-2 mt-4 p-2">
+            <div class="col-md-11 offset-md-1 mt-4 p-2">
             @endif
                 @include('admin.partials.nav_profile')
                 <div class="w-100 table-parent bg-white">
@@ -55,9 +55,9 @@
                             </p>
                         </div>
                     </div>
-                    <div class="row m-1">
+                    <div class="row">
                             @foreach($videos as $index => $data)
-                                <div class="col-6">
+                                <div class="col-4">
                                     <div class="card" style="width: 18rem;">
                                         <iframe class="card-img-top" src="https://www.youtube.com/embed/{{ \Illuminate\Support\Str::after($data->url, 'youtu.be/') }}?autoplay=1&mute=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                                         <div class="card-body">
@@ -73,16 +73,16 @@
                                     </div>
                                 </div>
                             @endforeach
-                        <div class="col-12 pt-4">
-                            <div class="card" >
-                                <iframe class="card-img-top" style="height: 20rem" src="https://www.youtube.com/embed/{{ \Illuminate\Support\Str::after($kemitraan->url, 'youtu.be/') }}?autoplay=1&mute=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                                <div class="card-body">
-                                    <h5 class="card-title">{{$kemitraan->title}}</h5>
-                                    <p class="card-text">{{ $kemitraan->description }}</p>
-                                    <a href="{{route('video.edit',[$token,$kemitraan->id_link])}}" class="btn btn-warning">Edit</a>
+                            <div class="col-4">
+                                <div class="card" style="width: 18rem;">
+                                    <iframe class="card-img-top" src="https://www.youtube.com/embed/{{ \Illuminate\Support\Str::after($kemitraan->url, 'youtu.be/') }}?autoplay=1&mute=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{$kemitraan->title}}</h5>
+                                        <p class="card-text">{{ $kemitraan->description }}</p>
+                                        <a href="{{route('video.edit',[$token,$kemitraan->id_link])}}" class="btn btn-warning">Edit</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>

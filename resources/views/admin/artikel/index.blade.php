@@ -29,8 +29,9 @@
                         <strong>{{ Session::get('success') }}</strong>
                     </div>
                     @endif
-                    <table id="table">
-                        <thead>
+                    <div class="col-11">
+                        <table id="table">
+                            <thead>
                             <tr>
                                 <th class="pl-4">Thumbnail</th>
                                 <th>Judul</th>
@@ -40,33 +41,33 @@
                                 <th>disutujui oleh</th>
                                 <th>Action</th>
                             </tr>
-                        </thead>
-                        <tbody>
+                            </thead>
+                            <tbody>
                             @foreach($artikel as $key => $data)
-{{--                                @dd($data)--}}
-                            <tr>
-                                <td><img src="{{ asset('img/artikel/'.$data->thumbnail) }}" width="100px" class="rounded" alt=""></td>
-                                <td style="word-wrap: break-word; max-width: 230px;">{{ $data->nama }}</td>
-                                <td>{{ $data->kategori ? $data->kategori->pemberitahuan_category_name : 'No Category' }}</td>
-                                <td style="word-wrap: break-word; max-width: 150px;">{{ $data->created_at }}</td>
-                                <td> <div class="{{ $data->approved ? "badge-success" : 'badge-warning' }}">{{ $data->approved ? "Publik" : 'Pending' }}</div></td>
-                                <td>{{$data->approved ? $data->Approved_by ? $data->Approved_by : "SuperAdmin" : 'Belum Disetujui'}}</td>
-                                <td>
-                                    <a href="{{ route('artikel.show', ['artikel' => $data->id_pemberitahuan, 'token' => $token]) }}" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
-                                    <a href="{{ route('artikel.edit', ['artikel' => $data->id_pemberitahuan, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                    <form action="{{ route('artikel.destroy', ['artikel' => $data->id_pemberitahuan, 'token' => $token]) }}" onclick="return confirm('Data akan dihapus ?')" method="post" class="d-inline">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>
-                                    </form>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td><img src="{{ asset('img/artikel/'.$data->thumbnail) }}" width="120px" height="60px" class="rounded" alt=""></td>
+                                    <td style="word-wrap: break-word; max-width: 230px;">{{ $data->nama }}</td>
+                                    <td>{{ $data->kategori ? $data->kategori->pemberitahuan_category_name : 'No Category' }}</td>
+                                    <td style="word-wrap: break-word; max-width: 150px;">{{ $data->created_at }}</td>
+                                    <td> <div class="{{ $data->approved ? "badge-success" : 'badge-warning' }}">{{ $data->approved ? "Publik" : 'Pending' }}</div></td>
+                                    <td>{{$data->approved ? ($data->Approved_by ? $data->Approved_by : "SuperAdmin" ): 'Belum Disetujui'}}</td>
+                                    <td>
+                                        <a href="{{ route('artikel.show', ['artikel' => $data->id_pemberitahuan, 'token' => $token]) }}" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
+                                        <a href="{{ route('artikel.edit', ['artikel' => $data->id_pemberitahuan, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
+                                        <form action="{{ route('artikel.destroy', ['artikel' => $data->id_pemberitahuan, 'token' => $token]) }}" onclick="return confirm('Data akan dihapus ?')" method="post" class="d-inline">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
                             @endforeach
-                        </tbody>
-                    </table>
-                    <script>
-                        $('#table').dataTable()
-                    </script>
+                            </tbody>
+                        </table>
+                        <script>
+                            $('#table').dataTable()
+                        </script>
+                    </div>
                 </div>
             </div>
         </div>

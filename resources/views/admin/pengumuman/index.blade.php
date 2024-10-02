@@ -30,8 +30,9 @@
                         <strong>{{ Session::get('success') }}</strong>
                     </div>
                     @endif
-                    <table id="tablePengumuman">
-                        <thead>
+                    <div class="col-11">
+                        <table id="tablePengumuman">
+                            <thead>
                             <tr>
                                 <th class="pl-4">Thumbnail</th>
                                 <th>Pengumuman</th>
@@ -42,34 +43,36 @@
                                 <th>Tujuan</th>
                                 <th>Action</th>
                             </tr>
-                        </thead>
-                        <tbody>
+                            </thead>
+                            <tbody>
                             @foreach($pengumuman as $key => $data)
-                            <tr>
-                                <td><img src="{{ asset('img/announcement/'.$data->thumbnail) }}" width="100px" class="rounded" alt=""></td>
-                                <td style="word-wrap: break-word; max-width: 230px;">{{ $data->nama }}</td>
-                                <td>{{ $data->kategori ? $data->kategori->pemberitahuan_category_name : 'No Category' }}</td>
-                                <td>{{ $data->date }} {{ $data->time }}</td>
-                                <td> <div class="{{ $data->approved ? "badge-success" : 'badge-warning' }}">{{ $data->approved ? "Publik" : 'Pending' }}</div></td>
-                                <td>{{$data->approved ? $data->Approved_by ? $data->Approved_by : "SuperAdmin" : 'Belum Disetujui'}}</td>
-                                <td style="word-wrap: break-word; max-width: 180px;">{{ $data->target }}</td>
-                                <td>
-                                    <a href="{{ route('pengumuman.show', ['pengumuman' => $data->id_pemberitahuan , 'token' => $token]) }}" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
-                                    <a href="{{ route('pengumuman.edit', ['pengumuman' => $data->id_pemberitahuan , 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                    <form action="{{ route('pengumuman.destroy', ['pengumuman' => $data->id_pemberitahuan , 'token' => $token]) }}" onclick="return confirm('Data akan dihapus ?')" method="post" class="d-inline">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>
-                                    </form>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td><img src="{{ asset('img/announcement/'.$data->thumbnail) }}" width="120px" height="60px" class="rounded" alt=""></td>
+                                    <td style="word-wrap: break-word; max-width: 230px;">{{ $data->nama }}</td>
+                                    <td>{{ $data->kategori ? $data->kategori->pemberitahuan_category_name : 'No Category' }}</td>
+                                    <td>{{ $data->date }} {{ $data->time }}</td>
+                                    <td> <div class="{{ $data->approved ? "badge-success" : 'badge-warning' }}">{{ $data->approved ? "Publik" : 'Pending' }}</div></td>
+                                    <td>{{$data->approved ? $data->Approved_by ? $data->Approved_by : "SuperAdmin" : 'Belum Disetujui'}}</td>
+                                    <td style="word-wrap: break-word; max-width: 180px;">{{ $data->target }}</td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <a href="{{ route('pengumuman.show', ['pengumuman' => $data->id_pemberitahuan , 'token' => $token]) }}" class="btn btn-warning p-2 m-1"><i class="fas fa-eye"></i></a>
+                                            <a href="{{ route('pengumuman.edit', ['pengumuman' => $data->id_pemberitahuan , 'token' => $token]) }}" class="btn btn-success p-2 m-1"><i class="fas fa-pen-alt"></i></a>
+                                            <form action="{{ route('pengumuman.destroy', ['pengumuman' => $data->id_pemberitahuan , 'token' => $token]) }}" onclick="return confirm('Data akan dihapus ?')" method="post" class="d-inline">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="btn btn-danger p-2 m-1"><i class="fas fa-trash"></i></button>
+                                            </form>                                    </div>
+                                    </td>
+                                </tr>
                             @endforeach
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
 
-                    <script type="text/javascript" >
-                        $('#tablePengumuman').dataTable()
-                    </script>
+                        <script type="text/javascript" >
+                            $('#tablePengumuman').dataTable()
+                        </script>
+                    </div>
                 </div>
             </div>
         </div>

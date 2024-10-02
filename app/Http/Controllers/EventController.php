@@ -85,6 +85,8 @@ class EventController extends Controller
             $imageName = hash('sha256', $fileContents).'.'.$request->file('thumbnail')->getClientOriginalExtension();
             $request->file('thumbnail')->move('img/event', $imageName);
             $event->thumbnail = $imageName;
+        } else {
+            $event->thumbnail = 'img/no_image.png';
         }
 
         $event->save();

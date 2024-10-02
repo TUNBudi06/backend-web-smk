@@ -22,13 +22,13 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.0/dist/sweetalert2.min.css
         </div>
         @endif
         <div class="row">
-            <div class="col-md-8 offset-md-2 mt-4 p-2">
+            <div class="col-md-11 offset-md-1 mt-4 p-2">
                 @include('admin.partials.nav_academic')
                 <div class="w-100 table-parent bg-white">
                     <div class="row p-4">
                         <div class="col-md-8">
-                            <h4 class="poppins mb-0">Komite</h4>
-                            <p class="montserrat" style="font-size: .85rem;">Daftar Komite untuk URL
+                            <h4 class="poppins mb-0">Perangkat Ajar</h4>
+                            <p class="montserrat" style="font-size: .85rem;">Daftar Perangkat Ajar SMKN 1 Purwosari
                             </p>
                         </div>
                         <div class="col-md-4 text-right">
@@ -36,8 +36,9 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.0/dist/sweetalert2.min.css
                                class="btn  rounded-1 btn-warning px-4 shadow-warning">Tambah</a>
                         </div>
                     </div>
-                    <table id="table">
-                        <thead>
+                    <div class="col-11">
+                        <table id="table">
+                            <thead>
                             <tr>
                                 <th>no</th>
                                 <th>id_pa</th>
@@ -47,38 +48,39 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.0/dist/sweetalert2.min.css
                                 <th>url</th>
                                 <th>Action</th>
                             </tr>
-                        </thead>
-                        <tbody>
+                            </thead>
+                            <tbody>
                             @foreach ($pa as $index => $data)
-                            <tr>
-                                <td>{{ $index }}</td>
-                                <td>{{ $data->id_pa }}</td>
-                                <td>{{$data->title}}</td>
-                                <td>{{$data->description}}</td>
-                                <td>{{$data->type}}</td>
-                                <td>
-                                    {{$data->url}}
-                                </td>
-                                <td>
-                                    <a href="{{ route('tools.edit', ['token' => $token, 'id' => $data->id_pa]) }}"
-                                        class="btn btn-warning px-4 shadow-warning">Edit</a>
-                                    <form action="{{ route('tools.destroy', ['token' => $token]) }}"
-                                          method="post" class="d-inline">
-                                        @csrf
-                                        @method('delete')
-                                        <input type="hidden" value="{{$data->id_pa}}" name="'idName">
-                                        <button type="submit" class="btn btn-danger px-4 shadow-danger">Hapus</button>
-                                    </form>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>{{ $index }}</td>
+                                    <td>{{ $data->id_pa }}</td>
+                                    <td>{{$data->title}}</td>
+                                    <td>{{$data->description}}</td>
+                                    <td>{{$data->type}}</td>
+                                    <td>
+                                        {{$data->url}}
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('tools.edit', ['token' => $token, 'id' => $data->id_pa]) }}"
+                                           class="btn btn-warning px-4 shadow-warning">Edit</a>
+                                        <form action="{{ route('tools.destroy', ['token' => $token]) }}"
+                                              method="post" class="d-inline">
+                                            @csrf
+                                            @method('delete')
+                                            <input type="hidden" value="{{$data->id_pa}}" name="'idName">
+                                            <button type="submit" class="btn btn-danger px-4 shadow-danger">Hapus</button>
+                                        </form>
+                                    </td>
+                                </tr>
                             @endforeach
-                        </tbody>
-                    </table>
-                    <script type="text/javascript">
-                        $(document).ready(function () {
-                           $('#table').DataTable()
-                        });
-                    </script>
+                            </tbody>
+                        </table>
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                $('#table').DataTable()
+                            });
+                        </script>
+                    </div>
                 </div>
             </div>
         </div>
