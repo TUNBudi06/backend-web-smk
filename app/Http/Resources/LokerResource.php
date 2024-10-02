@@ -52,7 +52,7 @@ class LokerResource extends JsonResource
         $thumbnailPath = 'img/loker/'.$this->loker_thumbnail;
         $loker_thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
-        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->kemitraan_description)));
+        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->kemitraan->kemitraan_description)));
 
         return [
             'id_loker' => $this->id_loker,

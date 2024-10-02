@@ -39,6 +39,11 @@ class JurusanResource extends JsonResource
         $thumbnailPath = 'img/jurusan/'.$this->jurusan_thumbnail;
         $jurusan_thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
+        // Menangkap URL dari iframe secara manual
+        preg_match('/src="([^"]+)"/', $this->text, $match);
+        $iframeUrl = isset($match[1]) ? $match[1] : null;
+
+        // Membersihkan teks tetapi mempertahankan URL iframe
         $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n", "\t"], '', $this->jurusan_text)));
 
         return [
@@ -52,7 +57,7 @@ class JurusanResource extends JsonResource
                 'nama_prodi' => $this->prodis->prodi_name,
                 'prodi_short' => $this->prodis->prodi_short,
             ] : null,
-            'jurusan_text' => $cleanText,
+            'jurusan_text' => $iframeUrl ? $iframeUrl : $cleanText,
         ];
     }
 }

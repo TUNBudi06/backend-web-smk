@@ -38,13 +38,18 @@ class EkstraResource extends JsonResource
         $image_cover = 'img/extrakurikuler/cover/'.$this->extra_image;
         $extra_image = File::exists(public_path($image_cover)) ? $image_cover : 'img/no_image.png';
 
-        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->extra_text)));
+        // Menangkap URL dari iframe secara manual
+        preg_match('/src="([^"]+)"/', $this->text, $match);
+        $iframeUrl = isset($match[1]) ? $match[1] : null;
+
+        // Membersihkan teks tetapi mempertahankan URL iframe
+        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n", "\t"], '', $this->extra_text)));
 
         return [
             'id_extra' => $this->id_extra,
             'extra_name' => $this->extra_name,
             'icon_type' => 'Ekstra',
-            'extra_text' => $cleanText,
+            'extra_text' => $iframeUrl ? $iframeUrl : $cleanText,
             'extra_type' => $this->extra_type,
             'extra_logo' => $extra_logo,
             'extra_image' => $extra_image,

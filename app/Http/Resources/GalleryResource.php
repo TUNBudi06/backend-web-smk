@@ -33,13 +33,18 @@ class GalleryResource extends JsonResource
         $thumbnailPath = 'img/gallery/'.$this->gallery_file;
         $gallery_file = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
-        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->gallery_text)));
+        // Menangkap URL dari iframe secara manual
+        preg_match('/src="([^"]+)"/', $this->text, $match);
+        $iframeUrl = isset($match[1]) ? $match[1] : null;
+
+        // Membersihkan teks tetapi mempertahankan URL iframe
+        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n", "\t"], '', $this->gallery_text)));
 
         return [
             'id_gallery' => $this->id_gallery,
             'gallery_title' => $this->gallery_title,
             'icon_type' => 'Gallery',
-            'gallery_text' => $cleanText,
+            'gallery_text' => $iframeUrl ? $iframeUrl : $cleanText,
             'gallery_location' => $this->gallery_location,
             'id_category' => $this->id_category,
             'gallery_file' => $gallery_file,

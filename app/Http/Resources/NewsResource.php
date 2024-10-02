@@ -41,14 +41,19 @@ class NewsResource extends JsonResource
         $thumbnailPath = 'img/berita/'.$this->thumbnail;
         $thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
-        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->text)));
+        // Menangkap URL dari iframe secara manual
+        preg_match('/src="([^"]+)"/', $this->text, $match);
+        $iframeUrl = isset($match[1]) ? $match[1] : null;
+
+        // Membersihkan teks tetapi mempertahankan URL iframe
+        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n", "\t"], '', $this->text)));
 
         return [
             'id_pemberitahuan' => $this->id_pemberitahuan,
             'nama' => $this->nama,
             'thumbnail' => $thumbnail,
             'icon_type' => 'News',
-            'text' => $cleanText,
+            'text' => $iframeUrl ? $iframeUrl : $cleanText,
             'level' => $this->level,
             'published_by' => $this->published_by ?? 'Humas',
             'jurnal_by' => $this->jurnal_by ?? '-',
