@@ -102,7 +102,7 @@ class ArticleResource extends JsonResource
         $iframeUrl = isset($match[1]) ? $match[1] : null;
 
         // Membersihkan teks tetapi mempertahankan URL iframe
-        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->text)));
+        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n", "\t"], '', $this->text)));
 
         return [
             'id_pemberitahuan' => $this->id_pemberitahuan,

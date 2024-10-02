@@ -57,7 +57,12 @@ class FasilitasResource extends JsonResource
         $thumbnailPath = 'img/fasilitas/'.$this->facility_image;
         $facility_image = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
-        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->facility_text)));
+        // Menangkap URL dari iframe secara manual
+        preg_match('/src="([^"]+)"/', $this->text, $match);
+        $iframeUrl = isset($match[1]) ? $match[1] : null;
+
+        // Membersihkan teks tetapi mempertahankan URL iframe
+        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n", "\t"], '', $this->facility_text)));
 
         return [
             'id_facility' => $this->id_facility,
@@ -69,7 +74,7 @@ class FasilitasResource extends JsonResource
                 'nama_prodi' => $this->prodis->prodi_name,
                 'prodi_short' => $this->prodis->prodi_short,
             ] : null,
-            'facility_text' => $cleanText,
+            'facility_text' => $iframeUrl ? $iframeUrl : $cleanText,
         ];
     }
 }
