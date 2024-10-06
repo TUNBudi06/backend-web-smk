@@ -39,12 +39,17 @@ class JurusanResource extends JsonResource
         $thumbnailPath = 'img/jurusan/'.$this->jurusan_thumbnail;
         $jurusan_thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
-        // Menangkap URL dari iframe secara manual
-        preg_match('/src="([^"]+)"/', $this->text, $match);
-        $iframeUrl = isset($match[1]) ? $match[1] : null;
-
-        // Membersihkan teks tetapi mempertahankan URL iframe
-        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n", "\t"], '', $this->jurusan_text)));
+        preg_match_all('/<iframe.*?src=["\'](.*?)["\'].*?>/i', $this->jurusan_text, $matches);
+        $iframeUrls = isset($matches[1]) ? $matches[1] : [];
+    
+        $cleanText = preg_replace('/<iframe.*?>.*?<\/iframe>/i', '', $this->jurusan_text);
+    
+        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n", "\t"], '', $cleanText)));
+    
+        if (!empty($iframeUrls)) {
+            $iframeLinks = implode("\n", array_map(fn($url) => "URL: " . $url, $iframeUrls));
+            $cleanText .= "\n" . $iframeLinks;
+        }
 
         return [
             'id_jurusan' => $this->id_jurusan,
@@ -57,7 +62,7 @@ class JurusanResource extends JsonResource
                 'nama_prodi' => $this->prodis->prodi_name,
                 'prodi_short' => $this->prodis->prodi_short,
             ] : null,
-            'jurusan_text' => $iframeUrl ? $iframeUrl : $cleanText,
+            'jurusan_text' => $cleanText,
         ];
     }
 }

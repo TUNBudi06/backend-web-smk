@@ -38,18 +38,23 @@ class EkstraResource extends JsonResource
         $image_cover = 'img/extrakurikuler/cover/'.$this->extra_image;
         $extra_image = File::exists(public_path($image_cover)) ? $image_cover : 'img/no_image.png';
 
-        // Menangkap URL dari iframe secara manual
-        preg_match('/src="([^"]+)"/', $this->text, $match);
-        $iframeUrl = isset($match[1]) ? $match[1] : null;
-
-        // Membersihkan teks tetapi mempertahankan URL iframe
-        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n", "\t"], '', $this->extra_text)));
+        preg_match_all('/<iframe.*?src=["\'](.*?)["\'].*?>/i', $this->extra_text, $matches);
+        $iframeUrls = isset($matches[1]) ? $matches[1] : [];
+    
+        $cleanText = preg_replace('/<iframe.*?>.*?<\/iframe>/i', '', $this->extra_text);
+    
+        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n", "\t"], '', $cleanText)));
+    
+        if (!empty($iframeUrls)) {
+            $iframeLinks = implode("\n", array_map(fn($url) => "URL: " . $url, $iframeUrls));
+            $cleanText .= "\n" . $iframeLinks;
+        }
 
         return [
             'id_extra' => $this->id_extra,
             'extra_name' => $this->extra_name,
             'icon_type' => 'Ekstra',
-            'extra_text' => $iframeUrl ? $iframeUrl : $cleanText,
+            'extra_text' => $cleanText,
             'extra_type' => $this->extra_type,
             'extra_logo' => $extra_logo,
             'extra_image' => $extra_image,

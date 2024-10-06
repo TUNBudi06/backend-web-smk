@@ -36,12 +36,17 @@ class KemitraanResource extends JsonResource
         $image_cover = 'img/kemitraan/cover/'.$this->kemitraan_thumbnail;
         $kemitraan_thumbnail = File::exists(public_path($image_cover)) ? $image_cover : 'img/no_image.png';
 
-        // Menangkap URL dari iframe secara manual
-        preg_match('/src="([^"]+)"/', $this->text, $match);
-        $iframeUrl = isset($match[1]) ? $match[1] : null;
-
-        // Membersihkan teks tetapi mempertahankan URL iframe
-        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n", "\t"], '', $this->kemitraan_description)));
+        preg_match_all('/<iframe.*?src=["\'](.*?)["\'].*?>/i', $this->kemitraan_description, $matches);
+        $iframeUrls = isset($matches[1]) ? $matches[1] : [];
+    
+        $cleanText = preg_replace('/<iframe.*?>.*?<\/iframe>/i', '', $this->kemitraan_description);
+    
+        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n", "\t"], '', $cleanText)));
+    
+        if (!empty($iframeUrls)) {
+            $iframeLinks = implode("\n", array_map(fn($url) => "URL: " . $url, $iframeUrls));
+            $cleanText .= "\n" . $iframeLinks;
+        }
 
         return [
             'id_kemitraan' => $this->id_kemitraan,
@@ -49,7 +54,7 @@ class KemitraanResource extends JsonResource
             'kemitraan_logo' => $kemitraan_logo,
             'icon_type' => 'Kemitraan',
             'kemitraan_thumbnail' => $kemitraan_thumbnail,
-            'kemitraan_description' => $iframeUrl ? $iframeUrl : $cleanText,
+            'kemitraan_description' => $cleanText,
             'kemitraan_city' => $this->kemitraan_city,
             'kemitraan_location_detail' => $this->kemitraan_location_detail,
         ];
