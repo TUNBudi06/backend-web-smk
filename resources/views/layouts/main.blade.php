@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="{{ asset('css/jssocials-theme-flat.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jssocials-theme-minima.css') }}">
     <link rel="icon" type="image/x-icon" class="rounded-circle" href="{{ asset('smkicon.ico') }}" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.4/css/dataTables.dataTables.css" />
+    <link href="https://cdn.datatables.net/v/bs5/dt-2.1.7/datatables.min.css" rel="stylesheet">
 
-    <script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/dt-2.1.7/datatables.min.js"></script>
     @if ($menu_active)
         <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     @endif

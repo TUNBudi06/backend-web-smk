@@ -23,7 +23,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.0/dist/sweetalert2.min.css
         </div>
         @endif
         <div class="row">
-            <div class="col-md-8 offset-md-2 mt-4 p-2">
+            <div class="col-md-11 offset-md-1 mt-4 p-2">
                 @include('admin.partials.nav_profile')
                 <div class="w-100 table-parent bg-white">
                     <div class="row p-4">
@@ -33,8 +33,9 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.0/dist/sweetalert2.min.css
                             </p>
                         </div>
                     </div>
-                    <table id="table">
-                        <thead>
+                    <div class="col-11">
+                        <table id="table">
+                            <thead>
                             <tr>
                                 <th>no</th>
                                 <th>id_link</th>
@@ -43,38 +44,39 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.0/dist/sweetalert2.min.css
                                 <th>jenis</th>
                                 <th>Action</th>
                             </tr>
-                        </thead>
-                        <tbody>
+                            </thead>
+                            <tbody>
                             @foreach ($other as $index => $data)
-                            <tr>
-                                <td>{{ $index }}</td>
-                                <td>{{ $data->id_link }}</td>
-                                <td>{{$data->title}}</td>
-                                @if($data->type == 'text')
-                                    <td>Text</td>
-                                @elseif($data->type == 'file')
-                                    <td>{{$data->description}}</td>
-                                @else
-                                    <td>Link</td>
-                                @endif
-                                <td>
-                                    {{$data->type}}
-                                </td>
-                                <td>
-                                    <a href="{{ route('lainnya.show', ['token' => $token, 'id' => $data->id_link]) }}"
-                                       class="btn btn-info px-4 shadow-info">Detail</a>
-                                    <a href="{{ route('lainnya.edit', ['token' => $token, 'id' => $data->id_link]) }}"
-                                       class="btn btn-warning px-4 shadow-warning">Edit</a>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>{{ $index }}</td>
+                                    <td>{{ $data->id_link }}</td>
+                                    <td>{{$data->title}}</td>
+                                    @if($data->type == 'text')
+                                        <td>Text</td>
+                                    @elseif($data->type == 'file')
+                                        <td>{{$data->description}}</td>
+                                    @else
+                                        <td>Link</td>
+                                    @endif
+                                    <td>
+                                        {{$data->type}}
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('lainnya.show', ['token' => $token, 'id' => $data->id_link]) }}"
+                                           class="btn btn-info px-4 shadow-info">Detail</a>
+                                        <a href="{{ route('lainnya.edit', ['token' => $token, 'id' => $data->id_link]) }}"
+                                           class="btn btn-warning px-4 shadow-warning">Edit</a>
+                                    </td>
+                                </tr>
                             @endforeach
-                        </tbody>
-                    </table>
-                    <script type="text/javascript">
-                        $(document).ready(function () {
-                           $('#table').DataTable()
-                        });
-                    </script>
+                            </tbody>
+                        </table>
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                $('#table').DataTable()
+                            });
+                        </script>
+                    </div>
                 </div>
             </div>
         </div>

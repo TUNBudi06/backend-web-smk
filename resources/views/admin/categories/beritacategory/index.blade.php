@@ -175,17 +175,23 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const colorPicker = document.getElementById('manual_color');
-            const hexInput = document.getElementById('category_color');
-    
-            colorPicker.addEventListener('input', function() {
-                hexInput.value = colorPicker.value.toUpperCase();
+        $(document).ready(function() {
+            const $colorPicker = $('#manual_color');
+            const $hexInput = $('#category_color');
+
+            if($hexInput.val() === '') {
+                $colorPicker.val('#000000');
+            } else {
+                $colorPicker.val($hexInput.val().toUpperCase());
+            }
+
+            $colorPicker.on('input', function() {
+                $hexInput.val($colorPicker.val().toUpperCase());
             });
-    
-            hexInput.addEventListener('input', function() {
-                if (/^#[0-9A-F]{6}$/i.test(hexInput.value)) {
-                    colorPicker.value = hexInput.value;
+
+            $hexInput.on('input', function() {
+                if (/^#[0-9A-F]{6}$/i.test($hexInput.val())) {
+                    $colorPicker.val($hexInput.val());
                 }
             });
         });

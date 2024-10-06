@@ -35,7 +35,7 @@
                     <strong>{{ Session::get('success') }}</strong>
                 </div>
                 @endif
-                <div class="p-2">
+                <div class="p-2 col-11">
                     <table id="userTable">
                         <thead>
                         <tr>
@@ -52,7 +52,7 @@
                         @foreach($user as $index => $userd)
                             <tr>
                                 <td><img src="{{ $userd->image ? asset('img/users/' . $userd->image) : '' }}"
-                                         width="100px" class="rounded" alt=""></td>
+                                         width="150px" height="100px" class="rounded" alt=""></td>
                                 <td>{{$userd->name}}</td>
                                 <td>{{$userd->email}}</td>
                                 <td>{{$userd->token}}</td>
@@ -77,11 +77,7 @@
                 </div>
                 <script>
                     $(document).ready(function () {
-                        $('#userTable').DataTable({
-                            "createdRow": function (row) {
-                                $('td', row).css('border', '1px solid #000');
-                            }
-                        });
+                        $('#userTable').DataTable();
                     });
                 </script>
                 <script>

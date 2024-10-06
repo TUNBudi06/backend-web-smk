@@ -23,6 +23,7 @@ class logUserAproved extends Controller
     {
         $data = tb_pemberitahuan::findOrFail($id);
         $data->approved = 1;
+        $data->Approved_by = $request->session()->get('user')->name;
         $data->save();
 
         return back()->with('success', 'Berhasil mengubah status');

@@ -103,8 +103,8 @@ class EventResource extends JsonResource
             'thumbnail' => $thumbnail,
             'icon_type' => 'Event',
             'date' => $this->date,
-            'published_by' => $this->published_by,
-            'jurnal_by' => $this->jurnal_by,
+            'published_by' => $this->published_by ?? 'Humas',
+            'jurnal_by' => $this->jurnal_by ?? '-',
             'text' => $cleanText,
             'category' => $this->kategori ? [
                 'id' => $this->kategori->id_pemberitahuan_category,

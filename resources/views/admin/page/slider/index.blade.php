@@ -79,12 +79,9 @@
                 <div class="w-100 table-parent bg-white">
                     <div class="row p-4">
                         <div class="col-md-8">
-                            <h4 class="poppins mb-0">Kategori</h4>
+                            <h4 class="poppins mb-0">Slider</h4>
                             <p class="montserrat" style="font-size: .85rem;">Daftar Slider Keunggulan Panel
                             </p>
-                        </div>
-                        <div class="col-md-4 text-right">
-                            <a href="{{ route('slider.index', ['token' => $token]) }}" class="btn-print btn btn-white border-warning px-3 rounded-pill"><i class="fas fa-newspaper"></i> Slider Keunggulan</a>
                         </div>
                     </div>
                     <table id="myTable">

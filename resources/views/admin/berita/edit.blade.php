@@ -63,6 +63,16 @@
             <small id="viewId" class="text-muted d-none"></small>
         </div>
         <div class="form-group">
+            <label for="jurnal_by">Jurnal By</label>
+            <input type="text" name="jurnal_by" id="jurnal_by" class="form-control @error('jurnal_by') is-invalid @enderror" value="{{ $news->jurnal_by }}" aria-describedby="jurnalId">
+            <small id="jurnalId" class="text-muted d-none"></small>
+            @error('jurnal_by')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+            @enderror
+        </div>
+        <div class="form-group">
             <label for="text">Deskripsi Berita</label>
             <textarea name="text" id="texteditor" cols="30" rows="10" class="form-control @error('text') is-invalid @enderror" placeholder="Isi dari news.." aria-describedby="textId">{{ $news->text }}</textarea>
             <small id="textId" class="text-muted d-none"></small>

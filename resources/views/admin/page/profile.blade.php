@@ -14,7 +14,7 @@
             <div class="profile-body bg-white px-3">
                 <div class="position-relative" style="top: -50px;">
                     <div class="avatar-profile d-inline-block overflow-hidden">
-                        <img src="{{ asset('img/illust/male.svg') }}" class="w-100" alt="">
+                        <img src="{{ session()->get('user')->image ? asset('img/users/' . session()->get('user')->image) : asset('img/illust/male.svg') }}" class="w-100" alt="">
                     </div>
                     <div class="name-profile ml-2 position-absolute d-inline-block" style="top: 20px;">
                         <h4 class="text-white poppins"> {{$nama}} <span class="text-white poppins" style="font-size: .8rem;">({{$user_type}})</span></h4>

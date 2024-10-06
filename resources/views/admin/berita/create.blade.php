@@ -60,6 +60,17 @@
                 </div>
             @enderror
         </div>
+{{--        tambahkan jurnal_by--}}
+        <div class="form-group">
+            <label for="jurnal_by">Jurnal By</label>
+            <input type="text" name="jurnal_by" id="jurnal_by" class="form-control @error('jurnal_by') is-invalid @enderror" value="{{ old('jurnal_by') }}" aria-describedby="jurnalId">
+            <small id="jurnalId" class="text-muted d-none"></small>
+            @error('jurnal_by')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
         <div class="form-group">
             <input type="hidden" name="viewer" id="viewer" class="form-control" value="0" aria-describedby="viewId">
             <small id="viewId" class="text-muted d-none"></small>

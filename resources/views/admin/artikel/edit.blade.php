@@ -52,6 +52,17 @@
             <input type="hidden" name="viewer" id="viewer" class="form-control" value="{{ $artikel->viewer }}" aria-describedby="viewId">
                 <small id="viewId" class="text-muted d-none"></small>
         </div>
+{{--        tambahkan field jurnal by--}}
+        <div class="form-group">
+            <label for="jurnal_by">Jurnal By</label>
+            <input type="text" name="jurnal_by" id="jurnal_by" class="form-control" placeholder="Jurnal By" aria-describedby="jurnalById" value="{{ $artikel->jurnal_by }}">
+            <small id="jurnalById" class="text-muted">Hindari penggunaan slash (/,\)</small>
+            @error('jurnal_by')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+            @enderror
+        </div>
         <div class="form-group">
             <label for="text">Deskripsi artikel</label>
             <textarea name="text" id="texteditor" cols="30" rows="10" class="form-control" placeholder="Isi dari artikel.." aria-describedby="textId">{{ $artikel->text }}</textarea>
