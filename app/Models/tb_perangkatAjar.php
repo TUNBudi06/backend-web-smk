@@ -17,6 +17,7 @@ class tb_perangkatAjar extends Model
         'title',
         'description',
         'type',
+        'size',
         'url'
     ];
 }

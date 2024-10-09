@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    <title>Agenda | Admin Panel</title>
+    <title>Perangkat Ajar | Admin Panel</title>
     <script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
 @endsection
 
@@ -16,7 +16,7 @@
                 <label for="title">Title</label>
                 <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror"
                        value="{{ $pa->title }}" placeholder="Masukkan judul" aria-describedby="titleHelp">
-                <small id="titleHelp" class="text-muted">Judul dari agenda</small>
+                <small id="titleHelp" class="text-muted">Judul dari Perangkat Ajar</small>
                 @error('title')
                 <p class="text-danger">{{ $message }}</p>
                 @enderror
@@ -24,7 +24,7 @@
 
             <div class="form-group">
                 <label for="description">Deskripsi</label>
-                <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror"
+                <textarea rows="5" name="description" id="description" class="form-control @error('description') is-invalid @enderror"
                           placeholder="Masukkan deskripsi">{{ $pa->description }}</textarea>
                 @error('description')
                 <p class="text-danger">{{ $message }}</p>
@@ -38,6 +38,15 @@
                     <option value="url" {{ $pa->type == 'url' ? 'selected' : '' }}>URL</option>
                 </select>
                 @error('type')
+                <p class="text-danger">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="form-group" id="sizeInput" style="display: none;">
+                <label for="size">Size (MB)</label>
+                <input type="text" name="size" id="size" class="form-control @error('size') is-invalid @enderror"
+                       value="{{ $pa->size }}" placeholder="Masukkan Ukuran dalam format Mb">
+                @error('size')
                 <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>
@@ -69,9 +78,11 @@
             const type = $('#type').val()
             if (type === 'file') {
                 $('#fileInput').show()
+                $('#sizeInput').show()
                 $('#urlInput').hide()
             } else {
                 $('#fileInput').hide()
+                $('#sizeInput').hide()
                 $('#urlInput').show()
             }
         }

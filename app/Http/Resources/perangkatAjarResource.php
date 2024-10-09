@@ -16,7 +16,8 @@ class perangkatAjarResource extends JsonResource
      *     @OA\Property(property="title", type="string", description="Title of the Perangkat Ajar"),
      *     @OA\Property(property="description", type="string", description="Description of the Perangkat Ajar"),
      *     @OA\Property(property="type", type="string", description="Type of the Perangkat Ajar"),
-     *     @OA\Property(property="url", type="string", format="url", description="URL of the Perangkat Ajar")
+     *     @OA\Property(property="url", type="string", format="url", description="URL of the Perangkat Ajar"),
+     *     @OA\Property(property="size", type="string", format="size", description="Size of the Perangkat Ajar")
      * )
      *
      * Transform the resource into an array.
@@ -32,6 +33,7 @@ class perangkatAjarResource extends JsonResource
             'description' => $this->description,
             'type' => $this->type,
             'url' => $this->url,
+            'size' => $this->size ?? '-',
         ];
     }
 }

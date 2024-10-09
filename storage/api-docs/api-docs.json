@@ -3031,6 +3031,11 @@
                         "description": "URL of the Perangkat Ajar",
                         "type": "string",
                         "format": "url"
+                    },
+                    "size": {
+                        "description": "Size of the Perangkat Ajar",
+                        "type": "string",
+                        "format": "size"
                     }
                 },
                 "type": "object"

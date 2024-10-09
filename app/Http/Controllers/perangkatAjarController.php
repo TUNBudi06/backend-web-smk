@@ -35,10 +35,15 @@ class perangkatAjarController extends Controller
     {
         $token = $request->session()->get('token') ?? $request->input('token');
         $data = $request->validate(['title' => 'required', 'description' => 'required', 'type' => 'required']);
+        if (isset($data['size'])) {
+            $data['size'] = str_replace(',', '.', $data['size']);
+        }
+
         $pa_data = new tb_perangkatAjar;
         $pa_data->title = $data['title'];
         $pa_data->description = $data['description'];
         $pa_data->type = $data['type'];
+        $pa_data->size = $data['size'] ?? null;
         if ($request->type == 'url') {
             $request->validate(['url' => 'required']);
             $pa_data->url = $request->url;
@@ -58,10 +63,15 @@ class perangkatAjarController extends Controller
     {
         $token = $request->session()->get('token') ?? $request->input('token');
         $data = $request->validate(['title' => 'required', 'description' => 'required', 'type' => 'required']);
+        if (isset($data['size'])) {
+            $data['size'] = str_replace(',', '.', $data['size']);
+        }
+
         $pa_data = tb_perangkatAjar::findOrFail($request->idName);
         $pa_data->title = $data['title'];
         $pa_data->description = $data['description'];
         $pa_data->type = $data['type'];
+        $pa_data->size = $data['size'] ?? null;
         if ($request->type == 'url') {
             $request->validate(['url' => 'required']);
             $pa_data->url = $request->url;

@@ -36,40 +36,51 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.0/dist/sweetalert2.min.css
                                class="btn  rounded-1 btn-warning px-4 shadow-warning">Tambah</a>
                         </div>
                     </div>
-                    <div class="col-11">
-                        <table id="table">
+                    <div class="table-responsive w-100">
+                        <table id="table" class="table table-row-bordered gy-5 w-100">
                             <thead>
                             <tr>
-                                <th>no</th>
-                                <th>id_pa</th>
-                                <th>title</th>
-                                <th>description</th>
-                                <th>type</th>
-                                <th>url</th>
+                                <th>No</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Type</th>
+                                <th>Size</th>
+                                <th>URL</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach ($pa as $index => $data)
                                 <tr>
-                                    <td>{{ $index }}</td>
-                                    <td>{{ $data->id_pa }}</td>
-                                    <td>{{$data->title}}</td>
-                                    <td>{{$data->description}}</td>
-                                    <td>{{$data->type}}</td>
+                                    <td style="text-align: start;">{{ $index + 1 }}</td>
+                                    <td>{{ $data->title }}</td>
+                                    <td>{{ Str::limit($data->description) }}</td>
+                                    <td>{{ $data->type }}</td>
+                                    <td style="text-align: start;">{{ isset($data->size) ? $data->size . ' MB' : '-' }}</td>
+                                    <td>{{ Str::limit($data->url, 50) }}</td>
                                     <td>
-                                        {{$data->url}}
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('tools.edit', ['token' => $token, 'id' => $data->id_pa]) }}"
-                                           class="btn btn-warning px-4 shadow-warning">Edit</a>
-                                        <form action="{{ route('tools.destroy', ['token' => $token]) }}"
-                                              method="post" class="d-inline">
-                                            @csrf
-                                            @method('delete')
-                                            <input type="hidden" value="{{$data->id_pa}}" name="'idName">
-                                            <button type="submit" class="btn btn-danger px-4 shadow-danger">Hapus</button>
-                                        </form>
+                                        <ul class="navbar-nav">
+                                            <li class="nav-item dropdown">
+                                                <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0" style="padding: 10px;">
+                                                    <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a href="{{ route('tools.edit', ['token' => $token, 'id' => $data->id_pa]) }}" class="dropdown-item text-warning" onclick="event.stopPropagation(); onEdit('${full.bin_id}'); return false;" style="padding-bottom: 10px; text-align: center; font-weight: 600;">
+                                                        <i class='fas fa-pen-alt mx-1 text-warning'></i> Edit
+                                                    </a>
+                                                    <form action="{{ route('tools.destroy', ['token' => $token]) }}"
+                                                          method="post" class="d-inline"
+                                                          onclick="event.stopPropagation(); return confirm('Data akan dihapus ?')">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <input type="hidden" value="{{$data->id_pa}}" name="idName">
+                                                        <button type="submit" class="dropdown-item text-danger" style="padding-bottom: 10px; padding-top: 10px; text-align: center; font-weight: 600;">
+                                                            <i class='fas fa-trash mx-1 text-danger'></i> Delete
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </li>
+                                        </ul>
                                     </td>
                                 </tr>
                             @endforeach
