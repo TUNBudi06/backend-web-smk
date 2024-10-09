@@ -29,8 +29,8 @@
                         <strong>{{ Session::get('success') }}</strong>
                     </div>
                     @endif
-                    <div class="col-11">
-                        <table id="table">
+                    <div class="table-responsive w-100">
+                        <table id="table" class="table table-row-bordered gy-5 w-100">
                             <thead>
                             <tr>
                                 <th class="pl-4">Thumbnail</th>
@@ -54,23 +54,69 @@
                                     <td>{{$data->approved ? $data->Approved_by ? $data->Approved_by : "SuperAdmin" : 'Belum Disetujui'}}</td>
                                     <td style="word-wrap: break-word; max-width: 180px;">{{ $data->target }}</td>
                                     <td>
-                                        <a href="{{ route('event.show', ['event' => $data->id_pemberitahuan, 'token' => $token]) }}" class="btn btn-warning p-2"><i class="fas fa-eye"></i></a>
-                                        <a href="{{ route('event.edit', ['event' => $data->id_pemberitahuan, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                        <form action="{{ route('event.destroy', ['event' => $data->id_pemberitahuan , 'token' => $token]) }}" onclick="return confirm('Data akan dihapus ?')" method="post" class="d-inline">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>
-                                        </form>
+                                        <ul class="navbar-nav">
+                                            <li class="nav-item dropdown">
+                                                <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0"
+                                                    style="padding: 10px;">
+                                                    <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a href="{{ route('event.show', ['event' => $data->id_pemberitahuan, 'token' => $token]) }}"
+                                                        class="dropdown-item text-info"
+                                                        onclick="event.stopPropagation(); onEdit('${full.bin_id}'); return false;"
+                                                        style="padding-bottom: 10px; text-align: center; font-weight: 600;">
+                                                        <i class='fas fa-eye mx-1 text-info'></i> Show
+                                                    </a>
+                                                    <a href="{{ route('event.edit', ['event' => $data->id_pemberitahuan, 'token' => $token]) }}"
+                                                        class="dropdown-item text-warning"
+                                                        onclick="event.stopPropagation(); onEdit('${full.bin_id}'); return false;"
+                                                        style="padding-bottom: 10px; text-align: center; font-weight: 600;">
+                                                        <i class='fas fa-pen-alt mx-1 text-warning'></i> Edit
+                                                    </a>
+                                                    <form
+                                                        action="{{ route('event.destroy', ['event' => $data->id_pemberitahuan, 'token' => $token]) }}"
+                                                        method="post" class="d-inline"
+                                                        onclick="event.stopPropagation(); return confirm('Data akan dihapus ?')">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <input type="hidden" value="{{ $data->id_pemberitahuan }}"
+                                                            name="idName">
+                                                        <button type="submit" class="dropdown-item text-danger"
+                                                            style="padding-bottom: 10px; padding-top: 10px; text-align: center; font-weight: 600;">
+                                                            <i class='fas fa-trash mx-1 text-danger'></i> Delete
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </li>
+                                        </ul>
                                     </td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
-                        <script>
-                            $('#table').dataTable()
+                        <script type="text/javascript">
+                            $(document).ready(function() {
+                                $('#table').DataTable()
+                            });
                         </script>
                     </div>
                 </div>
             </div>
         </div>
+@endsection
+
+@section('script')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            @if (Session::get('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: '{{ Session::get('success') }}',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            @endif
+        });
+    </script>
 @endsection
