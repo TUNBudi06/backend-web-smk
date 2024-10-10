@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('tb_pemberitahuan_category', function (Blueprint $table) {
             $table->id('id_pemberitahuan_category');
             $table->string('pemberitahuan_category_name');
+            $table->string('pemberitahuan_category_color');
             $table->unsignedBigInteger('type'); // Assuming type is intended to reference id_pemberitahuan_type
             $table->foreign('type')->references('id_pemberitahuan_type')->on('tb_pemberitahuan_type')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

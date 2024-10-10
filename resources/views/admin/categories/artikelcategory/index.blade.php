@@ -63,7 +63,7 @@
                             <small id="colorID" class="text-muted">Hex Color otomatis terisi saat warna dipilih</small>
                         </div>
                         <div class="text-right w-100">
-                            <button class="btn btn-warning px-4 rounded-pill shadow-warning position-absolute" style="right: 10px;">Simpan</button>
+                            <button type="submit" class="btn btn-warning px-4 rounded-pill shadow-warning position-absolute" style="right: 10px;">Simpan</button>
                         </div>
                     </form>
                 </div>

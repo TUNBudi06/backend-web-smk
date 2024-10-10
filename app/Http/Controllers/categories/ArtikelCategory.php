@@ -48,8 +48,8 @@ class ArtikelCategory extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'pemberitahuan_category_name' => 'required',
-            'pemberitahuan_category_color' => 'required',
+            'category_name' => 'required',
+            'category_color' => 'required',
         ]);
 
         $category = new tb_pemberitahuan_category;

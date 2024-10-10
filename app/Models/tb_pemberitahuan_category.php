@@ -13,6 +13,7 @@ class tb_pemberitahuan_category extends Model
     protected $fillable = [
         'pemberitahuan_category_name',
         'pemberitahuan_category_color',
+        'type',
     ];
 
     public function tb_pemberitahuans()
