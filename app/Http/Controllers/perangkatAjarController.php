@@ -9,8 +9,10 @@ class perangkatAjarController extends Controller
 {
     public function indexTools(Request $request)
     {
+        $perPage = 10;
+        $data_pa = tb_perangkatAjar::orderBy('id_pa', 'desc')->paginate($perPage);
+
         $token = $request->session()->get('token') ?? $request->input('token');
-        $data_pa = tb_perangkatAjar::all();
 
         return view('admin.page.perangkatAjar.index', [
             'menu_active' => 'academic',

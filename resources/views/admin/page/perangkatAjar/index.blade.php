@@ -92,10 +92,40 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.0/dist/sweetalert2.min.css
                             });
                         </script>
                     </div>
+                    <div class="row px-3 justify-content-end">
+                        <div class="col-md-6 text-right">
+                            <p class="montserrat d-inline" style="font-size: .9rem;">{{ $pa->firstItem() }} dari {{ $pa->lastItem() }}</p>
+                            <a href="{{ $pa->previousPageUrl() }}" class="btn btn-sm p-1 px-3 btn-white {{ $pa->onFirstPage() ? 'disabled' : 'active' }}">
+                                <i class="fas fa-caret-left text-warning"></i>
+                            </a>
+                            <a href="{{ $pa->nextPageUrl() }}" class="btn btn-sm p-1 px-3 btn-white {{ $pa->hasMorePages() ? 'active' : 'disabled' }}">
+                                <i class="fas fa-caret-right text-warning"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        $('.check-toggle').change(function() {
+            if(this.checked) {
+                $('.btn-print').removeAttr('disabled').removeClass('disabled')
+                $('.check-respond').prop('checked', true);
+            } else {
+                $('.btn-print').addClass('disabled').attr('disabled')
+                $('.check-respond').prop('checked', false);
+            }
+        });
+        $('input[name="checkPrint[]"]').change(function() {
+            var atLeastOneIsChecked = $('input[name="checkPrint[]"]:checked').length > 0;
+            if(atLeastOneIsChecked) {
+                $('.btn-print').removeAttr('disabled').removeClass('disabled')
+            } else {
+                $('.btn-print').addClass('disabled').attr('disabled')
+            }
+        });
+    </script>
 @endsection
 
 @section('script')
