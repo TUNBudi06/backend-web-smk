@@ -22,7 +22,7 @@ class tb_gallery extends Model
         'file_type',
     ];
 
-    // public $timestamps = false;
+    public $timestamps = false;
 
     public function category_gallery()
     {

@@ -7,7 +7,7 @@ use App\Models\tb_pemberitahuan_category;
 use App\Models\tb_pengumuman;
 use Illuminate\Http\Request;
 
-class PengumumanController extends Controller
+class   PengumumanController extends Controller
 {
     /**
      * Display a listing of the resource.

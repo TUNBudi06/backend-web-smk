@@ -194,7 +194,7 @@ class ArtikelController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $artikel = tb_pemberitahuan::where('id_pemberitahuan', $id_artikel)
-            ->where('type', 4)
+            ->where('type', 1) // maksudnya ini itu value aslinya itu 1 bukan 4 yaa syg
             ->firstOrFail();
 
         $imagePath = public_path('img/artikel/'.$artikel->thumbnail);
