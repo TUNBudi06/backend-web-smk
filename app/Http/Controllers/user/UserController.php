@@ -174,8 +174,13 @@ class UserController extends Controller
     {
         $token = $request->session()->get('token') ?? $request->input('token');
         $user = tb_admin::findOrFail($user);
-        unlink('img/users/'.$user->image);
+        if ($user->image != null) {
+            if (file_exists('img/users/'.$user->image)) {
+                unlink('img/users/'.$user->image);
+            }
+        }
         $user->delete();
+
         return redirect()->route('user.index', ['token' => $token])->with('success', 'User berhasil dihapus.');
     }
 }
