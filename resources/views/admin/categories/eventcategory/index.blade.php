@@ -98,12 +98,35 @@
                                 <td>{{ $data->pemberitahuan_category_name }}</td>
                                 <td>{{ $data->pemberitahuan_category_color ?? '-' }}</td>
                                 <td>
-                                    <a href="{{ route('event.category.edit', ['event_category' => $data->id_pemberitahuan_category, 'token' => $token]) }}" class="btn btn-success p-2"><i class="fas fa-pen-alt"></i></a>
-                                    <form action="{{ route('event.category.destroy', ['event_category' => $data->id_pemberitahuan_category, 'token' => $token]) }}" method="post" class="d-inline" onclick="return confirm('Agenda akan dihapus ?')">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="btn btn-danger p-2"><i class="fas fa-trash"></i></button>
-                                    </form>
+                                    <ul class="navbar-nav">
+                                        <li class="nav-item dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0"
+                                                style="padding: 10px;">
+                                                <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a href="{{ route('event.category.edit', ['event_category' => $data->id_pemberitahuan_category, 'token' => $token]) }}"
+                                                    class="dropdown-item text-warning"
+                                                    onclick="event.stopPropagation(); onEdit('${full.bin_id}'); return false;"
+                                                    style="padding-bottom: 10px; text-align: center; font-weight: 600;">
+                                                    <i class='fas fa-pen-alt mx-1 text-warning'></i> Edit
+                                                </a>
+                                                <form
+                                                    action="{{ route('event.category.destroy', ['event_category' => $data->id_pemberitahuan_category, 'token' => $token]) }}"
+                                                    method="post" class="d-inline"
+                                                    onclick="event.stopPropagation(); return confirm('Data akan dihapus ?')">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <input type="hidden" value="{{ $data->id_pemberitahuan_category }}"
+                                                        name="idName">
+                                                    <button type="submit" class="dropdown-item text-danger"
+                                                        style="padding-bottom: 10px; padding-top: 10px; text-align: center; font-weight: 600;">
+                                                        <i class='fas fa-trash mx-1 text-danger'></i> Delete
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </td>
                             </tr>
                             @endforeach
