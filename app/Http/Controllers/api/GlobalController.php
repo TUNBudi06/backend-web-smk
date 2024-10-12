@@ -102,7 +102,7 @@ class GlobalController extends Controller
             ->get();
 
         $lokers = tb_loker::with('position', 'kemitraan')
-            ->where('loker_type', 'LIKE', '%'.$query.'%')
+            ->where('loker_description', 'LIKE', '%'.$query.'%')
             ->get();
 
         $ptk = tb_ptk::where('nama', 'LIKE', '%'.$query.'%')

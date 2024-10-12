@@ -34,7 +34,7 @@
                     <thead>
                         <tr>
                             <th class="pl-4">Thumbnail</th>
-                            <th>Jenis Loker</th>
+                            <th>Deskripsi Loker</th>
                             <th>Posisi</th>
                             <th>Kemitraan</th>
                             <th>Status</th>
@@ -47,7 +47,7 @@
                     <tr>
                         <td><img src="{{ asset('img/loker/' . $data->loker_thumbnail) }}" width="100px" class="rounded"
                                 alt=""></td>
-                        <td style="word-wrap: break-word; max-width: 230px;">{{ $data->loker_type }}</td>
+                        <td style="word-wrap: break-word; max-width: 230px;">{{ $data->loker_description }}</td>
                         <td>{{ $data->position->position_name }}</td>
                         <td>{{ $data->kemitraan->kemitraan_name }}</td>
                         <td>

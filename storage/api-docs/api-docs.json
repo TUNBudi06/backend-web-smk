@@ -2655,7 +2655,7 @@
                         "type": "string",
                         "example": "img/loker/image.png"
                     },
-                    "loker_type": {
+                    "loker_description": {
                         "type": "string",
                         "example": "Kasir/Sales/Marketing"
                     },

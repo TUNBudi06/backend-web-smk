@@ -56,7 +56,7 @@ class LokerController extends Controller
 
         $request->validate([
             'loker_thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
-            'loker_type' => 'required|string|max:255',
+            'loker_description' => 'required|string|max:255',
             'position_id' => 'required|exists:tb_positions,id_position',
             'kemitraan_id' => 'required|exists:tb_kemitraans,id_kemitraan',
             'loker_available' => 'required|boolean',
@@ -68,7 +68,7 @@ class LokerController extends Controller
         ]);
 
         $data = new tb_loker;
-        $data->loker_type = $request->loker_type;
+        $data->loker_description = $request->loker_description;
         $data->position_id = $request->position_id;
         $data->kemitraan_id = $request->kemitraan_id;
         $data->loker_available = $request->loker_available;
@@ -122,7 +122,7 @@ class LokerController extends Controller
 
         $request->validate([
             'loker_thumbnail' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
-            'loker_type' => 'required|string|max:255',
+            'loker_description' => 'required|string|max:255',
             'position_id' => 'required|exists:tb_positions,id_position',
             'kemitraan_id' => 'required|exists:tb_kemitraans,id_kemitraan',
             'loker_available' => 'required',
@@ -133,7 +133,7 @@ class LokerController extends Controller
         ]);
 
         $data = tb_loker::findOrFail($id_loker);
-        $data->loker_type = $request->loker_type;
+        $data->loker_description = $request->loker_description;
         $data->position_id = $request->position_id;
         $data->kemitraan_id = $request->kemitraan_id;
         $data->loker_available = $request->loker_available;

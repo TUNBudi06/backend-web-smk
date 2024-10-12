@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\File;
  *
  *     @OA\Property(property="id_loker", type="integer", example=1),
  *     @OA\Property(property="loker_thumbnail", type="string", example="img/loker/image.png"),
- *     @OA\Property(property="loker_type", type="string", example="Kasir/Sales/Marketing"),
+ *     @OA\Property(property="loker_description", type="string", example="Kasir/Sales/Marketing"),
  *     
  *     @OA\Property(
  *         property="position",
@@ -58,7 +58,7 @@ class LokerResource extends JsonResource
             'id_loker' => $this->id_loker,
             'loker_thumbnail' => $loker_thumbnail,
             'icon_type' => 'Loker',
-            'loker_type' => $this->loker_type,
+            'loker_description' => $this->loker_description,
             'loker_available' => $this->loker_available == 1 ? 'Tersedia' : 'Tidak Tersedia',
             'position' => [
                 'id_position' => $this->position->id_position,

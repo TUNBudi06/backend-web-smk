@@ -12,10 +12,11 @@ class tb_loker extends Model
 
     protected $fillable = [
         'loker_thumbnail',
-        'loker_type',
+        'loker_description',
         'position_id',
         'kemitraan_id',
         'loker_available',
+        'loker_for',
     ];
 
     public $timestamps = true;

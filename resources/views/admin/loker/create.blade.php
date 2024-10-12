@@ -13,17 +13,28 @@
         <form action="{{ route('loker.store', ['token' => $token]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label for="loker_type">Jenis Loker</label>
-                <input type="text" name="loker_type" id="loker_type" class="form-control @error('loker_type') is-invalid @enderror" value="{{ old('loker_type') }}">
-                @error('loker_type')
+                <label for="loker_description">Deskripsi Loker</label>
+                <textarea name="loker_description" id="texteditor" class="form-control @error('loker_description') is-invalid @enderror" rows="10">{{ old('loker_description') }}</textarea>
+                @error('loker_description')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
-            </div>            
+            </div>
+            <script>
+                CKEDITOR.replace('texteditor');
+            </script>
+            
+            <div class="form-group">
+                <label for="loker_for">Target Pelamar</label>
+                <input type="text" name="loker_for" id="loker_for" class="form-control @error('loker_for') is-invalid @enderror" value="{{ old('loker_for') }}" placeholder="Siswa Alumni / Umum, dsb">
+                @error('loker_for')
+                    <p class="text-danger">{{ $message }}</p>
+                @enderror
+            </div>
 
             <div class="form-group">
-                <label for="position_id">Position</label>
+                <label for="position_id">Posisi Pekerjaan</label>
                 <select name="position_id" id="position_id" class="form-control @error('position_id') is-invalid @enderror">
-                    <option value="">Pilih Posisi</option>
+                    <option disabled value="">Pilih Posisi</option>
                     @foreach ($positions as $position)
                         <option value="{{ $position->id_position }}"
                             {{ old('position_id') == $position->id_position ? 'selected' : '' }}>
@@ -37,10 +48,10 @@
             </div>
 
             <div class="form-group">
-                <label for="kemitraan_id">Kemitraan</label>
+                <label for="kemitraan_id">Nama Kemitraan</label>
                 <select name="kemitraan_id" id="kemitraan_id"
                     class="form-control @error('kemitraan_id') is-invalid @enderror">
-                    <option value="">Pilih Kemitraan</option>
+                    <option disabled value="">Pilih Kemitraan</option>
                     @foreach ($kemitraans as $kemitraan)
                         <option value="{{ $kemitraan->id_kemitraan }}"
                             {{ old('kemitraan_id') == $kemitraan->id_kemitraan ? 'selected' : '' }}>
@@ -54,7 +65,7 @@
             </div>
 
             <div class="form-group">
-                <label>Loker Tersedia</label>
+                <label>Ketersediaan Loker</label>
                 <div class="form-check">
                     <input type="radio" name="loker_available" id="loker_available_yes" value="1" class="form-check-input" {{ old('loker_available') == '1' ? 'checked' : '' }}>
                     <label for="loker_available_yes" class="form-check-label">Tersedia</label>
