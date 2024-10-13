@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\File;
  *     @OA\Property(property="id_loker", type="integer", example=1),
  *     @OA\Property(property="loker_thumbnail", type="string", example="img/loker/image.png"),
  *     @OA\Property(property="loker_description", type="string", example="Kasir/Sales/Marketing"),
+ *     @OA\Property(property="loker_for", type="string", example="Siswa Alumni"),
  *     
  *     @OA\Property(
  *         property="position",
@@ -52,13 +53,24 @@ class LokerResource extends JsonResource
         $thumbnailPath = 'img/loker/'.$this->loker_thumbnail;
         $loker_thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
-        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n"], '', $this->kemitraan->kemitraan_description)));
+        preg_match_all('/<iframe.*?src=["\'](.*?)["\'].*?>/i', $this->loker_description, $matches);
+        $iframeUrls = isset($matches[1]) ? $matches[1] : [];
+    
+        $cleanText = preg_replace('/<iframe.*?>.*?<\/iframe>/i', '', $this->loker_description);
+    
+        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n", "\t"], '', $cleanText)));
+    
+        if (!empty($iframeUrls)) {
+            $iframeLinks = implode("\n", array_map(fn($url) => "URL: " . $url, $iframeUrls));
+            $cleanText .= "\n" . $iframeLinks;
+        }
 
         return [
             'id_loker' => $this->id_loker,
             'loker_thumbnail' => $loker_thumbnail,
             'icon_type' => 'Loker',
-            'loker_description' => $this->loker_description,
+            'loker_description' => $cleanText,
+            'loker_for' => $this->loker_for,
             'loker_available' => $this->loker_available == 1 ? 'Tersedia' : 'Tidak Tersedia',
             'position' => [
                 'id_position' => $this->position->id_position,

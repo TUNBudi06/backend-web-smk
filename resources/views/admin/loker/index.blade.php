@@ -47,7 +47,7 @@
                     <tr>
                         <td><img src="{{ asset('img/loker/' . $data->loker_thumbnail) }}" width="100px" class="rounded"
                                 alt=""></td>
-                        <td style="word-wrap: break-word; max-width: 230px;">{{ $data->loker_description }}</td>
+                        <td style="word-wrap: break-word; max-width: 230px;">{{ Str::limit(strip_tags($data->loker_description), 40) }}</td>
                         <td>{{ $data->position->position_name }}</td>
                         <td>{{ $data->kemitraan->kemitraan_name }}</td>
                         <td>
