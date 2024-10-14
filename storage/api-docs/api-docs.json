@@ -960,36 +960,25 @@
                     "Loker"
                 ],
                 "summary": "Get all Loker",
-                "description": "Retrieve all Loker data. Supports search by 'kemitraan_name' and filter by 'created_at'.",
+                "description": "Retrieve all Loker data. Supports search by 'position_name' and filter by 'loker_for'.",
                 "operationId": "getAllLoker",
                 "parameters": [
                     {
                         "name": "search",
                         "in": "query",
-                        "description": "Search keyword for Kemitraan names",
+                        "description": "Search keyword for Position names",
                         "required": false,
                         "schema": {
                             "type": "string"
                         }
                     },
                     {
-                        "name": "start_date",
+                        "name": "search_requirement",
                         "in": "query",
-                        "description": "Start date for filtering (YYYY-MM-DD format)",
+                        "description": "Search keyword for Loker Requirement (loker_for)",
                         "required": false,
                         "schema": {
-                            "type": "string",
-                            "format": "date"
-                        }
-                    },
-                    {
-                        "name": "end_date",
-                        "in": "query",
-                        "description": "End date for filtering (YYYY-MM-DD format)",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "format": "date"
+                            "type": "string"
                         }
                     }
                 ],

@@ -14,29 +14,22 @@ class LokerController extends Controller
      *     path="/api/user/lokers",
      *     tags={"Loker"},
      *     summary="Get all Loker",
-     *     description="Retrieve all Loker data. Supports search by 'kemitraan_name' and filter by 'created_at'.",
+     *     description="Retrieve all Loker data. Supports search by 'position_name' and filter by 'loker_for'.",
      *     operationId="getAllLoker",
      *
      *     @OA\Parameter(
      *         name="search",
      *         in="query",
-     *         description="Search keyword for Kemitraan names",
+     *         description="Search keyword for Position names",
      *         required=false,
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
-     *         name="start_date",
+     *         name="search_requirement",
      *         in="query",
-     *         description="Start date for filtering (YYYY-MM-DD format)",
+     *         description="Search keyword for Loker Requirement (loker_for)",
      *         required=false,
-     *         @OA\Schema(type="string", format="date")
-     *     ),
-     *     @OA\Parameter(
-     *         name="end_date",
-     *         in="query",
-     *         description="End date for filtering (YYYY-MM-DD format)",
-     *         required=false,
-     *         @OA\Schema(type="string", format="date")
+     *         @OA\Schema(type="string")
      *     ),
      *
      *     @OA\Response(
@@ -68,16 +61,15 @@ class LokerController extends Controller
         // Search by kemitraan_name
         if ($request->has('search')) {
             $search = $request->input('search');
-            $query->whereHas('kemitraan', function ($query) use ($search) {
-                $query->where('kemitraan_name', 'LIKE', '%' . $search . '%');
+            $query->whereHas('position', function ($query) use ($search) {
+                $query->where('position_name', 'LIKE', '%' . $search . '%');
             });
         }
 
-        // Filter by created_at range
-        if ($request->has('start_date') && $request->has('end_date')) {
-            $startDate = $request->input('start_date');
-            $endDate = $request->input('end_date');
-            $query->whereBetween('created_at', [$startDate, $endDate]);
+        // Search by requirement
+        if ($request->has('search_requirement')) {
+            $search = $request->input('search_requirement');
+            $query->where('loker_for', 'LIKE', '%'.$search.'%');
         }
 
         $data = $query->get();
