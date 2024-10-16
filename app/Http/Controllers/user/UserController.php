@@ -86,6 +86,8 @@ class UserController extends Controller
             $imageName = md5($file->getClientOriginalName().microtime()).'.'.$file->getClientOriginalExtension();
             $file->move('img/users', $imageName);
             $data->image = $imageName;
+        } else {
+            $data->image = 'img/illustration/male.png';
         }
         $data->save();
 

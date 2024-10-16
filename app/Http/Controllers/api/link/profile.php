@@ -131,4 +131,34 @@ class profile extends Controller
             'data' => profileController::collection($data),
         ]);
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/user/profile/sambutan/Kepala-sekolah",
+     *     tags={"Sekolah"},
+     *     summary="Get Program Sambutan Kepala Sekolah",
+     *     description="Retrieve Sambutan Kepala Sekolah",
+     *     operationId="getSambutanKepalaSekolahh",
+     *
+     *     @OA\Response(
+     *     response=200,
+     *     description="Data ditemukan",
+     *      @OA\JsonContent(
+     *          @OA\Property(property="message", type="string", example="Data ditemukan"),
+     *          @OA\Property(property="data", type="array",
+     *              @OA\Items(ref="#/components/schemas/ProfileData")
+     *          )
+     *  )
+     *      ),
+     * )
+     */
+    public function sambutanKepSek(Request $request)
+    {
+        $data = tb_other::where('id_link', 8)->get();
+
+        return response()->json([
+            'message' => 'data ditemukan',
+            'data' => profileController::collection($data),
+        ]);
+    }
 }

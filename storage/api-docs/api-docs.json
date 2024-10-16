@@ -1980,6 +1980,40 @@
                 }
             }
         },
+        "/api/user/profile/sambutan/Kepala-sekolah": {
+            "get": {
+                "tags": [
+                    "Sekolah"
+                ],
+                "summary": "Get Program Sambutan Kepala Sekolah",
+                "description": "Retrieve Sambutan Kepala Sekolah",
+                "operationId": "getSambutanKepalaSekolahh",
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ProfileData"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/link/alerts": {
             "get": {
                 "tags": [
@@ -2571,6 +2605,10 @@
                     "jurusan_thumbnail": {
                         "type": "string",
                         "example": "img/jurusan/gambar.jpg"
+                    },
+                    "jurusan_logo": {
+                        "type": "string",
+                        "example": "img/jurusan/logo/gambar.jpg"
                     },
                     "prodi": {
                         "properties": {

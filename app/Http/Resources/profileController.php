@@ -10,6 +10,7 @@ use OpenApi\Annotations as OA;
  * @OA\Schema(
  *     schema="ProfileData",
  *     type="object",
+ *
  *     @OA\Property(
  *     property="id_profile",
  *     type="integer",
@@ -59,13 +60,18 @@ class profileController extends JsonResource
             $ret['profile_data'] = $this->url;
         } else {
             $ret['profile_name'] = $this->title;
-            $ret['name_data'] = 'Text';
-            $ret['profile_data'] = $this->description;
-            $ret['type_data'] = 'text';
+            if ($this->id_link == 8) {
+                $ret['profile_image'] = $this->url;
+                $ret['profile_data'] = $this->description;
+            } else {
+                $ret['name_data'] = 'Text';
+                $ret['profile_data'] = $this->description;
+                $ret['type_data'] = 'text';
+            }
         }
 
         $ret['icon_type'] = 'Profile';
-        
+
         return $ret;
     }
 }

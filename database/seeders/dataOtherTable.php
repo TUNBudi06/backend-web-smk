@@ -83,6 +83,16 @@ class dataOtherTable extends Seeder
                 'created_at' => null,
                 'updated_at' => '2024-09-18T16:27:36.000000Z',
             ],
+            [
+                'id_link' => 8,
+                'title' => 'Sambutan Kepala Sekolah',
+                'description' => 'sambutan dari kepala sekolah',
+                'is_used' => 0,
+                'type' => 'text',
+                'url' => '',
+                'created_at' => null,
+                'updated_at' => '2024-09-18T16:27:36.000000Z',
+            ],
         ];
 
         foreach ($data as $d) {

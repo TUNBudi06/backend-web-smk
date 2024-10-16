@@ -51,7 +51,7 @@
                         <tbody>
                         @foreach($user as $index => $userd)
                             <tr>
-                                <td><img src="{{ $userd->image ? asset('img/users/' . $userd->image) : '' }}"
+                                <td><img src="{{ $userd->image ? asset('img/users/' . $userd->image) : asset('img/illust/male.png') }}"
                                          width="150px" height="100px" class="rounded" alt=""></td>
                                 <td>{{$userd->name}}</td>
                                 <td>{{$userd->email}}</td>

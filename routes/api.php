@@ -52,6 +52,7 @@ Route::prefix('user')->group(function () {
         Route::get('program-kerja', [profile::class, 'programKerja']);
         Route::get('struktur-organisasi', [profile::class, 'strukturOrganisasi']);
         Route::get('visi-misi', [profile::class, 'visiMisi']);
+        Route::get('sambutan/Kepala-sekolah', [profile::class, 'sambutanKepSek']);
     });
 
     Route::get('footer', [footerAPI::class, 'footer']);
