@@ -73,6 +73,23 @@
                 <img class="w-100 rounded" id="preview" src="{{ asset('img/no_image.png') }}" alt="">
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6 py-md-5 py-3">
+                <div class="form-group">
+                    <label for="jurusan_logo">Logo Jurusan</label>
+                    <input onchange="loadFile1(event)" type="file" name="jurusan_logo" id="image" class="form-control @error('jurusan_logo') is-invalid @enderror" placeholder="Purwosari, Pasuruan" aria-describedby="imageId">
+                    <small id="imageId" class="text-muted d-none"></small>
+                    @error('jurusan_logo')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <img class="w-100 rounded" id="preview1" src="{{ asset('img/no_image.png') }}" alt="">
+            </div>
+        </div>
         <div class="text-right mb-4">
             <button type="submit" class="btn btn-warning mt-2 px-5 rounded-pill shadow-warning"><i class="fas fa-paper-plane"></i> Submit</button>
         </div>
@@ -83,6 +100,14 @@
         var reader = new FileReader();
         reader.onload = function() {
             var preview = document.getElementById('preview');
+            preview.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+    function loadFile1(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var preview = document.getElementById('preview1');
             preview.src = reader.result;
         }
         reader.readAsDataURL(event.target.files[0]);

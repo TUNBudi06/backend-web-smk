@@ -27,6 +27,8 @@ class tb_jurusan extends Model
         'jurusan_text',
 
         'id_prodi',
+
+        'jurusan_logo',
     ];
 
     public $timestamps = false;

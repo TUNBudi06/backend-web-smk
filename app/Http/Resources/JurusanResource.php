@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\File;
  *     @OA\Property(property="icon_type", type="string", example="Jurusan"),
  *     @OA\Property(property="jurusan_short", type="string", example="TI"),
  *     @OA\Property(property="jurusan_thumbnail", type="string", example="img/jurusan/gambar.jpg"),
+ *     @OA\Property(property="jurusan_logo", type="string", example="img/jurusan/logo/gambar.jpg"),
  *     @OA\Property(
  *         property="prodi",
  *         type="object",
@@ -37,18 +38,20 @@ class JurusanResource extends JsonResource
     public function toArray(Request $request): array
     {
         $thumbnailPath = 'img/jurusan/'.$this->jurusan_thumbnail;
+        $logoPath = 'img/jurusan/'.$this->jurusan_thumbnail;
         $jurusan_thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
+        $jurusan_logo = File::exists(public_path($logoPath)) ? $logoPath : 'img/no_image.png';
 
         preg_match_all('/<iframe.*?src=["\'](.*?)["\'].*?>/i', $this->jurusan_text, $matches);
         $iframeUrls = isset($matches[1]) ? $matches[1] : [];
-    
+
         $cleanText = preg_replace('/<iframe.*?>.*?<\/iframe>/i', '', $this->jurusan_text);
-    
+
         $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n", "\t"], '', $cleanText)));
-    
-        if (!empty($iframeUrls)) {
-            $iframeLinks = implode("\n", array_map(fn($url) => "URL: " . $url, $iframeUrls));
-            $cleanText .= "\n" . $iframeLinks;
+
+        if (! empty($iframeUrls)) {
+            $iframeLinks = implode("\n", array_map(fn ($url) => 'URL: '.$url, $iframeUrls));
+            $cleanText .= "\n".$iframeLinks;
         }
 
         return [
@@ -57,6 +60,7 @@ class JurusanResource extends JsonResource
             'icon_type' => 'Jurusan',
             'jurusan_short' => $this->jurusan_short,
             'jurusan_thumbnail' => $jurusan_thumbnail,
+            'jurusan_logo' => $jurusan_logo,
             'prodi' => $this->prodis ? [
                 'id' => $this->prodis->id_prodi,
                 'nama_prodi' => $this->prodis->prodi_name,

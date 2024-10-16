@@ -20,7 +20,7 @@
                     {{ $message }}
                 </p>
             @enderror
-        </div>      
+        </div>
         <div class="form-group">
             <label for="jurusan" class="form-label">Kategori Jurusan</label>
             <select class="form-control @error('id_prodi') is-invalid @enderror" name="id_prodi">
@@ -73,9 +73,26 @@
                 </div>
             </div>
             <div class="col-md-6 text-center">
-                <img class="w-100 rounded" id="preview" 
-                src="{{ asset('img/jurusan/thumbnail/'.$jurusan->jurusan_thumbnail) }}"  
+                <img class="w-100 rounded" id="preview"
+                src="{{ asset('img/jurusan/'.$jurusan->jurusan_thumbnail) }}"
                 alt="">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 py-md-5 py-3">
+                <div class="form-group">
+                    <label for="jurusan_logo">Logo Jurusan</label>
+                    <input onchange="loadFile1(event)" type="file" name="jurusan_logo" id="image" class="form-control @error('jurusan_logo') is-invalid @enderror" placeholder="Purwosari, Pasuruan" aria-describedby="imageId">
+                    <small id="imageId" class="text-muted d-none"></small>
+                    @error('jurusan_logo')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <img class="w-100 rounded" id="preview1" src="{{ asset('img/jurusan/logo/'.$jurusan->jurusan_logo) }}" alt="">
             </div>
         </div>
         <div class="text-right mb-4">
@@ -88,6 +105,14 @@
         var reader = new FileReader();
         reader.onload = function() {
             var preview = document.getElementById('preview');
+            preview.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+    function loadFile1(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var preview = document.getElementById('preview1');
             preview.src = reader.result;
         }
         reader.readAsDataURL(event.target.files[0]);

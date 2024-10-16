@@ -55,7 +55,8 @@ class JurusanController extends Controller
             'jurusan_short' => 'required',
             'id_prodi' => 'required',
             'jurusan_text' => 'required',
-            'jurusan_thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'jurusan_thumbnail' => 'file|required|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'jurusan_logo' => 'file|required|image|mimes:jpeg,png,jpg,gif|max:10240',
         ], [
             'jurusan_nama.required' => 'Kolom nama jurusan harus diisi.',
             'jurusan_short.required' => 'Kolom inisial jurusan harus diisi.',
@@ -80,8 +81,14 @@ class JurusanController extends Controller
             $data->jurusan_thumbnail = $imageName;
         }
 
-        $data->save();
+        if ($request->hasFile('jurusan_logo')) {
+            $fileContents = file_get_contents($request->file('jurusan_logo')->getRealPath());
+            $imageName = hash('sha256', $fileContents).'.'.$request->file('jurusan_logo')->getClientOriginalExtension();
+            $request->file('jurusan_logo')->move('img/jurusan/logo', $imageName);
+            $data->jurusan_logo = $imageName;
+        }
 
+        $data->save();
         return redirect()->route('jurusan.index', ['token' => $token])->with('success', 'Jurusan baru berhasil ditambahkan.');
     }
 
@@ -126,6 +133,7 @@ class JurusanController extends Controller
             'id_prodi' => 'required',
             'jurusan_text' => 'required',
             'jurusan_thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'jurusan_logo' => 'file|required|image|mimes:jpeg,png,jpg,gif|max:10240',
         ], [
             'jurusan_nama.required' => 'Kolom nama jurusan harus diisi.',
             'jurusan_short.required' => 'Kolom inisial jurusan harus diisi.',
@@ -153,6 +161,20 @@ class JurusanController extends Controller
             $data->jurusan_thumbnail = $imageName;
         }
 
+        if ($request->hasFile('jurusan_logo')) {
+            if ($data->jurusan_thumbnail !== null) {
+                $oldImagePath = public_path('img/jurusan/logo'.$data->jurusan_thumbnail);
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+
+            // Simpan gambar baru
+            $imageName = $request->file('jurusan_logo')->hashName();
+            $request->file('jurusan_logo')->move('img/jurusan/logo', $imageName);
+            $data->jurusan_logo = $imageName;
+        }
+
         // Update data jurusan
         $data->update([
             'jurusan_nama' => $request->jurusan_nama,
@@ -174,11 +196,15 @@ class JurusanController extends Controller
 
         $jurusan = tb_jurusan::findOrFail($id_jurusan);
         $imagePath = public_path('img/jurusan/'.$jurusan->jurusan_thumbnail);
+        $imagePath1 = public_path('img/jurusan/logo'.$jurusan->jurusan_logo);
 
         $jurusan->delete();
 
         if (file_exists($imagePath)) {
             unlink($imagePath);
+        }
+        if (file_exists($imagePath1)) {
+            unlink(1);
         }
 
         return redirect()->route('jurusan.index', ['token' => $request->token])->with('success', 'Jurusan berhasil dihapus.');
