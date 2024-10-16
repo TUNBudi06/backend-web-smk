@@ -86,15 +86,7 @@ class EventResource extends JsonResource
 
         preg_match_all('/<iframe.*?src=["\'](.*?)["\'].*?>/i', $this->text, $matches);
         $iframeUrls = isset($matches[1]) ? $matches[1] : [];
-    
         $cleanText = preg_replace('/<iframe.*?>.*?<\/iframe>/i', '', $this->text);
-    
-        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n", "\t"], '', $cleanText)));
-    
-        if (!empty($iframeUrls)) {
-            $iframeLinks = implode("\n", array_map(fn($url) => "URL: " . $url, $iframeUrls));
-            $cleanText .= "\n" . $iframeLinks;
-        }
 
         return [
             'id_pemberitahuan' => $this->id_pemberitahuan,
@@ -106,6 +98,7 @@ class EventResource extends JsonResource
             'published_by' => $this->published_by ?? 'Humas',
             'jurnal_by' => $this->jurnal_by ?? '-',
             'text' => $cleanText,
+            'iframe'=> $iframeUrls ?? null,
             'category' => $this->kategori ? [
                 'id' => $this->kategori->id_pemberitahuan_category,
                 'nama' => $this->kategori->pemberitahuan_category_name,
