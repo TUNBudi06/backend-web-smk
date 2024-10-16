@@ -61,7 +61,7 @@ class profileController extends JsonResource
         } else {
             $ret['profile_name'] = $this->title;
             if ($this->id_link == 8) {
-                $ret['profile_image'] = $this->url;
+                $ret['profile_image'] = asset($this->url);
                 $ret['profile_data'] = $this->description;
             } else {
                 $ret['name_data'] = 'Text';

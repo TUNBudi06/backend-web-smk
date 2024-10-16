@@ -111,7 +111,7 @@ class otherController extends Controller
 
             if ($request->hasFile('jurusan_thumbnail')) {
                 if ($findData->url !== null) {
-                    $oldImagePath = public_path('img/kepsek/'.$findData->url);
+                    $oldImagePath = public_path($findData->url);
                     if (file_exists($oldImagePath)) {
                         unlink($oldImagePath);
                     }
@@ -120,7 +120,7 @@ class otherController extends Controller
                 // Simpan gambar baru
                 $imageName = $request->file('jurusan_thumbnail')->hashName();
                 $request->file('jurusan_thumbnail')->move('img/kepsek/', $imageName);
-                $findData->url = asset('img/kepsek/'.$imageName);
+                $findData->url = 'img/kepsek/'.$imageName;
             }
         }
 

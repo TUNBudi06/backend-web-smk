@@ -27,6 +27,7 @@ class tb_pemberitahuan extends Model
         'jurnal_by',
         'approved',
         'Approved_by',
+        'pdf',
     ];
 
     public $timestamps = true;
