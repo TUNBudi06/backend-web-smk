@@ -2181,6 +2181,10 @@
                         "type": "string",
                         "example": "img/announcement/gambar.jpg"
                     },
+                    "pdf": {
+                        "type": "string",
+                        "example": "pdf/announcement/example.pdf"
+                    },
                     "icon_type": {
                         "type": "string",
                         "example": "Announcement"
@@ -2420,6 +2424,10 @@
                     "thumbnail": {
                         "type": "string",
                         "example": "img/event/gambar.jpg"
+                    },
+                    "pdf": {
+                        "type": "string",
+                        "example": "pdf/event/example.pdf"
                     },
                     "icon_type": {
                         "type": "string",
@@ -2681,6 +2689,10 @@
                     "loker_thumbnail": {
                         "type": "string",
                         "example": "img/loker/image.png"
+                    },
+                    "pdf": {
+                        "type": "string",
+                        "example": "pdf/loker/example.pdf"
                     },
                     "loker_description": {
                         "type": "string",
