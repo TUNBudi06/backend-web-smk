@@ -58,6 +58,7 @@ class EventController extends Controller
             'text' => 'required',
             'date' => 'required|date',
             'location' => 'required',
+            'pdf_file' => 'nullable|file|mimes:pdf,jpeg,png,jpg,gif|max:10240',
         ], [
             'nama.required' => 'Kolom nama agenda harus diisi.',
             'id_pemberitahuan_category.required' => 'Kolom kategori agenda harus diisi.',
@@ -87,6 +88,15 @@ class EventController extends Controller
             $event->thumbnail = $imageName;
         } else {
             $event->thumbnail = 'img/no_image.png';
+        }
+
+        if ($request->hasFile('pdf_file')) {
+            $fileContents = file_get_contents($request->file('pdf_file')->getRealPath());
+            $pdfName = hash('sha256', $fileContents).'.'.$request->file('pdf_file')->getClientOriginalExtension();
+            $request->file('pdf_file')->move('pdf/event', $pdfName);
+            $event->pdf = $pdfName;
+        } else {
+            $event->pdf = 'img/no_image.png';
         }
 
         $event->save();
@@ -146,6 +156,7 @@ class EventController extends Controller
             'date' => 'required|date',
             'location' => 'required',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'pdf_file' => 'nullable|file|mimes:pdf,jpeg,png,jpg,gif|max:10240',
         ], [
             'nama.required' => 'Kolom nama agenda harus diisi.',
             'target.required' => 'Kolom tipe agenda harus diisi.',
@@ -175,6 +186,21 @@ class EventController extends Controller
             $event->thumbnail = $imageName;
         }
 
+        if ($request->hasFile('pdf_file')) {
+            // Hapus gambar sebelumnya jika ada
+            if (! empty($event->pdf)) {
+                $oldPdfPath = public_path('pdf/event/'.$event->pdf);
+                if (file_exists($oldPdfPath) && ! is_dir($oldPdfPath)) {
+                    unlink($oldPdfPath);
+                }
+            }
+
+            // Simpan gambar baru
+            $pdfName = $request->file('pdf_file')->hashName();
+            $request->file('pdf_file')->move('pdf/event', $pdfName);
+            $event->pdf = $pdfName;
+        }
+
         $event->update([
             'nama' => $request->nama,
             'target' => $request->target,
@@ -199,11 +225,15 @@ class EventController extends Controller
             ->findOrFail($id_event);
 
         $imagePath = public_path('img/event/'.$event->thumbnail);
+        $pdfPath = public_path('pdf/event/'.$event->pdf);
 
         $event->delete();
 
         if (file_exists($imagePath)) {
             unlink($imagePath);
+        }
+        if (file_exists($pdfPath)) {
+            unlink($pdfPath);
         }
 
         return redirect()->route('event.index', ['token' => $request->token])->with('success', 'Agenda berhasil dihapus.');

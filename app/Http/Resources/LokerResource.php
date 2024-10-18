@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\File;
  *
  *     @OA\Property(property="id_loker", type="integer", example=1),
  *     @OA\Property(property="loker_thumbnail", type="string", example="img/loker/image.png"),
+ *     @OA\Property(property="pdf", type="string", example="pdf/loker/example.pdf"),
  *     @OA\Property(property="loker_description", type="string", example="Kasir/Sales/Marketing"),
  *     @OA\Property(property="loker_for", type="string", example="Siswa Alumni"),
- *     
  *     @OA\Property(
  *         property="position",
  *         type="object",
@@ -24,7 +24,6 @@ use Illuminate\Support\Facades\File;
  *         @OA\Property(property="icon_type", type="string", example="Posisi"),
  *         @OA\Property(property="position_type", type="string", example="Full-time"),
  *     ),
- *     
  *     @OA\Property(
  *         property="kemitraan",
  *         type="object",
@@ -37,7 +36,6 @@ use Illuminate\Support\Facades\File;
  *         @OA\Property(property="kemitraan_city", type="string", example="Jakarta"),
  *         @OA\Property(property="kemitraan_location_detail", type="string", example="Jl. Jendral Sudirman No. 1, Jakarta"),
  *     ),
- *     
  *     @OA\Property(property="loker_available", type="string", example="Tersedia"),
  * )
  */
@@ -51,18 +49,20 @@ class LokerResource extends JsonResource
     public function toArray(Request $request): array
     {
         $thumbnailPath = 'img/loker/'.$this->loker_thumbnail;
+        $pdfPath = 'pdf/loker/'.$this->loker_pdf;
         $loker_thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
+        $pdf = $this->loker_pdf ? (File::exists(public_path($pdfPath)) ? $pdfPath : null) : null;
 
         preg_match_all('/<iframe.*?src=["\'](.*?)["\'].*?>/i', $this->loker_description, $matches);
         $iframeUrls = isset($matches[1]) ? $matches[1] : [];
-    
+
         $cleanText = preg_replace('/<iframe.*?>.*?<\/iframe>/i', '', $this->loker_description);
-    
+
         $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n", "\t"], '', $cleanText)));
-    
-        if (!empty($iframeUrls)) {
-            $iframeLinks = implode("\n", array_map(fn($url) => "URL: " . $url, $iframeUrls));
-            $cleanText .= "\n" . $iframeLinks;
+
+        if (! empty($iframeUrls)) {
+            $iframeLinks = implode("\n", array_map(fn ($url) => 'URL: '.$url, $iframeUrls));
+            $cleanText .= "\n".$iframeLinks;
         }
 
         return [
@@ -71,6 +71,7 @@ class LokerResource extends JsonResource
             'icon_type' => 'Loker',
             'loker_description' => $cleanText,
             'loker_for' => $this->loker_for,
+            'loker_pdf' => $pdf,
             'loker_available' => $this->loker_available == 1 ? 'Tersedia' : 'Tidak Tersedia',
             'position' => [
                 'id_position' => $this->position->id_position,

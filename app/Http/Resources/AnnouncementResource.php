@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\File;
  *     @OA\Property(property="id_pemberitahuan", type="integer", example=1),
  *     @OA\Property(property="nama", type="string", example="Pengumuman Penting"),
  *     @OA\Property(property="thumbnail", type="string", example="img/announcement/gambar.jpg"),
+ *     @OA\Property(property="pdf", type="string", example="pdf/announcement/example.pdf"),
  *     @OA\Property(property="icon_type", type="string", example="Announcement"),
  *     @OA\Property(property="target", type="string", example="Semua"),
  *     @OA\Property(
@@ -47,16 +48,19 @@ class AnnouncementResource extends JsonResource
     public function toArray(Request $request): array
     {
         $thumbnailPath = 'img/announcement/'.$this->thumbnail;
+        $pdfPath = 'pdf/announcement/'.$this->pdf;
         $thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
-    
+        $pdf = $this->pdf ? (File::exists(public_path($pdfPath)) ? $pdfPath : null) : null;
+
         preg_match_all('/<iframe.*?src=["\'](.*?)["\'].*?>/i', $this->text, $matches);
         $iframeUrls = isset($matches[1]) ? $matches[1] : [];
         $cleanText = preg_replace('/<iframe.*?>.*?<\/iframe>/i', '', $this->text);
-    
+
         return [
             'id_pemberitahuan' => $this->id_pemberitahuan,
             'nama' => $this->nama,
             'thumbnail' => $thumbnail,
+            'pdf' => $pdf,
             'icon_type' => 'Announcement',
             'target' => $this->target,
             'published_by' => $this->published_by ?? 'Humas',
@@ -64,7 +68,7 @@ class AnnouncementResource extends JsonResource
             'date' => $this->date,
             'time' => $this->time,
             'text' => $cleanText,
-            'iframe'=> $iframeUrls ?? null,
+            'iframe' => $iframeUrls ?? null,
             'category' => $this->kategori ? [
                 'id' => $this->kategori->id_pemberitahuan_category,
                 'nama' => $this->kategori->pemberitahuan_category_name,
@@ -73,5 +77,5 @@ class AnnouncementResource extends JsonResource
             'viewer' => $this->viewer,
             'created_at' => $this->created_at,
         ];
-    }    
+    }
 }

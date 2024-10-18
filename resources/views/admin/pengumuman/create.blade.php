@@ -118,6 +118,18 @@
                     <img class="w-100 rounded" id="preview" src="{{ asset('img/no_image.png') }}" alt="">
                 </div>
             </div>
+            <div class="form-group">
+                <label for="pdf_file">PDF Informasi Pengumuman</label>
+                <input type="file" name="pdf_file" id="pdf_file"
+                       class="form-control @error('pdf_file') is-invalid @enderror" placeholder="PDF Data"
+                aria-describedby="pdfdata">
+                <small id="pdfdata" class="text-muted d-none">pdf untuk mendukung informasi atau file foto</small>
+                @error('pdf_file')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
             <div class="text-right mb-4">
                 <button type="submit" class="btn btn-warning mt-2 px-5 rounded-pill shadow-warning"><i
                         class="fas fa-paper-plane"></i> Submit</button>

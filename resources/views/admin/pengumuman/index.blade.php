@@ -43,6 +43,7 @@
                                 <th>Kategori</th>
                                 <th>Tanggal</th>
                                 <th>Dilihat</th>
+                                <th>PDF</th>
                                 <th>disutujui oleh</th>
                                 <th>Tujuan</th>
                                 <th>Action</th>
@@ -61,6 +62,7 @@
                                         <div class="{{ $data->approved ? 'badge-success' : 'badge-warning' }}">
                                             {{ $data->approved ? 'Publik' : 'Pending' }}</div>
                                     </td>
+                                    <td>{{$data->pdf ? 'yes' : 'False'}}</td>
                                     <td>{{ $data->approved ? ($data->Approved_by ? $data->Approved_by : 'SuperAdmin') : 'Belum Disetujui' }}
                                     </td>
                                     <td style="word-wrap: break-word; max-width: 180px;">{{ $data->target }}</td>

@@ -38,6 +38,7 @@
                                 <th>Kategori</th>
                                 <th>Tanggal</th>
                                 <th>Dilihat</th>
+                                <th>PDF</th>
                                 <th>disutujui oleh</th>
                                 <th>Tujuan</th>
                                 <th>Action</th>
@@ -51,6 +52,7 @@
                                     <td>{{ $data->kategori ? $data->kategori->pemberitahuan_category_name : 'No Category' }}</td>
                                     <td>{{ $data->date }} {{ $data->time }}</td>
                                     <td> <div class="{{ $data->approved ? "badge-success" : 'badge-warning' }}">{{ $data->approved ? "Publik" : 'Pending' }}</div></td>
+                                    <td>{{$data->pdf ? 'Yes' : 'No'}}</td>
                                     <td>{{$data->approved ? $data->Approved_by ? $data->Approved_by : "SuperAdmin" : 'Belum Disetujui'}}</td>
                                     <td style="word-wrap: break-word; max-width: 180px;">{{ $data->target }}</td>
                                     <td>

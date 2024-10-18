@@ -82,6 +82,13 @@ class LokerController extends Controller
             $data->loker_thumbnail = $imageName;
         }
 
+        if ($request->hasFile('loker_pdf')) {
+            $fileContents = file_get_contents($request->file('loker_pdf')->getRealPath());
+            $pdfName = substr(hash('sha256', $fileContents), 0, 40).'.'.$request->file('loker_pdf')->getClientOriginalExtension();
+            $request->file('loker_pdf')->move(public_path('pdf/loker/'), $pdfName);
+            $data->loker_pdf = $pdfName;
+        }
+
         $data->save();
 
         return redirect()->route('loker.index', ['token' => $token])->with('success', 'Lowongan kerja baru berhasil ditambahkan.');
@@ -129,6 +136,7 @@ class LokerController extends Controller
             'position_id' => 'required|exists:tb_positions,id_position',
             'kemitraan_id' => 'required|exists:tb_kemitraans,id_kemitraan',
             'loker_available' => 'required',
+            'loker_pdf' => 'nullable|file|mimes:pdf,png,jpeg,jpg|max:10240',
         ], [
             'loker_thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
             'position_id.exists' => 'Posisi tidak valid.',
@@ -143,10 +151,31 @@ class LokerController extends Controller
         $data->loker_available = $request->loker_available;
 
         if ($request->hasFile('loker_thumbnail')) {
+            if (! empty($data->loker_thumbnail)) {
+                $oldPdfPath = public_path('img/loker/'.$data->loker_thumbnail);
+                if (file_exists($oldPdfPath) && ! is_dir($oldPdfPath)) {
+                    unlink($oldPdfPath);
+                }
+            }
+
             $fileContents = file_get_contents($request->file('loker_thumbnail')->getRealPath());
             $imageName = substr(hash('sha256', $fileContents), 0, 40).'.'.$request->file('loker_thumbnail')->getClientOriginalExtension();
             $request->file('loker_thumbnail')->move(public_path('img/loker/'), $imageName);
             $data->loker_thumbnail = $imageName;
+        }
+
+        if ($request->hasFile('loker_pdf')) {
+            if (! empty($data->loker_pdf)) {
+                $oldPdfPath = public_path('pdf/loker/'.$data->loker_pdf);
+                if (file_exists($oldPdfPath) && ! is_dir($oldPdfPath)) {
+                    unlink($oldPdfPath);
+                }
+            }
+
+            $fileContents = file_get_contents($request->file('loker_pdf')->getRealPath());
+            $pdfName = substr(hash('sha256', $fileContents), 0, 40).'.'.$request->file('loker_pdf')->getClientOriginalExtension();
+            $request->file('loker_pdf')->move(public_path('pdf/loker/'), $pdfName);
+            $data->loker_pdf = $pdfName;
         }
 
         $data->save();
@@ -166,6 +195,10 @@ class LokerController extends Controller
 
         if ($loker->loker_thumbnail && file_exists(public_path('img/loker/'.$loker->loker_thumbnail)) && is_file(public_path('img/loker/'.$loker->loker_thumbnail))) {
             unlink(public_path('img/loker/'.$loker->loker_thumbnail));
+        }
+
+        if ($loker->loker_pdf && file_exists(public_path('pdf/loker/'.$loker->loker_pdf)) && is_file(public_path('pdf/loker/'.$loker->loker_pdf))) {
+            unlink(public_path('pdf/loker/'.$loker->loker_pdf));
         }
 
         $loker->delete();

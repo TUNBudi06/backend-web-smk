@@ -32,6 +32,11 @@ use Illuminate\Support\Facades\File;
  *         example="img/event/gambar.jpg"
  *     ),
  *     @OA\Property(
+ *          property="pdf",
+ *          type="string",
+ *          example="pdf/event/example.pdf"
+ *      ),
+ *     @OA\Property(
  *         property="icon_type",
  *         type="string",
  *         example="Event"
@@ -82,7 +87,9 @@ class EventResource extends JsonResource
     public function toArray(Request $request): array
     {
         $thumbnailPath = 'img/event/'.$this->thumbnail;
+        $pdfPath = 'pdf/event/'.$this->pdf;
         $thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
+        $pdf = $this->pdf ? (File::exists(public_path($pdfPath)) ? $pdfPath : null) : null;
 
         preg_match_all('/<iframe.*?src=["\'](.*?)["\'].*?>/i', $this->text, $matches);
         $iframeUrls = isset($matches[1]) ? $matches[1] : [];
@@ -93,12 +100,13 @@ class EventResource extends JsonResource
             'nama' => $this->nama,
             'target' => $this->target,
             'thumbnail' => $thumbnail,
+            'pdf' => $pdf,
             'icon_type' => 'Event',
             'date' => $this->date,
             'published_by' => $this->published_by ?? 'Humas',
             'jurnal_by' => $this->jurnal_by ?? '-',
             'text' => $cleanText,
-            'iframe'=> $iframeUrls ?? null,
+            'iframe' => $iframeUrls ?? null,
             'category' => $this->kategori ? [
                 'id' => $this->kategori->id_pemberitahuan_category,
                 'nama' => $this->kategori->pemberitahuan_category_name,

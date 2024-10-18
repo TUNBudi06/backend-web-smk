@@ -35,11 +35,11 @@ class GalleryResource extends JsonResource
 
         preg_match_all('/<iframe.*?src=["\'](.*?)["\'].*?>/i', $this->gallery_text, $matches);
         $iframeUrls = isset($matches[1]) ? $matches[1] : [];
-    
+
         $cleanText = preg_replace('/<iframe.*?>.*?<\/iframe>/i', '', $this->gallery_text);
-    
+
         $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n", "\t"], '', $cleanText)));
-    
+
         if (!empty($iframeUrls)) {
             $iframeLinks = implode("\n", array_map(fn($url) => "URL: " . $url, $iframeUrls));
             $cleanText .= "\n" . $iframeLinks;

@@ -17,6 +17,7 @@ class tb_loker extends Model
         'kemitraan_id',
         'loker_available',
         'loker_for',
+        'loker_pdf',
     ];
 
     public $timestamps = true;

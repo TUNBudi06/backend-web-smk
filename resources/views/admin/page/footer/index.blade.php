@@ -22,7 +22,7 @@
             @if ($action == 'update')
                 <div class="col-md-4 offset-md-1 mt-4 p-2">
                     <div class="w-100 rad bg-white position-relative shadow py-3 px-4">
-                        <h5 class="poppins mb-0">Update Kategori</h5>
+                        <h5 class="poppins mb-0">Update Footer</h5>
                         <form action="{{ route('footer.update', ['token' => $token]) }}" method="post">
                             @method('PATCH')
                             @csrf
@@ -72,14 +72,14 @@
             @else
                 <div class="col-md-4 offset-md-1 mt-4 p-2">
                     <div class="w-100 rad bg-white position-relative shadow py-3 px-4">
-                        <h5 class="poppins mb-0">Tambah Kategori</h5>
+                        <h5 class="poppins mb-0">Tambah Footer</h5>
                         <form action="{{ route('footer.store', ['token' => $token]) }}" method="post">
                             @csrf
                             <div class="form-group">
                                 <label for="label" class="mt-3 mb-2">Label</label>
                                 <input type="text" name="label" id="label"
                                     class="form-control @error('Label') is-invalid @enderror"
-                                    placeholder="Pelayanan / Berita">
+                                    placeholder="Nama / Link">
                                 @error('Label')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -117,14 +117,9 @@
                 <div class="w-100 table-parent bg-white">
                     <div class="row p-4">
                         <div class="col-md-8">
-                            <h4 class="poppins mb-0">Kategori</h4>
-                            <p class="montserrat" style="font-size: .85rem;">Daftar Kategori Artikel SMKN 1 Purwosari
+                            <h4 class="poppins mb-0">Footer</h4>
+                            <p class="montserrat" style="font-size: .85rem;">Daftar Footer Artikel SMKN 1 Purwosari
                             </p>
-                        </div>
-                        <div class="col-md-4 text-right">
-                            <a href="{{ route('footer', ['token' => $token]) }}"
-                                class="btn-print btn btn-white border-warning px-3 rounded-pill"><i
-                                    class="fas fa-newspaper"></i> Footer Link</a>
                         </div>
                     </div>
                     <table id="myTable">

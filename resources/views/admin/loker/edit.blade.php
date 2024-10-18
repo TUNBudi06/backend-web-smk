@@ -106,6 +106,15 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label for="loker_pdf">PDF Loker</label>
+                <input type="file" name="loker_pdf" id="loker_pdf"
+                    class="form-control @error('loker_pdf') is-invalid @enderror">
+                @error('loker_pdf')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
             <div class="text-right mb-4">
                 <button type="submit" class="btn btn-warning mt-2 px-5 rounded-pill shadow-warning">
                     <i class="fas fa-paper-plane"></i> Update

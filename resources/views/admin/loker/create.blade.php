@@ -22,7 +22,7 @@
             <script>
                 CKEDITOR.replace('texteditor');
             </script>
-            
+
             <div class="form-group">
                 <label for="loker_for">Target Pelamar</label>
                 <input type="text" name="loker_for" id="loker_for" class="form-control @error('loker_for') is-invalid @enderror" value="{{ old('loker_for') }}" placeholder="Siswa Alumni / Umum, dsb">
@@ -94,6 +94,14 @@
                     <img class="w-100 rounded" id="cover_preview" src="{{ asset('img/no_image.png') }}"
                         alt="Cover Preview">
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label for="loker_pdf">PDF Loker</label>
+                <input type="file" name="loker_pdf" id="loker_pdf" class="form-control @error('loker_pdf') is-invalid @enderror">
+                @error('loker_pdf')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="text-right mb-4">

@@ -7,7 +7,7 @@ use App\Models\tb_pemberitahuan_category;
 use App\Models\tb_pengumuman;
 use Illuminate\Http\Request;
 
-class   PengumumanController extends Controller
+class PengumumanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -60,6 +60,7 @@ class   PengumumanController extends Controller
             'date' => 'required|date',
             'time' => 'required',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'pdf_file' => 'nullable|file|mimes:pdf,jpeg,png,jpg,gif|max:10240',
         ], [
             'nama.required' => 'Kolom nama pengumuman harus diisi.',
             'id_pemberitahuan_category.required' => 'Kolom kategori pengumuman harus diisi.',
@@ -90,6 +91,13 @@ class   PengumumanController extends Controller
             $imageName = hash('sha256', $fileContents).'.'.$request->file('thumbnail')->getClientOriginalExtension();
             $request->file('thumbnail')->move('img/announcement', $imageName);
             $data->thumbnail = $imageName;
+        }
+
+        if ($request->hasFile('pdf_file')) {
+            $fileContents = file_get_contents($request->file('pdf_file')->getRealPath());
+            $pdfName = hash('sha256', $fileContents).'.'.$request->file('pdf_file')->getClientOriginalExtension();
+            $request->file('pdf_file')->move('pdf/announcement', $pdfName);
+            $data->pdf = $pdfName;
         }
 
         $data->save();
@@ -146,6 +154,7 @@ class   PengumumanController extends Controller
             'date' => 'required|date',
             'time' => 'required',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'pdf_file' => 'nullable|file|mimes:pdf,jpeg,png,jpg,gif|max:10240',
         ], [
             'nama.required' => 'Kolom nama pengumuman harus diisi.',
             'target.required' => 'Kolom target pengumuman harus diisi.',
@@ -175,6 +184,21 @@ class   PengumumanController extends Controller
             $data->thumbnail = $imageName;
         }
 
+        if ($request->hasFile('pdf_file')) {
+            // Hapus file sebelumnya jika ada
+            if (! empty($data->pdf)) {
+                $oldPdfPath = public_path('pdf/announcement/'.$data->pdf);
+                if (file_exists($oldPdfPath) && ! is_dir($oldPdfPath)) {
+                    unlink($oldPdfPath);
+                }
+            }
+
+            // Simpan file baru
+            $pdfName = $request->file('pdf_file')->hashName();
+            $request->file('pdf_file')->move('pdf/announcement', $pdfName);
+            $data->pdf = $pdfName;
+        }
+
         $data->update([
             'nama' => $request->nama,
             'target' => $request->target,
@@ -200,11 +224,16 @@ class   PengumumanController extends Controller
             ->firstOrFail();
 
         $imagePath = public_path('img/announcement/'.$pengumuman->thumbnail);
+        $pdfPath = public_path('pdf/announcement/'.$pengumuman->pdf);
 
         $pengumuman->delete();
 
         if (file_exists($imagePath)) {
             unlink($imagePath);
+        }
+
+        if (file_exists($pdfPath)) {
+            unlink($pdfPath);
         }
 
         return redirect()->route('pengumuman.index', ['token' => $request->token])->with('success', 'Pengumuman berhasil dihapus.');
