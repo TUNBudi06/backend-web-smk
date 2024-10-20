@@ -5,7 +5,7 @@
 @endsection
 
 @section('container')
-    <div class="col-md-8 offset-md-2 pt-4">
+    <div class="col-md-8 offset-md-2 mt-5">
         <a href="{{ route('event.index', ['token' => $token]) }}" class="btn btn-light border-warning px-4 mb-4"><i
                 class="fas fa-arrow-left"></i> Kembali</a>
         <div class="card">

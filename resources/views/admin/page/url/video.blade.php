@@ -44,7 +44,7 @@
             </div>
             <div class="col-md-6 mt-4 p-2">
             @else
-            <div class="col-md-11 offset-md-1 mt-4 p-2">
+            <div class="col-md-11 offset-md-1 mt-5 p-2">
             @endif
                 @include('admin.partials.nav_profile')
                 <div class="w-100 table-parent bg-white">

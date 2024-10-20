@@ -8,7 +8,7 @@
 @endsection
 
 @section('container')
-    <d1v class="col-md-8 offset-md-2 pt-4">
+    <d1v class="col-md-8 offset-md-2 mt-5">
         <a href="{{ route('lainnya.index', ['token' => $token]) }}" class="btn btn-light border-warning px-4 mb-4"><i
                 class="fas fa-arrow-left"></i> Kembali</a>
         @if($data->type == 'text')

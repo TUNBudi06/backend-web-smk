@@ -6,7 +6,7 @@
 @endsection
 
 @section('container')
-    <div class="col-md-8 offset-md-2 pt-4">
+    <div class="col-md-8 offset-md-2 mt-5">
         <a href="{{ route('loker.index', ['token' => $token]) }}" class="btn btn-light border-warning px-4 mb-4">
             <i class="fas fa-arrow-left"></i> Kembali
         </a>
@@ -116,7 +116,7 @@
             </div>
 
             <div class="text-right mb-4">
-                <button type="submit" class="btn btn-warning mt-2 px-5 rounded-pill shadow-warning">
+                <button type="submit" class="btn btn-warning mt-5 px-5 rounded-pill shadow-warning">
                     <i class="fas fa-paper-plane"></i> Update
                 </button>
             </div>
