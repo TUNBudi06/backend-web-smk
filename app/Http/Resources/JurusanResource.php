@@ -38,7 +38,7 @@ class JurusanResource extends JsonResource
     public function toArray(Request $request): array
     {
         $thumbnailPath = 'img/jurusan/'.$this->jurusan_thumbnail;
-        $logoPath = 'img/jurusan/'.$this->jurusan_thumbnail;
+        $logoPath = 'img/jurusan/'.$this->jurusan_logo;
         $jurusan_thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
         $jurusan_logo = File::exists(public_path($logoPath)) ? $logoPath : 'img/no_image.png';
 
