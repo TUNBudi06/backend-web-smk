@@ -22,7 +22,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.0/dist/sweetalert2.min.css
         </div>
         @endif
         <div class="row">
-            <div class="col-md-11 offset-md-1 mt-4 p-2">
+            <div class="col-md-11 offset-md-1 mt-5 p-2">
                 @include('admin.partials.nav_academic')
                 <div class="w-100 table-parent bg-white">
                     <div class="row p-4">

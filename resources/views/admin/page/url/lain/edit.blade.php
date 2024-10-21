@@ -6,7 +6,7 @@
 @endsection
 
 @section('container')
-<div class="col-md-8 offset-md-2 pt-4">
+<div class="col-md-8 offset-md-2 mt-5">
     <a href="{{ route('lainnya.index', ['token' => $token]) }}" class="btn btn-light border-warning px-4 mb-4"><i class="fas fa-arrow-left"></i> Kembali</a>
     @if($idData != 8)
         <form action="{{route('lainnya.update',['token' => $token,'id'=>$data->id_link])}}" enctype="multipart/form-data" method="post">

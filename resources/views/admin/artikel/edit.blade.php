@@ -6,7 +6,7 @@
 @endsection
 
 @section('container')
-<div class="col-md-8 offset-md-2 pt-4">
+<div class="col-md-8 offset-md-2 mt-5">
     <a href="{{ route('artikel.index', ['token' => $token]) }}" class="btn btn-light border-warning px-4 mb-4"><i class="fas fa-arrow-left"></i> Kembali</a>
     <form action="{{ route('artikel.update', ['token' => $token, 'artikel' => $artikel->id_pemberitahuan]) }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -96,7 +96,7 @@
             </div>
         </div>
         <div class="text-right mb-4">
-            <button type="submit" class="btn btn-warning mt-2 px-5 rounded-pill shadow-warning"><i class="fas fa-paper-plane"></i> Submit</button>
+            <button type="submit" class="btn btn-warning mt-5 px-5 rounded-pill shadow-warning"><i class="fas fa-paper-plane"></i> Submit</button>
         </div>
     </form>
 </div>

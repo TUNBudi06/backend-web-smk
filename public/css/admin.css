@@ -39,9 +39,9 @@
     100% {transform: scale(1); opacity: 1;}
 }
 .avatar-admin-nav {
-    width: 34px;
+    width: 40px;
     display: inline-block;
-    height: 34px;
+    height: 40px;
 }
 .bg-gray {
     background-color: rgb(214, 214, 214);

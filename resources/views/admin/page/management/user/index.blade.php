@@ -6,7 +6,7 @@
 
 @section('container')
     <div class="row">
-        <div class="col-md-11 offset-md-1 mt-4 p-2">
+        <div class="col-md-11 offset-md-1 mt-5 p-2">
             <div class="menu-profile-admin mb-4">
                 <a href="{{ route('user.index',$token) }}"
                    class="<?= \Illuminate\Support\Facades\Route::is('user.index')  ? 'btn my-1 btn-warning px-4 shadow-warning' : 'btn my-1 btn-light px-4 border-warning'?>">User</a>
