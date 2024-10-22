@@ -40,7 +40,7 @@ class JurusanResource extends JsonResource
         $thumbnailPath = 'img/jurusan/'.$this->jurusan_thumbnail;
         $logoPath = 'img/jurusan/logo/'.$this->jurusan_logo;
         $jurusan_thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
-        $jurusan_logo = $this->jurusan_logo ?  (File::exists(public_path($logoPath)) ? $logoPath : 'img/no_image.png'): 'img/no_image.png';
+        $jurusan_logo = $this->jurusan_logo ? (File::exists(public_path($logoPath)) ? $logoPath : 'img/no_image.png') : 'img/no_image.png';
 
         preg_match_all('/<iframe.*?src=["\'](.*?)["\'].*?>/i', $this->jurusan_text, $matches);
         $iframeUrls = isset($matches[1]) ? $matches[1] : [];
