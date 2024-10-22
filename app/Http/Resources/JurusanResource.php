@@ -40,7 +40,11 @@ class JurusanResource extends JsonResource
         $thumbnailPath = 'img/jurusan/'.$this->jurusan_thumbnail;
         $logoPath = 'img/jurusan/logo/'.$this->jurusan_logo;
         $jurusan_thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
+<<<<<<< HEAD
         $jurusan_logo = $this->jurusan_logo ? (File::exists(public_path($logoPath)) ? $logoPath : 'img/no_image.png') : 'img/no_image.png';
+=======
+        $jurusan_logo = $this->jurusan_logo ?  (File::exists(public_path($logoPath)) ? $logoPath : 'img/no_image.png'): 'img/no_image.png';
+>>>>>>> a8fc1a42 (fix file not found for jurusan logo)
 
         $cleanText = str_replace(["\r", "\n", "\t"], '', $this->extra_text);
 
