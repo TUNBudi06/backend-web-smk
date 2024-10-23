@@ -44,14 +44,17 @@ class NewsResource extends JsonResource
         preg_match_all('/<iframe.*?src=["\'](.*?)["\'].*?>/i', $this->text, $matches);
         $iframeUrls = isset($matches[1]) ? $matches[1] : [];
         $cleanText = preg_replace('/<iframe.*?>.*?<\/iframe>/i', '', $this->text);
+        $cleanText = str_replace(["\r", "\n", "\t"], '', $cleanText);
+
+        $image = [$thumbnail];
+        $imageList = array_merge($image, $iframeUrls);
 
         return [
             'id_pemberitahuan' => $this->id_pemberitahuan,
             'nama' => $this->nama,
-            'thumbnail' => $thumbnail,
+            'thumbnail' => $imageList,
             'icon_type' => 'News',
             'text' => $cleanText,
-            'iframe'=> $iframeUrls ?? null,
             'level' => $this->level,
             'published_by' => $this->published_by ?? 'Humas',
             'jurnal_by' => $this->jurnal_by ?? '-',

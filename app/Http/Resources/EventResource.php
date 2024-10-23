@@ -94,6 +94,7 @@ class EventResource extends JsonResource
         preg_match_all('/<iframe.*?src=["\'](.*?)["\'].*?>/i', $this->text, $matches);
         $iframeUrls = isset($matches[1]) ? $matches[1] : [];
         $cleanText = preg_replace('/<iframe.*?>.*?<\/iframe>/i', '', $this->text);
+        $cleanText = str_replace(["\r", "\n", "\t"], '', $cleanText);
 
         return [
             'id_pemberitahuan' => $this->id_pemberitahuan,

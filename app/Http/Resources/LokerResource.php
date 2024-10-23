@@ -53,17 +53,7 @@ class LokerResource extends JsonResource
         $loker_thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
         $pdf = $this->loker_pdf ? (File::exists(public_path($pdfPath)) ? $pdfPath : null) : null;
 
-        preg_match_all('/<iframe.*?src=["\'](.*?)["\'].*?>/i', $this->loker_description, $matches);
-        $iframeUrls = isset($matches[1]) ? $matches[1] : [];
-
-        $cleanText = preg_replace('/<iframe.*?>.*?<\/iframe>/i', '', $this->loker_description);
-
-        $cleanText = strip_tags(html_entity_decode(str_replace(["\r", "\n", "\t"], '', $cleanText)));
-
-        if (! empty($iframeUrls)) {
-            $iframeLinks = implode("\n", array_map(fn ($url) => 'URL: '.$url, $iframeUrls));
-            $cleanText .= "\n".$iframeLinks;
-        }
+        $cleanText = str_replace(["\r", "\n", "\t"], '', $this->extra_text);
 
         return [
             'id_loker' => $this->id_loker,
