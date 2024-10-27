@@ -57,7 +57,10 @@ class FasilitasResource extends JsonResource
         $thumbnailPath = 'img/fasilitas/'.$this->facility_image;
         $facility_image = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
 
-        $cleanText = str_replace(["\r", "\n", "\t"], '', $this->extra_text);
+        preg_match_all('/<iframe.*?src=["\'](.*?)["\'].*?>/i', $this->facility_text, $matches);
+        $iframeUrls = isset($matches[1]) ? $matches[1] : [];
+        $cleanText = preg_replace('/<iframe.*?>.*?<\/iframe>/i', '', $this->facility_text);
+        $cleanText = str_replace(["\r", "\n", "\t"], '', $cleanText);
 
         return [
             'id_facility' => $this->id_facility,
