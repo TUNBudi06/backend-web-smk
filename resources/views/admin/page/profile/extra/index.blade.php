@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    <title>Extrakulikuler | Admin Panel</title>
+    <title>Extrakurikuler | Admin Panel</title>
 @endsection
 
 @section('container')
@@ -11,8 +11,8 @@
             <div class="w-100 table-parent bg-white">
                 <div class="row p-4">
                     <div class="col-md-8">
-                        <h4 class="poppins mb-0">Extrakulikuler</h4>
-                        <p class="montserrat" style="font-size: .85rem;">Daftar Extrakulikuler SMKN 1 Purwosari
+                        <h4 class="poppins mb-0">Extrakurikuler</h4>
+                        <p class="montserrat" style="font-size: .85rem;">Daftar Extrakurikuler SMKN 1 Purwosari
                         </p>
                     </div>
                     <div class="col-md-4 text-right">
@@ -35,7 +35,7 @@
                         <tr>
                             <th class="pl-4">Cover</th>
                             <th>Logo</th>
-                            <th>Nama Extrakulikuler</th>
+                            <th>Nama Extrakurikuler</th>
                             <th>Jadwal</th>
                             <th>Action</th>
                         </tr>

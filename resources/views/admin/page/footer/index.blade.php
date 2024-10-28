@@ -48,7 +48,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="footer_tipe" class="mt-3 mb-2">pilih tipe footer</label>
+                                <label for="footer_tipe" class="mt-3 mb-2">Pilih Tipe Footer</label>
                                 <select class="form-control @error('footer_tipe') is-invalid @enderror" name="footer_tipe"
                                     id="footer_tipe">
                                     <option value="1" {{ $footer->type == '1' ? 'selected' : '' }}>Unit Produksi
@@ -93,10 +93,10 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="footer_tipe" class="mt-3 mb-2">pilih tipe footer</label>
+                                <label for="footer_tipe" class="mt-3 mb-2">Pilih Tipe Footer</label>
                                 <select class="form-control @error('footer_tipe') is-invalid @enderror" name="footer_tipe"
                                     id="footer_tipe">
-                                    <option disabled selected hidden>pilih tipe</option>
+                                    <option disabled selected hidden>Pilih Tipe</option>
                                     <option value="1">Unit Produksi Sekolah</option>
                                     <option value="2">Aplikasi & Layanan</option>
                                     <option value="3">Lainnya</option>
@@ -118,7 +118,7 @@
                     <div class="row p-4">
                         <div class="col-md-8">
                             <h4 class="poppins mb-0">Footer</h4>
-                            <p class="montserrat" style="font-size: .85rem;">Daftar Footer Artikel SMKN 1 Purwosari
+                            <p class="montserrat" style="font-size: .85rem;">Daftar Footer SMKN 1 Purwosari
                             </p>
                         </div>
                     </div>

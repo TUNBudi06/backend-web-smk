@@ -77,7 +77,7 @@
                 <div class="col-md-6 mb-2"
                         @if(session()->get('user')->role == 1) onclick="window.location.href='{{ route('gallery.index', ['token' => $token]) }}';" @endif>
                     <div class="{{session()->get('user')->role == 1 ? 'count-card' : ' count-comment bg-gray'}} rounded px-4 py-3">
-                        <p class="poppins mb-2"><i class="fas mr-2 fa-images"></i>Gallery</p>
+                        <p class="poppins mb-2"><i class="fas mr-2 fa-images"></i>Galeri</p>
                         <p class="montserrat mb-0" style="font-size: .8rem;"><span class="font-weight-bold">{{$gallery}}</span> Item</p>
                     </div>
                 </div>

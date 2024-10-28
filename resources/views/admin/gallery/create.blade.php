@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    <title>Gallery | Admin Panel</title>
+    <title>Galeri | Admin Panel</title>
     <script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
 @endsection
 
@@ -11,7 +11,7 @@
     <form action="{{ route('gallery.store', ['token' => $token]) }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
-            <label for="gallery_title">Judul gallery</label>
+            <label for="gallery_title">Judul Galeri</label>
             <input type="text" name="gallery_title" id="gallery_title" class="form-control @error('gallery_title') is-invalid @enderror" value="{{ old('gallery_title') }}" placeholder="Besok ada sesuatu..." aria-describedby="nameId">
             <small id="nameId" class="text-muted">Hindari penggunaan slash (/,\)</small>
             @error('gallery_title')
@@ -19,7 +19,7 @@
             @enderror
         </div>
         <div class="form-group">
-            <label for="id_category" class="form-label">Kategori gallery</label>
+            <label for="id_category" class="form-label">Kategori Galeri</label>
             <select class="form-control @error('id_category') is-invalid @enderror" name="id_category">
                 @foreach ($gallery as $n)
                     <option value="{{ $n->id_category }}" {{ old('id_category') == $n->id_category ? 'selected' : '' }}>{{ $n->category_name }}</option>
@@ -31,8 +31,7 @@
         </div>
         <div class="form-group">
             <label for="gallery_location">Lokasi</label>
-            <input type="text" name="gallery_location" id="gallery_location" class="form-control @error('gallery_location') is-invalid @enderror" value="{{ old('gallery_location') }}" aria-describedby="waktuId">
-            <small id="waktuId" class="text-muted d-none"></small>
+            <input type="text" name="gallery_location" id="gallery_location" class="form-control @error('gallery_location') is-invalid @enderror" value="{{ old('gallery_location') }}" placeholder="Purwosari, Pasuruan">
             @error('gallery_location')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -40,7 +39,7 @@
             @enderror
         </div>
         <div class="form-group">
-            <label for="gallery_text">Deskripsi gallery</label>
+            <label for="gallery_text">Deskripsi Galeri</label>
             <textarea name="gallery_text" id="texteditor" cols="30" rows="10" class="form-control @error('gallery_text') is-invalid @enderror" placeholder="Isi dari gallery.." aria-describedby="textId">{{ old('gallery_text') }}</textarea>
             <small id="textId" class="text-muted d-none"></small>
             @error('gallery_text')
@@ -53,7 +52,7 @@
         <div class="row">
             <div class="col-md-6 py-md-5 py-3">
                 <div class="form-group">
-                    <label for="gallery_file">Gambar gallery</label>
+                    <label for="gallery_file">Gambar Galeri</label>
                     <input onchange="loadFile(event)" type="file" name="gallery_file" id="image" class="form-control @error('gallery_file') is-invalid @enderror" placeholder="Purwosari, Pasuruan" aria-describedby="imageId">
                     <small id="imageId" class="text-muted d-none"></small>
                     @error('gallery_file')

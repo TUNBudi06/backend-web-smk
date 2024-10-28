@@ -70,11 +70,11 @@
                             <th>Nama</th>
                             <th>Kelas</th>
                             <th>Tempat Lahir</th>
-                            <th>tanggal Lahir</th>
-                            <th>agama</th>
-                            <th>gender</th>
-                            <th>alamat</th>
-                            <th>action</th>
+                            <th>Tanggal Lahir</th>
+                            <th>Agama</th>
+                            <th>Gender</th>
+                            <th>Alamat</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>

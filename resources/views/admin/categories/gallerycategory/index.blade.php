@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    <title>Kategori Gallery | Admin Panel</title>
+    <title>Kategori Galeri | Admin Panel</title>
 @endsection
 
 @section('container')
@@ -70,13 +70,13 @@
                     <div class="row p-4">
                         <div class="col-md-8">
                             <h4 class="poppins mb-0">Kategori</h4>
-                            <p class="montserrat" style="font-size: .85rem;">Daftar Kategori Gallery SMKN 1 Purwosari
+                            <p class="montserrat" style="font-size: .85rem;">Daftar Kategori Galeri SMKN 1 Purwosari
                             </p>
                         </div>
                         <div class="col-md-4 text-right">
                             <a href="{{ route('gallery.index', ['token' => $token]) }}"
                                 class="btn-print btn btn-white border-warning px-3 rounded-pill"><i
-                                    class="fas fa-newspaper"></i> gallery</a>
+                                    class="fas fa-newspaper"></i> Galeri</a>
                         </div>
                     </div>
                     <table class="table">
