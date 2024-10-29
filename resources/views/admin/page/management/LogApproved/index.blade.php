@@ -31,8 +31,7 @@
                         <strong>{{ Session::get('success') }}</strong>
                     </div>
                 @endif
-                <div class="col-11">
-                    <table id="table">
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>Image</th>
@@ -134,13 +133,7 @@
                                 </tr>
                             @endforeach
                         </tbody>
-                        <script type="text/javascript">
-                            $(document).ready(function() {
-                                $('#table').DataTable();
-                            });
-                        </script>
                     </table>
-                </div>
             </div>
         </div>
     </div>

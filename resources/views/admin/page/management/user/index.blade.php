@@ -35,8 +35,8 @@
                     <strong>{{ Session::get('success') }}</strong>
                 </div>
                 @endif
-                <div class="p-2 col-11">
-                    <table id="userTable">
+                {{-- <div class="p-2 col-11"> --}}
+                    <table class="table">
                         <thead>
                         <tr>
                             <th class="pl-4">Gambar</th>
@@ -97,12 +97,7 @@
                         @endforeach
                         </tbody>
                     </table>
-                </div>
-                <script>
-                    $(document).ready(function () {
-                        $('#userTable').DataTable();
-                    });
-                </script>
+                {{-- </div> --}}
                 <script>
                     $('.check-toggle').change(function() {
                         if (this.checked) {
