@@ -18,7 +18,7 @@ class PengumumanController extends Controller
         $pengumuman = tb_pemberitahuan::where(['type' => 2])
             ->with('kategori')
             ->orderBy('date', 'desc')
-            ->get();
+            ->paginate($perPage);
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
