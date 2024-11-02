@@ -14,6 +14,7 @@ class tb_prodi extends Model
     protected $fillable = [
         'prodi_name',
         'prodi_short',
+        'prodi_color'
     ];
 
     protected $primaryKey = 'id_prodi';

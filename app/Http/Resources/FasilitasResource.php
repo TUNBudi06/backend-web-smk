@@ -36,7 +36,8 @@ use Illuminate\Support\Facades\File;
  *         type="object",
  *         @OA\Property(property="id", type="integer", example=1),
  *         @OA\Property(property="nama_prodi", type="string", example="Teknik Informatika"),
- *         @OA\Property(property="prodi_short", type="string", example="TI")
+ *         @OA\Property(property="prodi_short", type="string", example="TI"),
+ *         @OA\Property(property="prodi_color", type="string", example="#FF0000"),
  *     ),
  *     @OA\Property(
  *         property="facility_text",
@@ -71,6 +72,7 @@ class FasilitasResource extends JsonResource
                 'id' => $this->prodis->id_prodi,
                 'nama_prodi' => $this->prodis->prodi_name,
                 'prodi_short' => $this->prodis->prodi_short,
+                'prodi_color' => $this->prodis->prodi_color,
             ] : null,
             'facility_text' => $cleanText,
         ];

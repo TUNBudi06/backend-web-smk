@@ -2512,6 +2512,10 @@
                             "prodi_short": {
                                 "type": "string",
                                 "example": "TI"
+                            },
+                            "prodi_color": {
+                                "type": "string",
+                                "example": "#FF0000"
                             }
                         },
                         "type": "object"
@@ -2631,6 +2635,10 @@
                             "prodi_short": {
                                 "type": "string",
                                 "example": "TI"
+                            },
+                            "prodi_color": {
+                                "type": "string",
+                                "example": "#FF0000"
                             }
                         },
                         "type": "object",
@@ -2973,6 +2981,10 @@
                     "prodi_short": {
                         "type": "string",
                         "example": "TI"
+                    },
+                    "prodi_color": {
+                        "type": "string",
+                        "example": "#FF0000"
                     }
                 },
                 "type": "object"

@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\File;
  *         @OA\Property(property="id", type="integer", example=1),
  *         @OA\Property(property="nama_prodi", type="string", example="Teknik Informatika"),
  *         @OA\Property(property="prodi_short", type="string", example="TI"),
+ *         @OA\Property(property="prodi_color", type="string", example="#FF0000"),
  *     ),
  *     @OA\Property(property="jurusan_text", type="string", example="Deskripsi jurusan Teknik Informatika"),
  * )
@@ -58,6 +59,7 @@ class JurusanResource extends JsonResource
                 'id' => $this->prodis->id_prodi,
                 'nama_prodi' => $this->prodis->prodi_name,
                 'prodi_short' => $this->prodis->prodi_short,
+                'prodi_color' => $this->prodis->prodi_color,
             ] : null,
             'jurusan_text' => $cleanText,
         ];

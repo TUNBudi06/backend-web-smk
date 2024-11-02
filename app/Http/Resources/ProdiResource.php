@@ -14,6 +14,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *     @OA\Property(property="nama_prodi", type="string", example="Teknik Informatika"),
  *     @OA\Property(property="icon_type", type="string", example="Prodi"),
  *     @OA\Property(property="prodi_short", type="string", example="TI"),
+ *     @OA\Property(property="prodi_color", type="string", example="#FF0000"),
  * )
  */
 class ProdiResource extends JsonResource
@@ -30,6 +31,7 @@ class ProdiResource extends JsonResource
             'prodi_name' => $this->prodi_name,
             'icon_type' => 'Prodi',
             'prodi_short' => $this->prodi_short,
+            'prodi_color' => $this->prodi_color,
         ];
     }
 }

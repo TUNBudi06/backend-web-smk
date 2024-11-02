@@ -17,6 +17,7 @@
                     </div>
                     <div class="col-md-4 text-right">
                         <a href="{{ route('fasilitas.create', ['token' => $token]) }}" class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i> Fasilitas Baru</a>
+                        <a href="{{ route('prodi.index',$token) }}" class="btn-print btn btn-white border-warning px-3 rounded-pill"><i class="fas fa-list"></i> Prodi</a>
                     </div>
                 </div>
                 @if(Session::get('success'))

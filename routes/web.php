@@ -22,6 +22,7 @@ use App\Http\Controllers\profile\ExtraController;
 use App\Http\Controllers\profile\FasilitasController;
 use App\Http\Controllers\profile\JurusanController;
 use App\Http\Controllers\profile\PdController;
+use App\Http\Controllers\profile\ProdiController;
 use App\Http\Controllers\profile\ProfileController;
 use App\Http\Controllers\profile\PTKController;
 use App\Http\Controllers\profileAdmin;
@@ -146,6 +147,16 @@ Route::prefix('private/admin')->group(function () {
                     Route::resource('/fasilitas', FasilitasController::class)->parameters([
                         'fasilitas' => 'fasilitas',
                     ]);
+
+                    Route::resource('prodi', ProdiController::class)->names([
+                        'index' => 'prodi.index',
+                        'create' => 'prodi.create',
+                        'store' => 'prodi.store',
+                        'edit' => 'prodi.edit',
+                        'update' => 'prodi.update',
+                        'destroy' => 'prodi.destroy',
+                    ])->except(['show']);
+
                     Route::prefix('lainnya')->group(function () {
                         Route::get('index', [otherController::class, 'index'])->name('lainnya.index');
                         Route::get('show/{id}', [otherController::class, 'show'])->name('lainnya.show');
@@ -153,7 +164,7 @@ Route::prefix('private/admin')->group(function () {
                         Route::put('update/{id}', [otherController::class, 'updateOther'])->name('lainnya.update');
                         Route::delete('delete', [otherController::class, 'destroy'])->name('lainnya.destroy');
                     });
-                    //set name for this route
+
                     Route::resource('/video', VideoController::class)->names([
                         'index' => 'video.index',
                         'create' => 'video.create',
