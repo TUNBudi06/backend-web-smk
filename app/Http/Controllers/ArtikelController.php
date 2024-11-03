@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\tb_pemberitahuan;
 use App\Models\tb_pemberitahuan_category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Concurrency;
+use Illuminate\Support\Facades\DB;
 
 class ArtikelController extends Controller
 {
@@ -14,18 +16,25 @@ class ArtikelController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('show', 10);
-        $artikel = tb_pemberitahuan::where(['type' => 1])
-            ->with('kategori')
-            ->orderBy('created_at', 'desc')
-            ->paginate($perPage);
-
         $token = $request->session()->get('token') ?? $request->input('token');
+
+        [$artikel, $count] = Concurrency::run([
+            fn () => tb_pemberitahuan::where('type', 1)
+                ->with('kategori')
+                ->orderBy('created_at', 'desc')
+                ->paginate($perPage),
+            fn () => DB::table('tb_pemberitahuan')
+                ->where('type', 1)
+                ->count(),
+        ]);
+
 
         return view('admin.artikel.index', [
             'menu_active' => 'informasi',
             'info_active' => 'artikel',
             'token' => $token,
             'artikel' => $artikel,
+            'dataCount' => $count,
         ]);
     }
 
