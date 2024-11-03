@@ -12,7 +12,7 @@
                 <div class="row p-4">
                     <div class="col-md-8">
                         <h4 class="poppins mb-0">Berita</h4>
-                        <p class="montserrat" style="font-size: .85rem;">Daftar Berita SMKN 1 Purwosari
+                        <p class="montserrat" style="font-size: .85rem;">Daftar Berita SMKN 1 Purwosari ({{ $countNews }})
                         </p>
                     </div>
                     <div class="col-md-4 text-right">
@@ -142,15 +142,17 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-md-6 text-right">
-                        <p class="montserrat d-inline" style="font-size: .7rem;">{{ $news->firstItem() }} dari {{ $news->lastItem() }}</p>
-                        <a href="{{ $news->appends(['show' => request('show')])->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $news->onFirstPage() ? 'disabled' : 'active' }}">
-                            <i class="fas fa-caret-left text-warning"></i>
-                        </a>
-                        <a href="{{ $news->appends(['show' => request('show')])->nextPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $news->hasMorePages() ? 'active' : 'disabled' }}">
-                            <i class="fas fa-caret-right text-warning"></i>
-                        </a>
-                    </div>
+                    @if($countNews > request('show'))
+                        <div class="col-md-6 text-right">
+                            <p class="montserrat d-inline" style="font-size: .7rem;">{{ $news->firstItem() }} dari {{ $news->lastItem() }}</p>
+                            <a href="{{ $news->appends(['show' => request('show')])->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $news->onFirstPage() ? 'disabled' : 'active' }}">
+                                <i class="fas fa-caret-left text-warning"></i>
+                            </a>
+                            <a href="{{ $news->appends(['show' => request('show')])->nextPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $news->hasMorePages() ? 'active' : 'disabled' }}">
+                                <i class="fas fa-caret-right text-warning"></i>
+                            </a>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
