@@ -154,40 +154,32 @@
                     <div class="row px-3">
                         <div class="col-md-6">
                             <div class="pb-3">
-                                <form method="GET" id="show-form" name="showForm" action="">
+                                <form method="GET" id="show-form" name="showForm" action="{{ url()->current() }}">
                                     <div class="form-group d-inline-block">
-                                        <input type="hidden" name="page" value="">
-                                        <input type="hidden" name="id_category" value="">
-                                        <input type="hidden" name="action" value="">
-                                        <select id="show-select" name="show" onchange="showData()"
-                                            class="form-control form-control-sm d-inline-block"
-                                            style="width:70px; font-size: .7rem;">
-                                            <option value="10" selected>10</option>
-                                            <option value="20">20</option>
-                                            <option value="30">30</option>
-                                            <option value="40">40</option>
+                                        <input type="hidden" name="page" value="{{ request('page', 1) }}">
+                                        <select id="show-select" name="show" onchange="this.form.submit()" class="form-control form-control-sm d-inline-block"
+                                                style="width:70px; font-size: .7rem;">
+                                            <option value="10" {{ request('show') == 10 ? 'selected' : '' }}>10</option>
+                                            <option value="20" {{ request('show') == 20 ? 'selected' : '' }}>20</option>
+                                            <option value="30" {{ request('show') == 30 ? 'selected' : '' }}>30</option>
+                                            <option value="40" {{ request('show') == 40 ? 'selected' : '' }}>40</option>
                                         </select>
                                     </div>
                                     <p class="montserrat d-inline" style="font-size: .7rem;">Data per halaman</p>
-                                    <script>
-                                        function showData() {
-                                            $('#show-select').change(function() {
-                                                var value = $(this).val();
-                                                $('#show-form').submit()
-                                            });
-                                        }
-                                    </script>
                                 </form>
                             </div>
                         </div>
-                        <div class="col-md-6 text-right">
-                            <p class="montserrat d-inline" style="font-size: .7rem;">
-                                {{ $sliders->count() }} dari {{ $sliders->count() }} data</p>
-                            <a href="#" class="btn btn-sm p-0 px-2 btn-white disabled"><i
-                                    class="fas fa-caret-left text-warning"></i></a>
-                            <a href="#" class="btn btn-sm p-0 px-2 btn-white active"><i
-                                    class="fas fa-caret-right text-warning"></i></a>
-                        </div>
+                        @if($count > request('show') && $count > 10)
+                            <div class="col-md-6 text-right">
+                                <p class="montserrat d-inline" style="font-size: .7rem;">{{ $sliders->firstItem() }} dari {{ $sliders->lastItem() }}</p>
+                                <a href="{{ $sliders->appends(['show' => request('show')])->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $sliders->onFirstPage() ? 'disabled' : 'active' }}">
+                                    <i class="fas fa-caret-left text-warning"></i>
+                                </a>
+                                <a href="{{ $sliders->appends(['show' => request('show')])->nextPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $sliders->hasMorePages() ? 'active' : 'disabled' }}">
+                                    <i class="fas fa-caret-right text-warning"></i>
+                                </a>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

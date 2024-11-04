@@ -13,8 +13,9 @@ class PdController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = 10;
+        $perPage = $request->input('show', 10);
         $peserta_didik = tb_peserta_didik::orderBy('id', 'asc')->paginate($perPage);
+        $count = tb_peserta_didik::count();
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
@@ -23,6 +24,7 @@ class PdController extends Controller
             'profile_active' => 'pd',
             'token' => $token,
             'pd' => $peserta_didik,
+            'count' => $count,
         ]);
     }
 

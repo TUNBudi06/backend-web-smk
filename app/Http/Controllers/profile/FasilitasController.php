@@ -14,8 +14,9 @@ class FasilitasController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = 10;
+        $perPage = $request->input('show') ?? 10;
         $fasilitas = tb_facilities::orderBy('id_facility', 'desc')->paginate($perPage);
+        $count = tb_facilities::count();
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
@@ -24,6 +25,7 @@ class FasilitasController extends Controller
             'profile_active' => 'fasilitas',
             'token' => $token,
             'fasilitas' => $fasilitas,
+            'count' => $count,
             'prodis' => tb_prodi::all(),
         ]);
     }

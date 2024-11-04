@@ -14,7 +14,9 @@ class ProdiController extends Controller
     public function index(Request $request)
     {
         $token = $request->session()->get('token') ?? $request->input('token');
-        $prodi = tb_prodi::get();
+        $perpage = $request->input('show') ?? 10;
+        $prodi = tb_prodi::paginate($perpage);
+        $count = tb_prodi::count();
         $action = $_GET['action'] ?? '';
         //        return $request->session()->all();
 
@@ -23,6 +25,7 @@ class ProdiController extends Controller
             'action' => $action,
             'prodi' => $prodi,
             'token' => $token,
+            'count' => $count,
             'category' => $request->session()->get('category') ?? null,
             'action' => $request->session()->get('update') ?? false,
         ]);

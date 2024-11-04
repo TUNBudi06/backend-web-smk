@@ -12,7 +12,9 @@ class SkController extends Controller
     public function indexSlider(Request $request)
     {
         $token = $request->session()->get('token') ?? $request->input('token');
-        $sliders = tb_slider_keunggulan::get();
+        $perpage = $request->input('show') ?? 10;
+        $sliders = tb_slider_keunggulan::paginate($perpage);
+        $count = tb_slider_keunggulan::count();
         $action = $request->session()->get('update') ? 'update' : '';
 
         return view('admin.page.slider.index', [
@@ -20,6 +22,7 @@ class SkController extends Controller
             'profile_active' => 'slider',
             'action' => $action,
             'sliders' => $sliders,
+            'count' => $count,
             'token' => $token,
         ]);
     }

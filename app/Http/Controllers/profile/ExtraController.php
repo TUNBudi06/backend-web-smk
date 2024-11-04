@@ -13,8 +13,9 @@ class ExtraController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = 10;
+        $perPage = request()->input('show') ?? 10;
         $extra = tb_extra::orderBy('id_extra', 'desc')->paginate($perPage);
+        $count = tb_extra::count();
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
@@ -23,6 +24,7 @@ class ExtraController extends Controller
             'profile_active' => 'extra',
             'token' => $token,
             'extra' => $extra,
+            'count' => $count,
         ]);
     }
 

@@ -13,8 +13,9 @@ class PTKController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = 10;
+        $perPage = $request->input('show') ?? 10;
         $ptk = tb_ptk::orderBy('id', 'desc')->paginate($perPage);
+        $count = tb_ptk::count();
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
@@ -23,6 +24,7 @@ class PTKController extends Controller
             'profile_active' => 'ptk',
             'token' => $token,
             'ptk' => $ptk,
+            'count' => $count,
         ]);
     }
 
