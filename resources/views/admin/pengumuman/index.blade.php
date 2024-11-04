@@ -12,7 +12,7 @@
                 <div class="row p-4">
                     <div class="col-md-8">
                         <h4 class="poppins mb-0">Pengumuman</h4>
-                        <p class="montserrat" style="font-size: .85rem;">Daftar Pengumuman SMKN 1 Purwosari
+                        <p class="montserrat" style="font-size: .85rem;">Daftar Pengumuman SMKN 1 Purwosari ({{$countPengumuman}})
                         </p>
                     </div>
                     <div class="col-md-4 text-right">

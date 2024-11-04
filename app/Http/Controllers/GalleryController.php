@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\tb_category_gallery;
 use App\Models\tb_gallery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Concurrency;
 use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
@@ -14,8 +16,14 @@ class GalleryController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = 10;
-        $gallery = tb_gallery::orderBy('id_gallery', 'desc')->paginate($perPage);
+        $perPage = $request->input('show', 10);
+
+        [$gallery, $count] = Concurrency::run([
+            fn () => Cache::flexible('gallery', [3, 20], function () use ($perPage) {
+                return tb_gallery::orderBy('id_gallery', 'desc')->paginate($perPage);
+            }),
+            fn () => tb_gallery::count(),
+        ]);
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
@@ -24,6 +32,7 @@ class GalleryController extends Controller
             'token' => $token,
             'gallery' => $gallery,
             'category_gallery' => tb_category_gallery::all(),
+            'countGallery' => $count,
         ]);
     }
 
