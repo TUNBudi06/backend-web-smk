@@ -27,6 +27,8 @@ use App\Models\tb_perangkatAjar;
 use App\Models\tb_peserta_didik;
 use App\Models\tb_ptk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Concurrency;
 
 class GlobalController extends Controller
 {
@@ -63,75 +65,80 @@ class GlobalController extends Controller
     {
         $query = $request->input('query');
 
-        // Perform search in all tables
-        $articles = tb_pemberitahuan::where('type', 1)
-            ->where('nama', 'LIKE', '%'.$query.'%')
-            ->get();
+        $data = Cache::flexible('global_search_'.$query, [60 * 30, 60 * 60 * 2], function () use ($query, $request) {
+            // Perform search in all tables using concurrency
+            [$articles, $announcements, $news, $events, $ekstras, $facilities, $galleries, $jurusans, $pa, $pd, $kemitraan, $lokers, $ptk] = Concurrency::run([
+                fn () => tb_pemberitahuan::where('type', 1)
+                    ->where('nama', 'LIKE', '%'.$query.'%')
+                    ->get()
+                    ->whenNotEmpty(fn ($data) => ArticleResource::collection($data)),
 
-        $announcements = tb_pemberitahuan::where('type', 2)
-            ->where('nama', 'LIKE', '%'.$query.'%')
-            ->get();
+                fn () => tb_pemberitahuan::where('type', 2)
+                    ->where('nama', 'LIKE', '%'.$query.'%')
+                    ->get()
+                    ->whenNotEmpty(fn ($data) => AnnouncementResource::collection($data)),
 
-        $news = tb_pemberitahuan::where('type', 3)
-            ->where('nama', 'LIKE', '%'.$query.'%')
-            ->get();
+                fn () => tb_pemberitahuan::where('type', 3)
+                    ->where('nama', 'LIKE', '%'.$query.'%')
+                    ->get()
+                    ->whenNotEmpty(fn ($data) => NewsResource::collection($data)),
 
-        $events = tb_pemberitahuan::where('type', 4)
-            ->where('nama', 'LIKE', '%'.$query.'%')
-            ->get();
+                fn () => tb_pemberitahuan::where('type', 4)
+                    ->where('nama', 'LIKE', '%'.$query.'%')
+                    ->get()
+                    ->whenNotEmpty(fn ($data) => EventResource::collection($data)),
 
-        $ekstras = tb_extra::where('extra_name', 'LIKE', '%'.$query.'%')
-            ->get();
+                fn () => tb_extra::where('extra_name', 'LIKE', '%'.$query.'%')
+                    ->get()
+                    ->whenNotEmpty(fn ($data) => EkstraResource::collection($data)),
 
-        $facilities = tb_facilities::where('facility_name', 'LIKE', '%'.$query.'%')
-            ->get();
+                fn () => tb_facilities::where('facility_name', 'LIKE', '%'.$query.'%')
+                    ->get()
+                    ->whenNotEmpty(fn ($data) => FasilitasResource::collection($data)),
 
-        $galleries = tb_gallery::where('gallery_title', 'LIKE', '%'.$query.'%')
-            ->get();
+                fn () => tb_gallery::where('gallery_title', 'LIKE', '%'.$query.'%')
+                    ->get()
+                    ->whenNotEmpty(fn ($data) => GalleryResource::collection($data)),
 
-        $jurusans = tb_jurusan::where('jurusan_nama', 'LIKE', '%'.$query.'%')
-            ->get();
+                fn () => tb_jurusan::where('jurusan_nama', 'LIKE', '%'.$query.'%')
+                    ->get()
+                    ->whenNotEmpty(fn ($data) => JurusanResource::collection($data)),
 
-        $pa = tb_perangkatAjar::where('title', 'LIKE', '%'.$query.'%')
-            ->get();
+                fn () => tb_perangkatAjar::where('title', 'LIKE', '%'.$query.'%')
+                    ->get()
+                    ->whenNotEmpty(fn ($data) => perangkatAjarResource::collection($data)),
 
-        $pd = tb_peserta_didik::where('nama', 'LIKE', '%'.$query.'%')
-            ->get();
+                fn () => tb_peserta_didik::where('nama', 'LIKE', '%'.$query.'%')
+                    ->get()
+                    ->whenNotEmpty(fn ($data) => PDResource::collection($data)),
 
-        $kemitraan = tb_kemitraan::where('kemitraan_name', 'LIKE', '%'.$query.'%')
-            ->get();
+                fn () => tb_kemitraan::where('kemitraan_name', 'LIKE', '%'.$query.'%')
+                    ->get()
+                    ->whenNotEmpty(fn ($data) => KemitraanResource::collection($data)),
 
-        $lokers = tb_loker::with('position', 'kemitraan')
-            ->where('loker_description', 'LIKE', '%'.$query.'%')
-            ->get();
+                fn () => tb_loker::with('position', 'kemitraan')
+                    ->where('loker_description', 'LIKE', '%'.$query.'%')
+                    ->get()
+                    ->whenNotEmpty(fn ($data) => LokerResource::collection($data)),
 
-        $ptk = tb_ptk::where('nama', 'LIKE', '%'.$query.'%')
-            ->get();
+                fn () => tb_ptk::where('nama', 'LIKE', '%'.$query.'%')
+                    ->get()
+                    ->whenNotEmpty(fn ($data) => PTKResource::collection($data)),
+            ]);
 
-        $list_var = [
-            'articles' => ArticleResource::class,
-            'announcements' => AnnouncementResource::class,
-            'news' => NewsResource::class,
-            'events' => EventResource::class,
-            'ekstras' => EkstraResource::class,
-            'facilities' => FasilitasResource::class,
-            'galleries' => GalleryResource::class,
-            'jurusans' => JurusanResource::class,
-            'pa' => perangkatAjarResource::class,
-            'pd' => PDResource::class,
-            'ptk' => PTKResource::class,
-            'kemitraan' => KemitraanResource::class,
-            'lokers' => LokerResource::class,
-        ];
+            // Initialize an empty array to hold the merged data
+            $data = [];
 
-        $data = [];
-        foreach ($list_var as $index => $var) {
-            if (! $$index->isEmpty()) {
-                $data = array_merge($data, $var::collection($$index)->toArray($request));
+            // Merge all non-empty results
+            foreach ([$articles, $announcements, $news, $events, $ekstras, $facilities, $galleries, $jurusans, $pa, $pd, $kemitraan, $lokers, $ptk] as $result) {
+                if ($result) {
+                    $data = array_merge($data, $result->toArray($request));
+                }
             }
-        }
 
-        $data = array_slice($data, 0, 10);
+            // Limit the results to the first 10 items
+            return array_slice($data, 0, 10);
+        });
 
         return response()->json([
             'message' => 'Data ditemukan',
