@@ -132,15 +132,17 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-md-6 text-right">
-                        <p class="montserrat d-inline" style="font-size: .7rem;">{{ $event->firstItem() }} dari {{ $event->lastItem() }}</p>
-                        <a href="{{ $event->appends(['show' => request('show')])->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $event->onFirstPage() ? 'disabled' : 'active' }}">
-                            <i class="fas fa-caret-left text-warning"></i>
-                        </a>
-                        <a href="{{ $event->appends(['show' => request('show')])->nextPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $event->hasMorePages() ? 'active' : 'disabled' }}">
-                            <i class="fas fa-caret-right text-warning"></i>
-                        </a>
-                    </div>
+                    @if($countEvent > Request::get('show') && $countEvent > 10)
+                        <div class="col-md-6 text-right">
+                            <p class="montserrat d-inline" style="font-size: .7rem;">{{ $event->firstItem() }} dari {{ $event->lastItem() }}</p>
+                            <a href="{{ $event->appends(['show' => request('show')])->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $event->onFirstPage() ? 'disabled' : 'active' }}">
+                                <i class="fas fa-caret-left text-warning"></i>
+                            </a>
+                            <a href="{{ $event->appends(['show' => request('show')])->nextPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $event->hasMorePages() ? 'active' : 'disabled' }}">
+                                <i class="fas fa-caret-right text-warning"></i>
+                            </a>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

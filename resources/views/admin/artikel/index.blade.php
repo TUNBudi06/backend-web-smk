@@ -132,7 +132,7 @@
                             </form>
                         </div>
                     </div>
-                    @if($dataCount > request('show'))
+                    @if($dataCount > request('show') && $dataCount > 10)
                         <div class="col-md-6 text-right">
                             <p class="montserrat d-inline" style="font-size: .7rem;">{{ $artikel->firstItem() }} dari {{ $artikel->lastItem() }}</p>
                             <a href="{{ $artikel->appends(['show' => request('show')])->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $artikel->onFirstPage() ? 'disabled' : 'active' }}">

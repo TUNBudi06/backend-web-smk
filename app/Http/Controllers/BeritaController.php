@@ -6,6 +6,7 @@ use App\Models\tb_pemberitahuan;
 use App\Models\tb_pemberitahuan_category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Concurrency;
 use Illuminate\Support\Facades\Storage;
 
 class BeritaController extends Controller
@@ -17,7 +18,7 @@ class BeritaController extends Controller
     {
         $perPage = $request->input('show', 10);
 
-        [$news,$count] = \Concurrency::run([
+        [$news,$count] = Concurrency::run([
             fn () => Cache::flexible('news', [3, 20], function () use ($perPage) {
                 return tb_pemberitahuan::where(['type' => 3])
                     ->with('kategori')

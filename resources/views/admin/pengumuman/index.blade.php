@@ -140,15 +140,17 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-md-6 text-right">
-                        <p class="montserrat d-inline" style="font-size: .7rem;">{{ $pengumuman->firstItem() }} dari {{ $pengumuman->lastItem() }}</p>
-                        <a href="{{ $pengumuman->appends(['show' => request('show')])->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $pengumuman->onFirstPage() ? 'disabled' : 'active' }}">
-                            <i class="fas fa-caret-left text-warning"></i>
-                        </a>
-                        <a href="{{ $pengumuman->appends(['show' => request('show')])->nextPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $pengumuman->hasMorePages() ? 'active' : 'disabled' }}">
-                            <i class="fas fa-caret-right text-warning"></i>
-                        </a>
-                    </div>
+                    @if($countPengumuman > request('show') && $countPengumuman > 10)
+                        <div class="col-md-6 text-right">
+                            <p class="montserrat d-inline" style="font-size: .7rem;">{{ $pengumuman->firstItem() }} dari {{ $pengumuman->lastItem() }}</p>
+                            <a href="{{ $pengumuman->appends(['show' => request('show')])->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $pengumuman->onFirstPage() ? 'disabled' : 'active' }}">
+                                <i class="fas fa-caret-left text-warning"></i>
+                            </a>
+                            <a href="{{ $pengumuman->appends(['show' => request('show')])->nextPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $pengumuman->hasMorePages() ? 'active' : 'disabled' }}">
+                                <i class="fas fa-caret-right text-warning"></i>
+                            </a>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

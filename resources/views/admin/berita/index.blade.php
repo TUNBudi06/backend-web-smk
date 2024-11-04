@@ -142,7 +142,7 @@
                             </form>
                         </div>
                     </div>
-                    @if($countNews > request('show'))
+                    @if($countNews > request('show') && $countNews > 10)
                         <div class="col-md-6 text-right">
                             <p class="montserrat d-inline" style="font-size: .7rem;">{{ $news->firstItem() }} dari {{ $news->lastItem() }}</p>
                             <a href="{{ $news->appends(['show' => request('show')])->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $news->onFirstPage() ? 'disabled' : 'active' }}">
