@@ -65,7 +65,8 @@ class GlobalController extends Controller
     {
         $query = $request->input('query');
 
-        $data = Cache::flexible('global_search_'.$query, [60 * 30, 60 * 60 * 2], function () use ($query, $request) {
+        // Define the function that fetches the data
+        $getResult = function () use ($query, $request) {
             // Perform search in all tables using concurrency
             [$articles, $announcements, $news, $events, $ekstras, $facilities, $galleries, $jurusans, $pa, $pd, $kemitraan, $lokers, $ptk] = Concurrency::run([
                 fn () => tb_pemberitahuan::where('type', 1)
@@ -138,7 +139,15 @@ class GlobalController extends Controller
 
             // Limit the results to the first 10 items
             return array_slice($data, 0, 10);
-        });
+        };
+
+        // Fetch from cache or run the getResult function if not cached
+        if ($query) {
+            $data = $getResult();
+        } else {
+            \Log::info('No query provided');
+            $data = Cache::flexible("global_search:$query", [env('SEARCH_CURRENCY_REFRESH', 60 * 60), env('SEARCH_CURRENCY_EXPIRE', 60 * 60 * 2)], $getResult);
+        }
 
         return response()->json([
             'message' => 'Data ditemukan',
