@@ -6,6 +6,7 @@ use App\Models\tb_pemberitahuan;
 use App\Models\tb_pemberitahuan_category;
 use App\Models\tb_pengumuman;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Concurrency;
 
 class PengumumanController extends Controller
 {
@@ -15,10 +16,15 @@ class PengumumanController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('show', 10);
-        $pengumuman = tb_pemberitahuan::where(['type' => 2])
-            ->with('kategori')
-            ->orderBy('date', 'desc')
-            ->paginate($perPage);
+        [$pengumuman,$count] = Concurrency::run([
+            fn () => \Cache::flexible('pengumuman', [3, 20], function () use ($perPage) {
+                return tb_pemberitahuan::where(['type' => 2])
+                    ->with('kategori')
+                    ->orderBy('date', 'desc')
+                    ->paginate($perPage);
+            }),
+            fn () => tb_pemberitahuan::where(['type' => 2])->count(),
+        ]);
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
@@ -27,6 +33,7 @@ class PengumumanController extends Controller
             'info_active' => 'pengumuman',
             'token' => $token,
             'pengumuman' => $pengumuman,
+            'countPengumuman' => $count,
         ]);
     }
 

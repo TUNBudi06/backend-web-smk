@@ -10,6 +10,8 @@ use App\Models\tb_pemberitahuan;
 use App\Models\tb_peserta_didik;
 use App\Models\tb_ptk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Concurrency;
 
 class AdminController extends Controller
 {
@@ -17,19 +19,34 @@ class AdminController extends Controller
     {
         $token = $request->session()->get('token') ?? $request->input('token');
 
+        [$artikel,$pengumuman,$berita,$event,$gallery,$fasilitas,$pd,$ptk,$extra,$jurusan] = Cache::flexible('HomeAdmin', [10, 20], function () {
+            return Concurrency::run([
+                fn () => tb_pemberitahuan::where('type', 1)->count(),
+                fn () => tb_pemberitahuan::where('type', 2)->count(),
+                fn () => tb_pemberitahuan::where('type', 3)->count(),
+                fn () => tb_pemberitahuan::where('type', 4)->count(),
+                fn () => tb_gallery::count(),
+                fn () => tb_facilities::count(),
+                fn () => tb_peserta_didik::count(),
+                fn () => tb_ptk::count(),
+                fn () => tb_extra::count(),
+                fn () => tb_jurusan::count(),
+            ]);
+        });
+
         return view('admin.page.dashboard', [
             'menu_active' => 'dashboard',
             'token' => $token,
-            'artikel' => tb_pemberitahuan::where('type', 1)->count(),
-            'pengumuman' => tb_pemberitahuan::where('type', 2)->count(),
-            'berita' => tb_pemberitahuan::where('type', 3)->count(),
-            'event' => tb_pemberitahuan::where('type', 4)->count(),
-            'gallery' => tb_gallery::count(),
-            'fasilitas' => tb_facilities::count(),
-            'pd' => tb_peserta_didik::count(),
-            'ptk' => tb_ptk::count(),
-            'extra' => tb_extra::count(),
-            'jurusan' => tb_jurusan::count(),
+            'artikel' => $artikel,
+            'pengumuman' => $pengumuman,
+            'berita' => $berita,
+            'event' => $event,
+            'gallery' => $gallery,
+            'fasilitas' => $fasilitas,
+            'pd' => $pd,
+            'ptk' => $ptk,
+            'extra' => $extra,
+            'jurusan' => $jurusan,
         ]);
     }
 

@@ -13,8 +13,10 @@ class GalleryCategory extends Controller
      */
     public function index(Request $request)
     {
+        $perpage = $request->input('show', 10);
         $token = $request->session()->get('token') ?? $request->input('token');
-        $gallerys = tb_category_gallery::all();
+        $gallerys = tb_category_gallery::paginate($perpage);
+        $count = tb_category_gallery::count();
         $action = $_GET['action'] ?? '';
         //        return $request->session()->all();
 
@@ -25,6 +27,7 @@ class GalleryCategory extends Controller
             'token' => $token,
             'category' => $request->session()->get('category') ?? null,
             'action' => $request->session()->get('update') ?? false,
+            'count' => $count,
         ]);
     }
 

@@ -13,8 +13,10 @@ class PengumumanCategory extends Controller
      */
     public function index(Request $request)
     {
+        $perpage = $request->input('show', 10);
         $token = $request->session()->get('token') ?? $request->input('token');
-        $pengumuman = tb_pemberitahuan_category::where(['type' => 2])->get();
+        $pengumuman = tb_pemberitahuan_category::where(['type' => 2])->paginate($perpage);
+        $count = tb_pemberitahuan_category::where(['type' => 2])->count();
         $action = $_GET['action'] ?? '';
 
         return view('admin.categories.pengumumancategory.index', [
@@ -24,6 +26,7 @@ class PengumumanCategory extends Controller
             'token' => $token,
             'category' => $request->session()->get('category') ?? null,
             'action' => $request->session()->get('update') ?? false,
+            'count' => $count,
         ]);
     }
 

@@ -9,8 +9,9 @@ class perangkatAjarController extends Controller
 {
     public function indexTools(Request $request)
     {
-        $perPage = 10;
+        $perPage = $request->input('show') ?? 10;
         $data_pa = tb_perangkatAjar::orderBy('id_pa', 'desc')->paginate($perPage);
+        $count = tb_perangkatAjar::count();
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
@@ -19,6 +20,7 @@ class perangkatAjarController extends Controller
             'profile_active' => 'tools',
             'token' => $token,
             'pa' => $data_pa,
+            'count' => $count,
         ]);
     }
 

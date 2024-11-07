@@ -13,8 +13,10 @@ class EventCategory extends Controller
      */
     public function index(Request $request)
     {
+        $perpage = $request->input('show', 10);
         $token = $request->session()->get('token') ?? $request->input('token');
-        $event = tb_pemberitahuan_category::where(['type' => 4])->get();
+        $event = tb_pemberitahuan_category::where(['type' => 4])->paginate($perpage);
+        $count = tb_pemberitahuan_category::where(['type' => 4])->count();
         $action = $_GET['action'] ?? '';
 
         return view('admin.categories.eventcategory.index', [
@@ -24,6 +26,7 @@ class EventCategory extends Controller
             'token' => $token,
             'category' => $request->session()->get('category') ?? null,
             'action' => $request->session()->get('update') ?? false,
+            'count' => $count,
         ]);
     }
 

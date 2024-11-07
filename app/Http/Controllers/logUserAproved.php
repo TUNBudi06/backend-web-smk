@@ -10,12 +10,14 @@ class logUserAproved extends Controller
     public function index(Request $request)
     {
         $token = $request->session()->get('token') ?? $request->input('token');
-        $data = tb_pemberitahuan::with('kategori')->with('tipe')->where('approved', 0)->get();
+        $perpage = $request->input('show') ?? 10;
+        $data = tb_pemberitahuan::with('kategori')->with('tipe')->where('approved', 0)->paginate($perpage);
 
         return view('admin.page.management.LogApproved.index', [
             'menu_active' => 'user',
             'pending' => $data,
             'token' => $token,
+            'count' => tb_pemberitahuan::where('approved', 0)->count(),
         ]);
     }
 

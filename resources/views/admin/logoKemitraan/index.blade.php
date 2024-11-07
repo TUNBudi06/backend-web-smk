@@ -1,24 +1,21 @@
 @extends('layouts.main')
 
 @section('title')
-    <title>Extrakurikuler | Admin Panel</title>
+    <title>Kemitraan | Admin Panel</title>
 @endsection
 
 @section('container')
     <div class="row">
         <div class="col-md-11 offset-md-1">
-            @include('admin.partials.nav_academic')
+            @include('admin.partials.nav_kemitraan')
             <div class="w-100 table-parent bg-white">
                 <div class="row p-4">
                     <div class="col-md-8">
-                        <h4 class="poppins mb-0">Extrakurikuler</h4>
-                        <p class="montserrat" style="font-size: .85rem;">Daftar Extrakurikuler SMKN 1 Purwosari
-                        </p>
+                        <h4 class="poppins mb-0">Logo Kemitraan</h4>
+                        <p class="montserrat" style="font-size: .85rem;">Daftar Logo Kemitraan SMKN 1 Purwosari {{$count}}</p>
                     </div>
                     <div class="col-md-4 text-right">
-                        <a href="{{ route('extra.create', ['token' => $token]) }}"
-                            class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i>
-                            Extrakurikuler Baru</a>
+                        <a href="{{route('logok.create',['token'=>$token])}}" class="btn-print btn btn-warning shadow-warning px-4 rounded-pill"><i class="fas fa-plus"></i> Tambah Logo</a>
                     </div>
                 </div>
                 @if (Session::get('success'))
@@ -33,22 +30,20 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th class="pl-4">Cover</th>
                             <th>Logo</th>
-                            <th>Nama Extrakurikuler</th>
-                            <th>Jadwal</th>
+                            <th>Nama Perusahaan</th>
+                            <th>Tinggi Foto</th>
+                            <th>Lebar Foto</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($extra as $key => $data)
+                        @foreach ($logoK as $key => $data)
                             <tr>
-                                <td><img src="{{ asset(file_exists(public_path('img/extrakurikuler/cover/' . $data->extra_image)) ? 'img/extrakurikuler/cover/' . $data->extra_image : 'img/no_image.png') }}" width="100px"
-                                        class="rounded" alt=""></td>
-                                <td><img src="{{ asset(file_exists(public_path('img/extrakurikuler/logo/' . $data->extra_logo)) ? 'img/extrakurikuler/logo/' . $data->extra_logo : 'img/no_image.png') }}" width="80px"
-                                        class="rounded" alt=""></td>
-                                <td>{{ $data->extra_name }}</td>
-                                <td>{{ $data->extra_hari }}</td>
+                                <td><img src="{{ asset(file_exists(public_path('img/mitra/' . $data->logo_mitra)) ? 'img/mitra/' . $data->logo_mitra : 'img/no_image.png') }}" width="100px" class="rounded" alt=""></td>
+                                <td>{{ $data->nama_mitra }}</td>
+                                <td>{{ $data->width }} Px</td>
+                                <td>{{ $data->height }} Px</td>
                                 <td>
                                     <ul class="navbar-nav">
                                         <li class="nav-item dropdown">
@@ -57,19 +52,19 @@
                                                 <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-end">
-                                                <a href="{{ route('extra.edit', ['extra' => $data->id_extra, 'token' => $token]) }}"
+                                                <a href="{{route('logok.show',['token'=>$token,'id'=>$data->id_logo_mitra])}}"
                                                     class="dropdown-item text-warning"
                                                     onclick="event.stopPropagation(); onEdit('${full.bin_id}'); return false;"
                                                     style="padding-bottom: 10px; text-align: center; font-weight: 600;">
                                                     <i class='fas fa-pen-alt mx-1 text-warning'></i> Edit
                                                 </a>
                                                 <form
-                                                    action="{{ route('extra.destroy', ['extra' => $data->id_extra, 'token' => $token]) }}"
+                                                    action="{{ route('logok.destroy', ['token' => $token]) }}"
                                                     method="post" class="d-inline"
                                                     onclick="event.stopPropagation(); return confirm('Data akan dihapus ?')">
                                                     @csrf
                                                     @method('delete')
-                                                    <input type="hidden" value="{{ $data->id_gallery }}"
+                                                    <input type="hidden" value="{{ $data->id_logo_mitra }}"
                                                         name="idName">
                                                     <button type="submit" class="dropdown-item text-danger"
                                                         style="padding-bottom: 10px; padding-top: 10px; text-align: center; font-weight: 600;">
@@ -107,15 +102,14 @@
                     <div class="col-md-6">
                         <div class="pb-3">
                             @if($count > 10)
-                                <form method="GET" id="show-form" name="showForm" action="{{ url()->current() }}">
+                                <form method="GET" id="show-form" name="showForm" action="">
                                     <div class="form-group d-inline-block">
-                                        <input type="hidden" name="page" value="{{ request('page', 1) }}">
-                                        <select id="show-select" name="show" onchange="this.form.submit()" class="form-control form-control-sm d-inline-block"
-                                                style="width:70px; font-size: .7rem;">
-                                            <option value="10" {{ request('show') == 10 ? 'selected' : '' }}>10</option>
-                                            <option value="20" {{ request('show') == 20 ? 'selected' : '' }}>20</option>
-                                            <option value="30" {{ request('show') == 30 ? 'selected' : '' }}>30</option>
-                                            <option value="40" {{ request('show') == 40 ? 'selected' : '' }}>40</option>
+                                        <input type="hidden" name="#">
+                                        <select id="show-select" name="show" onchange="this.form.submit();" class="form-control form-control-sm d-inline-block" style="width:70px; font-size: .7rem;">
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
+                                            <option value="40">40</option>
                                         </select>
                                     </div>
                                     <p class="montserrat d-inline" style="font-size: .7rem;">Data per halaman</p>
@@ -123,17 +117,15 @@
                             @endif
                         </div>
                     </div>
-                    @if($count > request('show') && $count > 10)
-                        <div class="col-md-6 text-right">
-                            <p class="montserrat d-inline" style="font-size: .7rem;">{{ $extra->firstItem() }} dari {{ $extra->lastItem() }}</p>
-                            <a href="{{ $extra->appends(['show' => request('show')])->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $extra->onFirstPage() ? 'disabled' : 'active' }}">
-                                <i class="fas fa-caret-left text-warning"></i>
-                            </a>
-                            <a href="{{ $extra->appends(['show' => request('show')])->nextPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $extra->hasMorePages() ? 'active' : 'disabled' }}">
-                                <i class="fas fa-caret-right text-warning"></i>
-                            </a>
-                        </div>
-                    @endif
+                    <div class="col-md-6 text-right">
+                        <p class="montserrat d-inline" style="font-size: .7rem;">{{ $logoK->firstItem() }} dari {{ $logoK->lastItem() }}</p>
+                        <a href="{{ $logoK->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $logoK->onFirstPage() ? 'disabled' : 'active' }}">
+                            <i class="fas fa-caret-left text-warning"></i>
+                        </a>
+                        <a href="{{ $logoK->nextPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $logoK->hasMorePages() ? 'active' : 'disabled' }}">
+                            <i class="fas fa-caret-right text-warning"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

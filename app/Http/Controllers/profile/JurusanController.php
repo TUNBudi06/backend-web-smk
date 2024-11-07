@@ -14,8 +14,9 @@ class JurusanController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = 10;
+        $perPage = request()->input('show') ?? 10;
         $jurusan = tb_jurusan::orderBy('id_jurusan', 'desc')->paginate($perPage);
+        $count = tb_jurusan::count();
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
@@ -25,6 +26,7 @@ class JurusanController extends Controller
             'token' => $token,
             'jurusan' => $jurusan,
             'prodis' => tb_prodi::all(),
+            'count' => $count,
         ]);
     }
 

@@ -14,7 +14,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $user = tb_admin::orderBy('id_admin', 'desc')->get();
+        $perpage = $request->input('show') ?? 10;
+        $user = tb_admin::orderBy('id_admin', 'desc')->paginate($perpage);
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
@@ -22,6 +23,7 @@ class UserController extends Controller
             'menu_active' => 'user',
             'token' => $token,
             'user' => $user,
+            "count" => tb_admin::count(),
         ]);
     }
 

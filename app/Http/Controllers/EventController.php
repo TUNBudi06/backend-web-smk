@@ -14,10 +14,15 @@ class EventController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('show', 10);
-        $event = tb_pemberitahuan::where(['type' => 4])
-            ->with('kategori')
-            ->orderBy('created_at', 'desc')
-            ->paginate($perPage);
+        [$event,$count] = \Concurrency::run([
+            fn () => \Cache::flexible('event', [3, 20], function () use ($perPage) {
+                return tb_pemberitahuan::where(['type' => 4])
+                    ->with('kategori')
+                    ->orderBy('created_at', 'desc')
+                    ->paginate($perPage);
+            }),
+            fn () => tb_pemberitahuan::where(['type' => 4])->count(),
+        ]);
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
@@ -26,6 +31,7 @@ class EventController extends Controller
             'info_active' => 'event',
             'token' => $token,
             'event' => $event,
+            'countEvent' => $count,
         ]);
     }
 
