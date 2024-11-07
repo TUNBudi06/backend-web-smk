@@ -167,7 +167,13 @@ class FasilitasController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $facility = tb_facilities::findOrFail($id_facility);
+        $imagePath = public_path('img/fasilitas/'.$facility->facility_image);
+
         $facility->delete();
+        
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
 
         return redirect()->route('fasilitas.index', ['token' => $request->token])->with('success', 'Fasilitas berhasil dihapus.');
     }

@@ -199,7 +199,16 @@ class ExtraController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $extra = tb_extra::findOrFail($id_extra);
+        $imagePath = public_path('img/extrakurikuler/cover/'.$extra->extra_image);
+        $imagePath1 = public_path('img/extrakurikuler/logo/'.$extra->extra_logo);
+
         $extra->delete();
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+        if (file_exists($imagePath1)) {
+            unlink($imagePath1);
+        }
 
         return redirect()->route('extra.index', ['token' => $request->token])->with('success', 'Extrakurikuler berhasil dihapus.');
     }
