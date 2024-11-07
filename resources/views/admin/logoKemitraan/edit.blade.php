@@ -7,9 +7,9 @@
 @section('container')
     <div class="col-md-8 offset-md-2 mt-5">
         <a href="{{ route('logok.index', ['token' => $token]) }}" class="btn btn-light border-warning px-4 mb-4"><i class="fas fa-arrow-left"></i> Kembali</a>
-        <form action="{{ route('logok.update', ['id' => $logo->id, 'token' => $token]) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('logok.update', ['id' => $logo->id_logo_mitra, 'token' => $token]) }}" method="POST" enctype="multipart/form-data">
             @csrf
-            @method('PUT')
+            @method('PATCH')
 
             <div class="form-group">
                 <label for="nama_mitra">Nama Mitra</label>
@@ -25,7 +25,7 @@
                     <div class="form-group">
                         <label for="width_logo">Lebar Logo</label>
                         <div class="input-group flex-nowrap">
-                            <input type="number" id="width_logo" name="width_logo" class="form-control @error('width_logo') is-invalid @enderror" placeholder="Width" value="{{ old('width_logo', $logo->width_logo) }}">
+                            <input type="number" id="width_logo" name="width_logo" class="form-control @error('width_logo') is-invalid @enderror" placeholder="Width" value="{{ old('width_logo', $logo->width) }}">
                             <span class="input-group-text">px</span>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                     <div class="form-group">
                         <label for="height_logo">Tinggi Logo</label>
                         <div class="input-group flex-nowrap">
-                            <input type="number" id="height_logo" name="height_logo" class="form-control @error('height_logo') is-invalid @enderror" placeholder="Height" value="{{ old('height_logo', $logo->height_logo) }}">
+                            <input type="number" id="height_logo" name="height_logo" class="form-control @error('height_logo') is-invalid @enderror" placeholder="Height" value="{{ old('height_logo', $logo->height) }}">
                             <span class="input-group-text">px</span>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div class="col-md-6 text-center">
-                    <img class="w-100 rounded" id="cover_preview" src="{{ $logo->kemitraan_thumbnail ? asset('storage/' . $logo->kemitraan_thumbnail) : asset('img/no_image.png') }}" alt="Cover Preview">
+                    <img class="w-100 rounded" id="cover_preview" src="{{ $logo->logo_mitra ? asset('img/mitra/' . $logo->logo_mitra) : asset('img/no_image.png') }}" alt="Cover Preview">
                 </div>
             </div>
 

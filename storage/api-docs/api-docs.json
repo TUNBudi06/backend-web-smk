@@ -954,6 +954,47 @@
                 }
             }
         },
+        "/api/user/logo/kemitraan": {
+            "get": {
+                "tags": [
+                    "Kemitraan"
+                ],
+                "summary": "Retrieve all logo kemitraan data",
+                "description": "Get all Logo Kemitraan",
+                "operationId": "getLogok",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data logok berhasil diambil"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/LogoKResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
         "/api/user/lokers": {
             "get": {
                 "tags": [
@@ -2688,6 +2729,31 @@
                 },
                 "type": "object"
             },
+            "LogoKResource": {
+                "properties": {
+                    "id_logo_mitra": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "nama_mitra": {
+                        "type": "string",
+                        "example": "Inafood/Honda/Mayora"
+                    },
+                    "logo_mitra": {
+                        "type": "string",
+                        "example": "img/mitra/logo.png"
+                    },
+                    "width": {
+                        "type": "integer",
+                        "example": 128
+                    },
+                    "height": {
+                        "type": "integer",
+                        "example": 128
+                    }
+                },
+                "type": "object"
+            },
             "LokerResource": {
                 "properties": {
                     "id_loker": {
@@ -3125,5 +3191,87 @@
                 "type": "object"
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "name": "Slider Keunggulan",
+            "description": "Slider Keunggulan"
+        },
+        {
+            "name": "Articles",
+            "description": "Articles"
+        },
+        {
+            "name": "Ekstra",
+            "description": "Ekstra"
+        },
+        {
+            "name": "Events",
+            "description": "Events"
+        },
+        {
+            "name": "Facilities",
+            "description": "Facilities"
+        },
+        {
+            "name": "Gallery",
+            "description": "Gallery"
+        },
+        {
+            "name": "Global Search",
+            "description": "Global Search"
+        },
+        {
+            "name": "Major",
+            "description": "Major"
+        },
+        {
+            "name": "Kemitraan",
+            "description": "Kemitraan"
+        },
+        {
+            "name": "Loker",
+            "description": "Loker"
+        },
+        {
+            "name": "News",
+            "description": "News"
+        },
+        {
+            "name": "Perangkat Ajar",
+            "description": "Perangkat Ajar"
+        },
+        {
+            "name": "PD",
+            "description": "PD"
+        },
+        {
+            "name": "PTK",
+            "description": "PTK"
+        },
+        {
+            "name": "Announcement",
+            "description": "Announcement"
+        },
+        {
+            "name": "Position",
+            "description": "Position"
+        },
+        {
+            "name": "Footer navigation",
+            "description": "Footer navigation"
+        },
+        {
+            "name": "Sekolah",
+            "description": "Sekolah"
+        },
+        {
+            "name": "Links",
+            "description": "Links"
+        },
+        {
+            "name": "Videos",
+            "description": "Videos"
+        }
+    ]
 }

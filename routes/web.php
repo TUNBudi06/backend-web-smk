@@ -153,7 +153,7 @@ Route::prefix('private/admin')->group(function () {
                         Route::get('/create', [\App\Http\Controllers\mitra\logoController::class, 'create'])->name('logok.create');
                         Route::get('/view/{id}', [\App\Http\Controllers\mitra\logoController::class, 'edit'])->name('logok.show');
                         Route::post('/store', [\App\Http\Controllers\mitra\logoController::class, 'store'])->name('logok.store');
-                        Route::patch('/update', [\App\Http\Controllers\mitra\logoController::class, 'update'])->name('logok.update');
+                        Route::patch('/update/{id}', [\App\Http\Controllers\mitra\logoController::class, 'update'])->name('logok.update');
                         Route::delete('/delete', [\App\Http\Controllers\mitra\logoController::class, 'destroy'])->name('logok.destroy');
                     });
                 });

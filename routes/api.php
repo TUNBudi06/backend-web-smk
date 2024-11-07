@@ -11,6 +11,7 @@ use App\Http\Controllers\api\JurusanController;
 use App\Http\Controllers\api\KemitraanController;
 use App\Http\Controllers\api\link\footerAPI;
 use App\Http\Controllers\api\link\profile;
+use App\Http\Controllers\api\LogokController;
 use App\Http\Controllers\api\LokerController;
 use App\Http\Controllers\api\NewsController;
 use App\Http\Controllers\api\PAController;
@@ -60,6 +61,7 @@ Route::prefix('user')->group(function () {
     Route::get('PerangkatAjar', [PAController::class, 'index']);
     Route::get('slider/keunggulan', [SkController::class, 'apiSlider']);
     Route::resource('kemitraans', KemitraanController::class);
+    Route::get('logo/kemitraan', [LogokController::class, 'getLogok']);
     Route::resource('position', PosisiController::class);
     Route::resource('lokers', LokerController::class);
 

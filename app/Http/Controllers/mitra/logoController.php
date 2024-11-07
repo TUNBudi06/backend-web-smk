@@ -5,6 +5,7 @@ namespace App\Http\Controllers\mitra;
 use App\Http\Controllers\Controller;
 use App\Models\tb_logo_mitra;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class logoController extends Controller
 {
@@ -78,39 +79,36 @@ class logoController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        // Find the existing logo record
+        $id = $request->route('id');
+
         $logo = tb_logo_mitra::findOrFail($id);
 
         // Validate the input data
         $validatedData = $request->validate([
-            'nama_mitra' => 'required|string|max:255|regex:/^[^\/\\]+$/',
-            'width_logo' => 'required|integer|min:1',
-            'height_logo' => 'required|integer|min:1',
+            'nama_mitra' => 'required|string|max:255',
+            'width_logo' => 'required|integer|min:1|max:140',
+            'height_logo' => 'required|integer|min:1|max:140',
             'kemitraan_thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Max 2MB
-        ], [
-            'nama_mitra.regex' => 'Hindari penggunaan karakter slash (/ atau \\) pada Nama Mitra.',
         ]);
 
         // Check if a new file is uploaded and handle file update
         if ($request->hasFile('kemitraan_thumbnail')) {
-            // Delete the old thumbnail if exists
-            if ($logo->kemitraan_thumbnail && Storage::exists('public/'.$logo->kemitraan_thumbnail)) {
-                Storage::delete('public/'.$logo->kemitraan_thumbnail);
+            if ($logo->logo_mitra && file_exists(public_path('img/mitra/'.$logo->logo_mitra))) {
+                unlink(public_path('img/mitra/'.$logo->logo_mitra));
             }
 
-            // Store the new thumbnail
-            $file = $request->file('kemitraan_thumbnail');
-            $fileName = 'thumbnail_'.time().'.'.$file->getClientOriginalExtension();
-            $filePath = $file->storeAs('kemitraan_thumbnails', $fileName, 'public');
-            $logo->kemitraan_thumbnail = $filePath;
+            $fileContents = file_get_contents($request->file('kemitraan_thumbnail')->getRealPath());
+            $imageName = substr(hash('sha256', $fileContents), 0, 40).'.'.$request->file('kemitraan_thumbnail')->getClientOriginalExtension();
+            $request->file('kemitraan_thumbnail')->move(public_path('img/mitra/'), $imageName);
+            $logo->logo_mitra = $imageName;
         }
 
         // Update the logo data with validated data
         $logo->nama_mitra = $validatedData['nama_mitra'];
-        $logo->width_logo = $validatedData['width_logo'];
-        $logo->height_logo = $validatedData['height_logo'];
+        $logo->width = $validatedData['width_logo'];
+        $logo->height = $validatedData['height_logo'];
         $logo->save();
 
         return redirect()->route('logok.index', ['token' => $request->token])
@@ -129,6 +127,6 @@ class logoController extends Controller
             unlink(public_path('img/mitra/'.$kemitraan->logo_mitra));
         }
 
-        return redirect()->route('logok.index', ['token' => $token])->with('success', 'Kemitraan berhasil dihapus.');
+        return redirect()->route('logok.index', ['token' => $token])->with('success', 'Logo Kemitraan berhasil dihapus.');
     }
 }
