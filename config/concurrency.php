@@ -12,6 +12,7 @@ return [
     | be sent to isolated PHP processes which will return their results.
     |
     | Supported: "process", "fork", "sync"
+    | change process to sync but change its again when you want to push to production
     |
     */
 
