@@ -133,8 +133,31 @@ Route::prefix('private/admin')->group(function () {
             Route::resource('/artikel', ArtikelController::class);
             Route::middleware(preventAccessForAdminUsers::class)->group(function () {
                 Route::resource('/gallery', GalleryController::class);
-                Route::resource('/kemitraan', KemitraanController::class);
-                Route::resource('/loker', LokerController::class);
+
+                Route::prefix('mitra')->group(function () {
+                    Route::resource('/list', KemitraanController::class)->names([
+                        'index' => 'kemitraan.index',
+                        'create' => 'kemitraan.create',
+                        'store' => 'kemitraan.store',
+                        'show' => 'kemitraan.show',
+                        'edit' => 'kemitraan.edit',
+                        'update' => 'kemitraan.update',
+                        'destroy' => 'kemitraan.destroy',
+                    ])->parameters([
+                        'list' => 'kemitraan',
+                    ]);
+                    Route::resource('/loker', LokerController::class);
+
+                    Route::prefix('logo')->group(function () {
+                        Route::get('/index', [\App\Http\Controllers\mitra\logoController::class, 'index'])->name('logok.index');
+                        Route::get('/create', [\App\Http\Controllers\mitra\logoController::class, 'create'])->name('logok.create');
+                        Route::get('/view/{id}', [\App\Http\Controllers\mitra\logoController::class, 'edit'])->name('logok.show');
+                        Route::post('/store', [\App\Http\Controllers\mitra\logoController::class, 'store'])->name('logok.store');
+                        Route::patch('/update', [\App\Http\Controllers\mitra\logoController::class, 'update'])->name('logok.update');
+                        Route::delete('/delete', [\App\Http\Controllers\mitra\logoController::class, 'destroy'])->name('logok.destroy');
+                    });
+                });
+
                 Route::resource('/posisi', PosisiController::class);
                 Route::get('/links', [AdminController::class, 'links'])->name('links');
                 Route::prefix('profile')->group(function () {
