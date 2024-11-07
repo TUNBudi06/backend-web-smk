@@ -11,7 +11,8 @@ class footerController extends Controller
     public function index(Request $request)
     {
         $token = $request->session()->get('token') ?? $request->input('token');
-        $footers = tb_footer::get();
+        $perpage = $request->input('show', 10);
+        $footers = tb_footer::paginate($perpage);
         $action = $request->session()->get('update') ? 'update' : '';
 
         return view('admin.page.footer.index', [
@@ -19,6 +20,7 @@ class footerController extends Controller
             'navlink_active' => 'footer',
             'action' => $action,
             'footers' => $footers,
+            'count' => $footers->count(),
             'token' => $token,
         ]);
     }

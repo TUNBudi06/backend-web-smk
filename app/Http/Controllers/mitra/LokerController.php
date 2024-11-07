@@ -17,6 +17,7 @@ class LokerController extends Controller
     {
         $perPage = $request->input('show', 10);
         $loker = tb_loker::with(['position', 'kemitraan'])->orderBy('created_at', 'desc')->paginate($perPage);
+        $count = $loker->count();
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
@@ -25,6 +26,7 @@ class LokerController extends Controller
             'mitra_active' => 'loker',
             'token' => $token,
             'loker' => $loker,
+            'count' => $count,
         ]);
     }
 

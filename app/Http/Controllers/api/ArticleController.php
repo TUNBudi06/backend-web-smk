@@ -10,7 +10,7 @@ use App\Models\tb_pemberitahuan_category;
 use Illuminate\Http\Request;
 use OpenApi\Annotations as OA;
 
-class ArticleController extends Controller
+class rticleController extends Controller
 {
     /**
      * @OA\Get(

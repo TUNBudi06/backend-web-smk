@@ -14,7 +14,8 @@ class PosisiController extends Controller
     public function index(Request $request)
     {
         $token = $request->session()->get('token') ?? $request->input('token');
-        $positions = tb_position::get();
+        $perpage = $request->input('show', 10);
+        $positions = tb_position::paginate($perpage);
         $action = $request->session()->get('update') ? 'update' : '';
 
         return view('admin.posisi.index', [
@@ -22,6 +23,7 @@ class PosisiController extends Controller
             'action' => $action,
             'positions' => $positions,
             'token' => $token,
+            'count' => tb_position::count(),
         ]);
     }
 

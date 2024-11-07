@@ -191,6 +191,11 @@ class KemitraanController extends Controller
         if ($kemitraan->kemitraan_logo && file_exists(public_path('img/kemitraan/logo/'.$kemitraan->kemitraan_logo))) {
             unlink(public_path('img/kemitraan/logo/'.$kemitraan->kemitraan_logo));
         }
+
+        if ($kemitraan->kemitraan_thumbnail && file_exists(public_path('img/kemitraan/cover/'.$kemitraan->kemitraan_thumbnail))) {
+            unlink(public_path('img/kemitraan/cover/'.$kemitraan->kemitraan_thumbnail));
+        }
+
         $kemitraan->delete();
 
         return redirect()->route('kemitraan.index', ['token' => $request->token])->with('success', 'Kemitraan berhasil dihapus.');

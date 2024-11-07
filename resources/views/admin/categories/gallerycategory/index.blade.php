@@ -148,19 +148,21 @@
                     <div class="row px-3">
                         <div class="col-md-6">
                             <div class="pb-3">
-                                <form method="GET" id="show-form" name="showForm" action="{{ url()->current() }}">
-                                    <div class="form-group d-inline-block">
-                                        <input type="hidden" name="page" value="{{ request('page', 1) }}">
-                                        <select id="show-select" name="show" onchange="this.form.submit()" class="form-control form-control-sm d-inline-block"
-                                                style="width:70px; font-size: .7rem;">
-                                            <option value="10" {{ request('show') == 10 ? 'selected' : '' }}>10</option>
-                                            <option value="20" {{ request('show') == 20 ? 'selected' : '' }}>20</option>
-                                            <option value="30" {{ request('show') == 30 ? 'selected' : '' }}>30</option>
-                                            <option value="40" {{ request('show') == 40 ? 'selected' : '' }}>40</option>
-                                        </select>
-                                    </div>
-                                    <p class="montserrat d-inline" style="font-size: .7rem;">Data per halaman</p>
-                                </form>
+                                @if($count>10)
+                                    <form method="GET" id="show-form" name="showForm" action="{{ url()->current() }}">
+                                        <div class="form-group d-inline-block">
+                                            <input type="hidden" name="page" value="{{ request('page', 1) }}">
+                                            <select id="show-select" name="show" onchange="this.form.submit()" class="form-control form-control-sm d-inline-block"
+                                                    style="width:70px; font-size: .7rem;">
+                                                <option value="10" {{ request('show') == 10 ? 'selected' : '' }}>10</option>
+                                                <option value="20" {{ request('show') == 20 ? 'selected' : '' }}>20</option>
+                                                <option value="30" {{ request('show') == 30 ? 'selected' : '' }}>30</option>
+                                                <option value="40" {{ request('show') == 40 ? 'selected' : '' }}>40</option>
+                                            </select>
+                                        </div>
+                                        <p class="montserrat d-inline" style="font-size: .7rem;">Data per halaman</p>
+                                    </form>
+                                @endif
                             </div>
                         </div>
                         @if($count > request('show') && $count > 10)

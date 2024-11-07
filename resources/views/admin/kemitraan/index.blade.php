@@ -102,39 +102,34 @@
                     });
                 </script>
                 <div class="row px-3">
-                    <div class="col-md-6">
-                        <div class="pb-3">
-                            <form method="GET" id="show-form" name="showForm" action="">
-                                <div class="form-group d-inline-block">
-                                    <input type="hidden" name="#">
-                                    <select id="show-select" name="show" onchange="showData()" class="form-control form-control-sm d-inline-block" style="width:70px; font-size: .7rem;" name="" id="">
-                                        <option value="10">10</option>
-                                        <option value="20">20</option>
-                                        <option value="30">30</option>
-                                        <option value="40">40</option>
-                                    </select>
-                                </div>
-                                <p class="montserrat d-inline" style="font-size: .7rem;">Data per halaman</p>
-                                <script>
-                                    function showData() {
-                                        $('#show-select').change(function() {
-                                            var value = $(this).val();
-                                            $('#show-form').submit()
-                                        });
-                                    }
-                                </script>
-                            </form>
+                    @if($kemitraan->count() > 10)
+                        <div class="col-md-6">
+                            <div class="pb-3">
+                                    <form method="GET" id="show-form" name="showForm" action="{{ url()->current() }}">
+                                        <div class="form-group d-inline-block">
+                                            <input type="hidden" name="page" value="{{ request('page', 1) }}">
+                                            <select id="show-select" name="show" onchange="this.form.submit()" class="form-control form-control-sm d-inline-block"
+                                                    style="width:70px; font-size: .7rem;">
+                                                <option value="10" {{ request('show') == 10 ? 'selected' : '' }}>10</option>
+                                                <option value="20" {{ request('show') == 20 ? 'selected' : '' }}>20</option>
+                                                <option value="30" {{ request('show') == 30 ? 'selected' : '' }}>30</option>
+                                                <option value="40" {{ request('show') == 40 ? 'selected' : '' }}>40</option>
+                                            </select>
+                                        </div>
+                                        <p class="montserrat d-inline" style="font-size: .7rem;">Data per halaman</p>
+                                    </form>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6 text-right">
-                        <p class="montserrat d-inline" style="font-size: .7rem;">{{ $kemitraan->firstItem() }} dari {{ $kemitraan->lastItem() }}</p>
-                        <a href="{{ $kemitraan->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $kemitraan->onFirstPage() ? 'disabled' : 'active' }}">
-                            <i class="fas fa-caret-left text-warning"></i>
-                        </a>
-                        <a href="{{ $kemitraan->nextPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $kemitraan->hasMorePages() ? 'active' : 'disabled' }}">
-                            <i class="fas fa-caret-right text-warning"></i>
-                        </a>
-                    </div>
+                        <div class="col-md-6 text-right">
+                            <p class="montserrat d-inline" style="font-size: .7rem;">{{ $kemitraan->firstItem() }} dari {{ $kemitraan->lastItem() }}</p>
+                            <a href="{{ $kemitraan->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $kemitraan->onFirstPage() ? 'disabled' : 'active' }}">
+                                <i class="fas fa-caret-left text-warning"></i>
+                            </a>
+                            <a href="{{ $kemitraan->nextPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $kemitraan->hasMorePages() ? 'active' : 'disabled' }}">
+                                <i class="fas fa-caret-right text-warning"></i>
+                            </a>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
