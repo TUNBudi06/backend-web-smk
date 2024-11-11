@@ -43,8 +43,8 @@ class logoController extends Controller
         // Validate the input data
         $validatedData = $request->validate([
             'nama_mitra' => 'required|string|max:255',
-            'width_logo' => 'required|integer|min:1|max:140',
-            'height_logo' => 'required|integer|min:1|max:140',
+            'width_logo' => 'required|integer|min:1|max:200',
+            'height_logo' => 'required|integer|min:1|max:200',
             'kemitraan_thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Max 2MB
         ]);
 
@@ -88,8 +88,8 @@ class logoController extends Controller
         // Validate the input data
         $validatedData = $request->validate([
             'nama_mitra' => 'required|string|max:255',
-            'width_logo' => 'required|integer|min:1|max:140',
-            'height_logo' => 'required|integer|min:1|max:140',
+            'width_logo' => 'required|integer|min:1|max:200',
+            'height_logo' => 'required|integer|min:1|max:200',
             'kemitraan_thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Max 2MB
         ]);
 

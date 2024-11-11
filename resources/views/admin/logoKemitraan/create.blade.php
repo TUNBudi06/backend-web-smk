@@ -27,6 +27,11 @@
                         <input type="number" id="width_logo" name="width_logo" class="form-control @error('width_logo') is-invalid @enderror" placeholder="Width" aria-label="width" aria-describedby="addon-wrapping" value="{{ old('width_logo') ?? 128 }}">
                         <span class="input-group-text" id="addon-wrapping">px</span>
                     </div>
+                    @error('width_logo')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
             </div>
             <div class="col-md-3 py-md-5 py-3">
@@ -36,6 +41,11 @@
                         <input type="number" id="height_logo" name="height_logo" class="form-control @error('height_logo') is-invalid @enderror" placeholder="Height" aria-label="height" aria-describedby="addon-wrapping" value="{{ old('height_logo') ?? 128 }}">
                         <span class="input-group-text" id="addon-wrapping">px</span>
                     </div>
+                    @error('height_logo')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
             </div>
         </div>

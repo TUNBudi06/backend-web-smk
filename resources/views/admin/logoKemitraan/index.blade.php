@@ -42,8 +42,8 @@
                             <tr>
                                 <td><img src="{{ asset(file_exists(public_path('img/mitra/' . $data->logo_mitra)) ? 'img/mitra/' . $data->logo_mitra : 'img/no_image.png') }}" width="100px" class="rounded" alt=""></td>
                                 <td>{{ $data->nama_mitra }}</td>
-                                <td>{{ $data->width }} Px</td>
                                 <td>{{ $data->height }} Px</td>
+                                <td>{{ $data->width }} Px</td>
                                 <td>
                                     <ul class="navbar-nav">
                                         <li class="nav-item dropdown">

@@ -28,6 +28,11 @@
                             <input type="number" id="width_logo" name="width_logo" class="form-control @error('width_logo') is-invalid @enderror" placeholder="Width" value="{{ old('width_logo', $logo->width) }}">
                             <span class="input-group-text">px</span>
                         </div>
+                        @error('width_logo')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="col-md-3 py-md-5 py-3">
@@ -37,6 +42,11 @@
                             <input type="number" id="height_logo" name="height_logo" class="form-control @error('height_logo') is-invalid @enderror" placeholder="Height" value="{{ old('height_logo', $logo->height) }}">
                             <span class="input-group-text">px</span>
                         </div>
+                        @error('height_logo')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
                 </div>
             </div>
