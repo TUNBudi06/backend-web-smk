@@ -205,7 +205,12 @@ class PTKController extends Controller
             ], 404);
         }
 
+        $imagePath = public_path('img/guru/'.$ptk->foto);
+
         $ptk->delete();
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
 
         return response()->json([
             'status' => true,

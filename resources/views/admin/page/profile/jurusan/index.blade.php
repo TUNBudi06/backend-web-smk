@@ -44,7 +44,7 @@
                         @foreach($jurusan as $key => $data)
                         <tr>
                             <td><img src="{{ asset(file_exists(public_path('img/jurusan/' . $data->jurusan_thumbnail)) ? 'img/jurusan/' . $data->jurusan_thumbnail : 'img/no_image.png') }}" width="100px" class="rounded" alt=""></td>
-                            <td><img src="{{ asset(file_exists(public_path('img/jurusan/logo/' . $data->jurusan_thumbnail)) ? 'img/jurusan/logo/' . $data->jurusan_thumbnail : 'img/no_image.png') }}" width="100px" class="rounded" alt=""></td>
+                            <td><img src="{{ asset(file_exists(public_path('img/jurusan/logo/' . $data->jurusan_logo)) ? 'img/jurusan/logo/' . $data->jurusan_logo : 'img/no_image.png') }}" width="100px" class="rounded" alt=""></td>
                             <td>{{ $data->jurusan_nama }}</td>
                             <td>{{ $data->jurusan_short }}</td>
                             <td>{{ $data->prodis->prodi_name }}</td>

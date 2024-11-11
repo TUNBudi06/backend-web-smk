@@ -198,7 +198,7 @@ class JurusanController extends Controller
 
         $jurusan = tb_jurusan::findOrFail($id_jurusan);
         $imagePath = public_path('img/jurusan/'.$jurusan->jurusan_thumbnail);
-        $imagePath1 = public_path('img/jurusan/logo'.$jurusan->jurusan_logo);
+        $imagePath1 = public_path('img/jurusan/logo/'.$jurusan->jurusan_logo);
 
         $jurusan->delete();
 
@@ -206,7 +206,7 @@ class JurusanController extends Controller
             unlink($imagePath);
         }
         if (file_exists($imagePath1)) {
-            unlink(1);
+            unlink($imagePath1);
         }
 
         return redirect()->route('jurusan.index', ['token' => $request->token])->with('success', 'Jurusan berhasil dihapus.');

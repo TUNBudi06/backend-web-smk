@@ -183,7 +183,13 @@ class GalleryController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $gallery = tb_gallery::findOrFail($id_gallery);
+        $imagePath = public_path('img/gallery/'.$gallery->gallery_file);
+
         $gallery->delete();
+        
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
 
         return redirect()->route('gallery.index', ['token' => $request->token])->with('success', 'Data deleted successfully.');
     }
