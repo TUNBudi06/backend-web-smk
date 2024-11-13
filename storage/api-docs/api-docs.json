@@ -2235,8 +2235,17 @@
                         "example": "Semua"
                     },
                     "published_by": {
-                        "type": "string",
-                        "example": "Admin"
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "example": "Humas"
+                            },
+                            "img": {
+                                "type": "string",
+                                "example": "img/no_image.png"
+                            }
+                        },
+                        "type": "object"
                     },
                     "jurnal_by": {
                         "type": "string",
@@ -2324,11 +2333,11 @@
                         "properties": {
                             "name": {
                                 "type": "string",
-                                "example": "Admin A"
+                                "example": "Humas"
                             },
                             "img": {
                                 "type": "string",
-                                "example": "img/admin/gambar.jpg"
+                                "example": "img/no_image.png"
                             }
                         },
                         "type": "object"
@@ -2488,8 +2497,17 @@
                         "example": "2023-01-01"
                     },
                     "published_by": {
-                        "type": "string",
-                        "example": "Admin"
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "example": "Humas"
+                            },
+                            "img": {
+                                "type": "string",
+                                "example": "img/no_image.png"
+                            }
+                        },
+                        "type": "object"
                     },
                     "jurnal_by": {
                         "type": "string",
@@ -2904,8 +2922,17 @@
                         "example": "2023-09-19T12:00:00Z"
                     },
                     "published_by": {
-                        "type": "string",
-                        "example": "Admin"
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "example": "Humas"
+                            },
+                            "img": {
+                                "type": "string",
+                                "example": "img/no_image.png"
+                            }
+                        },
+                        "type": "object"
                     },
                     "jurnal_by": {
                         "type": "string",

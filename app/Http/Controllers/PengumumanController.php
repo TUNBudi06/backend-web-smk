@@ -6,6 +6,7 @@ use App\Models\tb_pemberitahuan;
 use App\Models\tb_pemberitahuan_category;
 use App\Models\tb_pengumuman;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Concurrency;
 
 class PengumumanController extends Controller
@@ -90,7 +91,7 @@ class PengumumanController extends Controller
         $data->time = $request->time;
         $data->viewer = 0;
         $data->approved = $request->session()->get('user')->role == 1 ? 1 : 0;
-        $data->published_by = $request->session()->get('user')->name;
+        $data->published_by = Auth::guard('admin')->id();
         $data->type = 2;
 
         if ($request->hasFile('thumbnail')) {

@@ -46,7 +46,7 @@ class PengumumanController extends Controller
      */
     public function index()
     {
-        $pengumuman = tb_pemberitahuan::with('kategori')
+        $pengumuman = tb_pemberitahuan::with(['kategori', 'publishedUser'])
             ->where('type', 2)
             ->orderBy('created_at', 'desc')->where('approved', 1)
             ->get();

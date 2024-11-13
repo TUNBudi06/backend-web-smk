@@ -25,7 +25,12 @@ use Illuminate\Support\Facades\File;
  *     ),
  *     @OA\Property(property="viewer", type="integer", example=100),
  *     @OA\Property(property="created_at", type="string", format="date-time", example="2023-09-19T12:00:00Z"),
- *     @OA\Property(property="published_by", type="string", example="Admin"),
+ *     @OA\Property(
+ *           property="published_by",
+ *           type="object",
+ *           @OA\Property(property="name", type="string", example="Humas"),
+ *           @OA\Property(property="img", type="string", example="img/no_image.png"),
+ *       ),
  *     @OA\Property(property="jurnal_by", type="string", example="Jurnal B")
  * )
  */
@@ -56,7 +61,13 @@ class NewsResource extends JsonResource
             'icon_type' => 'News',
             'text' => $cleanText,
             'level' => $this->level,
-            'published_by' => $this->published_by ?? 'Humas',
+            'published_by' => $this->published_by ? [
+                'name' => $this->publishedUser->name,
+                'img' => $this->publishedUser->image ? $this->publishedUser->image : 'img/no_image.png',
+            ] : [
+                'name' => 'Humas',
+                'img' => 'img/no_image.png',
+            ],
             'jurnal_by' => $this->jurnal_by ?? '-',
             'location' => $this->location,
             'category' => [

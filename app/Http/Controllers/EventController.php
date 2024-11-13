@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\tb_pemberitahuan;
 use App\Models\tb_pemberitahuan_category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -83,7 +84,7 @@ class EventController extends Controller
         $event->date = $request->date;
         $event->location = $request->location;
         $event->approved = $request->session()->get('user')->role == 1 ? 1 : 0;
-        $event->published_by = $request->session()->get('user')->name;
+        $event->published_by = Auth::guard('admin')->id();
         $event->type = 4;
         $event->viewer = 0;
 

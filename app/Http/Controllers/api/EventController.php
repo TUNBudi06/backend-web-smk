@@ -46,7 +46,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $event = tb_pemberitahuan::with('kategori')
+        $event = tb_pemberitahuan::with(['kategori', 'publishedUser'])
             ->where('type', 4)
             ->orderBy('created_at', 'desc')->where('approved', 1)
             ->get();

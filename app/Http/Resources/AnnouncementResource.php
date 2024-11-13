@@ -18,8 +18,9 @@ use Illuminate\Support\Facades\File;
  *     @OA\Property(property="target", type="string", example="Semua"),
  *     @OA\Property(
  *           property="published_by",
- *           type="string",
- *           example="Admin"
+ *           type="object",
+ *           @OA\Property(property="name", type="string", example="Humas"),
+ *           @OA\Property(property="img", type="string", example="img/no_image.png"),
  *       ),
  *       @OA\Property(
  *           property="jurnal_by",
@@ -64,7 +65,13 @@ class AnnouncementResource extends JsonResource
             'pdf' => $pdf,
             'icon_type' => 'Announcement',
             'target' => $this->target,
-            'published_by' => $this->published_by ?? 'Humas',
+            'published_by' => $this->published_by ? [
+                'name' => $this->publishedUser->name,
+                'img' => $this->publishedUser->image ? $this->publishedUser->image : 'img/no_image.png',
+            ] : [
+                'name' => 'Humas',
+                'img' => 'img/no_image.png',
+            ],
             'jurnal_by' => $this->jurnal_by ?? '-',
             'date' => $this->date,
             'time' => $this->time,

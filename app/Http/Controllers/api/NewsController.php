@@ -79,7 +79,7 @@ class NewsController extends Controller
      */
     public function index(Request $request)
     {
-        $query = tb_pemberitahuan::with('kategori')
+        $query = tb_pemberitahuan::with(['kategori', 'publishedUser'])
             ->where('type', 3)
             ->where('approved', 1);
 
