@@ -83,7 +83,7 @@ class ArticleController extends Controller
      */
     public function index(Request $request)
     {
-        $query = tb_pemberitahuan::with('kategori')
+        $query = tb_pemberitahuan::with(['kategori', 'publishedUser'])
             ->where('type', 1)
             ->where('approved', 1);
 

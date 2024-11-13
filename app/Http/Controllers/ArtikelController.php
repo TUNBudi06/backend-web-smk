@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\tb_pemberitahuan;
 use App\Models\tb_pemberitahuan_category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Concurrency;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +23,7 @@ class ArtikelController extends Controller
         [$artikel, $count] = Concurrency::run([
             fn () => Cache::flexible('artikel', [2, 20], function () use ($perPage) {
                 return tb_pemberitahuan::where('type', 1)
-                    ->with('kategori')
+                    ->with(['kategori', 'publishedUser'])
                     ->orderBy('created_at', 'desc')
                     ->paginate($perPage);
             }),
@@ -83,7 +84,7 @@ class ArtikelController extends Controller
         $data->category = $request->id_pemberitahuan_category;
         $data->text = $request->text;
         $data->approved = $request->session()->get('user')->role == 1 ? 1 : 0;
-        $data->published_by = $request->session()->get('user')->name;
+        $data->published_by = Auth::guard('admin')->id();
         $data->jurnal_by = $request->jurnal_by ?? '-';
         $data->type = 1;
         $data->viewer = 0;

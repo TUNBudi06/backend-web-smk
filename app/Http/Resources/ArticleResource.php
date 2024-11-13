@@ -58,8 +58,9 @@ use Illuminate\Support\Facades\File;
  *      ),
  *      @OA\Property(
  *          property="published_by",
- *          type="string",
- *          example="Admin"
+ *          type="object",
+ *          @OA\Property(property="name", type="string", example="Admin A"),
+ *          @OA\Property(property="img", type="string", example="img/admin/gambar.jpg"),
  *      ),
  *      @OA\Property(
  *          property="jurnal_by",
@@ -111,7 +112,10 @@ class ArticleResource extends JsonResource
             'text' => $cleanText,
             'iframe'=> $iframeUrls ?? null,
             'level' => $this->level,
-            'published_by' => $this->published_by ?? 'Humas',
+            'published_by' => $this->published_by ? [
+                'name' => $this->publishedUser->name,
+                'img' => $this->publishedUser->image ? $this->publishedUser->image : 'img/no_image.png',
+            ] : null,
             'jurnal_by' => $this->jurnal_by ?? '-',
             'category' => $this->kategori ? [
                 'id' => $this->kategori->id_pemberitahuan_category,

@@ -89,7 +89,7 @@ class UserController extends Controller
             $file->move('img/users', $imageName);
             $data->image = $imageName;
         } else {
-            $data->image = 'img/illustration/male.png';
+            $data->image = 'img/illust/male.png';
         }
         $data->save();
 

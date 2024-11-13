@@ -33,7 +33,7 @@ class tb_pemberitahuan extends Model
     public $timestamps = true;
 
     // Define relationships
-    public function relationships()
+    public function relationships(): array
     {
         return [
             'jenis' => $this->belongsTo(tb_pemberitahuan_type::class, 'type', 'id_pemberitahuan_type'),
@@ -41,13 +41,18 @@ class tb_pemberitahuan extends Model
         ];
     }
 
-    public function kategori()
+    public function kategori(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(tb_pemberitahuan_category::class, 'category', 'id_pemberitahuan_category');
     }
 
-    public function tipe()
+    public function tipe(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(tb_pemberitahuan_type::class, 'type', 'id_pemberitahuan_type');
+    }
+
+    public function publishedUser(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(tb_admin::class, 'published_by', 'id_admin');
     }
 }
