@@ -63,7 +63,7 @@
                         "description": "Search keyword for category article names",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     },
                     {
@@ -1137,7 +1137,7 @@
                         "description": "Search keyword for news category names",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     },
                     {

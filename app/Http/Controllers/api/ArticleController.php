@@ -35,7 +35,7 @@ class ArticleController extends Controller
      *          description="Search keyword for category article names",
      *          required=false,
      *
-     *          @OA\Schema(type="integer")
+     *          @OA\Schema(type="string")
      *      ),
      *
      *     @OA\Parameter(
@@ -94,8 +94,10 @@ class ArticleController extends Controller
         }
 
         if ($request->has('search_category')) {
-            $search = $request->input('search_category');
-            $query->where('category', 'LIKE', '%'.$search.'%');
+            $searchCategory = $request->input('search_category');
+            $query->whereHas('kategori', function ($q) use ($searchCategory) {
+                $q->where('pemberitahuan_category_name', 'LIKE', '%'.$searchCategory.'%');
+            });
         }
 
         // Filter by date range
