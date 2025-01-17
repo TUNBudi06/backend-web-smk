@@ -22,11 +22,12 @@
         <div class="row">
             <div class="col-md-3 py-md-5 py-3">
                 <div class="form-group">
-                    <label for="width_logo_logo">Lebar Logo</label>
+                    <label for="width_logo">Lebar Logo</label>
                     <div class="input-group flex-nowrap">
                         <input type="number" id="width_logo" name="width_logo" class="form-control @error('width_logo') is-invalid @enderror" placeholder="Width" aria-label="width" aria-describedby="addon-wrapping" value="{{ old('width_logo') ?? 128 }}">
                         <span class="input-group-text" id="addon-wrapping">px</span>
                     </div>
+                    <small id="width_text" class="text-muted">Width: - px</small>
                     @error('width_logo')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -41,6 +42,7 @@
                         <input type="number" id="height_logo" name="height_logo" class="form-control @error('height_logo') is-invalid @enderror" placeholder="Height" aria-label="height" aria-describedby="addon-wrapping" value="{{ old('height_logo') ?? 128 }}">
                         <span class="input-group-text" id="addon-wrapping">px</span>
                     </div>
+                    <small id="height_text" class="text-muted">Height: - px</small>
                     @error('height_logo')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -48,7 +50,7 @@
                     @enderror
                 </div>
             </div>
-        </div>
+        </div>        
         <div class="row mb-4">
             <div class="col-md-6 py-md-5 py-3">
                 <div class="form-group">
@@ -73,12 +75,28 @@
 </div>
 <script>
     function loadFile(event, previewId) {
-        var reader = new FileReader();
-        reader.onload = function() {
-            var preview = document.getElementById(previewId);
-            preview.src = reader.result;
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const preview = document.getElementById(previewId);
+                preview.src = reader.result;
+
+                const img = new Image();
+                img.onload = function() {
+                    const width = img.width;
+                    const height = img.height;
+
+                    document.getElementById('width_logo').value = width;
+                    document.getElementById('height_logo').value = height;
+
+                    document.getElementById('width_text').textContent = `Width: ${width} px`;
+                    document.getElementById('height_text').textContent = `Height: ${height} px`;
+                };
+                img.src = reader.result;
+            };
+            reader.readAsDataURL(file);
         }
-        reader.readAsDataURL(event.target.files[0]);
     }
 </script>
 @endsection
