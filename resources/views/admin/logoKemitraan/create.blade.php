@@ -56,13 +56,13 @@
                 <div class="form-group">
                     <label for="kemitraan_thumbnail">Thumbnail Kemitraan</label>
                     <input onchange="loadFile(event, 'cover_preview')" type="file" name="kemitraan_thumbnail" id="kemitraan_thumbnail" class="form-control @error('kemitraan_thumbnail') is-invalid @enderror">
-                    <small id="imageId" class="text-muted d-none"></small>
+                    <small id="imageId" class="text-muted d-none">Dimensi gambar: -</small>
                     @error('kemitraan_thumbnail')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
                     @enderror
-                </div>
+                </div>                
             </div>
             <div class="col-md-6 text-center">
                 <img class="w-100 rounded" id="cover_preview" src="{{ asset('img/no_image.png') }}" alt="Cover Preview">
@@ -102,6 +102,16 @@
             reader.onload = function () {
                 const preview = document.getElementById(previewId);
                 preview.src = reader.result;
+
+                const img = new Image();
+                img.onload = function () {
+                    const width = img.width;
+                    const height = img.height;
+
+                    document.getElementById('imageId').textContent = `Dimensi gambar: ${width}px x ${height}px`;
+                    document.getElementById('imageId').classList.remove('d-none');
+                };
+                img.src = reader.result;
             };
             reader.readAsDataURL(file);
         }
