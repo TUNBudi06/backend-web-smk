@@ -28,11 +28,11 @@
                         <span class="input-group-text" id="addon-wrapping">px</span>
                     </div>
                     <small id="width_error" class="text-danger d-none">Lebar tidak boleh lebih dari 128px.</small>
+                    <small id="width_text" class="text-muted">Width: - px</small>
                     @error('width_logo')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
-                    <small id="width_text" class="text-muted">Width: - px</small>
                     @enderror
                 </div>
             </div>
@@ -40,15 +40,15 @@
                 <div class="form-group">
                     <label for="height_logo">Tinggi Logo</label>
                     <div class="input-group flex-nowrap">
-                        <input type="number" id="height_logo" name="height_logo" class="form-control @error('height_logo') is-invalid @enderror" placeholder="Height" aria-label="height" aria-describedby="addon-wrapping" value="128" min="1" max="128">
+                        <input type="number" id="height_logo" name="height_logo" class="form-control @error('height_logo') is-invalid @enderror" placeholder="Height" aria-label="height" aria-describedby="addon-wrapping" value="140" min="1" max="140">
                         <span class="input-group-text" id="addon-wrapping">px</span>
                     </div>
-                    <small id="height_error" class="text-danger d-none">Tinggi tidak boleh lebih dari 128px.</small>
+                    <small id="height_error" class="text-danger d-none">Tinggi tidak boleh lebih dari 140px.</small>
+                    <small id="height_text" class="text-muted">Height: - px</small>
                     @error('height_logo')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
-                    <small id="height_text" class="text-muted">Height: - px</small>
                     @enderror
                 </div>
             </div>
@@ -77,15 +77,16 @@
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const MAX_DIMENSION = 128;
+        const MAX_WIDTH = 128;
+        const MAX_HEIGHT = 140;
 
-        function validateInput(inputId, errorId) {
+        function validateInput(inputId, errorId, maxDimension) {
             const input = document.getElementById(inputId);
             const error = document.getElementById(errorId);
 
             input.addEventListener('input', function () {
-                if (parseInt(input.value) > MAX_DIMENSION) {
-                    input.value = MAX_DIMENSION;
+                if (parseInt(input.value) > maxDimension) {
+                    input.value = maxDimension;
                     error.classList.remove('d-none');
                 } else {
                     error.classList.add('d-none');
@@ -93,8 +94,8 @@
             });
         }
 
-        validateInput('width_logo', 'width_error');
-        validateInput('height_logo', 'height_error');
+        validateInput('width_logo', 'width_error', MAX_WIDTH);
+        validateInput('height_logo', 'height_error', MAX_HEIGHT);
     });
 
     function loadFile(event, previewId) {
@@ -110,11 +111,11 @@
                     const width = img.width;
                     const height = img.height;
 
-                    document.getElementById('width_logo').value = width;
-                    document.getElementById('height_logo').value = height;
-                    
-                    document.getElementById('width_text').textContent = `Width: ${width} px`;
-                    document.getElementById('height_text').textContent = `Height: ${height} px`;
+                    document.getElementById('width_logo').value = '';
+                    document.getElementById('height_logo').value = '';
+
+                    document.getElementById('width_text').innerHTML = `Width: ${width} px<br>`;
+                    document.getElementById('height_text').innerHTML = `Height: ${height} px<br>`;
                 };
                 img.src = reader.result;
             };
