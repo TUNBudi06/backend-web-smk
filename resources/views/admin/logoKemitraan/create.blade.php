@@ -32,6 +32,7 @@
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
+                    <small id="width_text" class="text-muted">Width: - px</small>
                     @enderror
                 </div>
             </div>
@@ -47,6 +48,7 @@
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
+                    <small id="height_text" class="text-muted">Height: - px</small>
                     @enderror
                 </div>
             </div>
@@ -108,8 +110,11 @@
                     const width = img.width;
                     const height = img.height;
 
-                    document.getElementById('imageId').textContent = `Dimensi gambar: ${width}px x ${height}px`;
-                    document.getElementById('imageId').classList.remove('d-none');
+                    document.getElementById('width_logo').value = width;
+                    document.getElementById('height_logo').value = height;
+                    
+                    document.getElementById('width_text').textContent = `Width: ${width} px`;
+                    document.getElementById('height_text').textContent = `Height: ${height} px`;
                 };
                 img.src = reader.result;
             };
