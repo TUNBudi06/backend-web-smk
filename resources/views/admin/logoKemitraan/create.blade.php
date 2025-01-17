@@ -24,10 +24,10 @@
                 <div class="form-group">
                     <label for="width_logo">Lebar Logo</label>
                     <div class="input-group flex-nowrap">
-                        <input type="number" id="width_logo" name="width_logo" class="form-control @error('width_logo') is-invalid @enderror" placeholder="Width" aria-label="width" aria-describedby="addon-wrapping" value="{{ old('width_logo') ?? 128 }}">
+                        <input type="number" id="width_logo" name="width_logo" class="form-control @error('width_logo') is-invalid @enderror" placeholder="Width" aria-label="width" aria-describedby="addon-wrapping" value="128" min="1" max="128">
                         <span class="input-group-text" id="addon-wrapping">px</span>
                     </div>
-                    <small id="width_text" class="text-muted">Width: - px</small>
+                    <small id="width_error" class="text-danger d-none">Lebar tidak boleh lebih dari 128px.</small>
                     @error('width_logo')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -39,10 +39,10 @@
                 <div class="form-group">
                     <label for="height_logo">Tinggi Logo</label>
                     <div class="input-group flex-nowrap">
-                        <input type="number" id="height_logo" name="height_logo" class="form-control @error('height_logo') is-invalid @enderror" placeholder="Height" aria-label="height" aria-describedby="addon-wrapping" value="{{ old('height_logo') ?? 128 }}">
+                        <input type="number" id="height_logo" name="height_logo" class="form-control @error('height_logo') is-invalid @enderror" placeholder="Height" aria-label="height" aria-describedby="addon-wrapping" value="128" min="1" max="128">
                         <span class="input-group-text" id="addon-wrapping">px</span>
                     </div>
-                    <small id="height_text" class="text-muted">Height: - px</small>
+                    <small id="height_error" class="text-danger d-none">Tinggi tidak boleh lebih dari 128px.</small>
                     @error('height_logo')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -74,26 +74,34 @@
     </form>
 </div>
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const MAX_DIMENSION = 128;
+
+        function validateInput(inputId, errorId) {
+            const input = document.getElementById(inputId);
+            const error = document.getElementById(errorId);
+
+            input.addEventListener('input', function () {
+                if (parseInt(input.value) > MAX_DIMENSION) {
+                    input.value = MAX_DIMENSION;
+                    error.classList.remove('d-none');
+                } else {
+                    error.classList.add('d-none');
+                }
+            });
+        }
+
+        validateInput('width_logo', 'width_error');
+        validateInput('height_logo', 'height_error');
+    });
+
     function loadFile(event, previewId) {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = function() {
+            reader.onload = function () {
                 const preview = document.getElementById(previewId);
                 preview.src = reader.result;
-
-                const img = new Image();
-                img.onload = function() {
-                    const width = img.width;
-                    const height = img.height;
-
-                    document.getElementById('width_logo').value = width;
-                    document.getElementById('height_logo').value = height;
-
-                    document.getElementById('width_text').textContent = `Width: ${width} px`;
-                    document.getElementById('height_text').textContent = `Height: ${height} px`;
-                };
-                img.src = reader.result;
             };
             reader.readAsDataURL(file);
         }
