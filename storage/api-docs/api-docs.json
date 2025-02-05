@@ -44,8 +44,8 @@
                 "tags": [
                     "Articles"
                 ],
-                "summary": "Get all articles",
-                "description": "Retrieve all articles with type 1. Supports search by 'nama' and 'category' and filtering by date range using 'created_at'.",
+                "summary": "Get all articles with pagination",
+                "description": "Retrieve all articles with type 1, supports search and filtering. Results are paginated with 9 items per page.",
                 "operationId": "getAllArticles",
                 "parameters": [
                     {
@@ -85,6 +85,16 @@
                             "type": "string",
                             "format": "date"
                         }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
                     }
                 ],
                 "responses": {
@@ -103,6 +113,35 @@
                                             "items": {
                                                 "$ref": "#/components/schemas/ArticleResource"
                                             }
+                                        },
+                                        "pagination": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 9
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 100
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 12
+                                                },
+                                                "next_page_url": {
+                                                    "type": "string",
+                                                    "example": "http://api.example.com/api/user/articles?page=2"
+                                                },
+                                                "prev_page_url": {
+                                                    "type": "string",
+                                                    "example": "http://api.example.com/api/user/articles?page=1"
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -1118,8 +1157,8 @@
                 "tags": [
                     "News"
                 ],
-                "summary": "Get all news data",
-                "description": "Retrieve all news data. Supports search by 'nama' and filtering by date range using 'created_at'.",
+                "summary": "Get all news data with pagination",
+                "description": "Retrieve all news data. Supports search by 'nama' and filtering by date range using 'created_at'. Results are paginated with 9 items per page.",
                 "operationId": "getAllNews",
                 "parameters": [
                     {
@@ -1159,6 +1198,16 @@
                             "type": "string",
                             "format": "date"
                         }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
                     }
                 ],
                 "responses": {
@@ -1167,10 +1216,48 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/NewsResource"
-                                    }
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/NewsResource"
+                                            }
+                                        },
+                                        "pagination": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 9
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 100
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 12
+                                                },
+                                                "next_page_url": {
+                                                    "type": "string",
+                                                    "example": "http://api.example.com/api/user/news?page=2"
+                                                },
+                                                "prev_page_url": {
+                                                    "type": "string",
+                                                    "example": "http://api.example.com/api/user/news?page=1"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }

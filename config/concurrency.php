@@ -12,10 +12,10 @@ return [
     | be sent to isolated PHP processes which will return their results.
     |
     | Supported: "process", "fork", "sync"
-    | change process to "sync" but change its again when you want to push to production
+    | change "process" to "sync" for development but change its again when you want to push to production
     |
     */
 
-    'default' => env('CONCURRENCY_DRIVER', 'sync'),
+    'default' => env('CONCURRENCY_DRIVER', 'process'),
 
 ];

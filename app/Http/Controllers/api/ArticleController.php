@@ -16,8 +16,8 @@ class ArticleController extends Controller
      * @OA\Get(
      *     path="/api/user/articles",
      *     tags={"Articles"},
-     *     summary="Get all articles",
-     *     description="Retrieve all articles with type 1. Supports search by 'nama' and 'category' and filtering by date range using 'created_at'.",
+     *     summary="Get all articles with pagination",
+     *     description="Retrieve all articles with type 1, supports search and filtering. Results are paginated with 9 items per page.",
      *     operationId="getAllArticles",
      *
      *     @OA\Parameter(
@@ -25,57 +25,59 @@ class ArticleController extends Controller
      *         in="query",
      *         description="Search keyword for article names",
      *         required=false,
-     *
      *         @OA\Schema(type="string")
      *     ),
-     *
      *     @OA\Parameter(
-     *          name="search_category",
-     *          in="query",
-     *          description="Search keyword for category article names",
-     *          required=false,
-     *
-     *          @OA\Schema(type="string")
-     *      ),
-     *
+     *         name="search_category",
+     *         in="query",
+     *         description="Search keyword for category article names",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
      *     @OA\Parameter(
      *         name="start_date",
      *         in="query",
      *         description="Start date for filtering articles (format: YYYY-MM-DD)",
      *         required=false,
-     *
      *         @OA\Schema(type="string", format="date")
      *     ),
-     *
      *     @OA\Parameter(
      *         name="end_date",
      *         in="query",
      *         description="End date for filtering articles (format: YYYY-MM-DD)",
      *         required=false,
-     *
      *         @OA\Schema(type="string", format="date")
+     *     ),
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Page number for pagination",
+     *         required=false,
+     *         @OA\Schema(type="integer", format="int32")
      *     ),
      *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
-     *
      *         @OA\JsonContent(
-     *
      *             @OA\Property(property="message", type="string", example="Data ditemukan"),
      *             @OA\Property(property="data", type="array",
-     *
      *                 @OA\Items(ref="#/components/schemas/ArticleResource")
+     *             ),
+     *             @OA\Property(property="pagination", type="object",
+     *                 @OA\Property(property="current_page", type="integer", example=1),
+     *                 @OA\Property(property="per_page", type="integer", example=9),
+     *                 @OA\Property(property="total", type="integer", example=100),
+     *                 @OA\Property(property="last_page", type="integer", example=12),
+     *                 @OA\Property(property="next_page_url", type="string", example="http://api.example.com/api/user/articles?page=2"),
+     *                 @OA\Property(property="prev_page_url", type="string", example="http://api.example.com/api/user/articles?page=1")
      *             )
      *         )
      *     ),
-     *
      *     @OA\Response(
      *         response=404,
      *         description="Data tidak ditemukan",
-     *
      *         @OA\JsonContent(
-     *
      *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )
@@ -107,7 +109,7 @@ class ArticleController extends Controller
             $query->whereBetween('created_at', [$startDate, $endDate]);
         }
 
-        $artikel = $query->orderBy('created_at', 'desc')->get();
+        $artikel = $query->orderBy('created_at', 'desc')->paginate(9);
 
         if ($artikel->isEmpty()) {
             return response()->json([
@@ -118,7 +120,15 @@ class ArticleController extends Controller
         return response()->json([
             'message' => 'Data ditemukan',
             'data' => ArticleResource::collection($artikel),
-        ], 200);
+            'pagination' => [
+                'current_page' => $artikel->currentPage(),
+                'per_page' => $artikel->perPage(),
+                'total' => $artikel->total(),
+                'last_page' => $artikel->lastPage(),
+                'next_page_url' => $artikel->nextPageUrl(),
+                'prev_page_url' => $artikel->previousPageUrl(),
+            ]
+        ], 200);        
     }
 
     /**

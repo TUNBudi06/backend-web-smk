@@ -15,8 +15,8 @@ class NewsController extends Controller
      * @OA\Get(
      *     path="/api/user/news",
      *     tags={"News"},
-     *     summary="Get all news data",
-     *     description="Retrieve all news data. Supports search by 'nama' and filtering by date range using 'created_at'.",
+     *     summary="Get all news data with pagination",
+     *     description="Retrieve all news data. Supports search by 'nama' and filtering by date range using 'created_at'. Results are paginated with 9 items per page.",
      *     operationId="getAllNews",
      *
      *     @OA\Parameter(
@@ -24,25 +24,22 @@ class NewsController extends Controller
      *         in="query",
      *         description="Search keyword for news names",
      *         required=false,
-     *
      *         @OA\Schema(type="string")
      *     ),
      *
      *     @OA\Parameter(
-     *          name="search_category",
-     *          in="query",
-     *          description="Search keyword for news category names",
-     *          required=false,
-     *
-     *          @OA\Schema(type="string")
-     *      ),
+     *         name="search_category",
+     *         in="query",
+     *         description="Search keyword for news category names",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
      *
      *     @OA\Parameter(
      *         name="start_date",
      *         in="query",
      *         description="Start date for filtering news (format: YYYY-MM-DD)",
      *         required=false,
-     *
      *         @OA\Schema(type="string", format="date")
      *     ),
      *
@@ -51,27 +48,40 @@ class NewsController extends Controller
      *         in="query",
      *         description="End date for filtering news (format: YYYY-MM-DD)",
      *         required=false,
-     *
      *         @OA\Schema(type="string", format="date")
+     *     ),
+     *
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Page number for pagination",
+     *         required=false,
+     *         @OA\Schema(type="integer", format="int32")
      *     ),
      *
      *     @OA\Response(
      *         response=200,
      *         description="Data ditemukan",
-     *
      *         @OA\JsonContent(
-     *             type="array",
-     *
-     *             @OA\Items(ref="#/components/schemas/NewsResource")
+     *             @OA\Property(property="message", type="string", example="Data ditemukan"),
+     *             @OA\Property(property="data", type="array",
+     *                 @OA\Items(ref="#/components/schemas/NewsResource")
+     *             ),
+     *             @OA\Property(property="pagination", type="object",
+     *                 @OA\Property(property="current_page", type="integer", example=1),
+     *                 @OA\Property(property="per_page", type="integer", example=9),
+     *                 @OA\Property(property="total", type="integer", example=100),
+     *                 @OA\Property(property="last_page", type="integer", example=12),
+     *                 @OA\Property(property="next_page_url", type="string", example="http://api.example.com/api/user/news?page=2"),
+     *                 @OA\Property(property="prev_page_url", type="string", example="http://api.example.com/api/user/news?page=1")
+     *             )
      *         )
      *     ),
      *
      *     @OA\Response(
      *         response=404,
      *         description="Data tidak ditemukan",
-     *
      *         @OA\JsonContent(
-     *
      *             @OA\Property(property="message", type="string", example="Data tidak ditemukan")
      *         )
      *     )
@@ -103,7 +113,7 @@ class NewsController extends Controller
             $query->whereBetween('created_at', [$startDate, $endDate]);
         }
 
-        $berita = $query->orderBy('created_at', 'desc')->get();
+        $berita = $query->orderBy('created_at', 'desc')->paginate(9);
 
         if ($berita->isEmpty()) {
             return response()->json([
@@ -114,6 +124,14 @@ class NewsController extends Controller
         return response()->json([
             'message' => 'Data ditemukan',
             'data' => NewsResource::collection($berita),
+            'pagination' => [
+                'current_page' => $berita->currentPage(),
+                'per_page' => $berita->perPage(),
+                'total' => $berita->total(),
+                'last_page' => $berita->lastPage(),
+                'next_page_url' => $berita->nextPageUrl(),
+                'prev_page_url' => $berita->previousPageUrl(),
+            ]
         ], 200);
     }
 
