@@ -14,14 +14,6 @@ class adminUser extends Seeder
      */
     public function run(): void
     {
-        DB::table('tb_user_roles')->insert([
-            [
-                'name' => 'admin',
-                'user_access' => data_manager::array2base(data_manager::accessRole()), // Example JSON array of user access
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
         DB::table('tb_admins')->insert([
             // [
             //     'name' => 'Budi',
