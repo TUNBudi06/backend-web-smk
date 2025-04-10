@@ -57,6 +57,11 @@ use Illuminate\Support\Facades\File;
  *           type="string",
  *           example="Jurnal A"
  *       ),
+ *       @OA\Property(
+ *           property="location",
+ *           type="string",
+ *           example="SMKN 1 Purwosari"
+ *       ),
  *     @OA\Property(
  *         property="time",
  *         type="string",
@@ -87,9 +92,12 @@ class EventResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $thumbnailPath = 'img/event/'.$this->thumbnail;
+        $thumbnail = $this->thumbnail
+            ? (File::exists(public_path('img/event/' . $this->thumbnail))
+                ? 'img/event/' . $this->thumbnail
+                : 'img/no_image.png')
+            : 'img/no_image.png';
         $pdfPath = 'pdf/event/'.$this->pdf;
-        $thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
         $pdf = $this->pdf ? (File::exists(public_path($pdfPath)) ? $pdfPath : null) : null;
 
         preg_match_all('/<iframe.*?src=["\'](.*?)["\'].*?>/i', $this->text, $matches);
@@ -113,6 +121,7 @@ class EventResource extends JsonResource
                 'img' => 'img/no_image.png',
             ],
             'jurnal_by' => $this->jurnal_by ?? '-',
+            'location' => $this->location ?? '-',
             'text' => $cleanText,
             'iframe' => $iframeUrls ?? null,
             'category' => $this->kategori ? [

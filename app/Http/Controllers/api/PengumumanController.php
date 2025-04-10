@@ -51,6 +51,12 @@ class PengumumanController extends Controller
             ->orderBy('created_at', 'desc')->where('approved', 1)
             ->get();
 
+        if ($pengumuman->isEmpty()) {
+            return response()->json([
+                'message' => 'Data tidak ditemukan',
+            ], 404);
+        }
+
         return response()->json([
             'message' => 'Data ditemukan',
             'data' => AnnouncementResource::collection($pengumuman),

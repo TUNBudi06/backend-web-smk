@@ -2600,6 +2600,10 @@
                         "type": "string",
                         "example": "Jurnal A"
                     },
+                    "location": {
+                        "type": "string",
+                        "example": "SMKN 1 Purwosari"
+                    },
                     "time": {
                         "type": "string",
                         "example": "12:00"

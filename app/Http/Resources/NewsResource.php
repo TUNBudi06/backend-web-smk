@@ -43,8 +43,11 @@ class NewsResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $thumbnailPath = 'img/berita/'.$this->thumbnail;
-        $thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
+        $thumbnail = $this->thumbnail
+            ? (File::exists(public_path('img/berita/' . $this->thumbnail))
+                ? 'img/berita/' . $this->thumbnail
+                : 'img/no_image.png')
+            : 'img/no_image.png';
 
         preg_match_all('/<iframe.*?src=["\'](.*?)["\'].*?>/i', $this->text, $matches);
         $iframeUrls = isset($matches[1]) ? $matches[1] : [];
