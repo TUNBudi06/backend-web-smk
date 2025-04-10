@@ -48,9 +48,12 @@ class AnnouncementResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $thumbnailPath = 'img/announcement/'.$this->thumbnail;
-        $pdfPath = 'pdf/announcement/'.$this->pdf;
-        $thumbnail = File::exists(public_path($thumbnailPath)) ? $thumbnailPath : 'img/no_image.png';
+        $thumbnail = $this->thumbnail
+            ? (File::exists(public_path('img/announcement/' . $this->thumbnail))
+                ? 'img/announcement/' . $this->thumbnail
+                : 'img/no_image.png')
+            : 'img/no_image.png';
+        $pdfPath = 'pdf/announcement/' . $this->pdf;
         $pdf = $this->pdf ? (File::exists(public_path($pdfPath)) ? $pdfPath : null) : null;
 
         preg_match_all('/<iframe.*?src=["\'](.*?)["\'].*?>/i', $this->text, $matches);
