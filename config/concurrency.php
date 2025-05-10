@@ -16,6 +16,6 @@ return [
     |
     */
 
-    'default' => env('CONCURRENCY_DRIVER', 'process'),
+    'default' => env('CONCURRENCY_DRIVER', 'sync'), // change to "process" for production
 
 ];
