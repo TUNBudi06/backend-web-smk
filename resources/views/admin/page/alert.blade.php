@@ -17,6 +17,9 @@
             </div>
         @endif
         <div class="row">
+            <div class="offset-md-1 col-12">
+                @include('admin.partials.nav_link')
+            </div>
             @if ($action == 'update' && session('alerts'))
                 <div class="col-md-4 offset-md-1 mt-4 p-2">
                     <div class="w-100 rad bg-white position-relative shadow py-3 px-4">
@@ -44,9 +47,8 @@
                 </div>
                 <div class="col-md-6 mt-4 p-2">
                 @else
-                    <div class="col-md-11 offset-md-1 mt-5 p-2">
+                    <div class="col-md-11 offset-md-1 p-2">
             @endif
-            @include('admin.partials.nav_link')
             <div class="w-100 table-parent bg-white">
                 <div class="row p-4">
                     <div class="col-md-8">

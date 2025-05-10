@@ -17,7 +17,7 @@
         @endif
         <div class="row">
             @if ($action == "update")
-            <div class="col-md-4 offset-md-1 mt-4 p-2">
+            <div class="col-md-4 offset-md-1 p-2">
                 <div class="w-100 rad bg-white position-relative shadow py-3 px-4">
                     <h5 class="poppins mb-0">Update Video</h5>
                     <form action="{{ route('video.update', ['token' => $token, 'video' => $video->id_link]) }}" method="post">
@@ -42,12 +42,12 @@
                     </form>
                 </div>
             </div>
-            <div class="col-md-6 mt-4 p-2">
+            <div class="col-md-6 p-2">
             @else
-            <div class="col-md-11 offset-md-1 mt-5 p-2">
+            <div class="col-md-11 offset-md-1 p-2">
             @endif
                 @include('admin.partials.nav_profile')
-                <div class="w-100 table-parent bg-white">
+                <div class="w-100 table-parent bg-white mb-2">
                     <div class="row p-4">
                         <div class="col-md-8">
                             <h4 class="poppins mb-0">Video</h4>
@@ -55,7 +55,7 @@
                             </p>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row mb-4 p-2">
                             @foreach($videos as $index => $data)
                                 <div class="col-4">
                                     <div class="card" style="width: 18rem;">
@@ -65,7 +65,7 @@
                                             <p class="card-text">{{ $data->description }}</p>
                                             <a href="{{route('video.edit',[$token,$data->id_link])}}" class="btn btn-warning">Edit</a>
                                             @if($data->is_used == 1)
-                                                <div class="btn btn-gray">Telah Digunakan</div>
+                                                <div class="btn btn-gray">Sedang Digunakan</div>
                                             @else
                                                 <a href="{{route('video.show',['token'=>$token,'video'=>$data->id_link])}}" class="btn btn-primary">Gunakan Ini</a>
                                             @endif

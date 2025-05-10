@@ -20,7 +20,7 @@
                 @include('admin.partials.nav_link')
             </div>
             @if ($action == 'update')
-                <div class="col-md-4 offset-md-1 mt-4 p-2">
+                <div class="col-md-4 offset-md-1 p-2">
                     <div class="w-100 rad bg-white position-relative shadow py-3 px-4">
                         <h5 class="poppins mb-0">Update Footer</h5>
                         <form action="{{ route('footer.update', ['token' => $token]) }}" method="post">
@@ -70,7 +70,7 @@
                     </div>
                 </div>
             @else
-                <div class="col-md-4 offset-md-1 mt-4 p-2">
+                <div class="col-md-4 offset-md-1 p-2">
                     <div class="w-100 rad bg-white position-relative shadow py-3 px-4">
                         <h5 class="poppins mb-0">Tambah Footer</h5>
                         <form action="{{ route('footer.store', ['token' => $token]) }}" method="post">
@@ -113,7 +113,7 @@
                     </div>
                 </div>
             @endif
-            <div class="col-md-6 mt-4 p-2">
+            <div class="col-md-6 p-2">
                 <div class="w-100 table-parent bg-white">
                     <div class="row p-4">
                         <div class="col-md-8">

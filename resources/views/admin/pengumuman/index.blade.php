@@ -17,7 +17,7 @@
                     </div>
                     <div class="col-md-4 text-right">
                         <a href="{{ route('pengumuman.create', ['token' => $token]) }}"
-                            class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i>
+                            class="btn-print btn btn-warning shadow-warning px-4 rounded-pill"><i class="fas fa-plus"></i>
                             Pengumuman Baru</a>
                         <a href="{{ route('pengumuman.category.index', ['token' => $token]) }}"
                             class="btn-print btn btn-white border-warning px-3 rounded-pill"><i class="fas fa-list"></i>
@@ -49,7 +49,7 @@
                     </thead>
                     @foreach ($pengumuman as $key => $data)
                         <tr>
-                            <td><img src="{{ asset('img/announcement/' . $data->thumbnail) }}" width="120px"
+                            <td><img src="{{ asset(file_exists(public_path('img/announcement/' . ($data->thumbnail ?? 'no_image.png'))) ? 'img/announcement/' . ($data->thumbnail ?? 'no_image.png') : 'img/no_image.png') }}" width="120px"
                                     height="60px" class="rounded" alt=""></td>
                             <td style="word-wrap: break-word; max-width: 230px;">{{ $data->nama }}</td>
                             <td>{{ $data->kategori ? $data->kategori->pemberitahuan_category_name : 'No Category' }}
