@@ -102,7 +102,7 @@ class otherController extends Controller
         } elseif ($idData == 8) {
             $request->validate([
                 'description' => 'required',
-                'jurusan_thumbnail' => 'file|required|image|mimes:jpeg,png,jpg,gif|max:10240',
+                'jurusan_thumbnail' => 'file|required|image|mimes:jpeg,png,jpg,gif,webp|max:10240',
             ], [
                 'jurusan_thumbnail' => 'Kolom gambar wajib diisi',
                 'jurusan_thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
@@ -110,7 +110,7 @@ class otherController extends Controller
             $findData->description = $request->description;
 
             if ($request->hasFile('jurusan_thumbnail')) {
-                if ($findData->url !== null) {
+                if (! is_null($findData->url) && $findData->url !== '' && $findData->url !== 'img/kepsek/default.png') {
                     $oldImagePath = public_path($findData->url);
                     if (file_exists($oldImagePath)) {
                         unlink($oldImagePath);

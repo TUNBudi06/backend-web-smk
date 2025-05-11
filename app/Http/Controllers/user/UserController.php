@@ -133,7 +133,7 @@ class UserController extends Controller
             'username' => 'required|string|max:255',
             'role' => 'required|in:1,2',
             'password' => 'required|string|min:6', // Add password validation rule
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ], [
             'nama.required' => 'Nama User wajib diisi.',
             'email.required' => 'Email User wajib diisi.',

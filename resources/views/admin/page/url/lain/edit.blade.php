@@ -91,6 +91,16 @@
                 </div>
                 <div class="col-md-6 text-center">
                     <img class="w-100 rounded" id="preview" src="{{ asset('img/no_image.png') }}" alt="">
+                    <script type="text/javascript">
+                        function loadFile(event) {
+                            var reader = new FileReader();
+                            reader.onload = function() {
+                                var preview = document.getElementById('preview');
+                                preview.src = reader.result;
+                            }
+                            reader.readAsDataURL(event.target.files[0]);
+                        }
+                    </script>
                 </div>
             </div>
             <button class="btn btn-warning px-4 mb-4 rounded-pill shadow-warning">Update</button>
@@ -102,6 +112,7 @@
 @section('script')
     @if($idData != 8)
         <script  type="text/javascript" >
+
             var data= @json($data);
 
             function changeField(type) {

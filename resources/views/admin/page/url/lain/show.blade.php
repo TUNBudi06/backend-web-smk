@@ -15,6 +15,11 @@
             <div class="bg-white shadow-sm p-2">
                 {{--            i want this page only render html from string without from other afffec5tion using $data->description but the text is html format--}}
                 <div class="row justify-content-center">
+                @if($data->id_link == 8)
+                    <div class="col-12 text-center pb-2">
+                        <img src="{{asset($data->url)}}" alt="foto kepsek">
+                    </div>
+                @endif
                     <div class="col-md-8">
                         {!! $data->description !!}
                     </div>
@@ -36,8 +41,10 @@
             width: 300,
             height: 500,
         };
-        $(document).ready(function () {
-            $('#PDFView').pdfViewer('{{$data->url}}', options);
-        });
+        @if($data->type == 'file')
+            $(document).ready(function () {
+                $('#PDFView').pdfViewer('{{$data->url}}', options);
+            });
+        @endif
     </script><script>
 @endsection
