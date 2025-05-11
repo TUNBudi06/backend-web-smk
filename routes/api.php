@@ -10,6 +10,7 @@ use App\Http\Controllers\api\GlobalController;
 use App\Http\Controllers\api\JurusanController;
 use App\Http\Controllers\api\KemitraanController;
 use App\Http\Controllers\api\link\footerAPI;
+use App\Http\Controllers\api\link\NavbarApiController;
 use App\Http\Controllers\api\link\profile;
 use App\Http\Controllers\api\LogokController;
 use App\Http\Controllers\api\LokerController;
@@ -57,6 +58,7 @@ Route::prefix('user')->group(function () {
     });
 
     Route::get('footer', [footerAPI::class, 'footer']);
+    Route::get('navbar', [NavbarApiController::class, 'index']);
     Route::get('PerangkatAjar', [PAController::class, 'index']);
     Route::get('PerangkatAjar', [PAController::class, 'index']);
     Route::get('slider/keunggulan', [SkController::class, 'apiSlider']);

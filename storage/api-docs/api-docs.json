@@ -1926,6 +1926,40 @@
                 }
             }
         },
+        "/api/user/navbar": {
+            "get": {
+                "tags": [
+                    "Navbar"
+                ],
+                "summary": "Get all Navbar with optional sub_navbars",
+                "description": "Retrieve all Navbar data, including sub_navbars if available",
+                "operationId": "getAllNavbar",
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "data ditemukan"
+                                        },
+                                        "List": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/NavbarResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/footer": {
             "get": {
                 "tags": [
@@ -3228,6 +3262,72 @@
                 },
                 "type": "object"
             },
+            "NavbarResource": {
+                "required": [
+                    "id",
+                    "title",
+                    "order"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Akademik"
+                    },
+                    "order": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "route": {
+                        "type": "string",
+                        "example": "https://www.smkn1purwosari.sch.id/public/",
+                        "nullable": true
+                    },
+                    "sub_navbar": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SubNavbarResource"
+                        },
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "SubNavbarResource": {
+                "required": [
+                    "id",
+                    "title",
+                    "icon",
+                    "route",
+                    "navbar_id"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Jadwal Pelajaran"
+                    },
+                    "icon": {
+                        "type": "string",
+                        "example": "Book"
+                    },
+                    "route": {
+                        "type": "string",
+                        "example": "https://www.smkn1purwosari.sch.id/public/"
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "1"
+                    }
+                },
+                "type": "object"
+            },
             "VideoResource": {
                 "properties": {
                     "id_video": {
@@ -3383,6 +3483,10 @@
         {
             "name": "Position",
             "description": "Position"
+        },
+        {
+            "name": "Navbar",
+            "description": "Navbar"
         },
         {
             "name": "Footer navigation",

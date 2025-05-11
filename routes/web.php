@@ -28,6 +28,7 @@ use App\Http\Controllers\profile\PTKController;
 use App\Http\Controllers\profileAdmin;
 use App\Http\Controllers\SkController;
 use App\Http\Controllers\url\AlertController;
+use App\Http\Controllers\url\NavbarController;
 use App\Http\Controllers\url\otherController;
 use App\Http\Controllers\url\VideoController;
 use App\Http\Controllers\user\UserController;
@@ -200,6 +201,7 @@ Route::prefix('private/admin')->group(function () {
 
                     Route::prefix('link')->group(function () {
                         Route::resource('/alert', AlertController::class);
+                        Route::resource('/navbar', NavbarController::class);
 
                         Route::prefix('footer')->group(function () {
                             Route::get('index', [footerController::class, 'index'])->name('footer');
