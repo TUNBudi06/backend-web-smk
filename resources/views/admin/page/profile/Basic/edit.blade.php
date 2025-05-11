@@ -25,7 +25,7 @@
                     </div>
                     <div class="form-group col-4">
                         <label for="alias_name" class="my-2">alias_name</label>
-                        <input type="text" name="alias_name" id="alias_name" class="form-control @error('$this->alias_name') is-invalid @enderror" placeholder="alias_name" value="{{ $data->alias_name }}" @if($type === "show") disabled @endif>
+                        <input type="text" name="alias_name" id="alias_name" class="form-control @error('$this->alias_name') is-invalid @enderror" placeholder="alias_name" value="{{ $data->alias_name }}"  disabled>
                         <small class="text-muted">Alias name is used for URL slug (developer only)</small>
                         @error('$this->alias_name')
                         <div class="invalid-feedback">

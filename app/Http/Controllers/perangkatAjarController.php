@@ -47,16 +47,16 @@ class perangkatAjarController extends Controller
         $pa_data->title = $data['title'];
         $pa_data->description = $data['description'];
         $pa_data->type = $data['type'];
-        $pa_data->size = $data['size'] ?? null;
         if ($request->type == 'url') {
             $request->validate(['url' => 'required']);
             $pa_data->url = $request->url;
         } else {
             $request->validate(['file' => 'required']);
             $fileContents = file_get_contents($request->file('file')->getRealPath());
+            $pa_data->size = $request->file('file')->getSize();
             $imageName = hash('sha256', $fileContents).'.'.$request->file('file')->getClientOriginalExtension();
             $request->file('file')->move('data-perangkatAjar', $imageName);
-            $pa_data->url = asset('data-perangkatAjar/'.$imageName);
+            $pa_data->url = 'data-perangkatAjar/'.$imageName;
         }
         $pa_data->save();
 
@@ -84,7 +84,7 @@ class perangkatAjarController extends Controller
             $fileContents = file_get_contents($request->file('file')->getRealPath());
             $imageName = hash('sha256', $fileContents).'.'.$request->file('file')->getClientOriginalExtension();
             $request->file('file')->move('data-perangkatAjar', $imageName);
-            $pa_data->url = asset('data-perangkatAjar/'.$imageName);
+            $pa_data->url = 'data-perangkatAjar/'.$imageName;
         }
         $pa_data->save();
 

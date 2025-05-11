@@ -1926,6 +1926,40 @@
                 }
             }
         },
+        "/api/user/profile-basic": {
+            "get": {
+                "tags": [
+                    "Sekolah"
+                ],
+                "summary": "Get basic information as email,phone, etc",
+                "description": "This provide information about basic profile",
+                "operationId": "getBasicProfile",
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "data ditemukan"
+                                        },
+                                        "List": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/BasicResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/navbar": {
             "get": {
                 "tags": [
@@ -3262,6 +3296,32 @@
                 },
                 "type": "object"
             },
+            "BasicResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Twitter/X"
+                    },
+                    "alias": {
+                        "type": "string",
+                        "example": "twitter"
+                    },
+                    "link": {
+                        "type": "string",
+                        "example": "https://twitter.com/yourcompany"
+                    },
+                    "logo": {
+                        "type": "string",
+                        "example": "http://your-domain.com/storage/logos/twitter-logo.png",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
             "NavbarResource": {
                 "required": [
                     "id",
@@ -3485,16 +3545,16 @@
             "description": "Position"
         },
         {
+            "name": "Sekolah",
+            "description": "Sekolah"
+        },
+        {
             "name": "Navbar",
             "description": "Navbar"
         },
         {
             "name": "Footer navigation",
             "description": "Footer navigation"
-        },
-        {
-            "name": "Sekolah",
-            "description": "Sekolah"
         },
         {
             "name": "Links",

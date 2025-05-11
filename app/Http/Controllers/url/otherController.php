@@ -96,7 +96,7 @@ class otherController extends Controller
                     $fileContents = file_get_contents($request->file('file')->getRealPath());
                     $imageName = hash('sha256', $fileContents).'.'.$request->file('file')->getClientOriginalExtension();
                     $request->file('file')->move('data-pdf', $imageName);
-                    $findData->url = asset('data-pdf/'.$imageName);
+                    $findData->url = 'data-pdf/'.$imageName;
                 }
             }
         } elseif ($idData == 8) {

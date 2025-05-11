@@ -21,7 +21,6 @@ use App\Http\Controllers\api\PengumumanController;
 use App\Http\Controllers\api\PosisiController;
 use App\Http\Controllers\api\PTKController;
 use App\Http\Controllers\link\LinkController;
-use App\Http\Controllers\profile\ProfileController;
 use App\Http\Controllers\SkController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -59,6 +58,7 @@ Route::prefix('user')->group(function () {
 
     Route::get('footer', [footerAPI::class, 'footer']);
     Route::get('navbar', [NavbarApiController::class, 'index']);
+    Route::get('profile-basic', [\App\Http\Controllers\api\link\BasicApiController::class, 'index']);
     Route::get('PerangkatAjar', [PAController::class, 'index']);
     Route::get('PerangkatAjar', [PAController::class, 'index']);
     Route::get('slider/keunggulan', [SkController::class, 'apiSlider']);

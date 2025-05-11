@@ -26,14 +26,20 @@ class perangkatAjarResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
+        $data =[
             'id_pa' => $this->id_pa,
             'title' => $this->title,
             'icon_type' => 'Perangkat Ajar',
             'description' => $this->description,
             'type' => $this->type,
             'url' => $this->url,
-            'size' => $this->size ?? '-',
+            'size' => \Number::fileSize($this->size,2),
         ];
+        if ($this->type == 'url') {
+            $data['url'] = $this->url;
+        } else {
+            $data['url'] = asset($this->url);
+        }
+        return $data;
     }
 }
