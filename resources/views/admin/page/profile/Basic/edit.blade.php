@@ -74,7 +74,7 @@
                         @else
                             <div class="col-md-12 text-center">
                                 <img class="w-100 rounded" id="preview"
-                                     src="{{ asset($data->logo()) }}"
+                                     src="{{ asset($data->logo) }}"
                                      alt="Logo">
                             </div>
                         @endif
