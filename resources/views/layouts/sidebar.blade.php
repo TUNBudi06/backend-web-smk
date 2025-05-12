@@ -36,7 +36,7 @@
             <i class="fas fa-handshake"></i>
             <h6 class="label-menu d-none">Kemitraan</h6>
         </div>
-        <div class="my-2 {{ ($menu_active ==="profile") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('fasilitas.index', ['token' => $token]) }}';">
+        <div class="my-2 {{ ($menu_active ==="profile") ? 'menu-active' : '' }} my-2 px-3" onclick="window.location.href='{{ route('basic.index', ['token' => $token]) }}';">
             <i class="fas fa-school"></i>
             <h6 class="label-menu d-none">Profil Sekolah</h6>
         </div>

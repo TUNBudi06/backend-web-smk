@@ -40,15 +40,6 @@
             @enderror
         </div>
 
-        <div class="form-group" id="sizeInput" style="display: none;">
-            <label for="size">Ukuran (MB)</label>
-            <input type="text" name="size" id="size" class="form-control @error('size') is-invalid @enderror"
-                   value="{{ old('size') }}" placeholder="Masukkan Ukuran dalam format Mb">
-            @error('size')
-            <p class="text-danger">{{ $message }}</p>
-            @enderror
-        </div>
-
         <div class="form-group" id="fileInput" style="display: none;">
             <label for="file">Upload File</label>
             <input type="file" name="file" id="file" class="form-control @error('file') is-invalid @enderror">

@@ -39,7 +39,7 @@
                             <td>{{ $data->title }}</td>
                             <td>{{ Str::limit($data->description) }}</td>
                             <td>{{ $data->type }}</td>
-                            <td style="text-align: start;">{{ isset($data->size) ? $data->size . ' MB' : '-' }}</td>
+                            <td style="text-align: start;">{{ \Illuminate\Support\Number::fileSize($data->size,2) }}</td>
                             <td>{{ Str::limit($data->url, 50) }}</td>
                             <td>
                                 <ul class="navbar-nav">

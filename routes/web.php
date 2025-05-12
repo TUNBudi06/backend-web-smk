@@ -18,6 +18,7 @@ use App\Http\Controllers\mitra\LokerController;
 use App\Http\Controllers\mitra\PosisiController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\perangkatAjarController;
+use App\Http\Controllers\profile\BasicInformation;
 use App\Http\Controllers\profile\ExtraController;
 use App\Http\Controllers\profile\FasilitasController;
 use App\Http\Controllers\profile\JurusanController;
@@ -180,6 +181,13 @@ Route::prefix('private/admin')->group(function () {
                         'update' => 'prodi.update',
                         'destroy' => 'prodi.destroy',
                     ])->except(['show']);
+
+                    Route::prefix('Basic')->group(function () {
+                        Route::get('/', [BasicInformation::class, 'index'])->name('basic.index');
+                        Route::get('/show/{id}', [BasicInformation::class, 'show'])->name('basic.show');
+                        Route::get('/edit/{id}', [BasicInformation::class, 'edit'])->name('basic.edit');
+                        Route::patch('/update/{id}', [BasicInformation::class, 'update'])->name('basic.update');
+                    });
 
                     Route::prefix('lainnya')->group(function () {
                         Route::get('index', [otherController::class, 'index'])->name('lainnya.index');
