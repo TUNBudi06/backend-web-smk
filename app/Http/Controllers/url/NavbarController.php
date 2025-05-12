@@ -5,9 +5,9 @@ namespace App\Http\Controllers\url;
 use App\Http\Controllers\Controller;
 use App\Models\tb_navbar;
 use App\Models\tb_sub_navbar;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Concurrency;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class NavbarController extends Controller
@@ -68,7 +68,7 @@ class NavbarController extends Controller
 
         $lastNavbarOrder = tb_navbar::max('order') ?? 0;
 
-        $navbar = new tb_navbar();
+        $navbar = new tb_navbar;
         $navbar->title = $request->input('title');
         $navbar->route = $request->input('route');
         $navbar->is_dropdown = $request->input('is_dropdown');
@@ -84,7 +84,7 @@ class NavbarController extends Controller
                     'title' => $sub['title'],
                     'route' => $sub['route'],
                     'icon' => $sub['icon'],
-                    'order' => $order++
+                    'order' => $order++,
                 ]);
             }
         }
