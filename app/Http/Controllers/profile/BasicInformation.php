@@ -105,6 +105,7 @@ class BasicInformation extends Controller
             $findData->logo = $imagepath;
         }
 
+        $findData->alias_name = $request->alias_name;
         $findData->name = $request->name;
         $findData->url = $request->url;
         $findData->save();
