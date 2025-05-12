@@ -31,17 +31,19 @@
                 <table class="table ">
                     <thead>
                         <tr>
-                            <th>Urutan</th>
+                            <th>No</th>
                             <th>Nama</th>
+                            <th>Dropdown</th>
                             <th>URL</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     @foreach ($navbar as $key => $data)
                         <tr>
-                            <td style="word-wrap: break-word; max-width: 230px;">{{ $data->order }}</td>
+                            <td style="word-wrap: break-word; max-width: 230px;">{{ $loop->iteration }}</td>
                             <td style="word-wrap: break-word; max-width: 230px;">{{ $data->title }}</td>
-                            <td>{{ $data->route }}</td>
+                            <td style="word-wrap: break-word; max-width: 230px;">{{ $data->is_dropdown == 1 ? 'Yes' : 'No' }}</td>
+                            <td><a href="{{ $data->route }}" target="_blank">{{ $data->route }}</a></td>
                             <td>
                                 <ul class="navbar-nav">
                                     <li class="nav-item dropdown">

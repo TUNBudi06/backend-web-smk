@@ -22,4 +22,9 @@ class tb_sub_navbar extends Model
     ];
 
     public $timestamps = true;
+
+    public function navbar()
+    {
+        return $this->belongsTo(tb_navbar::class, 'navbar_id');
+    }
 }
