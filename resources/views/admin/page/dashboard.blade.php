@@ -84,7 +84,7 @@
                 <div class="col-md-4 mb-2"
                         @if(session()->get('user')->role == 1) onclick="window.location.href='{{ route('aproved-user-log.index', ['token' => $token]) }}';" @endif>
                     <div class="{{session()->get('user')->role == 1 ? 'count-card' : ' count-comment bg-gray'}} rounded px-4 py-3">
-                        <p class="poppins mb-2"><i class="fas mr-2 fa-images"></i>Log Tertunda</p>
+                        <p class="poppins mb-2"><i class="fas mr-2 fa-clock"></i>Log Tertunda</p>
                         <p class="montserrat mb-0" style="font-size: .8rem;"><span class="font-weight-bold">{{$log_pending}}</span> Item</p>
                     </div>
                 </div>

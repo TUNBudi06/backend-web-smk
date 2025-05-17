@@ -161,4 +161,34 @@ class profile extends Controller
             'data' => profileController::collection($data),
         ]);
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/user/profile/history",
+     *     tags={"Sekolah"},
+     *     summary="Get Sejarah Sekolah",
+     *     description="Retrieve Sejarah Sekolah",
+     *     operationId="getSejarahSekolah",
+     *
+     *     @OA\Response(
+     *     response=200,
+     *     description="Data ditemukan",
+     *      @OA\JsonContent(
+     *          @OA\Property(property="message", type="string", example="Data ditemukan"),
+     *          @OA\Property(property="data", type="array",
+     *              @OA\Items(ref="#/components/schemas/ProfileData")
+     *          )
+     *  )
+     *      ),
+     * )
+     */
+    public function sejarahSekolah(Request $request)
+    {
+        $data = tb_other::where('id_link', 9)->get();
+
+        return response()->json([
+            'message' => 'data ditemukan',
+            'data' => profileController::collection($data),
+        ]);
+    }
 }

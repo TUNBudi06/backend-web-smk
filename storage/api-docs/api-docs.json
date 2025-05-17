@@ -2210,6 +2210,40 @@
                 }
             }
         },
+        "/api/user/profile/history": {
+            "get": {
+                "tags": [
+                    "Sekolah"
+                ],
+                "summary": "Get Sejarah Sekolah",
+                "description": "Retrieve Sejarah Sekolah",
+                "operationId": "getSejarahSekolah",
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data ditemukan"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ProfileData"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/link/alerts": {
             "get": {
                 "tags": [

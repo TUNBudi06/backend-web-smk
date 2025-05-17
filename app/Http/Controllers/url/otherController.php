@@ -11,7 +11,7 @@ class otherController extends Controller
     public function index(Request $request)
     {
         $token = $request->session()->get('token') ?? $request->input('token');
-        $other = tb_other::whereBetween('id_link', [4, 8])->get();
+        $other = tb_other::whereBetween('id_link', [4, 9])->get();
         $action = $request->session()->get('update') ? 'update' : '';
 
         return view('admin.page.url.lainnya', [
@@ -58,7 +58,7 @@ class otherController extends Controller
         $idData = $request->route('id');
         $findData = tb_other::findOrFail($idData);
 
-        if ($idData != 8) {
+        if ($idData != 8 || $idData != 9) {
             $request->validate([
                 'type' => 'required',
             ]);
@@ -99,18 +99,18 @@ class otherController extends Controller
                     $findData->url = 'data-pdf/'.$imageName;
                 }
             }
-        } elseif ($idData == 8) {
+        } elseif ($idData == 8 || $idData == 9) {
             $request->validate([
                 'description' => 'required',
-                'jurusan_thumbnail' => 'file|required|image|mimes:jpeg,png,jpg,gif,webp|max:10240',
+                'thumbnail' => 'file|required|image|mimes:jpeg,png,jpg,gif,webp|max:10240',
             ], [
-                'jurusan_thumbnail' => 'Kolom gambar wajib diisi',
-                'jurusan_thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
+                'thumbnail' => 'Kolom gambar wajib diisi',
+                'thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
             ]);
             $findData->description = $request->description;
 
-            if ($request->hasFile('jurusan_thumbnail')) {
-                if (! is_null($findData->url) && $findData->url !== '' && $findData->url !== 'img/kepsek/default.png') {
+            if ($request->hasFile('thumbnail')) {
+                if (! is_null($findData->url) && $findData->url !== '' && $findData->url !== 'img/lain/default.png') {
                     $oldImagePath = public_path($findData->url);
                     if (file_exists($oldImagePath)) {
                         unlink($oldImagePath);
@@ -118,9 +118,9 @@ class otherController extends Controller
                 }
 
                 // Simpan gambar baru
-                $imageName = $request->file('jurusan_thumbnail')->hashName();
-                $request->file('jurusan_thumbnail')->move('img/kepsek/', $imageName);
-                $findData->url = 'img/kepsek/'.$imageName;
+                $imageName = $request->file('thumbnail')->hashName();
+                $request->file('thumbnail')->move('img/lain/', $imageName);
+                $findData->url = 'img/lain/'.$imageName;
             }
         }
 

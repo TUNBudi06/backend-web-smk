@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    <title>Peserta Didik | Admin Panel</title>
+    <title>Show | Admin Panel</title>
     <link rel="stylesheet" href="{{asset('css/pdfviewer.jquery.css')}}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
     <script src="{{asset('js/pdfviewer.jquery.js')}}"></script>
@@ -15,9 +15,9 @@
             <div class="bg-white shadow-sm p-2">
                 {{--            i want this page only render html from string without from other afffec5tion using $data->description but the text is html format--}}
                 <div class="row justify-content-center">
-                @if($data->id_link == 8)
+                @if($data->id_link == 8 || $data->id_link == 9)
                     <div class="col-12 text-center pb-2">
-                        <img src="{{asset($data->url)}}" alt="foto kepsek">
+                        <img src="{{asset($data->url)}}" alt="Foto">
                     </div>
                 @endif
                     <div class="col-md-8">

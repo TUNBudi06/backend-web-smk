@@ -79,10 +79,10 @@
             <div class="row mt-4">
                 <div class="col-md-6 py-md-5 py-3">
                     <div class="form-group">
-                        <label for="jurusan_thumbnail">Thumbnail Jurusan</label>
-                        <input onchange="loadFile(event)" type="file" name="jurusan_thumbnail" id="image" class="form-control @error('jurusan_thumbnail') is-invalid @enderror" placeholder="Purwosari, Pasuruan" aria-describedby="imageId">
+                        <label for="thumbnail">Thumbnail</label>
+                        <input onchange="loadFile(event)" type="file" name="thumbnail" id="image" class="form-control @error('thumbnail') is-invalid @enderror" placeholder="Purwosari, Pasuruan" aria-describedby="imageId">
                         <small id="imageId" class="text-muted d-none"></small>
-                        @error('jurusan_thumbnail')
+                        @error('thumbnail')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
