@@ -182,13 +182,6 @@ Route::prefix('private/admin')->group(function () {
                         'destroy' => 'prodi.destroy',
                     ])->except(['show']);
 
-                    Route::prefix('Basic')->group(function () {
-                        Route::get('/', [BasicInformation::class, 'index'])->name('basic.index');
-                        Route::get('/show/{id}', [BasicInformation::class, 'show'])->name('basic.show');
-                        Route::get('/edit/{id}', [BasicInformation::class, 'edit'])->name('basic.edit');
-                        Route::patch('/update/{id}', [BasicInformation::class, 'update'])->name('basic.update');
-                    });
-
                     Route::prefix('lainnya')->group(function () {
                         Route::get('index', [otherController::class, 'index'])->name('lainnya.index');
                         Route::get('show/{id}', [otherController::class, 'show'])->name('lainnya.show');
@@ -210,6 +203,13 @@ Route::prefix('private/admin')->group(function () {
                     Route::prefix('link')->group(function () {
                         Route::resource('/alert', AlertController::class);
                         Route::resource('/navbar', NavbarController::class);
+
+                        Route::prefix('basic')->group(function () {
+                            Route::get('/', [BasicInformation::class, 'index'])->name('basic.index');
+                            Route::get('/show/{id}', [BasicInformation::class, 'show'])->name('basic.show');
+                            Route::get('/edit/{id}', [BasicInformation::class, 'edit'])->name('basic.edit');
+                            Route::patch('/update/{id}', [BasicInformation::class, 'update'])->name('basic.update');
+                        });
 
                         Route::prefix('footer')->group(function () {
                             Route::get('index', [footerController::class, 'index'])->name('footer');

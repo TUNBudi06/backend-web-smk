@@ -24,7 +24,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.0/dist/sweetalert2.min.css
         @endif
         <div class="row">
             <div class="col-md-11 offset-md-1 p-2">
-                @include('admin.partials.nav_profile')
+                @include('admin.partials.nav_link')
                 <div class="w-100 table-parent bg-white">
                     <div class="row p-4">
                         <div class="col-md-8">

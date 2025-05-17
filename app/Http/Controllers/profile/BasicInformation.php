@@ -20,8 +20,8 @@ class BasicInformation extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
 
         return view('admin.page.profile.Basic.index', [
-            'menu_active' => 'profile',
-            'profile_active' => 'basic',
+            'menu_active' => 'links',
+            'navlink_active' => 'basic',
             'token' => $token,
             'basic' => $basic,
             'count' => $count,
@@ -54,7 +54,7 @@ class BasicInformation extends Controller
         $data = BasicInformationModel::findOrFail($idData);
 
         return view('admin.page.profile.Basic.edit', [
-            'menu_active' => 'profile',
+            'menu_active' => 'links',
             'profile_active' => 'other',
             'type' => 'show',
             'token' => $token,
@@ -72,7 +72,7 @@ class BasicInformation extends Controller
         $data = BasicInformationModel::findOrFail($idData);
 
         return view('admin.page.profile.Basic.edit', [
-            'menu_active' => 'profile',
+            'menu_active' => 'links',
             'profile_active' => 'other',
             'type' => 'edit',
             'token' => $token,

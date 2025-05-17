@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    <title>Extrakurikuler | Admin Panel</title>
+    <title>Ekstrakurikuler | Admin Panel</title>
 @endsection
 
 @section('container')
@@ -11,14 +11,14 @@
             <div class="w-100 table-parent bg-white">
                 <div class="row p-4">
                     <div class="col-md-8">
-                        <h4 class="poppins mb-0">Extrakurikuler</h4>
-                        <p class="montserrat" style="font-size: .85rem;">Daftar Extrakurikuler SMKN 1 Purwosari
+                        <h4 class="poppins mb-0">Ekstrakurikuler</h4>
+                        <p class="montserrat" style="font-size: .85rem;">Daftar Ekstrakurikuler SMKN 1 Purwosari
                         </p>
                     </div>
                     <div class="col-md-4 text-right">
                         <a href="{{ route('extra.create', ['token' => $token]) }}"
                             class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i>
-                            Extrakurikuler Baru</a>
+                            Ekstrakurikuler Baru</a>
                     </div>
                 </div>
                 @if (Session::get('success'))
@@ -35,7 +35,7 @@
                         <tr>
                             <th class="pl-4">Cover</th>
                             <th>Logo</th>
-                            <th>Nama Extrakurikuler</th>
+                            <th>Nama Ekstrakurikuler</th>
                             <th>Jadwal</th>
                             <th>Action</th>
                         </tr>

@@ -6,7 +6,7 @@
 
 @section('container')
     <div class="row">
-        <div class="col-md-11 offset-md-1 mt-5 p-2">
+        <div class="col-md-11 offset-md-1 p-2">
             @include('admin.partials.nav_kemitraan')
             <div class="w-100 table-parent bg-white">
                 <div class="row p-4">

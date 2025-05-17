@@ -19,7 +19,7 @@ class AdminController extends Controller
     {
         $token = $request->session()->get('token') ?? $request->input('token');
 
-        [$artikel,$pengumuman,$berita,$event,$gallery,$fasilitas,$pd,$ptk,$extra,$jurusan] = Cache::flexible('HomeAdmin', [10, 20], function () {
+        [$artikel,$pengumuman,$berita,$event,$gallery,$fasilitas,$pd,$ptk,$extra,$jurusan,$log_pending] = Cache::flexible('HomeAdmin', [10, 20], function () {
             return Concurrency::run([
                 fn () => tb_pemberitahuan::where('type', 1)->count(),
                 fn () => tb_pemberitahuan::where('type', 2)->count(),
@@ -31,6 +31,7 @@ class AdminController extends Controller
                 fn () => tb_ptk::count(),
                 fn () => tb_extra::count(),
                 fn () => tb_jurusan::count(),
+                fn () => tb_pemberitahuan::where('approved', 0)->count(),
             ]);
         });
 
@@ -47,6 +48,7 @@ class AdminController extends Controller
             'ptk' => $ptk,
             'extra' => $extra,
             'jurusan' => $jurusan,
+            'log_pending' => $log_pending,
         ]);
     }
 

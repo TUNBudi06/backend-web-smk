@@ -12,13 +12,13 @@
                     class="<?= \Illuminate\Support\Facades\Route::is('user.index') ? 'btn my-1 btn-warning px-4 shadow-warning' : 'btn my-1 btn-light px-4 border-warning' ?>">User</a>
                 <a href="{{ route('aproved-user-log.index', $token) }}"
                     class="<?= \Illuminate\Support\Facades\Route::is('aproved-user-log.index') ? 'btn my-1 btn-warning px-4 shadow-warning' : 'btn my-1 btn-light px-4 border-warning' ?>">Log
-                    Pending</a>
+                    Tertunda</a>
             </div>
             <div class="w-100 table-parent bg-white">
                 <div class="row p-4">
                     <div class="col-md-8">
-                        <h4 class="poppins mb-0">Log Pending View</h4>
-                        <p class="montserrat" style="font-size: .85rem;">Daftar Informasi Yang Pending View
+                        <h4 class="poppins mb-0">Log Tertunda</h4>
+                        <p class="montserrat" style="font-size: .85rem;">Daftar Informasi Yang Tertunda
                         </p>
                     </div>
                 </div>

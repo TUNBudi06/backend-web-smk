@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    <title>Profile Extrakurikuler | Admin Panel</title>
+    <title>Profile Ekstrakurikuler | Admin Panel</title>
     <script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
 @endsection
 
@@ -11,8 +11,8 @@
     <form action="{{ route('extra.store', ['token' => $token]) }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
-            <label for="extra_name">Nama Extrakurikuler</label>
-            <input type="text" name="extra_name" id="extra_name" class="form-control @error('extra_name') is-invalid @enderror" placeholder="Extrakurikuler baru..." aria-describedby="nameId" value="{{ old('extra_name') }}">
+            <label for="extra_name">Nama Ekstrakurikuler</label>
+            <input type="text" name="extra_name" id="extra_name" class="form-control @error('extra_name') is-invalid @enderror" placeholder="Ekstrakurikuler baru..." aria-describedby="nameId" value="{{ old('extra_name') }}">
             <small id="nameId" class="text-muted">Hindari penggunaan slash (/,\)</small>
             @error('extra_name')
                 <div class="invalid-feedback">
@@ -21,8 +21,8 @@
             @enderror
         </div>
         <div class="form-group">
-            <label for="extra_type">Type Extrakurikuler</label>
-            <input type="text" name="extra_type" id="extra_type" class="form-control @error('extra_type') is-invalid @enderror" placeholder="Extrakurikuler type" aria-describedby="nameId" value="{{ old('extra_type') }}">
+            <label for="extra_type">Type Ekstrakurikuler</label>
+            <input type="text" name="extra_type" id="extra_type" class="form-control @error('extra_type') is-invalid @enderror" placeholder="Ekstrakurikuler type" aria-describedby="nameId" value="{{ old('extra_type') }}">
             <small id="typeId" class="text-muted"></small>
             @error('extra_type')
                 <div class="invalid-feedback">
@@ -31,8 +31,8 @@
             @enderror
         </div>
         <div class="form-group">
-            <label for="extra_hari">Jadwal Extrakurikuler</label>
-            <input type="text" name="extra_hari" id="extra_hari" class="form-control @error('extra_hari') is-invalid @enderror" placeholder="Jadwal Extrakurikuler" aria-describedby="hariId" value="{{ old('extra_hari') }}">
+            <label for="extra_hari">Jadwal Ekstrakurikuler</label>
+            <input type="text" name="extra_hari" id="extra_hari" class="form-control @error('extra_hari') is-invalid @enderror" placeholder="Jadwal Ekstrakurikuler" aria-describedby="hariId" value="{{ old('extra_hari') }}">
             <small id="hariId" class="text-muted"></small>
             @error('extra_hari')
                 <div class="invalid-feedback">
@@ -42,7 +42,7 @@
         </div>
         <div class="form-group">
             <label for="instagram">Instagram</label>
-            <input type="text" name="instagram" id="instagram" class="form-control @error('instagram') is-invalid @enderror" placeholder="Extrakurikuler Instagram" aria-describedby="hariId" value="{{ old('instagram') }}">
+            <input type="text" name="instagram" id="instagram" class="form-control @error('instagram') is-invalid @enderror" placeholder="Ekstrakurikuler Instagram" aria-describedby="hariId" value="{{ old('instagram') }}">
             <small id="instagramId" class="text-muted"></small>
             @error('instagram')
                 <div class="invalid-feedback">
@@ -52,7 +52,7 @@
         </div>
         <div class="form-group">
             <label for="telegram">Telegram</label>
-            <input type="text" name="telegram" id="telegram" class="form-control @error('telegram') is-invalid @enderror" placeholder="Extrakurikuler Telegram" aria-describedby="hariId" value="{{ old('telegram') }}">
+            <input type="text" name="telegram" id="telegram" class="form-control @error('telegram') is-invalid @enderror" placeholder="Ekstrakurikuler Telegram" aria-describedby="hariId" value="{{ old('telegram') }}">
             <small id="telegramId" class="text-muted"></small>
             @error('telegram')
                 <div class="invalid-feedback">
@@ -61,7 +61,7 @@
             @enderror
         </div>
         <div class="form-group">
-            <label for="extra_text">Deskripsi Extrakurikuler</label>
+            <label for="extra_text">Deskripsi Ekstrakurikuler</label>
             <textarea name="extra_text" id="texteditor" cols="30" rows="10" class="form-control @error('extra_text') is-invalid @enderror" placeholder="Isi dari extra.." aria-describedby="textId">{{ old('extra_text') }}</textarea>
             <small id="textId" class="text-muted d-none"></small>
             @error('extra_text')
@@ -76,7 +76,7 @@
         <div class="row mb-4">
             <div class="col-md-6 py-md-5 py-3">
                 <div class="form-group">
-                    <label for="extra_image">Cover Extrakurikuler</label>
+                    <label for="extra_image">Cover Ekstrakurikuler</label>
                     <input onchange="loadFile(event, 'cover_preview')" type="file" name="extra_image" id="extra_image" class="form-control @error('extra_image') is-invalid @enderror">
                     <small id="imageId" class="text-muted d-none"></small>
                     @error('extra_image')
@@ -93,7 +93,7 @@
         <div class="row">
             <div class="col-md-6 py-md-5 py-3">
                 <div class="form-group">
-                    <label for="extra_logo">Logo Extrakurikuler</label>
+                    <label for="extra_logo">Logo Ekstrakurikuler</label>
                     <input onchange="loadFile(event, 'logo_preview')" type="file" name="extra_logo" id="extra_logo" class="form-control @error('extra_logo') is-invalid @enderror">
                     <small id="logoId" class="text-muted d-none"></small>
                     @error('extra_logo')

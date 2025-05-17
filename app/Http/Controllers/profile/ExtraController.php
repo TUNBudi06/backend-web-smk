@@ -61,12 +61,12 @@ class ExtraController extends Controller
             'extra_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
             'extra_logo' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
         ], [
-            'extra_name.required' => 'Kolom nama extrakurikuler harus diisi.',
-            'extra_text.required' => 'Kolom isi extrakurikuler harus diisi.',
-            'extra_type.required' => 'Kolom type extrakurikuler harus diisi.',
-            'extra_hari.required' => 'Kolom jadwal extrakurikuler harus diisi.',
-            'instagram.required' => 'Kolom instagram extrakurikuler harus diisi.',
-            'telegram.required' => 'Kolom telegram extrakurikuler harus diisi.',
+            'extra_name.required' => 'Kolom nama ekstrakurikuler harus diisi.',
+            'extra_text.required' => 'Kolom isi ekstrakurikuler harus diisi.',
+            'extra_type.required' => 'Kolom type ekstrakurikuler harus diisi.',
+            'extra_hari.required' => 'Kolom jadwal ekstrakurikuler harus diisi.',
+            'instagram.required' => 'Kolom instagram ekstrakurikuler harus diisi.',
+            'telegram.required' => 'Kolom telegram ekstrakurikuler harus diisi.',
             'extra_image.required' => 'Kolom gambar wajib diisi',
             'extra_image.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
             'extra_logo.required' => 'Kolom gambar wajib diisi',
@@ -98,7 +98,7 @@ class ExtraController extends Controller
 
         $data->save();
 
-        return redirect()->route('extra.index', ['token' => $token])->with('success', 'Extrakurikuler baru berhasil ditambahkan.');
+        return redirect()->route('extra.index', ['token' => $token])->with('success', 'Ekstrakurikuler baru berhasil ditambahkan.');
     }
 
     /**
@@ -144,12 +144,12 @@ class ExtraController extends Controller
             'extra_image' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
             'extra_logo' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
         ], [
-            'extra_name.required' => 'Kolom nama extrakurikuler harus diisi.',
-            'extra_text.required' => 'Kolom isi extrakurikuler harus diisi.',
-            'extra_type.required' => 'Kolom type extrakurikuler harus diisi.',
-            'extra_hari.required' => 'Kolom jadwal extrakurikuler harus diisi.',
-            'instagram.required' => 'Kolom instagram extrakurikuler harus diisi.',
-            'telegram.required' => 'Kolom telegram extrakurikuler harus diisi.',
+            'extra_name.required' => 'Kolom nama ekstrakurikuler harus diisi.',
+            'extra_text.required' => 'Kolom isi ekstrakurikuler harus diisi.',
+            'extra_type.required' => 'Kolom type ekstrakurikuler harus diisi.',
+            'extra_hari.required' => 'Kolom jadwal ekstrakurikuler harus diisi.',
+            'instagram.required' => 'Kolom instagram ekstrakurikuler harus diisi.',
+            'telegram.required' => 'Kolom telegram ekstrakurikuler harus diisi.',
             'extra_image.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
             'extra_logo.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
         ]);
@@ -189,7 +189,7 @@ class ExtraController extends Controller
 
         $data->save();
 
-        return redirect()->route('extra.index', ['token' => $token])->with('success', 'Extrakurikuler berhasil diperbarui.');
+        return redirect()->route('extra.index', ['token' => $token])->with('success', 'Ekstrakurikuler berhasil diperbarui.');
     }
 
     /**
@@ -212,6 +212,6 @@ class ExtraController extends Controller
             unlink($imagePath1);
         }
 
-        return redirect()->route('extra.index', ['token' => $request->token])->with('success', 'Extrakurikuler berhasil dihapus.');
+        return redirect()->route('extra.index', ['token' => $request->token])->with('success', 'Ekstrakurikuler berhasil dihapus.');
     }
 }

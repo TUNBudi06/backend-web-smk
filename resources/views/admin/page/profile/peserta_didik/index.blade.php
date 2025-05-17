@@ -22,7 +22,7 @@
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-warning rounded-pill px-4" data-toggle="modal"
                             data-target="#modelId">
-                            import CSV
+                            Import CSV
                         </button>
 
                         <!-- Modal -->

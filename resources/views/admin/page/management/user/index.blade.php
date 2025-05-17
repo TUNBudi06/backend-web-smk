@@ -11,7 +11,7 @@
                 <a href="{{ route('user.index',$token) }}"
                    class="<?= \Illuminate\Support\Facades\Route::is('user.index')  ? 'btn my-1 btn-warning px-4 shadow-warning' : 'btn my-1 btn-light px-4 border-warning'?>">User</a>
                 <a href="{{ route('aproved-user-log.index',$token) }}"
-                   class="<?= \Illuminate\Support\Facades\Route::is('aproved-user-log.index')? 'btn my-1 btn-warning px-4 shadow-warning' : 'btn my-1 btn-light px-4 border-warning'?>">Log Pending</a>
+                   class="<?= \Illuminate\Support\Facades\Route::is('aproved-user-log.index')? 'btn my-1 btn-warning px-4 shadow-warning' : 'btn my-1 btn-light px-4 border-warning'?>">Log Tertunda</a>
             </div>
             <div class="w-100 table-parent bg-white">
                 <div class="row p-4">
