@@ -11,15 +11,15 @@
             <div class="w-100 table-parent bg-white">
                 <div class="row p-4">
                     <div class="col-md-8">
-                        <h4 class="poppins mb-0">PTK</h4>
-                        <p class="montserrat" style="font-size: .85rem;">Daftar PTK SMKN 1 Purwosari
+                        <h4 class="poppins mb-0">Pendidik dan Tenaga Kependidikan</h4>
+                        <p class="montserrat" style="font-size: .85rem;">Daftar Pendidik dan Tenaga Kependidikan SMKN 1 Purwosari
                         </p>
                     </div>
                     <div class="col-md-4 text-right">
                         <a href="{{ route('ptk.create', ['token' => $token]) }}" class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i> PTK Baru</a>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-warning rounded-pill px-4" data-toggle="modal" data-target="#modelId">
-                            import CSV
+                            Import CSV
                         </button>
 
                         <!-- Modal -->

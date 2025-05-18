@@ -37,7 +37,7 @@
                                 <th>Image</th>
                                 <th>Nama</th>
                                 <th>level</th>
-                                <th>published By</th>
+                                <th>Published By</th>
                                 <th>Jurnal By</th>
                                 <th>Category</th>
                                 <th>Event</th>

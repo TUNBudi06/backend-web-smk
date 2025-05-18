@@ -18,6 +18,7 @@ class AdminController extends Controller
     public function dashboard(Request $request)
     {
         $token = $request->session()->get('token') ?? $request->input('token');
+        $perpage = $request->input('show') ?? 10;
 
         [$artikel,$pengumuman,$berita,$event,$gallery,$fasilitas,$pd,$ptk,$extra,$jurusan,$log_pending] = Cache::flexible('HomeAdmin', [10, 20], function () {
             return Concurrency::run([
@@ -35,6 +36,8 @@ class AdminController extends Controller
             ]);
         });
 
+        $data_pending = tb_pemberitahuan::with('kategori')->with('tipe')->where('approved', 0)->paginate($perpage);
+
         return view('admin.page.dashboard', [
             'menu_active' => 'dashboard',
             'token' => $token,
@@ -49,6 +52,7 @@ class AdminController extends Controller
             'extra' => $extra,
             'jurusan' => $jurusan,
             'log_pending' => $log_pending,
+            'data_pending' => $data_pending,
         ]);
     }
 

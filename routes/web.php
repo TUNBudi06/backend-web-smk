@@ -19,6 +19,7 @@ use App\Http\Controllers\mitra\PosisiController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\perangkatAjarController;
 use App\Http\Controllers\profile\BasicInformation;
+use App\Http\Controllers\profile\ElearningController;
 use App\Http\Controllers\profile\ExtraController;
 use App\Http\Controllers\profile\FasilitasController;
 use App\Http\Controllers\profile\JurusanController;
@@ -169,6 +170,7 @@ Route::prefix('private/admin')->group(function () {
                     ]);
                     Route::resource('/ptk', PTKController::class);
                     Route::resource('/extra', ExtraController::class);
+                    Route::resource('/elearning', ElearningController::class);
                     Route::resource('/fasilitas', FasilitasController::class)->parameters([
                         'fasilitas' => 'fasilitas',
                     ]);
