@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tb_custom_badges', function (Blueprint $table) {
+        Schema::create('tb_badges', function (Blueprint $table) {
             $table->id();
             $table->foreignId('elearning_id')->constrained('tb_elearnings')->onDelete('cascade');
             $table->string('label');
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tb_custom_badges');
+        Schema::dropIfExists('tb_badges');
     }
 };

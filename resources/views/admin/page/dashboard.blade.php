@@ -91,7 +91,7 @@
             </div>
             <div class="row my-4">
                 <div class="col-md-8">
-                    <h4 class="poppins mb-0">Log Tertunda</h4>
+                    <h4 class="poppins mb-2">Log Tertunda</h4>
                     <p class="montserrat" style="font-size: .85rem;">Daftar Informasi Yang Tertunda
                     </p>
                 </div>

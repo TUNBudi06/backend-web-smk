@@ -15,6 +15,9 @@
                         <p class="montserrat" style="font-size: .85rem;">E-Learning SMKN 1 Purwosari
                         </p>
                     </div>
+                    <div class="col-md-4 text-right">
+                        <a href="{{ route('badge.index',$token) }}" class="btn-print btn btn-white border-warning px-3 rounded-pill"><i class="fas fa-columns mr-1"></i> Badges</a>
+                    </div>
                 </div>
                 @if (Session::get('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -31,11 +34,9 @@
                             <th class="pl-4">Thumbnail</th>
                             <th>Judul</th>
                             <th>Deskripsi Utama</th>
-                            <th>Tombol</th>
                             <th>Subjudul</th>
                             <th>Deskripsi Konten</th>
-                            <th>Multiple Badges</th>
-                            <th>Tombol Konten</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,12 +45,9 @@
                                 <td><img src="{{ asset(file_exists(public_path('img/e-learning/' . $data->thumbnail)) ? 'img/e-learning/' . $data->thumbnail : 'img/no_image.png') }}" width="100px"
                                         class="rounded" alt=""></td>
                                 <td>{{ $data->title }}</td>
-                                <td>{{ $data->desc }}</td>
-                                <td>Tampilan button(label, url, icon)</td>
+                                <td>{{ Str::limit($data->desc, 50, '...') }}</td>
                                 <td>{{ $data->subtitle }}</td>
-                                <td>{{ $data->body_desc }}</td>
-                                <td>Tampilan beberapa badges</td>
-                                <td>Tampilan button konten</td>
+                                <td>{{ Str::limit($data->body_desc, 50, '...') }}</td>
                                 <td>
                                     <ul class="navbar-nav">
                                         <li class="nav-item dropdown">
@@ -58,7 +56,12 @@
                                                 <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-end">
-                                                <a href="{{ route('elearning.edit', ['elearning' => $data->id_extra, 'token' => $token]) }}"
+                                                <a href="{{ route('elearning.show', ['elearning' => $data->id, 'token' => $token]) }}"
+                                                    class="dropdown-item text-info"
+                                                    style="padding-bottom: 10px; text-align: center; font-weight: 600;">
+                                                    <i class='fas fa-eye mx-1 text-info'></i> Show
+                                                </a>
+                                                <a href="{{ route('elearning.edit', ['elearning' => $data->id, 'token' => $token]) }}"
                                                     class="dropdown-item text-warning"
                                                     onclick="event.stopPropagation(); onEdit('${full.bin_id}'); return false;"
                                                     style="padding-bottom: 10px; text-align: center; font-weight: 600;">

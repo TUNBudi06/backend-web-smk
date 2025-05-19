@@ -18,6 +18,7 @@ use App\Http\Controllers\mitra\LokerController;
 use App\Http\Controllers\mitra\PosisiController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\perangkatAjarController;
+use App\Http\Controllers\profile\BadgeController;
 use App\Http\Controllers\profile\BasicInformation;
 use App\Http\Controllers\profile\ElearningController;
 use App\Http\Controllers\profile\ExtraController;
@@ -171,6 +172,7 @@ Route::prefix('private/admin')->group(function () {
                     Route::resource('/ptk', PTKController::class);
                     Route::resource('/extra', ExtraController::class);
                     Route::resource('/elearning', ElearningController::class);
+                    Route::resource('/badge', BadgeController::class);
                     Route::resource('/fasilitas', FasilitasController::class)->parameters([
                         'fasilitas' => 'fasilitas',
                     ]);

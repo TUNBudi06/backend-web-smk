@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class tb_custom_badge extends Model
+class tb_badge extends Model
 {
     use HasFactory;
 
-    protected $table = 'tb_custom_badges';
+    protected $table = 'tb_badges';
 
     protected $primaryKey = 'id';
 

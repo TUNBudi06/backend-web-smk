@@ -27,8 +27,8 @@ class tb_elearning extends Model
 
     public $timestamps = true;
 
-    public function customBadges()
+    public function badges()
     {
-        return $this->hasMany(tb_custom_badge::class, 'elearning_id');
+        return $this->hasMany(tb_badge::class, 'elearning_id');
     }
 }
