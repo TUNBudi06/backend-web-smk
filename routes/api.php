@@ -61,7 +61,6 @@ Route::prefix('user')->group(function () {
     Route::get('navbar', [NavbarApiController::class, 'index']);
     Route::get('profile-basic', [\App\Http\Controllers\api\link\BasicApiController::class, 'index']);
     Route::get('PerangkatAjar', [PAController::class, 'index']);
-    Route::get('PerangkatAjar', [PAController::class, 'index']);
     Route::get('slider/keunggulan', [SkController::class, 'apiSlider']);
     Route::resource('kemitraans', KemitraanController::class);
     Route::get('logo/kemitraan', [LogokController::class, 'getLogok']);

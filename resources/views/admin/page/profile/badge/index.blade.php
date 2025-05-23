@@ -38,7 +38,7 @@
                             <div class="form-group">
                                 <label for="icon" class="mt-3 mb-2">Icon Badge</label>
                                 <input type="file" value="{{ $category->icon }}"
-                                    name="icon" id="icon" class="form-control">
+                                    name="icon" id="icon" class="form-control" accept=".png, .jpg, .jpeg">
                             </div>
                             <div class="text-right w-100 position-absolute" style="right: 10px;">
                                 <button class="btn btn-warning px-4 rounded-pill shadow-warning">Update</button>
@@ -59,7 +59,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="icon" class="mt-3 mb-2">Icon Badge</label>
-                                <input type="file" name="icon" id="icon" class="form-control">
+                                <input type="file" name="icon" id="icon" class="form-control" accept=".png, .jpg, .jpeg">
                             </div>
                             <div class="text-right w-100">
                                 <button class="btn btn-warning px-4 rounded-pill shadow-warning position-absolute"

@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Number;
 
 class perangkatAjarResource extends JsonResource
 {
@@ -33,7 +34,7 @@ class perangkatAjarResource extends JsonResource
             'description' => $this->description,
             'type' => $this->type,
             'url' => $this->url,
-            'size' => \Number::fileSize($this->size,2),
+            'size' => $this->size !== null ? Number::fileSize($this->size, 2) : '0 KB',
         ];
         if ($this->type == 'url') {
             $data['url'] = $this->url;
