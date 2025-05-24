@@ -56,7 +56,7 @@ public function index(Request $request)
 
         $data = new tb_badge();
         $data->label = $request->label;
-        $data->elearning_id = 1;
+        $data->elearning_id = 0;
 
         if ($request->hasFile('icon')) {
             $file = $request->file('icon');

@@ -87,14 +87,13 @@ class ElearningController extends Controller
      */
     public function update(Request $request)
     {
-        dd($request);
         $id_elearning = $request->route('elearning');
         $token = $request->session()->get('token') ?? $request->input('token');
 
         $request->validate([
             'title' => 'required',
             'desc' => 'required',
-            'id_badge' => 'required',
+            'id_badge' => 'required|array',
             'btn_label' => 'required',
             'btn_url' => 'required',
             'subtitle' => 'required',
@@ -111,11 +110,44 @@ class ElearningController extends Controller
             'subtitle.required' => 'Kolom subjudul harus diisi.',
             'body_desc.required' => 'Kolom deskripsi konten harus diisi.',
             'body_url.required' => 'Kolom url konten harus diisi.',
-            'btn_icon' => 'Kolom tombol ikon wajib diisi',
             'btn_icon.max' => 'Ukuran tombol ikon tidak boleh lebih dari 10MB.',
-            'thumbnail' => 'Kolom gambar wajib diisi',
             'thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
         ]);
+
+        $data = tb_elearning::findOrFail($id_elearning);
+
+        $updateData = [
+            'title' => $request->title,
+            'desc' => $request->desc,
+            'btn_label' => $request->btn_label,
+            'btn_url' => $request->btn_url,
+            'subtitle' => $request->subtitle,
+            'body_desc' => $request->body_desc,
+            'body_url' => $request->body_url,
+        ];
+
+        if ($request->hasFile('thumbnail')) {
+            $updateData['thumbnail'] = $this->handleFileUpload($request, 'thumbnail', 'img/e-learning', $data->thumbnail);
+        }
+
+        if ($request->hasFile('btn_icon')) {
+            $updateData['btn_icon'] = $this->handleFileUpload($request, 'btn_icon', 'img/badge', $data->btn_icon);
+        }
+
+        $data->update($updateData);
+
+        $selectedBadges = $request->input('id_badge');
+
+        DB::table('tb_badge')
+            ->where('id_elearning', $id_elearning)
+            ->whereNotIn('id', $selectedBadges)
+            ->update(['id_elearning' => 0]);
+
+        DB::table('tb_badge')
+            ->whereIn('id', $selectedBadges)
+            ->update(['id_elearning' => $id_elearning]);
+
+        return redirect()->route('elearning.index', ['token' => $token])->with('success', 'E-Learning berhasil diperbarui.');
     }
 
     /**
@@ -124,5 +156,23 @@ class ElearningController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    private function handleFileUpload(Request $request, string $field, string $folder, ?string $oldFileName = null): string
+    {
+        if ($request->hasFile($field)) {
+            if (! empty($oldFileName)) {
+                $oldPath = public_path("$folder/$oldFileName");
+                if (file_exists($oldPath) && ! is_dir($oldPath)) {
+                    unlink($oldPath);
+                }
+            }
+
+            $newName = $request->file($field)->hashName();
+            $request->file($field)->move(public_path($folder), $newName);
+            return $newName;
+        }
+
+        return $oldFileName;
     }
 }

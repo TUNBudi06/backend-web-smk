@@ -93,7 +93,7 @@
         @endphp
         <div class="form-group">
             <label for="elearning" class="form-label">Multiple Badge</label>
-            <select id="badgeSelect" multiple class="form-control @error('id_badge') is-invalid @enderror" name="id[]">
+            <select id="badgeSelect" multiple class="form-control @error('id_badge') is-invalid @enderror" name="id_badge[]">
                 @foreach ($badges as $badge)
                     <option value="{{ $badge->id }}"
                         data-icon="{{ asset('img/badge/' . $badge->icon) }}"
