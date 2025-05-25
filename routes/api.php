@@ -3,6 +3,7 @@
 use App\Http\Controllers\api\ArticleController;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\EkstraController;
+use App\Http\Controllers\api\ElearningApiController;
 use App\Http\Controllers\api\EventController;
 use App\Http\Controllers\api\FasilitasController;
 use App\Http\Controllers\api\GalleryController;
@@ -49,6 +50,7 @@ Route::prefix('user')->group(function () {
     });
 
     Route::prefix('profile')->group(function () {
+        Route::resource('e-learning', ElearningApiController::class);
         Route::get('komite-sekolah', [profile::class, 'komiteSekolah']);
         Route::get('program-kerja', [profile::class, 'programKerja']);
         Route::get('struktur-organisasi', [profile::class, 'strukturOrganisasi']);

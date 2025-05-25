@@ -367,6 +367,40 @@
                 }
             }
         },
+        "/api/user/profile/e-learning": {
+            "get": {
+                "tags": [
+                    "E-Learning"
+                ],
+                "summary": "Get all E-Learning",
+                "description": "Retrieve all E-Learning including badge",
+                "operationId": "getAllElearning",
+                "responses": {
+                    "200": {
+                        "description": "Data ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "data ditemukan"
+                                        },
+                                        "List": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ElearningResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/events": {
             "get": {
                 "tags": [
@@ -3510,6 +3544,91 @@
                     }
                 },
                 "type": "object"
+            },
+            "BadgeResource": {
+                "required": [
+                    "id",
+                    "label",
+                    "icon",
+                    "elearning_id"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "label": {
+                        "type": "string",
+                        "example": "Jadwal Pelajaran"
+                    },
+                    "icon": {
+                        "type": "string",
+                        "example": "Book"
+                    },
+                    "elearning_id": {
+                        "type": "string",
+                        "example": "1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "1"
+                    }
+                },
+                "type": "object"
+            },
+            "ElearningResource": {
+                "required": [
+                    "id",
+                    "title",
+                    "desc",
+                    "btn_label",
+                    "btn_url",
+                    "subtitle",
+                    "body_desc",
+                    "body_url"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Akademik"
+                    },
+                    "desc": {
+                        "type": "string",
+                        "example": "Deskripsi utama e-learning."
+                    },
+                    "btn_label": {
+                        "type": "string",
+                        "example": "Mulai Belajar"
+                    },
+                    "btn_url": {
+                        "type": "string",
+                        "example": "https://www.smkn1purwosari.sch.id/public/mulai"
+                    },
+                    "subtitle": {
+                        "type": "string",
+                        "example": "Subjudul Konten"
+                    },
+                    "body_desc": {
+                        "type": "string",
+                        "example": "Deskripsi konten utama e-learning."
+                    },
+                    "body_url": {
+                        "type": "string",
+                        "example": "https://www.smkn1purwosari.sch.id/public/konten"
+                    },
+                    "badge": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BadgeResource"
+                        },
+                        "nullable": true
+                    }
+                },
+                "type": "object"
             }
         }
     },
@@ -3525,6 +3644,10 @@
         {
             "name": "Ekstra",
             "description": "Ekstra"
+        },
+        {
+            "name": "E-Learning",
+            "description": "E-Learning"
         },
         {
             "name": "Events",
