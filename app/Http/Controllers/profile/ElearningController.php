@@ -96,22 +96,30 @@ class ElearningController extends Controller
             'id_badge' => 'required|array',
             'btn_label' => 'required',
             'btn_url' => 'required',
+            'btn_label_2' => 'required',
+            'btn_url_2' => 'required',
             'subtitle' => 'required',
             'body_desc' => 'required',
             'body_url' => 'required',
             'btn_icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'btn_icon_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'body_thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
         ], [
             'title.required' => 'Kolom judul harus diisi.',
             'desc.required' => 'Kolom deskripsi utama harus diisi.',
             'id_badge.required' => 'Kolom badge harus diisi.',
             'btn_label.required' => 'Kolom label tombol harus diisi.',
             'btn_url.required' => 'Kolom url tombol harus diisi.',
+            'btn_label_2.required' => 'Kolom label tombol harus diisi.',
+            'btn_url_2.required' => 'Kolom url tombol harus diisi.',
             'subtitle.required' => 'Kolom subjudul harus diisi.',
             'body_desc.required' => 'Kolom deskripsi konten harus diisi.',
             'body_url.required' => 'Kolom url konten harus diisi.',
             'btn_icon.max' => 'Ukuran tombol ikon tidak boleh lebih dari 10MB.',
+            'btn_icon_2.max' => 'Ukuran tombol ikon tidak boleh lebih dari 10MB.',
             'thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
+            'body_thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
         ]);
 
         $data = tb_elearning::findOrFail($id_elearning);
@@ -121,6 +129,8 @@ class ElearningController extends Controller
             'desc' => $request->desc,
             'btn_label' => $request->btn_label,
             'btn_url' => $request->btn_url,
+            'btn_label_2' => $request->btn_label,
+            'btn_url_2' => $request->btn_url,
             'subtitle' => $request->subtitle,
             'body_desc' => $request->body_desc,
             'body_url' => $request->body_url,
@@ -129,23 +139,25 @@ class ElearningController extends Controller
         if ($request->hasFile('thumbnail')) {
             $updateData['thumbnail'] = $this->handleFileUpload($request, 'thumbnail', 'img/e-learning', $data->thumbnail);
         }
-
-        if ($request->hasFile('btn_icon')) {
-            $updateData['btn_icon'] = $this->handleFileUpload($request, 'btn_icon', 'img/badge', $data->btn_icon);
+        if ($request->hasFile('body_thumbnail')) {
+            $updateData['body_thumbnail'] = $this->handleFileUpload($request, 'body_thumbnail', 'img/e-learning', $data->body_thumbnail);
+        }
+        if ($request->hasFile('btn_icon_2')) {
+            $updateData['btn_icon_2'] = $this->handleFileUpload($request, 'btn_icon_2', 'img/badge', $data->btn_icon_2);
         }
 
         $data->update($updateData);
 
         $selectedBadges = $request->input('id_badge');
 
-        DB::table('tb_badge')
-            ->where('id_elearning', $id_elearning)
+        DB::table('tb_badges')
+            ->where('elearning_id', $id_elearning)
             ->whereNotIn('id', $selectedBadges)
-            ->update(['id_elearning' => 0]);
+            ->update(['elearning_id' => 0]);
 
-        DB::table('tb_badge')
+        DB::table('tb_badges')
             ->whereIn('id', $selectedBadges)
-            ->update(['id_elearning' => $id_elearning]);
+            ->update(['elearning_id' => $id_elearning]);
 
         return redirect()->route('elearning.index', ['token' => $token])->with('success', 'E-Learning berhasil diperbarui.');
     }

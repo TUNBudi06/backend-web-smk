@@ -3616,11 +3616,27 @@
                         "type": "string",
                         "example": "no_image.png"
                     },
+                    "btn_label_2": {
+                        "type": "string",
+                        "example": "Mulai Aksi"
+                    },
+                    "btn_url_2": {
+                        "type": "string",
+                        "example": "https://www.smkn1purwosari.sch.id/public/aksi"
+                    },
+                    "btn_icon_2": {
+                        "type": "string",
+                        "example": "no_image.png"
+                    },
                     "subtitle": {
                         "type": "string",
                         "example": "Subjudul Konten"
                     },
                     "body_desc": {
+                        "type": "string",
+                        "example": "no_image.png"
+                    },
+                    "body_thumbnail": {
                         "type": "string",
                         "example": "Deskripsi konten utama e-learning."
                     },

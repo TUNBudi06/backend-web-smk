@@ -60,6 +60,36 @@
                 @enderror
             </div>
         </div>
+        <h6 class="my-2 font-weight-normal">Tombol Utama 2</h6>
+        <div class="row mb-4 mt-2">
+            <div class="col-md-4">
+                <label for="btn_label_2">Label 2</label>
+                <input type="text" name="btn_label_2" id="btn_label_2" class="form-control" placeholder="Microsoft Office..." aria-describedby="nameId" value="{{ $elearning->btn_label_2 }}">
+                @error('btn_label_2')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                @enderror
+            </div>
+            <div class="col-md-4">
+                <label for="btn_url_2">URL 2</label>
+                <input type="text" name="btn_url_2" id="btn_url_2" class="form-control" placeholder="url.com" aria-describedby="nameId" value="{{ $elearning->btn_url_2 }}">
+                @error('btn_url_2')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                @enderror
+            </div>
+            <div class="col-md-4">
+                <label for="btn_icon_2">Icon 2</label>
+                <input type="file" name="btn_icon_2" id="btn_icon_2" class="form-control" aria-describedby="nameId">
+                @error('btn_icon_2')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                @enderror
+            </div>
+        </div>
         <div class="form-group">
             <label for="subtitle">Subjudul E-Learning</label>
             <input type="text" name="subtitle" id="subtitle" class="form-control" placeholder="Microsoft Office..." aria-describedby="nameId" value="{{ $elearning->subtitle }}">
@@ -91,20 +121,24 @@
         @php
         $selectedBadgeIds = $elearning->badges->pluck('id')->toArray();
         @endphp
-        <div class="form-group">
-            <label for="elearning" class="form-label">Multiple Badge</label>
-            <select id="badgeSelect" multiple class="form-control @error('id_badge') is-invalid @enderror" name="id_badge[]">
-                @foreach ($badges as $badge)
-                    <option value="{{ $badge->id }}"
-                        data-icon="{{ asset('img/badge/' . $badge->icon) }}"
-                        {{ in_array($badge->id, $selectedBadgeIds) ? 'selected' : '' }}>
-                        {{ $badge->label }}
-                    </option>
-                @endforeach
-            </select>
-            @error('id_badge')
-                <p class="text-danger">{{ $message }}</p>
-            @enderror
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="elearning" class="form-label">Multiple Badge</label>
+                    <select id="badgeSelect" multiple class="form-control @error('id_badge') is-invalid @enderror" name="id_badge[]">
+                        @foreach ($badges as $badge)
+                            <option value="{{ $badge->id }}"
+                                data-icon="{{ asset('img/badge/' . $badge->icon) }}"
+                                {{ in_array($badge->id, $selectedBadgeIds) ? 'selected' : '' }}>
+                                {{ $badge->label }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('id_badge')
+                        <p class="text-danger">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-6 py-md-5 mt-3 py-3">
@@ -122,6 +156,25 @@
             <div class="col-md-6 mt-3 text-center">
                 <img class="w-100 rounded" id="preview"
                 src="{{ $elearning->thumbnail ? asset('img/e-learning/'.$elearning->thumbnail) : asset('img/no_image.png') }}"
+                alt="">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 py-md-5 mt-3 py-3">
+                <div class="form-group">
+                    <label for="body_thumbnail">Thumbnail Konten</label>
+                    <input onchange="loadFileKonten(event)" type="file" name="body_thumbnail" id="image" class="form-control" placeholder="Purwosari, Pasuruan" aria-describedby="imageId">
+                    <small id="imageId" class="text-muted d-none"></small>
+                @error('body_thumbnail')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+                </div>
+            </div>
+            <div class="col-md-6 mt-3 text-center">
+                <img class="w-100 rounded" id="preview-konten"
+                src="{{ $elearning->body_thumbnail ? asset('img/e-learning/'.$elearning->body_thumbnail) : asset('img/no_image.png') }}"
                 alt="">
             </div>
         </div>
@@ -151,6 +204,15 @@
         var reader = new FileReader();
         reader.onload = function() {
             var preview = document.getElementById('preview');
+            preview.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+    function loadFileKonten(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var preview = document.getElementById('preview-konten');
             preview.src = reader.result;
         }
         reader.readAsDataURL(event.target.files[0]);
