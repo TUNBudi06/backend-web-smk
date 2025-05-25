@@ -14,9 +14,11 @@ use Illuminate\Support\Facades\File;
  *
  *     @OA\Property(property="id", type="integer", example=1),
  *     @OA\Property(property="title", type="string", example="Akademik"),
+ *     @OA\Property(property="thumbnail", type="string", example="no_image.png"),
  *     @OA\Property(property="desc", type="string", example="Deskripsi utama e-learning."),
  *     @OA\Property(property="btn_label", type="string", example="Mulai Belajar"),
  *     @OA\Property(property="btn_url", type="string", example="https://www.smkn1purwosari.sch.id/public/mulai"),
+ *     @OA\Property(property="btn_icon", type="string", example="no_image.png"),
  *     @OA\Property(property="subtitle", type="string", example="Subjudul Konten"),
  *     @OA\Property(property="body_desc", type="string", example="Deskripsi konten utama e-learning."),
  *     @OA\Property(property="body_url", type="string", example="https://www.smkn1purwosari.sch.id/public/konten"),
@@ -53,9 +55,11 @@ class ElearningResource extends JsonResource
         $base = [
             'id' => $this->id,
             'title' => $this->title,
+            'thumbnail' => $thumbnail,
             'desc' => $this->desc,
             'btn_label' => $this->btn_label,
             'btn_url' => $this->btn_url,
+            'btn_icon' => $btn_icon,
             'subtitle' => $this->subtitle,
             'body_desc' => $this->body_desc,
             'body_url' => $this->body_url,

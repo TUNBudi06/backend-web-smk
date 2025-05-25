@@ -3596,6 +3596,10 @@
                         "type": "string",
                         "example": "Akademik"
                     },
+                    "thumbnail": {
+                        "type": "string",
+                        "example": "no_image.png"
+                    },
                     "desc": {
                         "type": "string",
                         "example": "Deskripsi utama e-learning."
@@ -3607,6 +3611,10 @@
                     "btn_url": {
                         "type": "string",
                         "example": "https://www.smkn1purwosari.sch.id/public/mulai"
+                    },
+                    "btn_icon": {
+                        "type": "string",
+                        "example": "no_image.png"
                     },
                     "subtitle": {
                         "type": "string",

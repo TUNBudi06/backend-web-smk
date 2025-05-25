@@ -4,6 +4,7 @@ namespace App\Http\Resources\profile;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\File;
 
 /**
  * @OA\Schema(
@@ -28,10 +29,16 @@ class BadgeResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $icon = $this->icon
+            ? (File::exists(public_path('img/badge/' . $this->icon))
+                ? 'img/badge/' . $this->icon
+                : 'img/no_image.png')
+            : 'img/no_image.png';
+
         return [
             'id' => $this->id,
             'label' => $this->label,
-            'icon' => $this->icon,
+            'icon' => $icon,
             'elearning_id' => (string) $this->elearning_id,
         ];
     }

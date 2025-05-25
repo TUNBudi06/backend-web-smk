@@ -18,32 +18,32 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('tb_admins')->insert([
             [
-                'name' => 'Budi',
-                'username' => 'tunbudi06',
-                'email' => 'budi@tun06.tech',
-                'token' => 'budi',
+                'name' => 'Rezza',
+                'username' => 'rezzahhe',
+                'email' => 'dapvakerenz@gmail.com',
+                'token' => 'rezza',
                 'role' => 1, // Assuming role ID 1 is for the admin role
                 'created_by' => 'Admin',
-                'password' => Hash::make('budi123'), // Hash the password
+                'password' => Hash::make('rezza123'), // Hash the password
                 'remember_token' => null,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             // Add more admin records as needed
         ]);
-        DB::table('tb_pemberitahuan_type')->insert([
-            ['pemberitahuan_type_name' => 'artikel',
-                'created_at' => now(),
-                'updated_at' => now(), ],
-            ['pemberitahuan_type_name' => 'pengumuman',
-                'created_at' => now(),
-                'updated_at' => now(), ],
-            ['pemberitahuan_type_name' => 'berita',
-                'created_at' => now(),
-                'updated_at' => now(), ],
-            ['pemberitahuan_type_name' => 'event',
-                'created_at' => now(),
-                'updated_at' => now(), ],
-        ]);
+        // DB::table('tb_pemberitahuan_type')->insert([
+        //     ['pemberitahuan_type_name' => 'artikel',
+        //         'created_at' => now(),
+        //         'updated_at' => now(), ],
+        //     ['pemberitahuan_type_name' => 'pengumuman',
+        //         'created_at' => now(),
+        //         'updated_at' => now(), ],
+        //     ['pemberitahuan_type_name' => 'berita',
+        //         'created_at' => now(),
+        //         'updated_at' => now(), ],
+        //     ['pemberitahuan_type_name' => 'event',
+        //         'created_at' => now(),
+        //         'updated_at' => now(), ],
+        // ]);
     }
 }
