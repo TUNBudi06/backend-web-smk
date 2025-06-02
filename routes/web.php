@@ -170,6 +170,7 @@ Route::prefix('private/admin')->group(function () {
                         'pd' => 'pd',
                     ]);
                     Route::resource('/ptk', PTKController::class);
+                    Route::post('/ptk/import', [PTKController::class, 'import'])->name('ptk.import');
                     Route::resource('/extra', ExtraController::class);
                     Route::resource('/elearning', ElearningController::class);
                     Route::resource('/badge', BadgeController::class);

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\profile;
 
 use App\Http\Controllers\Controller;
+use App\Imports\PTKImport;
 use App\Models\tb_ptk;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PTKController extends Controller
 {
@@ -84,7 +86,7 @@ class PTKController extends Controller
         // Simpan gambar
         if ($request->hasFile('foto')) {
             $fileContents = file_get_contents($request->file('foto')->getRealPath());
-            $imageName = hash('sha256', $fileContents).'.'.$request->file('foto')->getClientOriginalExtension();
+            $imageName = hash('sha256', $fileContents) . '.' . $request->file('foto')->getClientOriginalExtension();
             $request->file('foto')->move('img/guru', $imageName);
             $data->foto = $imageName;
         }
@@ -143,7 +145,7 @@ class PTKController extends Controller
 
         if ($request->hasFile('foto')) {
             if (! empty($data->foto)) {
-                $oldImagePath = public_path('img/guru/'.$data->foto);
+                $oldImagePath = public_path('img/guru/' . $data->foto);
                 if (file_exists($oldImagePath) && ! is_dir($oldImagePath)) {
                     unlink($oldImagePath);
                 }
@@ -179,7 +181,7 @@ class PTKController extends Controller
         $ptk = tb_ptk::findOrFail($id);
 
         if (! empty($ptk->thumbnail)) {
-            $imagePath = public_path('img/guru/'.$ptk->thumbnail);
+            $imagePath = public_path('img/guru/' . $ptk->thumbnail);
 
             if (file_exists($imagePath) && is_file($imagePath)) {
                 unlink($imagePath);
@@ -189,5 +191,18 @@ class PTKController extends Controller
         $ptk->delete();
 
         return redirect()->route('ptk.index', ['token' => $request->token])->with('success', 'PTK berhasil dihapus.');
+    }
+
+    public function import(Request $request)
+    {
+        $token = $request->session()->get('token') ?? $request->input('token');
+
+        $request->validate([
+            'excel_file' => 'required|file|mimes:xls,xlsx',
+        ]);
+
+        Excel::import(new PTKImport(), $request->file('excel_file'));
+
+        return redirect()->route('ptk.index', ['token' => $token])->with('success', 'PTK berhasil diimport.');
     }
 }
