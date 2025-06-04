@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\profile;
 
 use App\Http\Controllers\Controller;
+use App\Imports\PDImport;
 use App\Models\tb_peserta_didik;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PdController extends Controller
 {
@@ -175,5 +177,18 @@ class PdController extends Controller
         $pd->delete();
 
         return redirect()->route('pd.index', ['token' => $request->token])->with('success', 'Peserta Didik berhasil dihapus.');
+    }
+
+    public function import(Request $request)
+    {
+        $token = $request->session()->get('token') ?? $request->input('token');
+
+        $request->validate([
+            'excel_file' => 'required|file|mimes:xls,xlsx',
+        ]);
+
+        Excel::import(new PDImport(), $request->file('excel_file'));
+
+        return redirect()->route('pd.index', ['token' => $token])->with('success', 'Peserta Didik berhasil diimport.');
     }
 }

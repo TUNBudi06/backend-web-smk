@@ -169,6 +169,7 @@ Route::prefix('private/admin')->group(function () {
                     Route::resource('pd', PdController::class)->parameters([
                         'pd' => 'pd',
                     ]);
+                    Route::post('/pd/import', [PdController::class, 'import'])->name('pd.import');
                     Route::resource('/ptk', PTKController::class);
                     Route::post('/ptk/import', [PTKController::class, 'import'])->name('ptk.import');
                     Route::resource('/extra', ExtraController::class);

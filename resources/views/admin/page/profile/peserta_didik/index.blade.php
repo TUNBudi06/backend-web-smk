@@ -20,9 +20,9 @@
                             class="btn-print btn btn-warning shadow-warning px-5 rounded-pill"><i class="fas fa-plus"></i>
                             Peserta Baru</a>
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-warning rounded-pill px-4" data-toggle="modal"
-                            data-target="#modelId">
-                            Import CSV
+                        <button type="button" class="mx-2 btn btn-outline btn-warning shadow-warning px-4 rounded-pill"
+                            data-bs-toggle="modal" data-bs-target="#importModal">
+                            <i class="fas fa-file-import"></i> Import
                         </button>
 
                         <!-- Modal -->
@@ -132,25 +132,6 @@
 
 
                 </table>
-                <script>
-                    $('.check-toggle').change(function() {
-                        if (this.checked) {
-                            $('.btn-print').removeAttr('disabled').removeClass('disabled')
-                            $('.check-respond').prop('checked', true);
-                        } else {
-                            $('.btn-print').addClass('disabled').attr('disabled')
-                            $('.check-respond').prop('checked', false);
-                        }
-                    });
-                    $('input[name="checkPrint[]"]').change(function() {
-                        var atLeastOneIsChecked = $('input[name="checkPrint[]"]:checked').length > 0;
-                        if (atLeastOneIsChecked) {
-                            $('.btn-print').removeAttr('disabled').removeClass('disabled')
-                        } else {
-                            $('.btn-print').addClass('disabled').attr('disabled')
-                        }
-                    });
-                </script>
                 <div class="row px-3">
                     <div class="col-md-6">
                         <div class="pb-3">
@@ -186,4 +167,95 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Import Excel -->
+    <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-4">
+                <div class="modal-header bg-warning text-white">
+                    <h5 class="modal-title" id="importModalLabel">Import Excel</h5>
+                    <button type="button" class="border-0 bg-transparent text-dark fs-5" data-bs-dismiss="modal"
+                        aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form id="importExcelForm" action="{{ route('pd.import', ['token' => $token]) }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="excelFile" class="form-label">Pilih file Excel (.xls, .xlsx)</label>
+                            <input class="form-control" type="file" id="excelFile" name="excel_file"
+                                accept=".xls,.xlsx" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Atau tarik file ke sini:</label>
+                            <div id="dropzone" class="border border-dashed p-4 rounded text-center bg-light">
+                                <i class="fas fa-upload fa-2x mb-2 text-warning"></i>
+                                <p class="text-muted">Drop file Excel di sini</p>
+                            </div>
+                            <div id="fileError" class="text-danger mt-2" style="display: none;"></div>
+                        </div>
+
+                        <div class="text-center mt-3">
+                            <a href="{{ asset('template/template-pd.xlsx') }}" class="btn btn-outline-secondary btn-sm"
+                                download>
+                                <i class="fas fa-download"></i> Download Template
+                            </a>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" form="importExcelForm"
+                        class="btn btn-warning px-4 rounded-pill">Import</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const isExcelFile = (file) => {
+            const allowedExtensions = ['xls', 'xlsx'];
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            return allowedExtensions.includes(fileExtension);
+        };
+
+        $("#dropzone").on("dragover", function(e) {
+            e.preventDefault();
+            $(this).addClass("border-warning");
+        });
+
+        $("#dropzone").on("dragleave", function(e) {
+            $(this).removeClass("border-warning");
+        });
+
+        $("#dropzone").on("drop", function(e) {
+            e.preventDefault();
+            $(this).removeClass("border-warning");
+
+            const files = e.originalEvent.dataTransfer.files;
+            const file = files[0];
+
+            if (file && isExcelFile(file)) {
+                $("#excelFile").prop("files", files);
+                $("#fileError").hide().text('');
+            } else {
+                $("#excelFile").val("");
+                $("#fileError").text("Jenis file tidak sesuai. Hanya .xls dan .xlsx yang diperbolehkan.").show();
+            }
+        });
+
+        $("#excelFile").on("change", function() {
+            const file = this.files[0];
+            if (file && !isExcelFile(file)) {
+                $(this).val("");
+                $("#fileError").text("Jenis file tidak sesuai. Hanya .xls dan .xlsx yang diperbolehkan.").show();
+            } else {
+                $("#fileError").hide().text('');
+            }
+        });
+    </script>
 @endsection
