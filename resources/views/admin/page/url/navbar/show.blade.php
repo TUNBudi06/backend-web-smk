@@ -57,8 +57,6 @@
     const existingSubNavbars = @json($sub_navbar);
 
     $(document).ready(function () {
-        let index = 0;
-
         toggleRouteField(isDropdown);
 
         if (isDropdown && existingSubNavbars.length > 0) {
@@ -66,92 +64,38 @@
                 const template = `
                     <div class="row mb-2 sub-navbar-item">
                         <div class="col-md-4">
-                            <input type="text" name="sub_navbars[${i}][title]" class="form-control" placeholder="Nama Sub Navbar" value="${sub.title}" required disabled>
+                            <input type="text" class="form-control" placeholder="Nama Sub Navbar" value="${sub.title}" disabled>
                         </div>
                         <div class="col-md-4">
-                            <input type="text" name="sub_navbars[${i}][route]" class="form-control" placeholder="/sub-navbar" value="${sub.route}" required disabled>
+                            <input type="text" class="form-control" placeholder="/sub-navbar" value="${sub.route}" disabled>
                         </div>
                         <div class="col-md-4">
-                            <input type="text" name="sub_navbars[${i}][icon]" class="form-control" placeholder="Icon" value="${sub.icon}" required disabled>
+                            <input type="text" class="form-control" placeholder="Icon" value="${sub.icon}" disabled>
                         </div>
                     </div>
                 `;
                 $('#sub-navbar-container').append(template);
-                index++;
             });
         }
 
-        $('#is_dropdown').prop('checked', isDropdown);
-
-        $('#is_dropdown').on('change', function () {
-            const checked = $(this).is(':checked');
-            toggleRouteField(checked);
-
-            if (!checked) {
-                $('#sub-navbar-container').empty();
-                index = 0;
-            }
-        });
+        $('#is_dropdown').prop('checked', isDropdown).attr('disabled', true);
 
         function toggleRouteField(isChecked) {
             if (isChecked) {
                 $('#sub-navbar-section').removeClass('d-none');
                 $('#route-group').addClass('d-none');
-                $('#route-navbar').val('');
+                $('#route-navbar').val('').attr('disabled', true);
                 $('#routeNote').removeClass('d-none');
             } else {
                 $('#sub-navbar-section').addClass('d-none');
                 $('#route-group').removeClass('d-none');
+                $('#route-navbar').attr('disabled', true);
                 $('#routeNote').addClass('d-none');
             }
         }
 
-        $('#add-sub-navbar').on('click', function () {
-            const template = `
-                <div class="row mb-2 sub-navbar-item">
-                    <div class="col-md-4">
-                        <input type="text" name="sub_navbars[${index}][title]" class="form-control" placeholder="Nama Sub Navbar" required>
-                    </div>
-                    <div class="col-md-4">
-                        <input type="text" name="sub_navbars[${index}][route]" class="form-control" placeholder="/sub-navbar" required>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" name="sub_navbars[${index}][icon]" class="form-control" placeholder="Icon" required>
-                    </div>
-                    <div class="col-md-1">
-                        <button type="button" class="btn btn-danger remove-sub-navbar">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </div>
-                </div>
-            `;
-            $('#sub-navbar-container').append(template);
-            index++;
-        });
-
-        $('#sub-navbar-container').on('click', '.remove-sub-navbar', function () {
-            $(this).closest('.sub-navbar-item').remove();
-            reindexSubNavbars();
-        });
-
-        function reindexSubNavbars() {
-            $('#sub-navbar-container .sub-navbar-item').each(function (i, el) {
-                $(el).find('input[name^="sub_navbars"]').each(function () {
-                    const field = $(this);
-                    let newName = '';
-
-                    if (field.attr('placeholder') === 'Nama Sub Navbar') {
-                        newName = `sub_navbars[${i}][title]`;
-                    } else if (field.attr('placeholder') === '/sub-navbar') {
-                        newName = `sub_navbars[${i}][route]`;
-                    } else if (field.attr('placeholder') === 'Icon') {
-                        newName = `sub_navbars[${i}][icon]`;
-                    }
-
-                    field.attr('name', newName);
-                });
-            });
-        }
+        $('#add-sub-navbar').remove();
+        $('.remove-sub-navbar').remove();
     });
 </script>
 @endsection

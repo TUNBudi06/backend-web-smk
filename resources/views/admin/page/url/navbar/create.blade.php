@@ -80,24 +80,37 @@
         }
 
         $('#add-sub-navbar').on('click', function () {
+            const index = $('#sub-navbar-container .sub-navbar-item').length + 1;
+
             const template = `
-                <div class="row mb-2 sub-navbar-item">
-                    <div class="col-md-4">
-                        <input type="text" name="sub_navbars[][title]" class="form-control" placeholder="Nama Sub Navbar" required>
-                    </div>
-                    <div class="col-md-4">
-                        <input type="text" name="sub_navbars[][route]" class="form-control" placeholder="/sub-navbar" required>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" name="sub_navbars[][icon]" class="form-control" placeholder="Icon" required>
-                    </div>
-                    <div class="col-md-1">
-                        <button type="button" class="btn btn-danger remove-sub-navbar">
+                <div class="card mb-3 sub-navbar-item">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Sub Navbar #<span class="sub-navbar-index">${index}</span></span>
+                        <button type="button" class="btn btn-sm btn-danger remove-sub-navbar">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-2">
+                                <input type="text" name="sub_navbars[][title]" class="form-control" placeholder="Nama Sub Navbar" required>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <input type="text" name="sub_navbars[][route]" class="form-control" placeholder="/sub-navbar" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-2">
+                                <input type="text" name="sub_navbars[][icon]" class="form-control" placeholder="Icon" required>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <input type="text" name="sub_navbars[][description]" class="form-control" placeholder="Deskripsi" required>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             `;
+
             $('#sub-navbar-container').append(template);
             reindexSubNavbars();
         });
@@ -109,19 +122,19 @@
 
         function reindexSubNavbars() {
             $('#sub-navbar-container .sub-navbar-item').each(function (i, el) {
+                $(el).find('.sub-navbar-index').text(i + 1);
+
                 $(el).find('input[name^="sub_navbars"]').each(function () {
                     const field = $(this);
-                    let newName = '';
+                    const placeholder = field.attr('placeholder');
+                    let name = '';
 
-                    if (field.attr('placeholder') === 'Nama Sub Navbar') {
-                        newName = `sub_navbars[${i}][title]`;
-                    } else if (field.attr('placeholder') === '/sub-navbar') {
-                        newName = `sub_navbars[${i}][route]`;
-                    } else if (field.attr('placeholder') === 'Icon') {
-                        newName = `sub_navbars[${i}][icon]`;
-                    }
+                    if (placeholder === 'Nama Sub Navbar') name = `sub_navbars[${i}][title]`;
+                    else if (placeholder === '/sub-navbar') name = `sub_navbars[${i}][route]`;
+                    else if (placeholder === 'Icon') name = `sub_navbars[${i}][icon]`;
+                    else if (placeholder === 'Deskripsi') name = `sub_navbars[${i}][description]`;
 
-                    field.attr('name', newName);
+                    field.attr('name', name);
                 });
             });
         }

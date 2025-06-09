@@ -15,6 +15,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *     @OA\Property(property="title", type="string", example="Jadwal Pelajaran"),
  *     @OA\Property(property="icon", type="string", example="Book"),
  *     @OA\Property(property="route", type="string", example="https://www.smkn1purwosari.sch.id/public/"),
+ *     @OA\Property(property="description", type="string", example="Schedule of lessons"),
  *     @OA\Property(property="type", type="string", example="1")
  * )
  */
@@ -32,6 +33,7 @@ class SubNavbarResource extends JsonResource
             'title' => $this->title,
             'icon' => $this->icon,
             'route' => $this->route,
+            'description' => $this->description,
             'navbar_id' => (string) $this->navbar_id,
         ];
     }

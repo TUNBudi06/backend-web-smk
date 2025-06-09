@@ -3449,6 +3449,10 @@
                         "type": "string",
                         "example": "https://www.smkn1purwosari.sch.id/public/"
                     },
+                    "description": {
+                        "type": "string",
+                        "example": "Schedule of lessons"
+                    },
                     "type": {
                         "type": "string",
                         "example": "1"

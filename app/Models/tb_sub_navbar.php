@@ -17,6 +17,7 @@ class tb_sub_navbar extends Model
         'navbar_id',
         'title',
         'route',
+        'description',
         'icon',
         'order',
     ];

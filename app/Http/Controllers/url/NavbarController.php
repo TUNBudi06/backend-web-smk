@@ -83,6 +83,7 @@ class NavbarController extends Controller
                     'navbar_id' => $navbar->id,
                     'title' => $sub['title'],
                     'route' => $sub['route'],
+                    'description' => $sub['description'],
                     'icon' => $sub['icon'],
                     'order' => $order++,
                 ]);
@@ -166,6 +167,7 @@ class NavbarController extends Controller
                     'navbar_id' => $navbar->id,
                     'title' => $sub['title'],
                     'route' => $sub['route'],
+                    'description' => $sub['description'],
                     'icon' => $sub['icon'],
                     'order' => $order++,
                 ]);
