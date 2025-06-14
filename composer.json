@@ -7,9 +7,9 @@
     "require": {
         "php": "^8.2",
         "ext-pdo": "*",
-        "darkaonline/l5-swagger": "^8.6",
+        "darkaonline/l5-swagger": "^9.0",
         "intervention/image": "^3.5",
-        "laravel/framework": "^11.0",
+        "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "maatwebsite/excel": "^3.1"
@@ -19,8 +19,8 @@
         "laravel/pint": "^1.17",
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",
-        "nunomaduro/collision": "^8.0",
-        "phpunit/phpunit": "^10.5",
+        "nunomaduro/collision": "^8.8",
+        "phpunit/phpunit": "^12.0",
         "spatie/laravel-ignition": "^2.4"
     },
     "autoload": {
