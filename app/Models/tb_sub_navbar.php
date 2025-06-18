@@ -11,7 +11,7 @@ class tb_sub_navbar extends Model
 
     protected $table = 'tb_sub_navbars';
 
-    protected $primaryKey = 'id_sub_navbar';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'navbar_id',
@@ -19,6 +19,7 @@ class tb_sub_navbar extends Model
         'route',
         'description',
         'icon',
+        'icon_id',
         'order',
     ];
 
@@ -27,5 +28,10 @@ class tb_sub_navbar extends Model
     public function navbar()
     {
         return $this->belongsTo(tb_navbar::class, 'navbar_id');
+    }
+
+    public function icon()
+    {
+        return $this->belongsTo(tb_badge::class, 'icon_id');
     }
 }

@@ -63,14 +63,17 @@
             existingSubNavbars.forEach(function (sub, i) {
                 const template = `
                     <div class="row mb-2 sub-navbar-item">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <input type="text" class="form-control" placeholder="Nama Sub Navbar" value="${sub.title}" disabled>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <input type="text" class="form-control" placeholder="/sub-navbar" value="${sub.route}" disabled>
                         </div>
-                        <div class="col-md-4">
-                            <input type="text" class="form-control" placeholder="Icon" value="${sub.icon}" disabled>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" placeholder="Deskripsi" value="${sub.description}" disabled>
+                        </div>
+                        <div class="col-md-3 d-flex align-items-center">
+                            <img src="/img/navbar/${sub.icon}" alt="${sub.title}" class="img-fluid" style="max-height: 100px; max-width: 100px">
                         </div>
                     </div>
                 `;

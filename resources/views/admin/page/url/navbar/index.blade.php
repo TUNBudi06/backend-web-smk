@@ -16,7 +16,8 @@
                         </p>
                     </div>
                     <div class="col-md-4 text-right">
-                        <a href="{{ route('navbar.create', ['token' => $token]) }}" class="btn-print btn btn-warning shadow-warning px-4 rounded-pill"><i class="fas fa-plus"></i> Navbar Baru</a>
+                        <a href="{{ route('navbar.create', ['token' => $token]) }}" class="btn btn-warning shadow-warning px-4 rounded-pill"><i class="fas fa-plus"></i> Navbar Baru</a>
+                        {{-- <a href="{{ route('badge.index',$token) }}" class="btn-print btn btn-white border-warning px-3 rounded-pill"><i class="fas fa-columns mx-2"></i> Icon</a> --}}
                     </div>
                 </div>
                 @if(Session::get('success'))

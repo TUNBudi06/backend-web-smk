@@ -4,6 +4,7 @@ namespace App\Http\Resources\link;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\File;
 
 /**
  * @OA\Schema(
@@ -28,10 +29,16 @@ class SubNavbarResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $icon = $this->icon
+            ? (File::exists(public_path('img/navbar/' . $this->icon))
+                ? 'img/navbar/' . $this->icon
+                : 'img/no_image.png')
+            : 'img/no_image.png';
+
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'icon' => $this->icon,
+            'icon' => $icon,
             'route' => $this->route,
             'description' => $this->description,
             'navbar_id' => (string) $this->navbar_id,

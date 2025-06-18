@@ -4,6 +4,51 @@
     <title>Badge | Admin Panel</title>
 @endsection
 
+@push('styles')
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0;
+            right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px; width: 26px;
+            left: 4px; bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #00cc66;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+    </style>
+@endpush
+
 @section('container')
     <div class="container-fluid">
         @if (Session::get('success'))
@@ -40,6 +85,14 @@
                                 <input type="file" value="{{ $category->icon }}"
                                     name="icon" id="icon" class="form-control" accept=".png, .jpg, .jpeg">
                             </div>
+                            <div class="form-group mt-3">
+                                <label for="elearning_id" class="mb-2 d-block">Dipakai di E-Learning</label>
+                                <input type="hidden" name="elearning_id" value="">
+                                <label class="switch">
+                                    <input type="checkbox" name="elearning_id" id="elearning_id" value="1" {{ isset($category) && $category->elearning_id == 1 ? 'checked' : '' }}>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
                             <div class="text-right w-100 position-absolute" style="right: 10px;">
                                 <button class="btn btn-warning px-4 rounded-pill shadow-warning">Update</button>
                             </div>
@@ -60,6 +113,14 @@
                             <div class="form-group">
                                 <label for="icon" class="mt-3 mb-2">Icon Badge</label>
                                 <input type="file" name="icon" id="icon" class="form-control" accept=".png, .jpg, .jpeg">
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="elearning_id" class="mb-2 d-block">Dipakai di E-Learning</label>
+                                <input type="hidden" name="elearning_id" value="">
+                                <label class="switch">
+                                    <input type="checkbox" name="elearning_id" id="elearning_id" value="1">
+                                    <span class="slider round"></span>
+                                </label>
                             </div>
                             <div class="text-right w-100">
                                 <button class="btn btn-warning px-4 rounded-pill shadow-warning position-absolute"

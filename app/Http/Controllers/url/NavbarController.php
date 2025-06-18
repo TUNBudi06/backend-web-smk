@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\url;
 
 use App\Http\Controllers\Controller;
+use App\Models\tb_badge;
 use App\Models\tb_navbar;
 use App\Models\tb_sub_navbar;
 use Illuminate\Http\Request;
@@ -44,11 +45,13 @@ class NavbarController extends Controller
     public function create(Request $request)
     {
         $token = $request->session()->get('token') ?? $request->input('token');
+        $badges = tb_badge::all();
 
         return view('admin.page.url.navbar.create', [
             'menu_active' => 'links',
             'info_active' => 'navbar',
             'navbar' => tb_navbar::all(),
+            'badges' => $badges,
             'token' => $token,
         ]);
     }
@@ -78,17 +81,29 @@ class NavbarController extends Controller
         if ($request->has('sub_navbars') && is_array($request->sub_navbars)) {
             $order = 1;
 
-            foreach ($request->sub_navbars as $sub) {
+            foreach ($request->sub_navbars as $i => $sub) {
+                $iconPath = null;
+
+                if ($request->hasFile("sub_navbars.$i.icon")) {
+                    $file = $request->file("sub_navbars.$i.icon");
+                    $time = time();
+                    $originalName = $file->getClientOriginalName();
+                    $imageName = $time . '_' . $originalName;
+                    $file->move(public_path('img/navbar'), $imageName);
+                    $iconPath = $imageName;
+                }
+
                 tb_sub_navbar::create([
-                    'navbar_id' => $navbar->id,
-                    'title' => $sub['title'],
-                    'route' => $sub['route'],
-                    'description' => $sub['description'],
-                    'icon' => $sub['icon'],
-                    'order' => $order++,
+                    'navbar_id'  => $navbar->id,
+                    'title'      => $sub['title'],
+                    'route'      => $sub['route'],
+                    'description'=> $sub['description'],
+                    'icon'       => $iconPath,
+                    'order'      => $order++,
                 ]);
             }
         }
+
 
         return redirect()->route('navbar.index', ['token' => $token])->with('success', 'Navbar baru berhasil ditambahkan.');
     }
@@ -121,12 +136,14 @@ class NavbarController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
         $navbar = tb_navbar::findOrFail($id_navbar);
         $sub_navbar = tb_sub_navbar::where('navbar_id', $id_navbar)->get();
+        $badges = tb_badge::all();
 
         return view('admin.page.url.navbar.edit', [
             'menu_active' => 'links',
             'info_active' => 'navbar',
             'navbar' => $navbar,
             'sub_navbar' => $sub_navbar,
+            'badges' => $badges,
             'token' => $token,
         ]);
     }
@@ -158,19 +175,90 @@ class NavbarController extends Controller
             tb_sub_navbar::where('navbar_id', $navbar->id)->delete();
         }
 
-        if ($request->input('is_dropdown') == 1 && $request->has('sub_navbars') && is_array($request->sub_navbars)) {
-            tb_sub_navbar::where('navbar_id', $navbar->id)->delete();
+        if ($request->has('deleted_sub_navbars')) {
+            foreach ($request->deleted_sub_navbars as $id) {
+                $subNavbar = tb_sub_navbar::find($id);
+                if ($subNavbar) {
+                    if ($subNavbar->icon && file_exists(public_path('img/navbar/' . $subNavbar->icon))) {
+                        unlink(public_path('img/navbar/' . $subNavbar->icon));
+                    }
+                    $subNavbar->delete();
+                }
+            }
+        }
 
-            $order = 1;
-            foreach ($request->sub_navbars as $sub) {
-                tb_sub_navbar::create([
-                    'navbar_id' => $navbar->id,
-                    'title' => $sub['title'],
-                    'route' => $sub['route'],
+        $order = 1;
+        if ($request->has('sub_navbars')) {
+            $existingIds = tb_sub_navbar::where('navbar_id', $navbar->id)->pluck('id')->toArray();
+
+            $currentIds = collect($request->sub_navbars)
+                ->pluck('id')
+                ->filter()
+                ->map(function ($id) {
+                    return (int) $id;
+                })
+                ->toArray();
+
+            $deletedIds = array_diff($existingIds, $currentIds);
+
+            foreach ($deletedIds as $id) {
+                $sub = tb_sub_navbar::find($id);
+                if ($sub) {
+                    if ($sub->icon && file_exists(public_path('img/navbar/' . $sub->icon))) {
+                        unlink(public_path('img/navbar/' . $sub->icon));
+                    }
+                    $sub->delete();
+                }
+            }
+
+            foreach ($request->sub_navbars as $i => $sub) {
+                $data = [
+                    'navbar_id'   => $navbar->id,
+                    'title'       => $sub['title'],
+                    'route'       => $sub['route'],
                     'description' => $sub['description'],
-                    'icon' => $sub['icon'],
-                    'order' => $order++,
-                ]);
+                    'order'       => $order++,
+                ];
+
+                if (!empty($sub['id'])) {
+                    $subNavbar = tb_sub_navbar::find($sub['id']);
+                    if (!$subNavbar) {
+                        continue;
+                    }
+
+                    if ($request->hasFile("sub_navbars.$i.icon")) {
+                        if ($subNavbar->icon && file_exists(public_path('img/navbar/' . $subNavbar->icon))) {
+                            unlink(public_path('img/navbar/' . $subNavbar->icon));
+                        }
+
+                        $file = $request->file("sub_navbars.$i.icon");
+                        $time = time();
+                        $originalName = $file->getClientOriginalName();
+                        $iconName = $time . '_' . $originalName;
+                        $file->move(public_path('img/navbar'), $iconName);
+
+                        $data['icon'] = $iconName;
+                    } else {
+                        $data['icon'] = $subNavbar->icon;
+                    }
+
+                    $subNavbar->update($data);
+                }
+                else {
+                    if ($request->hasFile("sub_navbars.$i.icon")) {
+                        $file = $request->file("sub_navbars.$i.icon");
+                        $time = time();
+                        $originalName = $file->getClientOriginalName();
+                        $iconName = $time . '_' . $originalName;
+                        $file->move(public_path('img/navbar'), $iconName);
+
+                        $data['icon'] = $iconName;
+                    } else {
+                        $data['icon'] = null;
+                    }
+
+                    tb_sub_navbar::create($data);
+                }
             }
         }
 
@@ -188,9 +276,16 @@ class NavbarController extends Controller
         $navbar = tb_navbar::findOrFail($id_navbar);
 
         if ($navbar->is_dropdown == 1) {
+            $subNavbars = tb_sub_navbar::where('navbar_id', $navbar->id)->get();
+
+            foreach ($subNavbars as $sub) {
+                if ($sub->icon && file_exists(public_path('img/navbar/' . $sub->icon))) {
+                    unlink(public_path('img/navbar/' . $sub->icon));
+                }
+            }
+
             tb_sub_navbar::where('navbar_id', $navbar->id)->delete();
         }
-
         $navbar->delete();
 
         return redirect()->route('navbar.index', ['token' => $token])->with('success', 'Navbar atau Sub Navbar berhasil dihapus.');

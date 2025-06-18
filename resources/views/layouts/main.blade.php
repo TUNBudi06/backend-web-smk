@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset('css/jssocials-theme-classic.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jssocials-theme-flat.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jssocials-theme-minima.css') }}">
+    @stack('styles')
     <link rel="icon" type="image/x-icon" class="rounded-circle" href="{{ asset('smkicon.ico') }}" />
     {{-- <link href="https://cdn.datatables.net/v/bs4/jszip-3.10.1/dt-2.1.8/af-2.7.0/b-3.1.2/b-colvis-3.1.2/b-html5-3.1.2/b-print-3.1.2/fc-5.0.3/fh-4.0.1/r-3.0.3/datatables.min.css" rel="stylesheet"> --}}
 

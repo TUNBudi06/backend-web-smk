@@ -172,7 +172,7 @@ class FasilitasController extends Controller
         $imagePath = public_path('img/fasilitas/'.$facility->facility_image);
 
         $facility->delete();
-        
+
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }

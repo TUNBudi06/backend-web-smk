@@ -55,6 +55,7 @@
 <script>
     $(document).ready(function () {
         let index = 0;
+        const badges = @json($badges);
 
         toggleRouteField($('#is_dropdown').is(':checked'));
         $('#is_dropdown').on('change', function () {
@@ -80,12 +81,11 @@
         }
 
         $('#add-sub-navbar').on('click', function () {
-            const index = $('#sub-navbar-container .sub-navbar-item').length + 1;
-
+            const index = $('#sub-navbar-container .sub-navbar-item').length;
             const template = `
                 <div class="card mb-3 sub-navbar-item">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span>Sub Navbar #<span class="sub-navbar-index">${index}</span></span>
+                        <span>Sub Navbar #<span class="sub-navbar-index">${index + 1}</span></span>
                         <button type="button" class="btn btn-sm btn-danger remove-sub-navbar">
                             <i class="fas fa-trash-alt"></i>
                         </button>
@@ -93,18 +93,18 @@
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col-md-6 mb-2">
-                                <input type="text" name="sub_navbars[][title]" class="form-control" placeholder="Nama Sub Navbar" required>
+                                <input type="text" name="sub_navbars[${index}][title]" class="form-control" placeholder="Nama Sub Navbar" required>
                             </div>
                             <div class="col-md-6 mb-2">
-                                <input type="text" name="sub_navbars[][route]" class="form-control" placeholder="/sub-navbar" required>
+                                <input type="text" name="sub_navbars[${index}][route]" class="form-control" placeholder="/sub-navbar" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-2">
-                                <input type="text" name="sub_navbars[][icon]" class="form-control" placeholder="Icon" required>
+                                <input type="file" name="sub_navbars[${index}][icon]" class="form-control" placeholder="Icon" accept=".jpg,.jpeg,.png,.webp" required>
                             </div>
                             <div class="col-md-6 mb-2">
-                                <input type="text" name="sub_navbars[][description]" class="form-control" placeholder="Deskripsi" required>
+                                <input type="text" name="sub_navbars[${index}][description]" class="form-control" placeholder="Deskripsi" required>
                             </div>
                         </div>
                     </div>
@@ -131,7 +131,7 @@
 
                     if (placeholder === 'Nama Sub Navbar') name = `sub_navbars[${i}][title]`;
                     else if (placeholder === '/sub-navbar') name = `sub_navbars[${i}][route]`;
-                    else if (placeholder === 'Icon') name = `sub_navbars[${i}][icon]`;
+                    else if (field.attr('type') === 'file') name = `sub_navbars[${i}][icon]`;
                     else if (placeholder === 'Deskripsi') name = `sub_navbars[${i}][description]`;
 
                     field.attr('name', name);

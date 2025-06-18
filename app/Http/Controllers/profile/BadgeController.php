@@ -56,7 +56,7 @@ public function index(Request $request)
 
         $data = new tb_badge();
         $data->label = $request->label;
-        $data->elearning_id = 0;
+        $data->elearning_id = $request->elearning_id ?? null;
 
         if ($request->hasFile('icon')) {
             $file = $request->file('icon');
@@ -127,7 +127,7 @@ public function index(Request $request)
 
         $data->update([
             'label' => $request->label,
-            'elearning_id' => 1,
+            'elearning_id' => $request->elearning_id ?? null,
         ]);
 
         return redirect()->route('badge.index', ['token' => $request->token])->with('success', 'Badge berhasil diperbarui.');

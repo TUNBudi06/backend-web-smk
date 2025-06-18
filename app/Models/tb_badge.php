@@ -25,4 +25,9 @@ class tb_badge extends Model
     {
         return $this->belongsTo(tb_elearning::class, 'elearning_id');
     }
+
+    public function subNavbar()
+    {
+        return $this->hasMany(tb_sub_navbar::class, 'icon_id');
+    }
 }

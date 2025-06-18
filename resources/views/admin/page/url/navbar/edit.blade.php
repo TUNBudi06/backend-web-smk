@@ -58,14 +58,14 @@
     const existingSubNavbars = @json($sub_navbar);
 
     $(document).ready(function () {
-        let index = 0;
+        let index = existingSubNavbars.length;
 
         toggleRouteField(isDropdown);
 
         if (isDropdown && existingSubNavbars.length > 0) {
             existingSubNavbars.forEach(function (sub, i) {
                 const template = `
-                    <div class="card mb-3 sub-navbar-item">
+                    <div class="card mb-3 sub-navbar-item" data-id="${sub.id || ''}">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <span>Sub Navbar #<span class="sub-navbar-index">${i + 1}</span></span>
                             <button type="button" class="btn btn-sm btn-danger remove-sub-navbar">
@@ -83,7 +83,10 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-2">
-                                    <input type="text" name="sub_navbars[${i}][icon]" class="form-control" placeholder="Icon" value="${sub.icon}" required>
+                                    <label class="form-label">Icon Saat Ini: ${sub.icon}</label>
+                                    <input type="hidden" name="sub_navbars[${i}][id]" value="${sub.id || ''}">
+                                    <input type="hidden" name="sub_navbars[${i}][old_icon]" value="${sub.icon}">
+                                    <input type="file" name="sub_navbars[${i}][icon]" class="form-control" accept="image/*">
                                 </div>
                                 <div class="col-md-6 mb-2">
                                     <input type="text" name="sub_navbars[${i}][description]" class="form-control" placeholder="Deskripsi" value="${sub.description ?? ''}" required>
@@ -93,7 +96,6 @@
                     </div>
                 `;
                 $('#sub-navbar-container').append(template);
-                index++;
             });
         }
 
@@ -123,10 +125,11 @@
         }
 
         $('#add-sub-navbar').on('click', function () {
+            const newIndex = $('#sub-navbar-container .sub-navbar-item').length;
             const template = `
                 <div class="card mb-3 sub-navbar-item">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span>Sub Navbar #<span class="sub-navbar-index">${index + 1}</span></span>
+                        <span>Sub Navbar #<span class="sub-navbar-index">${newIndex + 1}</span></span>
                         <button type="button" class="btn btn-sm btn-danger remove-sub-navbar">
                             <i class="fas fa-trash-alt"></i>
                         </button>
@@ -134,51 +137,55 @@
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col-md-6 mb-2">
-                                <input type="text" name="sub_navbars[${index}][title]" class="form-control" placeholder="Nama Sub Navbar" required>
+                                <input type="text" name="sub_navbars[${newIndex}][title]" class="form-control" placeholder="Nama Sub Navbar" required>
                             </div>
                             <div class="col-md-6 mb-2">
-                                <input type="text" name="sub_navbars[${index}][route]" class="form-control" placeholder="/sub-navbar" required>
+                                <input type="text" name="sub_navbars[${newIndex}][route]" class="form-control" placeholder="/sub-navbar" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-2">
-                                <input type="text" name="sub_navbars[${index}][icon]" class="form-control" placeholder="Icon" required>
+                                <input type="file" name="sub_navbars[${newIndex}][icon]" class="form-control" required>
                             </div>
                             <div class="col-md-6 mb-2">
-                                <input type="text" name="sub_navbars[${index}][description]" class="form-control" placeholder="Deskripsi" required>
+                                <input type="text" name="sub_navbars[${newIndex}][description]" class="form-control" placeholder="Deskripsi" required>
                             </div>
                         </div>
                     </div>
                 </div>
             `;
             $('#sub-navbar-container').append(template);
-            index++;
             reindexSubNavbars();
         });
 
-        $('#sub-navbar-container').on('click', '.remove-sub-navbar', function () {
-            $(this).closest('.sub-navbar-item').remove();
+        $('#sub-navbar-container').on('click', '.remove-sub-navbar', function() {
+            const item = $(this).closest('.sub-navbar-item');
+            const id = item.data('id');
+
+            if (id) {
+                item.append(`<input type="hidden" name="deleted_sub_navbars[]" value="${id}">`);
+                item.remove();
+            } else {
+                item.remove();
+            }
+
             reindexSubNavbars();
         });
 
         function reindexSubNavbars() {
-            $('#sub-navbar-container .sub-navbar-item').each(function (i, el) {
-                $(el).find('.sub-navbar-index').text(i + 1);
+            let visibleItems = $('#sub-navbar-container .sub-navbar-item:visible');
 
-                $(el).find('input[name^="sub_navbars"]').each(function () {
-                    const field = $(this);
-                    const placeholder = field.attr('placeholder');
-                    let newName = '';
+            visibleItems.each(function (i, el) {
+                const item = $(el);
+                item.find('.sub-navbar-index').text(i + 1);
 
-                    if (placeholder === 'Nama Sub Navbar') newName = `sub_navbars[${i}][title]`;
-                    else if (placeholder === '/sub-navbar') newName = `sub_navbars[${i}][route]`;
-                    else if (placeholder === 'Icon') newName = `sub_navbars[${i}][icon]`;
-                    else if (placeholder === 'Deskripsi') newName = `sub_navbars[${i}][description]`;
-
-                    field.attr('name', newName);
+                item.find('[name^="sub_navbars["]').each(function() {
+                    const name = $(this).attr('name').replace(/sub_navbars\[\d+\]/g, `sub_navbars[${i}]`);
+                    $(this).attr('name', name);
                 });
             });
-            index = $('#sub-navbar-container .sub-navbar-item').length;
+
+            index = visibleItems.length;
         }
     });
 </script>
