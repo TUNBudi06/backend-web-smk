@@ -7,6 +7,7 @@ use App\Models\tb_pemberitahuan_category;
 use App\Models\tb_pengumuman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Concurrency;
 
 class PengumumanController extends Controller
@@ -18,7 +19,7 @@ class PengumumanController extends Controller
     {
         $perPage = $request->input('show', 10);
         [$pengumuman,$count] = Concurrency::run([
-            fn () => \Cache::flexible('pengumuman', [3, 20], function () use ($perPage) {
+            fn () => Cache::flexible('pengumuman_' . request('page', 1) . '_show_' . $perPage, [3, 20], function () use ($perPage) {
                 return tb_pemberitahuan::where(['type' => 2])
                     ->with('kategori')
                     ->orderBy('date', 'desc')

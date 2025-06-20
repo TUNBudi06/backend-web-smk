@@ -20,11 +20,9 @@ class NavbarController extends Controller
     {
         $perPage = $request->input('show', 10);
         $token = $request->session()->get('token') ?? $request->input('token');
-        $navbar = tb_navbar::get();
         [$navbar, $count] = Concurrency::run([
-            fn () => Cache::flexible('navbar', [2, 20], function () use ($perPage) {
-                return tb_navbar::orderBy('created_at', 'asc')
-                    ->paginate($perPage);
+            fn () => Cache::flexible('navbar_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
+                return tb_navbar::orderBy('created_at', 'asc')->paginate($perPage);
             }),
             fn () => DB::table('tb_navbars')
                 ->count(),
@@ -35,7 +33,7 @@ class NavbarController extends Controller
             'navlink_active' => 'navbar',
             'navbar' => $navbar,
             'token' => $token,
-            'dataCount' => $count,
+            'count' => $count,
         ]);
     }
 

@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\tb_facilities;
 use App\Models\tb_prodi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Concurrency;
+use Illuminate\Support\Facades\DB;
 
 class FasilitasController extends Controller
 {
@@ -15,8 +18,14 @@ class FasilitasController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('show') ?? 10;
-        $fasilitas = tb_facilities::orderBy('id_facility', 'desc')->paginate($perPage);
-        $count = tb_facilities::count();
+
+        [$fasilitas, $count] = Concurrency::run([
+            fn () => Cache::flexible('fasilitas_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
+                return tb_facilities::paginate($perPage);
+            }),
+            fn () => DB::table('tb_facilities')
+                ->count(),
+        ]);
 
         $token = $request->session()->get('token') ?? $request->input('token');
 

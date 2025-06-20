@@ -69,25 +69,6 @@
                     @endforeach
                     </tbody>
                 </table>
-                <script>
-                    $('.check-toggle').change(function() {
-                        if(this.checked) {
-                            $('.btn-print').removeAttr('disabled').removeClass('disabled')
-                            $('.check-respond').prop('checked', true);
-                        } else {
-                            $('.btn-print').addClass('disabled').attr('disabled')
-                            $('.check-respond').prop('checked', false);
-                        }
-                    });
-                    $('input[name="checkPrint[]"]').change(function() {
-                        var atLeastOneIsChecked = $('input[name="checkPrint[]"]:checked').length > 0;
-                        if(atLeastOneIsChecked) {
-                            $('.btn-print').removeAttr('disabled').removeClass('disabled')
-                        } else {
-                            $('.btn-print').addClass('disabled').attr('disabled')
-                        }
-                    });
-                </script>
                 <div class="row px-3">
                     <div class="col-md-6">
                         <div class="pb-3">
@@ -123,4 +104,10 @@
             </div>
         </div>
     </div>
+    <script>
+        $('#show-select').change(() => {
+            $('input[name="page"]').val(1);
+            $('#show-form').submit();
+        });
+    </script>
 @endsection

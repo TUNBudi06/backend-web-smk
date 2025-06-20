@@ -95,25 +95,6 @@
                     @endforeach
                     </tbody>
                 </table>
-                <script>
-                    $('.check-toggle').change(function() {
-                        if(this.checked) {
-                            $('.btn-print').removeAttr('disabled').removeClass('disabled')
-                            $('.check-respond').prop('checked', true);
-                        } else {
-                            $('.btn-print').addClass('disabled').attr('disabled')
-                            $('.check-respond').prop('checked', false);
-                        }
-                    });
-                    $('input[name="checkPrint[]"]').change(function() {
-                        var atLeastOneIsChecked = $('input[name="checkPrint[]"]:checked').length > 0;
-                        if(atLeastOneIsChecked) {
-                            $('.btn-print').removeAttr('disabled').removeClass('disabled')
-                        } else {
-                            $('.btn-print').addClass('disabled').attr('disabled')
-                        }
-                    });
-                </script>
                 <div class="row px-3">
                     <div class="col-md-6">
                         <div class="pb-3">
@@ -134,7 +115,7 @@
                             @endif
                         </div>
                     </div>
-                    @if($countEvent > Request::get('show') && $countEvent > 10)
+                    @if($countEvent > request('show') && $countEvent > 10)
                         <div class="col-md-6 text-right">
                             <p class="montserrat d-inline" style="font-size: .7rem;">{{ $event->firstItem() }} dari {{ $event->lastItem() }}</p>
                             <a href="{{ $event->appends(['show' => request('show')])->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $event->onFirstPage() ? 'disabled' : 'active' }}">
@@ -149,4 +130,10 @@
             </div>
         </div>
     </div>
+    <script>
+        $('#show-select').change(() => {
+            $('input[name="page"]').val(1);
+            $('#show-form').submit();
+        });
+    </script>
 @endsection

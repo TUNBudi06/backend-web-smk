@@ -7,6 +7,9 @@ use App\Models\tb_kemitraan;
 use App\Models\tb_loker;
 use App\Models\tb_position;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Concurrency;
+use Illuminate\Support\Facades\DB;
 
 class LokerController extends Controller
 {
@@ -16,8 +19,15 @@ class LokerController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('show', 10);
-        $loker = tb_loker::with(['position', 'kemitraan'])->orderBy('created_at', 'desc')->paginate($perPage);
-        $count = $loker->count();
+        [$loker, $count] = Concurrency::run([
+            fn () => Cache::flexible('loker_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
+                return tb_loker::with(['position', 'kemitraan'])
+                    ->orderBy('created_at', 'desc')
+                    ->paginate($perPage);
+            }),
+            fn () => DB::table('tb_lokers')
+                ->count(),
+        ]);
 
         $token = $request->session()->get('token') ?? $request->input('token');
 

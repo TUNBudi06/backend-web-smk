@@ -12,7 +12,7 @@
                 <div class="row p-4">
                     <div class="col-md-8">
                         <h4 class="poppins mb-0">Navbar</h4>
-                        <p class="montserrat" style="font-size: .85rem;">Daftar Navbar SMKN 1 Purwosari ({{$dataCount}})
+                        <p class="montserrat" style="font-size: .85rem;">Daftar Navbar SMKN 1 Purwosari ({{$count}})
                         </p>
                     </div>
                     <div class="col-md-4 text-right">
@@ -86,7 +86,7 @@
                 <div class="row px-3">
                     <div class="col-md-6">
                         <div class="pb-3">
-                            @if($dataCount)
+                            @if($count)
                                 <form method="GET" id="show-form" name="showForm" action="{{ url()->current() }}">
                                     <div class="form-group d-inline-block">
                                         <input type="hidden" name="page" value="{{ request('page', 1) }}">
@@ -103,13 +103,16 @@
                             @endif
                         </div>
                     </div>
-                    @if($dataCount > request('show') && $dataCount > 10)
+                    @if ($count > request('show') && $count > 10)
                         <div class="col-md-6 text-right">
-                            <p class="montserrat d-inline" style="font-size: .7rem;">{{ $navbar->firstItem() }} dari {{ $navbar->lastItem() }}</p>
-                            <a href="{{ $navbar->appends(['show' => request('show')])->previousPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $navbar->onFirstPage() ? 'disabled' : 'active' }}">
+                            <p class="montserrat d-inline" style="font-size: .7rem;">{{ $navbar->firstItem() }} dari
+                                {{ $navbar->lastItem() }}</p>
+                            <a href="{{ $navbar->appends(['show' => request('show')])->previousPageUrl() }}"
+                                class="btn btn-sm p-0 px-2 btn-white {{ $navbar->onFirstPage() ? 'disabled' : 'active' }}">
                                 <i class="fas fa-caret-left text-warning"></i>
                             </a>
-                            <a href="{{ $navbar->appends(['show' => request('show')])->nextPageUrl() }}" class="btn btn-sm p-0 px-2 btn-white {{ $navbar->hasMorePages() ? 'active' : 'disabled' }}">
+                            <a href="{{ $navbar->appends(['show' => request('show')])->nextPageUrl() }}"
+                                class="btn btn-sm p-0 px-2 btn-white {{ $navbar->hasMorePages() ? 'active' : 'disabled' }}">
                                 <i class="fas fa-caret-right text-warning"></i>
                             </a>
                         </div>
@@ -118,4 +121,10 @@
             </div>
         </div>
     </div>
+    <script>
+        $('#show-select').change(() => {
+            $('input[name="page"]').val(1);
+            $('#show-form').submit();
+        });
+    </script>
 @endsection

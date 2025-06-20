@@ -5,6 +5,9 @@ namespace App\Http\Controllers\mitra;
 use App\Http\Controllers\Controller;
 use App\Models\tb_kemitraan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Concurrency;
+use Illuminate\Support\Facades\DB;
 
 class KemitraanController extends Controller
 {
@@ -14,7 +17,13 @@ class KemitraanController extends Controller
     public function index(Request $request)
     {
         $perPage = 10;
-        $kemitraan = tb_kemitraan::orderBy('id_kemitraan', 'desc')->paginate($perPage);
+        [$kemitraan, $count] = Concurrency::run([
+            fn () => Cache::flexible('kemitraan_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
+                return tb_kemitraan::orderBy('id_kemitraan', 'desc')->paginate($perPage);
+            }),
+            fn () => DB::table('tb_kemitraans')
+                ->count(),
+        ]);
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
@@ -23,6 +32,7 @@ class KemitraanController extends Controller
             'mitra_active' => 'kemitraan',
             'token' => $token,
             'kemitraan' => $kemitraan,
+            'count' => $count,
         ]);
     }
 

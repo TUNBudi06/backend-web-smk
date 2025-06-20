@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Imports\PTKImport;
 use App\Models\tb_ptk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Concurrency;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PTKController extends Controller
@@ -16,8 +19,14 @@ class PTKController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('show') ?? 10;
-        $ptk = tb_ptk::orderBy('id', 'desc')->paginate($perPage);
-        $count = tb_ptk::count();
+
+        [$ptk, $count] = Concurrency::run([
+            fn () => Cache::flexible('ptk_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
+                return tb_ptk::orderBy('id', 'desc')->paginate($perPage);
+            }),
+            fn () => DB::table('tb_ptk')
+                ->count(),
+        ]);
 
         $token = $request->session()->get('token') ?? $request->input('token');
 

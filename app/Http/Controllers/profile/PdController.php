@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Imports\PDImport;
 use App\Models\tb_peserta_didik;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Concurrency;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PdController extends Controller
@@ -16,8 +19,14 @@ class PdController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('show', 10);
-        $peserta_didik = tb_peserta_didik::orderBy('id', 'asc')->paginate($perPage);
-        $count = tb_peserta_didik::count();
+
+        [$pd, $count] = Concurrency::run([
+            fn () => Cache::flexible('peserta_didik_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
+                return tb_peserta_didik::orderBy('id', 'desc')->paginate($perPage);
+            }),
+            fn () => DB::table('tb_peserta_didik')
+                ->count(),
+        ]);
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
@@ -25,7 +34,7 @@ class PdController extends Controller
             'menu_active' => 'academic',
             'profile_active' => 'pd',
             'token' => $token,
-            'pd' => $peserta_didik,
+            'pd' => $pd,
             'count' => $count,
         ]);
     }

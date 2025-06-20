@@ -5,6 +5,9 @@ namespace App\Http\Controllers\profile;
 use App\Http\Controllers\Controller;
 use App\Models\tb_extra;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Concurrency;
+use Illuminate\Support\Facades\DB;
 
 class ExtraController extends Controller
 {
@@ -14,8 +17,14 @@ class ExtraController extends Controller
     public function index(Request $request)
     {
         $perPage = request()->input('show') ?? 10;
-        $extra = tb_extra::orderBy('id_extra', 'desc')->paginate($perPage);
-        $count = tb_extra::count();
+
+        [$extra, $count] = Concurrency::run([
+            fn () => Cache::flexible('extra_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
+                return tb_extra::paginate($perPage);
+            }),
+            fn () => DB::table('tb_extra')
+                ->count(),
+        ]);
 
         $token = $request->session()->get('token') ?? $request->input('token');
 

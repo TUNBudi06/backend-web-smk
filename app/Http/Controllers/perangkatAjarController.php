@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\tb_perangkatAjar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Concurrency;
+use Illuminate\Support\Facades\DB;
 
 class perangkatAjarController extends Controller
 {
@@ -11,7 +14,14 @@ class perangkatAjarController extends Controller
     {
         $perPage = $request->input('show') ?? 10;
         $data_pa = tb_perangkatAjar::orderBy('id_pa', 'desc')->paginate($perPage);
-        $count = tb_perangkatAjar::count();
+
+        [$pa, $count] = Concurrency::run([
+            fn () => Cache::flexible('pa_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
+                return tb_perangkatAjar::paginate($perPage);
+            }),
+            fn () => DB::table('tb_perangkat_ajars')
+                ->count(),
+        ]);
 
         $token = $request->session()->get('token') ?? $request->input('token');
 

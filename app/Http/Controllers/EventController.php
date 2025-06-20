@@ -6,6 +6,8 @@ use App\Models\tb_pemberitahuan;
 use App\Models\tb_pemberitahuan_category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Concurrency;
 
 class EventController extends Controller
 {
@@ -15,8 +17,8 @@ class EventController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('show', 10);
-        [$event,$count] = \Concurrency::run([
-            fn () => \Cache::flexible('event', [3, 20], function () use ($perPage) {
+        [$event,$count] = Concurrency::run([
+            fn () => Cache::flexible('event_' . request('page', 1) . '_show_' . $perPage, [3, 20], function () use ($perPage) {
                 return tb_pemberitahuan::where(['type' => 4])
                     ->with('kategori')
                     ->orderBy('created_at', 'desc')

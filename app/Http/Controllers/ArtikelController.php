@@ -21,7 +21,7 @@ class ArtikelController extends Controller
         $token = $request->session()->get('token') ?? $request->input('token');
 
         [$artikel, $count] = Concurrency::run([
-            fn () => Cache::flexible('artikel', [2, 20], function () use ($perPage) {
+            fn () => Cache::flexible('artikel_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
                 return tb_pemberitahuan::where('type', 1)
                     ->with(['kategori', 'publishedUser'])
                     ->orderBy('created_at', 'desc')

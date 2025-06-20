@@ -5,6 +5,9 @@ namespace App\Http\Controllers\profile;
 use App\Http\Controllers\Controller;
 use App\Models\BasicInformationModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Concurrency;
+use Illuminate\Support\Facades\DB;
 
 class BasicInformation extends Controller
 {
@@ -14,8 +17,13 @@ class BasicInformation extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('show') ?? 10;
-        $basic = BasicInformationModel::orderBy('id', 'desc')->paginate($perPage);
-        $count = BasicInformationModel::count();
+        [$basic, $count] = Concurrency::run([
+            fn () => Cache::flexible('basic_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
+                return BasicInformationModel::orderBy('id', 'desc')->paginate($perPage);
+            }),
+            fn () => DB::table('tb_basic-information')
+                ->count(),
+        ]);
 
         $token = $request->session()->get('token') ?? $request->input('token');
 

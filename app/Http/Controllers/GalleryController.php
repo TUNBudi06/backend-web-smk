@@ -7,6 +7,7 @@ use App\Models\tb_gallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Concurrency;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
@@ -19,10 +20,11 @@ class GalleryController extends Controller
         $perPage = $request->input('show', 10);
 
         [$gallery, $count] = Concurrency::run([
-            fn () => Cache::flexible('gallery', [3, 20], function () use ($perPage) {
+            fn () => Cache::flexible('gallery_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
                 return tb_gallery::orderBy('id_gallery', 'desc')->paginate($perPage);
             }),
-            fn () => tb_gallery::count(),
+            fn () => DB::table('tb_gallery')
+                ->count(),
         ]);
 
         $token = $request->session()->get('token') ?? $request->input('token');
@@ -32,7 +34,7 @@ class GalleryController extends Controller
             'token' => $token,
             'gallery' => $gallery,
             'category_gallery' => tb_category_gallery::all(),
-            'countGallery' => $count,
+            'count' => $count,
         ]);
     }
 
@@ -186,7 +188,7 @@ class GalleryController extends Controller
         $imagePath = public_path('img/gallery/'.$gallery->gallery_file);
 
         $gallery->delete();
-        
+
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }

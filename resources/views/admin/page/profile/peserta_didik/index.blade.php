@@ -80,15 +80,13 @@
                     <tbody>
                         @foreach ($pd as $key => $data)
                             <tr>
-                                <!-- <td>{{ $data->nisn }}</td>
-                    <td>{{ $data->nis }}</td> -->
-                                <td>{{ $data->nama }}</td>
-                                <td>{{ $data->kelas }}</td>
-                                <td>{{ $data->tempat_lahir }}</td>
-                                <td>{{ $data->tanggal_lahir }}</td>
-                                <td>{{ $data->agama }}</td>
-                                <td>{{ $data->gender }}</td>
-                                <td>{{ $data->alamat }}</td>
+                                <td>{{ $data->nama === '' ? '-' : $data->nama }}</td>
+                                <td>{{ $data->kelas === '' ? '-' : $data->kelas }}</td>
+                                <td>{{ $data->tempat_lahir === '' ? '-' : $data->tempat_lahir }}</td>
+                                <td>{{ $data->tanggal_lahir === '' ? '-' : $data->tanggal_lahir }}</td>
+                                <td>{{ $data->agama === '' ? '-' : $data->agama }}</td>
+                                <td>{{ $data->gender === '' ? '-' : $data->gender }}</td>
+                                <td>{{ $data->alamat === '' ? '-' : $data->alamat }}</td>
                                 <td>
                                     <ul class="navbar-nav">
                                         <li class="nav-item dropdown">

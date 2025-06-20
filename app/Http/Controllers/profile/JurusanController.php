@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\tb_jurusan;
 use App\Models\tb_prodi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Concurrency;
+use Illuminate\Support\Facades\DB;
 
 class JurusanController extends Controller
 {
@@ -15,8 +18,14 @@ class JurusanController extends Controller
     public function index(Request $request)
     {
         $perPage = request()->input('show') ?? 10;
-        $jurusan = tb_jurusan::orderBy('id_jurusan', 'desc')->paginate($perPage);
-        $count = tb_jurusan::count();
+
+        [$jurusan, $count] = Concurrency::run([
+            fn () => Cache::flexible('jurusan_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
+                return tb_jurusan::paginate($perPage);
+            }),
+            fn () => DB::table('tb_jurusan')
+                ->count(),
+        ]);
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
