@@ -18,15 +18,16 @@ class PengumumanController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('show', 10);
-        [$pengumuman,$count] = Concurrency::run([
-            fn () => Cache::flexible('pengumuman_' . request('page', 1) . '_show_' . $perPage, [3, 20], function () use ($perPage) {
-                return tb_pemberitahuan::where(['type' => 2])
-                    ->with('kategori')
-                    ->orderBy('date', 'desc')
-                    ->paginate($perPage);
-            }),
-            fn () => tb_pemberitahuan::where(['type' => 2])->count(),
-        ]);
+        $page = $request->input('page', 1);
+
+        $pengumuman = Cache::flexible("pengumuman_{$page}_show_{$perPage}", [3, 20], function () use ($perPage) {
+            return tb_pemberitahuan::where('type', 2)
+                ->with('kategori')
+                ->orderBy('date', 'desc')
+                ->paginate($perPage);
+        });
+
+        $count = Cache::flexible("pengumuman_count", [3, 20], fn () => tb_pemberitahuan::where('type', 2)->count());
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
@@ -35,7 +36,7 @@ class PengumumanController extends Controller
             'info_active' => 'pengumuman',
             'token' => $token,
             'pengumuman' => $pengumuman,
-            'countPengumuman' => $count,
+            'count' => $count,
         ]);
     }
 
