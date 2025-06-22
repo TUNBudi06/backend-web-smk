@@ -255,5 +255,10 @@
                 $("#fileError").hide().text('');
             }
         });
+
+        $('#show-select').change(() => {
+            $('input[name="page"]').val(1);
+            $('#show-form').submit();
+        });
     </script>
 @endsection

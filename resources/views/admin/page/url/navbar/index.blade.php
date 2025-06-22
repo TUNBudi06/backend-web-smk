@@ -86,7 +86,7 @@
                 <div class="row px-3">
                     <div class="col-md-6">
                         <div class="pb-3">
-                            @if($count)
+                            @if ($count > request('show') && $count > 10)
                                 <form method="GET" id="show-form" name="showForm" action="{{ url()->current() }}">
                                     <div class="form-group d-inline-block">
                                         <input type="hidden" name="page" value="{{ request('page', 1) }}">

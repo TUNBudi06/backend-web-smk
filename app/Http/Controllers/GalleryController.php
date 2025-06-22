@@ -18,14 +18,12 @@ class GalleryController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('show', 10);
+        $page = $request->input('page', 1);
 
-        [$gallery, $count] = Concurrency::run([
-            fn () => Cache::flexible('gallery_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
-                return tb_gallery::orderBy('id_gallery', 'desc')->paginate($perPage);
-            }),
-            fn () => DB::table('tb_gallery')
-                ->count(),
-        ]);
+        $gallery = Cache::flexible("gallery_{$page}_show_{$perPage}", [3, 20], function () use ($perPage) {
+            return tb_gallery::orderBy('id_gallery', 'desc')->paginate($perPage);
+        });
+        $count = Cache::flexible("gallery_count", [3, 20], fn () => tb_gallery::count());
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
