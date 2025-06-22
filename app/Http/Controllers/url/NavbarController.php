@@ -18,15 +18,14 @@ class NavbarController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = $request->input('show', 10);
         $token = $request->session()->get('token') ?? $request->input('token');
-        [$navbar, $count] = Concurrency::run([
-            fn () => Cache::flexible('navbar_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
-                return tb_navbar::orderBy('created_at', 'asc')->paginate($perPage);
-            }),
-            fn () => DB::table('tb_navbars')
-                ->count(),
-        ]);
+        $perPage = $request->input('show', 10);
+        $page = $request->input('page', 1);
+
+        $navbar = Cache::flexible("navbar_{$page}_show_{$perPage}", [3, 20], function () use ($perPage) {
+            return tb_navbar::orderBy('id', 'desc')->paginate($perPage);
+        });
+        $count = Cache::flexible("navbar_count", [3, 20], fn () => tb_navbar::count());
 
         return view('admin.page.url.navbar.index', [
             'menu_active' => 'links',

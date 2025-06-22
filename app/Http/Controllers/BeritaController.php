@@ -18,16 +18,15 @@ class BeritaController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('show', 10);
+        $page = $request->input('page', 1);
 
-        [$news,$count] = Concurrency::run([
-            fn () => Cache::flexible('news_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
-                return tb_pemberitahuan::where(['type' => 3])
-                    ->with(['kategori', 'publishedUser'])
-                    ->orderBy('created_at', 'desc')
-                    ->paginate($perPage);
-            }),
-            fn () => tb_pemberitahuan::where(['type' => 3])->count(),
-        ]);
+        $news = Cache::flexible("news_{$page}_show_{$perPage}", [3, 20], function () use ($perPage) {
+            return tb_pemberitahuan::where('type', 3)
+                ->with(['kategori', 'publishedUser'])
+                ->orderBy('created_at', 'desc')
+                ->paginate($perPage);
+        });
+        $count = Cache::flexible("news_count", [3, 20], fn () => tb_pemberitahuan::where('type', 3)->count());
 
         $token = $request->session()->get('token') ?? $request->input('token');
 

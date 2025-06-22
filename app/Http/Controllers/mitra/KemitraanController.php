@@ -16,14 +16,13 @@ class KemitraanController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = 10;
-        [$kemitraan, $count] = Concurrency::run([
-            fn () => Cache::flexible('kemitraan_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
-                return tb_kemitraan::orderBy('id_kemitraan', 'desc')->paginate($perPage);
-            }),
-            fn () => DB::table('tb_kemitraans')
-                ->count(),
-        ]);
+        $perPage = $request->input('show', 10);
+        $page = $request->input('page', 1);
+
+        $kemitraan = Cache::flexible("kemitraan_{$page}_show_{$perPage}", [3, 20], function () use ($perPage) {
+            return tb_kemitraan::orderBy('id_kemitraan', 'desc')->paginate($perPage);
+        });
+        $count = Cache::flexible("kemitraan_count", [3, 20], fn () => tb_kemitraan::count());
 
         $token = $request->session()->get('token') ?? $request->input('token');
 

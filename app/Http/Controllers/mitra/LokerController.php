@@ -19,15 +19,14 @@ class LokerController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('show', 10);
-        [$loker, $count] = Concurrency::run([
-            fn () => Cache::flexible('loker_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
-                return tb_loker::with(['position', 'kemitraan'])
-                    ->orderBy('created_at', 'desc')
-                    ->paginate($perPage);
-            }),
-            fn () => DB::table('tb_lokers')
-                ->count(),
-        ]);
+        $page = $request->input('page', 1);
+
+        $loker = Cache::flexible("loker_{$page}_show_{$perPage}", [3, 20], function () use ($perPage) {
+            return tb_loker::with(['position', 'kemitraan'])
+                ->orderBy('created_at', 'desc')
+                ->paginate($perPage);
+        });
+        $count = Cache::flexible("loker_count", [3, 20], fn () => tb_loker::count());
 
         $token = $request->session()->get('token') ?? $request->input('token');
 

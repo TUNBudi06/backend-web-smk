@@ -26,7 +26,6 @@ class PengumumanController extends Controller
                 ->orderBy('date', 'desc')
                 ->paginate($perPage);
         });
-
         $count = Cache::flexible("pengumuman_count", [3, 20], fn () => tb_pemberitahuan::where('type', 2)->count());
 
         $token = $request->session()->get('token') ?? $request->input('token');

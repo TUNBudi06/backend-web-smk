@@ -18,15 +18,13 @@ class PTKController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = $request->input('show') ?? 10;
+        $perPage = $request->input('show', 10);
+        $page = $request->input('page', 1);
 
-        [$ptk, $count] = Concurrency::run([
-            fn () => Cache::flexible('ptk_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
-                return tb_ptk::orderBy('id', 'desc')->paginate($perPage);
-            }),
-            fn () => DB::table('tb_ptk')
-                ->count(),
-        ]);
+        $ptk = Cache::flexible("ptk_{$page}_show_{$perPage}", [3, 20], function () use ($perPage) {
+            return tb_ptk::orderBy('id', 'desc')->paginate($perPage);
+        });
+        $count = Cache::flexible("ptk_count", [3, 20], fn () => tb_ptk::count());
 
         $token = $request->session()->get('token') ?? $request->input('token');
 

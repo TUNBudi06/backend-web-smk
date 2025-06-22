@@ -12,16 +12,13 @@ class perangkatAjarController extends Controller
 {
     public function indexTools(Request $request)
     {
-        $perPage = $request->input('show') ?? 10;
-        $data_pa = tb_perangkatAjar::orderBy('id_pa', 'desc')->paginate($perPage);
+        $perPage = $request->input('show', 10);
+        $page = $request->input('page', 1);
 
-        [$pa, $count] = Concurrency::run([
-            fn () => Cache::flexible('pa_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
-                return tb_perangkatAjar::paginate($perPage);
-            }),
-            fn () => DB::table('tb_perangkat_ajars')
-                ->count(),
-        ]);
+        $pa = Cache::flexible("pa_{$page}_show_{$perPage}", [3, 20], function () use ($perPage) {
+            return tb_perangkatAjar::paginate($perPage);
+        });
+        $count = Cache::flexible("pa_count", [3, 20], fn () => tb_perangkatAjar::count());
 
         $token = $request->session()->get('token') ?? $request->input('token');
 
@@ -29,7 +26,7 @@ class perangkatAjarController extends Controller
             'menu_active' => 'academic',
             'profile_active' => 'tools',
             'token' => $token,
-            'pa' => $data_pa,
+            'pa' => $pa,
             'count' => $count,
         ]);
     }

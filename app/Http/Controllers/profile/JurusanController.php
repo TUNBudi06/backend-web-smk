@@ -17,15 +17,13 @@ class JurusanController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = request()->input('show') ?? 10;
+        $perPage = $request->input('show', 10);
+        $page = $request->input('page', 1);
 
-        [$jurusan, $count] = Concurrency::run([
-            fn () => Cache::flexible('jurusan_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
-                return tb_jurusan::paginate($perPage);
-            }),
-            fn () => DB::table('tb_jurusan')
-                ->count(),
-        ]);
+        $jurusan = Cache::flexible("jurusan_{$page}_show_{$perPage}", [3, 20], function () use ($perPage) {
+            return tb_jurusan::paginate($perPage);
+        });
+        $count = Cache::flexible("jurusan_count", [3, 20], fn () => tb_jurusan::count());
 
         $token = $request->session()->get('token') ?? $request->input('token');
 

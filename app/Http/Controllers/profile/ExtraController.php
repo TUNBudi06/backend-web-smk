@@ -16,15 +16,13 @@ class ExtraController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = request()->input('show') ?? 10;
+        $perPage = $request->input('show', 10);
+        $page = $request->input('page', 1);
 
-        [$extra, $count] = Concurrency::run([
-            fn () => Cache::flexible('extra_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
-                return tb_extra::paginate($perPage);
-            }),
-            fn () => DB::table('tb_extra')
-                ->count(),
-        ]);
+        $extra = Cache::flexible("extra_{$page}_show_{$perPage}", [3, 20], function () use ($perPage) {
+            return tb_extra::paginate($perPage);
+        });
+        $count = Cache::flexible("extra_count", [3, 20], fn () => tb_extra::count());
 
         $token = $request->session()->get('token') ?? $request->input('token');
 

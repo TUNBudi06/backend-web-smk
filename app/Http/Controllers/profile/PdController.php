@@ -19,14 +19,12 @@ class PdController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('show', 10);
+        $page = $request->input('page', 1);
 
-        [$pd, $count] = Concurrency::run([
-            fn () => Cache::flexible('peserta_didik_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
-                return tb_peserta_didik::orderBy('id', 'desc')->paginate($perPage);
-            }),
-            fn () => DB::table('tb_peserta_didik')
-                ->count(),
-        ]);
+        $pd = Cache::flexible("pd_{$page}_show_{$perPage}", [3, 20], function () use ($perPage) {
+            return tb_peserta_didik::orderBy('id', 'desc')->paginate($perPage);
+        });
+        $count = Cache::flexible("pd_count", [3, 20], fn () => tb_peserta_didik::count());
 
         $token = $request->session()->get('token') ?? $request->input('token');
 

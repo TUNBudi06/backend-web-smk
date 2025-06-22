@@ -17,15 +17,15 @@ class EventController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('show', 10);
-        [$event,$count] = Concurrency::run([
-            fn () => Cache::flexible('event_' . request('page', 1) . '_show_' . $perPage, [3, 20], function () use ($perPage) {
-                return tb_pemberitahuan::where(['type' => 4])
-                    ->with('kategori')
-                    ->orderBy('created_at', 'desc')
-                    ->paginate($perPage);
-            }),
-            fn () => tb_pemberitahuan::where(['type' => 4])->count(),
-        ]);
+        $page = $request->input('page', 1);
+
+        $event = Cache::flexible("event_{$page}_show_{$perPage}", [3, 20], function () use ($perPage) {
+            return tb_pemberitahuan::where('type', 4)
+                ->with('kategori')
+                ->orderBy('created_at', 'desc')
+                ->paginate($perPage);
+        });
+        $count = Cache::flexible("event_count", [3, 20], fn () => tb_pemberitahuan::where('type', 4)->count());
 
         $token = $request->session()->get('token') ?? $request->input('token');
 

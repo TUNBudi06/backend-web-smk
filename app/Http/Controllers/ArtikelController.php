@@ -17,20 +17,17 @@ class ArtikelController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = $request->input('show', 10);
         $token = $request->session()->get('token') ?? $request->input('token');
+        $perPage = $request->input('show', 10);
+        $page = $request->input('page', 1);
 
-        [$artikel, $count] = Concurrency::run([
-            fn () => Cache::flexible('artikel_' . request('page', 1) . '_show_' . $perPage, [2, 20], function () use ($perPage) {
-                return tb_pemberitahuan::where('type', 1)
-                    ->with(['kategori', 'publishedUser'])
-                    ->orderBy('created_at', 'desc')
-                    ->paginate($perPage);
-            }),
-            fn () => DB::table('tb_pemberitahuan')
-                ->where('type', 1)
-                ->count(),
-        ]);
+        $artikel = Cache::flexible("artikel_{$page}_show_{$perPage}", [3, 20], function () use ($perPage) {
+            return tb_pemberitahuan::where('type', 1)
+                ->with(['kategori', 'publishedUser'])
+                ->orderBy('created_at', 'desc')
+                ->paginate($perPage);
+        });
+        $count = Cache::flexible("artikel_count", [3, 20], fn () => tb_pemberitahuan::where('type', 1)->count());
 
         return view('admin.artikel.index', [
             'menu_active' => 'informasi',
