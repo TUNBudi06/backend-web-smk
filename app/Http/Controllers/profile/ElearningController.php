@@ -20,11 +20,11 @@ class ElearningController extends Controller
         $perPage = request()->input('show') ?? 10;
         $elearning = tb_elearning::get();
         [$elearning, $count] = Concurrency::run([
-            fn () => Cache::flexible('elearning', [2, 20], function () use ($perPage) {
+            fn() => Cache::flexible('elearning', [2, 20], function () use ($perPage) {
                 return tb_elearning::orderBy('created_at', 'asc')
                     ->paginate($perPage);
             }),
-            fn () => DB::table('tb_navbars')
+            fn() => DB::table('tb_navbars')
                 ->count(),
         ]);
 
@@ -42,9 +42,17 @@ class ElearningController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $token = $request->session()->get('token') ?? $request->input('token');
+        $badges = tb_badge::get();
+
+        return view('admin.page.profile.elearning.create', [
+            'menu_active' => 'academic',
+            'info_active' => 'elearning',
+            'badges' => $badges,
+            'token' => $token,
+        ]);
     }
 
     /**
@@ -52,7 +60,68 @@ class ElearningController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $token = $request->session()->get('token') ?? $request->input('token');
+
+        $request->validate([
+            'title' => 'required',
+            'desc' => 'required',
+            'id_badge' => 'required|array',
+            'btn_label' => 'required',
+            'btn_url' => 'required',
+            'btn_label_2' => 'required',
+            'btn_url_2' => 'required',
+            'subtitle' => 'required',
+            'body_desc' => 'required',
+            'body_url' => 'required',
+            'btn_icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'btn_icon_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'body_thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+        ], [
+            'title.required' => 'Kolom judul harus diisi.',
+            'desc.required' => 'Kolom deskripsi utama harus diisi.',
+            'id_badge.required' => 'Kolom badge harus diisi.',
+            'btn_label.required' => 'Kolom label tombol harus diisi.',
+            'btn_url.required' => 'Kolom url tombol harus diisi.',
+            'btn_label_2.required' => 'Kolom label tombol harus diisi.',
+            'btn_url_2.required' => 'Kolom url tombol harus diisi.',
+            'subtitle.required' => 'Kolom subjudul harus diisi.',
+            'body_desc.required' => 'Kolom deskripsi konten harus diisi.',
+            'body_url.required' => 'Kolom url konten harus diisi.',
+            'btn_icon.max' => 'Ukuran tombol ikon tidak boleh lebih dari 10MB.',
+            'btn_icon_2.max' => 'Ukuran tombol ikon tidak boleh lebih dari 10MB.',
+            'thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
+            'body_thumbnail.max' => 'Ukuran gambar tidak boleh lebih dari 10MB.',
+        ]);
+
+        $data = new tb_elearning;
+        $data->title = $request->title;
+        $data->desc = $request->desc;
+        $data->btn_label = $request->btn_label;
+        $data->btn_url = $request->btn_url;
+        $data->btn_label_2 = $request->btn_label_2;
+        $data->btn_url_2 = $request->btn_url_2;
+        $data->subtitle = $request->subtitle;
+        $data->body_desc = $request->body_desc;
+        $data->body_url = $request->body_url;
+
+        if ($request->hasFile('thumbnail')) {
+            $data->thumbnail = $this->handleFileUpload($request, 'thumbnail', 'img/e-learning', $data->thumbnail);
+        }
+        if ($request->hasFile('body_thumbnail')) {
+            $data->body_thumbnail = $this->handleFileUpload($request, 'body_thumbnail', 'img/e-learning', $data->body_thumbnail);
+        }
+        if ($request->hasFile('btn_icon')) {
+            $data->btn_icon = $this->handleFileUpload($request, 'btn_icon', 'img/e-learning', $data->btn_icon);
+        }
+        if ($request->hasFile('btn_icon_2')) {
+            $data->btn_icon_2 = $this->handleFileUpload($request, 'btn_icon_2', 'img/e-learning', $data->btn_icon_2);
+        }
+
+        $data->save();
+        $data->badges()->sync($request->id_badge);
+
+        return redirect()->route('elearning.index', ['token' => $token])->with('success', 'E-Learning berhasil dibuat.');
     }
 
     /**
@@ -71,7 +140,7 @@ class ElearningController extends Controller
         $id_elearning = $request->route('elearning');
         $token = $request->session()->get('token') ?? $request->input('token');
         $elearning = tb_elearning::findOrFail($id_elearning);
-        $badges = tb_badge::where('elearning_id', $id_elearning)->get();
+        $badges = tb_badge::get();
 
         return view('admin.page.profile.elearning.edit', [
             'menu_active' => 'academic',
@@ -142,22 +211,15 @@ class ElearningController extends Controller
         if ($request->hasFile('body_thumbnail')) {
             $updateData['body_thumbnail'] = $this->handleFileUpload($request, 'body_thumbnail', 'img/e-learning', $data->body_thumbnail);
         }
+        if ($request->hasFile('btn_icon')) {
+            $updateData['btn_icon'] = $this->handleFileUpload($request, 'btn_icon', 'img/e-learning', $data->btn_icon);
+        }
         if ($request->hasFile('btn_icon_2')) {
-            $updateData['btn_icon_2'] = $this->handleFileUpload($request, 'btn_icon_2', 'img/badge', $data->btn_icon_2);
+            $updateData['btn_icon_2'] = $this->handleFileUpload($request, 'btn_icon_2', 'img/e-learning', $data->btn_icon_2);
         }
 
         $data->update($updateData);
-
-        $selectedBadges = $request->input('id_badge');
-
-        DB::table('tb_badges')
-            ->where('elearning_id', $id_elearning)
-            ->whereNotIn('id', $selectedBadges)
-            ->update(['elearning_id' => 0]);
-
-        DB::table('tb_badges')
-            ->whereIn('id', $selectedBadges)
-            ->update(['elearning_id' => $id_elearning]);
+        $data->badges()->sync($request->id_badge);
 
         return redirect()->route('elearning.index', ['token' => $token])->with('success', 'E-Learning berhasil diperbarui.');
     }
@@ -165,9 +227,23 @@ class ElearningController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $id_elearning = $request->route('elearning');
+        $token = $request->session()->get('token') ?? $request->input('token');
+
+        $elearning = tb_elearning::where('id', $id_elearning)->firstOrFail();
+
+        $this->deleteElearningImages($elearning, [
+            'thumbnail' => 'img/e-learning',
+            'body_thumbnail' => 'img/e-learning',
+            'btn_icon' => 'img/badge',
+            'btn_icon_2' => 'img/badge',
+        ]);
+
+        $elearning->delete();
+
+        return redirect()->route('elearning.index', ['token' => $token])->with('success', 'E-Learning berhasil dihapus');
     }
 
     private function handleFileUpload(Request $request, string $field, string $folder, ?string $oldFileName = null): string
@@ -180,11 +256,29 @@ class ElearningController extends Controller
                 }
             }
 
-            $newName = $request->file($field)->hashName();
+            $originalName = $request->file($field)->getClientOriginalName();
+            $timestamp = time();
+            $safeName = preg_replace('/\s+/', '-', $originalName);
+            $newName = $timestamp . '_' . $safeName;
+
             $request->file($field)->move(public_path($folder), $newName);
+
             return $newName;
         }
 
         return $oldFileName;
+    }
+
+    private function deleteElearningImages(tb_elearning $elearning, array $fieldsWithFolder)
+    {
+        foreach ($fieldsWithFolder as $field => $folder) {
+            $fileName = $elearning->$field;
+            if (!empty($fileName)) {
+                $filePath = public_path("$folder/$fileName");
+                if (file_exists($filePath) && !is_dir($filePath)) {
+                    unlink($filePath);
+                }
+            }
+        }
     }
 }

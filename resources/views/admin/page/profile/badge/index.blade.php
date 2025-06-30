@@ -85,14 +85,6 @@
                                 <input type="file" value="{{ $category->icon }}"
                                     name="icon" id="icon" class="form-control" accept=".png, .jpg, .jpeg">
                             </div>
-                            <div class="form-group mt-3">
-                                <label for="elearning_id" class="mb-2 d-block">Dipakai di E-Learning</label>
-                                <input type="hidden" name="elearning_id" value="">
-                                <label class="switch">
-                                    <input type="checkbox" name="elearning_id" id="elearning_id" value="1" {{ isset($category) && $category->elearning_id == 1 ? 'checked' : '' }}>
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
                             <div class="text-right w-100 position-absolute" style="right: 10px;">
                                 <button class="btn btn-warning px-4 rounded-pill shadow-warning">Update</button>
                             </div>
@@ -113,14 +105,6 @@
                             <div class="form-group">
                                 <label for="icon" class="mt-3 mb-2">Icon Badge</label>
                                 <input type="file" name="icon" id="icon" class="form-control" accept=".png, .jpg, .jpeg">
-                            </div>
-                            <div class="form-group mt-3">
-                                <label for="elearning_id" class="mb-2 d-block">Dipakai di E-Learning</label>
-                                <input type="hidden" name="elearning_id" value="">
-                                <label class="switch">
-                                    <input type="checkbox" name="elearning_id" id="elearning_id" value="1">
-                                    <span class="slider round"></span>
-                                </label>
                             </div>
                             <div class="text-right w-100">
                                 <button class="btn btn-warning px-4 rounded-pill shadow-warning position-absolute"

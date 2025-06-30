@@ -21,13 +21,8 @@ class tb_badge extends Model
 
     public $timestamps = true;
 
-    public function elearning()
+    public function elearnings()
     {
-        return $this->belongsTo(tb_elearning::class, 'elearning_id');
-    }
-
-    public function subNavbar()
-    {
-        return $this->hasMany(tb_sub_navbar::class, 'icon_id');
+        return $this->belongsToMany(tb_elearning::class, 'badge_elearning', 'badge_id', 'elearning_id');
     }
 }

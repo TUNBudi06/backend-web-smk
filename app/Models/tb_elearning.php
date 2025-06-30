@@ -29,6 +29,6 @@ class tb_elearning extends Model
 
     public function badges()
     {
-        return $this->hasMany(tb_badge::class, 'elearning_id');
+        return $this->belongsToMany(tb_badge::class, 'badge_elearning', 'elearning_id', 'badge_id');
     }
 }

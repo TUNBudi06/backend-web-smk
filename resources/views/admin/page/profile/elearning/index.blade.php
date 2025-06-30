@@ -16,6 +16,7 @@
                         </p>
                     </div>
                     <div class="col-md-4 text-right">
+                        <a href="{{ route('elearning.create', ['token' => $token]) }}" class="btn-print btn btn-warning shadow-warning px-4 rounded-pill"><i class="fas fa-plus"></i> E-Learning Baru</a>
                         <a href="{{ route('badge.index',$token) }}" class="btn-print btn btn-white border-warning px-3 rounded-pill"><i class="fas fa-columns mr-1"></i> Badges</a>
                     </div>
                 </div>
@@ -67,6 +68,19 @@
                                                     style="padding-bottom: 10px; text-align: center; font-weight: 600;">
                                                     <i class='fas fa-pen-alt mx-1 text-warning'></i> Edit
                                                 </a>
+                                                <form
+                                                    action="{{ route('elearning.destroy', ['elearning' => $data->id, 'token' => $token]) }}"
+                                                    method="post" class="d-inline"
+                                                    onclick="event.stopPropagation(); return confirm('Data akan dihapus ?')">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <input type="hidden" value="{{ $data->id }}"
+                                                        name="idName">
+                                                    <button type="submit" class="dropdown-item text-danger"
+                                                        style="padding-bottom: 10px; padding-top: 10px; text-align: center; font-weight: 600;">
+                                                        <i class='fas fa-trash mx-1 text-danger'></i> Delete
+                                                    </button>
+                                                </form>
                                             </div>
                                         </li>
                                     </ul>

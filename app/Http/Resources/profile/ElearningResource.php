@@ -56,13 +56,13 @@ class ElearningResource extends JsonResource
                 : 'img/no_image.png')
             : 'img/no_image.png';
         $btn_icon = $this->btn_icon
-            ? (File::exists(public_path('img/badge/' . $this->btn_icon))
-                ? 'img/badge/' . $this->btn_icon
+            ? (File::exists(public_path('img/e-learning/' . $this->btn_icon))
+                ? 'img/e-learning/' . $this->btn_icon
                 : 'img/no_image.png')
             : 'img/no_image.png';
         $btn_icon_2 = $this->btn_icon_2
-            ? (File::exists(public_path('img/badge/' . $this->btn_icon_2))
-                ? 'img/badge/' . $this->btn_icon_2
+            ? (File::exists(public_path('img/e-learning/' . $this->btn_icon_2))
+                ? 'img/e-learning/' . $this->btn_icon_2
                 : 'img/no_image.png')
             : 'img/no_image.png';
 
