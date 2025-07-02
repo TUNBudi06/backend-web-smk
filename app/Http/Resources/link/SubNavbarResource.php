@@ -35,7 +35,7 @@ class SubNavbarResource extends JsonResource
                 : 'img/no_image.png')
             : 'img/no_image.png';
 
-        return [
+        $base = [
             'id' => $this->id,
             'title' => $this->title,
             'icon' => $icon,
@@ -43,5 +43,21 @@ class SubNavbarResource extends JsonResource
             'description' => $this->description,
             'navbar_id' => (string) $this->navbar_id,
         ];
+
+        if (strtolower($this->title) === 'e-learn') {
+            $base['children'] = \App\Models\tb_elearning::all()->map(function ($e) {
+                return [
+                    'id' => $e->id,
+                    'title' => $e->title,
+                    'route' => str()->slug($e->title),
+                    'description' => \Illuminate\Support\Str::limit($e->desc, 50, '...'),
+                    'icon' => File::exists(public_path('img/e-learning/' . $e->thumbnail))
+                        ? 'img/e-learning/' . $e->thumbnail
+                        : 'img/no_image.png',
+                ];
+            });
+        }
+
+        return $base;
     }
 }
