@@ -5,6 +5,7 @@ namespace App\Http\Resources\link;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 /**
  * @OA\Schema(
@@ -44,13 +45,13 @@ class SubNavbarResource extends JsonResource
             'navbar_id' => (string) $this->navbar_id,
         ];
 
-        if (strtolower($this->title) === 'e-learn') {
+        if (Str::contains(Str::lower($this->title), 'e-learn')) {
             $base['children'] = \App\Models\tb_elearning::all()->map(function ($e) {
                 return [
                     'id' => $e->id,
                     'title' => $e->title,
                     'route' => str()->slug($e->title),
-                    'description' => \Illuminate\Support\Str::limit($e->desc, 50, '...'),
+                    'description' => Str::limit($e->desc, 50, '...'),
                     'icon' => File::exists(public_path('img/e-learning/' . $e->thumbnail))
                         ? 'img/e-learning/' . $e->thumbnail
                         : 'img/no_image.png',
