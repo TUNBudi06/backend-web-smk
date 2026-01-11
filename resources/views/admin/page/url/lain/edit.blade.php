@@ -8,7 +8,7 @@
 @section('container')
 <div class="col-md-8 offset-md-2 mt-5">
     <a href="{{ route('lainnya.index', ['token' => $token]) }}" class="btn btn-light border-warning px-4 mb-4"><i class="fas fa-arrow-left"></i> Kembali</a>
-    @if($idData != 8)
+    @if(!in_array($idData, [8, 9]))
         <form action="{{route('lainnya.update',['token' => $token,'id'=>$data->id_link])}}" enctype="multipart/form-data" method="post">
             @csrf
             @method('PUT')
@@ -60,7 +60,7 @@
                 </div>
             </div>
         </form>
-    @elseif ($idData == 8)
+    @else
         <form action="{{route('lainnya.update',['token' => $token,'id'=>$data->id_link])}}" enctype="multipart/form-data" method="post">
             @csrf
             @method('PUT')
@@ -110,7 +110,7 @@
 @endsection
 
 @section('script')
-    @if($idData != 8)
+    @if(!in_array($idData, [8, 9]))
         <script  type="text/javascript" >
 
             var data= @json($data);

@@ -52,29 +52,30 @@ class profileController extends JsonResource
      */
     public function toArray(Request $request)
     {
-        $ret['id_profile'] = $this->id_link;
+        $ret = [
+            'id_profile' => $this->id_link,
+            'profile_name' => $this->title,
+            'icon_type' => 'Profile',
+        ];
+
+        // Handle URL and File types
         if (in_array($this->type, ['url', 'file'])) {
-            $ret['profile_name'] = $this->title;
-            $ret['name_data'] = $this->description ? $this->description : 'URL';
+            $ret['name_data'] = $this->description ?: 'URL';
             $ret['type_data'] = $this->type;
             $ret['profile_data'] = $this->url;
-        } else {
-            $ret['profile_name'] = $this->title;
-            if ($this->id_link == 8) {
-                $ret['profile_image'] = asset($this->url);
-                $ret['profile_data'] = $this->description;
-            } elseif ($this->id_link == 9) {
-                $ret['profile_image'] = asset($this->url);
-                $ret['profile_data'] = $this->description;
-            }
-            else {
-                $ret['name_data'] = 'Text';
-                $ret['profile_data'] = $this->description;
-                $ret['type_data'] = 'text';
-            }
         }
-
-        $ret['icon_type'] = 'Profile';
+        // Handle special items with images (Sambutan Kepala Sekolah, etc.)
+        elseif (in_array($this->id_link, [8, 9])) {
+            $ret['profile_image'] = $this->url ? asset($this->url) : null;
+            $ret['profile_data'] = $this->description;
+            $ret['type_data'] = 'text';
+        }
+        // Handle regular text type
+        else {
+            $ret['name_data'] = 'Text';
+            $ret['profile_data'] = $this->description;
+            $ret['type_data'] = 'text';
+        }
 
         return $ret;
     }
