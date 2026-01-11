@@ -16,17 +16,13 @@ class tb_admin extends Authincatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'image',
         'name',
-        'username',
         'email',
-        'token',
-        'role',
-        'email_verified_at',
-        'created_by',
-        'verified_user',
         'password',
-
+        'token',
+        'remember_token',
+        'created_at',
+        'updated_at',
     ];
 
     /**
